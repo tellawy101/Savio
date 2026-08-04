@@ -3,23 +3,14 @@
    (مقصورة على صفحة الدخل بس - class has-scroll)
 ============================== */
 body.has-scroll {
+    margin: 0;
+    background: #F6F8FA;
     padding-bottom: 0 !important;
 }
 
 /* ==============================
    عنوان صفحة الدخل
 ============================== */
-.income-title {
-    text-align: center;
-    font-size: 24px;
-    padding-top: 30px !important;
-    margin-bottom: 10px;
-}
-
-.income-title {
-    order: 1 !important;
-}
-
 #incomeAmount::placeholder {
     color: #111;
 }
@@ -29,42 +20,7 @@ body.has-scroll {
     outline: none;
 }
 
-.income-title {
-    margin: 0;
-    text-align: center;
-    font-size: 28px;
-    font-weight: 700;
-    color: #111;
-}
 
-body.has-scroll {
-    margin: 0;
-    background: #F6F8FA;
-}
-
-.container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 24px 20px 100px;
-}
-
-.income-header {
-    display: flex;
-    align-items: center;
-
-    padding: 18px 20px;
-
-    border-bottom: 1px solid #eee;
-
-    background: #F6F8FA;
-}
-
-.income-header h1 {
-    margin: 0 auto;
-
-    font-size: 22px;
-    font-weight: 700;
-}
 
 .back-btn{
     width:40px;
@@ -114,19 +70,6 @@ body.has-scroll {
 
     color: #111;
 }
-
-.back-btn {
-    width: 40px;
-    height: 40px;
-
-    border: none;
-    background: transparent;
-
-    font-size: 24px;
-    color: #0F766E; 
-    cursor: pointer;
-}
-
 .amount-section {
     text-align: center;
     padding: 10px 20px;
@@ -594,4 +537,16 @@ body.has-scroll {
 .toast.show{
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+}
+body.dark {
+    background: #121212 !important;
+    color: #fff;
+}
+
+body.dark main {
+    background: #121212 !important;
+}
+.dark .account-select,
+.dark .category-select {
+    color: #fff;
 }

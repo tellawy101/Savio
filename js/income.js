@@ -85,7 +85,8 @@ const incomeAccount = document.getElementById("incomeAccount");
 const incomeDescription = document.getElementById("incomeDescription");
 const incomeCategory = document.getElementById("incomeCategory");
 const incomeDate = document.getElementById("incomeDate");
-
+const today = new Date().toISOString().split("T")[0];
+incomeDate.value = today;
 // وضع التعديل: لو جاي من الصفحة الرئيسية بـ ?edit=index
 const urlParams = new URLSearchParams(window.location.search);
 const editIndex = urlParams.has("edit") ? Number(urlParams.get("edit")) : -1;
