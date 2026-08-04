@@ -1,14 +1,215 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/income.css">
 </head>
+<body class="has-scroll">
+    <!-- رأس الصفحة -->
+ <header class="income-header">
 
-<body>
-  
+    <button id="backBtn" class="back-btn">←</button>
+
+    <h1>Income</h1>
+
+    <button id="saveIncomeBtn" class="save-btn">✓</button>
+
+</header>
+    
+    <!-- محتوى الصفحة -->
+    <main class="income-content">
+    
+<div class="amount-section">
+
+    <div class="amount-display">
+    <span class="currency">EGP</span>
+
+    <input
+        type="tel"
+        id="incomeAmount"
+        inputmode="numeric"
+        value="0">
+</div>
+
+</div>
+
+<div class="form-group">
+
+    <label>Account</label>
+
+    <div class="account-select-box">
+
+        <span class="account-icon">💳</span>
+
+        <div id="incomeAccount" class="account-select">
+</div>
+        <span class="account-arrow">›</span>
+
+    </div>
+
+</div>
+<div class="form-group">
+    <label>Category</label>
+    <div class="category-select-box">
+        <span class="category-icon">🏷️</span>
+      <div id="incomeCategory" class="category-select">
+</div>
+        <span class="category-arrow">›</span>
+    </div>
+</div>
+
+<div class="form-group">
+
+    <label>Description</label>
+
+    
+    <div class="description-box">
+
+        <input
+            type="text"
+            id="incomeDescription"
+            class="description-input"
+            placeholder="Write a note">
+
+    </div>
+
+</div>
+
+<div class="form-group">
+    <label>Date</label>
+   <div class="description-box">
+    <input
+        type="date"
+        id="incomeDate"
+        class="description-input"
+        placeholder="Write the date">
+</div>
+</div>
+
+    </main>
+<div id="accountModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Accounts</h2>
+
+        <div id="accountsList"></div>
+
+        <button id="addAccountBtn">
+            + Add Account
+        </button>
+
+    </div>
+
+</div>
+
+<div id="addAccountModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>New Account</h2>
+
+        <input
+            type="text"
+            id="newAccountName"
+            class="form-input"
+            placeholder="Account name">
+
+        <select id="newAccountIcon" class="form-input">
+            <option value="💳">💳 Bank Card</option>
+            <option value="💵">💵 Cash</option>
+            <option value="👛">👛 Wallet</option>
+            <option value="🏦">🏦 Bank</option>
+            <option value="💰">💰 Savings</option>
+            <option value="📈">📈 Investment</option>
+        </select>
+
+        <input
+            type="tel"
+            id="newAccountBalance"
+            class="form-input"
+            placeholder="Initial Balance">
+
+        <button id="saveAccountBtn" class="account-save-btn">
+    Save
+</button>
+
+    </div>
+
+</div>
+
+<div id="categoryModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Categories</h2>
+
+        <div id="categoriesList"></div>
+
+        <button id="addCategoryBtn">
+            + Add Category
+        </button>
+
+    </div>
+
+</div>
+
+<div id="addCategoryModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>New Category</h2>
+
+        <input
+            type="text"
+            id="newCategoryName"
+            class="form-input"
+            placeholder="Category name">
+
+        <input
+            type="text"
+            id="newCategoryIcon"
+            class="form-input"
+            placeholder="Category Icon (😀)">
+
+        <button id="saveCategoryBtn" class="account-save-btn">
+            Save
+        </button>
+
+    </div>
+
+</div>
+<div id="accountMenu" class="modal">
+
+    <div class="modal-content">
+
+        <button id="editAccountBtn">✏️ Edit</button>
+
+        <button id="deleteAccountBtn">🗑 Delete</button>
+
+    </div>
+
+</div>
+
+<div id="toast" class="toast">
+    Account name already exists
+</div>
+<div id="categoryMenu" class="modal">
+
+    <div class="modal-content">
+
+        <button id="editCategoryBtn">✏️ Edit</button>
+
+        <button id="deleteCategoryBtn">🗑 Delete</button>
+
+    </div>
+
+</div>
+<script src="../js/storage.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/income.js"></script>
 </body>
-
 </html>

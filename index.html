@@ -1,14 +1,146 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savio</title>
+    <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/income.css">
+  <link rel="stylesheet" href="css/expense.css">
+<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/statistics.css">
+<link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
-  
-</body>
+<header class="dashboard">
+  <button id="themeBtn">🌙</button>
+    <div class="balance-box">
+        <h3>Balance</h3>
+        <h2 id="balance">EGP 0.00</h2>
+    </div>
 
+    <div class="stats">
+
+        <div class="stat">
+            <span>↗️</span>
+            <h4>Income</h4>
+            <p id="totalIncome">EGP 0.00</p>
+        </div>
+
+        <div class="stat">
+            <span>↙️</span>
+            <h4>Expenses</h4>
+            <p id="totalExpense">EGP 0.00</p>
+        </div>
+
+    </div>
+
+</header>
+<main>
+    <!-- نافذة إضافة المصروف -->
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+
+            <h2>Add Expense</h2>
+
+            <input
+                type="number"
+                id="amount"
+                placeholder="Amount">
+
+            <select id="category">
+                <option>Food</option>
+                <option>Transport</option>
+                <option>Bills</option>
+                <option>Shopping</option>
+                <option>Health</option>
+                <option>Entertainment</option>
+                <option>Other</option>
+            </select>
+<button id="addCategoryBtn" type="button">
+    ➕ Add Category
+</button>
+            <button id="saveBtn">Save</button>
+            <button id="closeBtn">Cancel</button>
+
+        </div>
+    </div>
+
+<!-- نافذة إضافة التصنيف -->
+<div id="categoryModal" class="modal">
+    <div class="modal-content">
+
+        <h2>➕ Add Category</h2>
+
+        <input
+            type="text"
+            id="newCategoryName"
+            placeholder="Category Name">
+
+        <input
+            type="text"
+            id="newCategoryIcon"
+            placeholder="😀 Icon"
+            maxlength="2">
+
+        <button id="saveCategoryBtn">Save</button>
+        <button id="closeCategoryBtn">Cancel</button>
+
+    </div>
+</div>
+     <div class="card">
+    <h2>Expenses</h2>
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search by category...">
+
+    <ul id="expenseList"></ul>
+</div>
+
+</main>
+<nav class="bottom-nav">
+
+    <button class="nav-item active">
+        🏠
+        <span>Home</span>
+    </button>
+
+    <button id="addMenuBtn" class="fab-nav">
+        +
+    </button>
+<div id="fabMenu" class="fab-menu">
+
+    <button id="fabIncome">
+        ↗️
+        <span>Income</span>
+    </button>
+
+    <button id="fabExpense">
+        ↙️
+        <span>Expense</span>
+    </button>
+
+    <button id="fabTransfer">
+        🔄
+        <span>Transfer</span>
+    </button>
+
+</div>
+    <button class="nav-item">
+        ⚙️
+        <span>Settings</span>
+    </button>
+
+</nav>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/search.js"></script>
+<script src="js/expense.js"></script>
+<script src="js/statistics.js"></script>
+<script src="js/script.js"></script>
+</body>
 </html>
