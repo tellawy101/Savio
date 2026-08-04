@@ -1,26 +1,32 @@
 // ==============================
-// theme.js
-// تبديل الوضع الليلي/النهاري
+// Theme (Dark / Light Mode)
 // ==============================
-
 const themeBtn = document.getElementById("themeBtn");
+const themeIconWrap = document.getElementById("themeIconWrap");
 
-// تطبيق الوضع المحفوظ عند فتح الصفحة
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    themeBtn.textContent = "☀️";
+function setThemeIcon(iconName) {
+    if (!themeIconWrap) return;
+    themeIconWrap.innerHTML = `<i data-lucide="${iconName}"></i>`;
+    if (window.lucide) {
+        lucide.createIcons();
+    }
 }
 
-themeBtn.onclick = function () {
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+}
 
+document.addEventListener("DOMContentLoaded", function() {
+    setThemeIcon(document.body.classList.contains("dark") ? "sun" : "moon");
+});
+
+themeBtn.onclick = () => {
     document.body.classList.toggle("dark");
-
     if (document.body.classList.contains("dark")) {
         localStorage.setItem("theme", "dark");
-        themeBtn.textContent = "☀️";
+        setThemeIcon("sun");
     } else {
         localStorage.setItem("theme", "light");
-        themeBtn.textContent = "🌙";
+        setThemeIcon("moon");
     }
-
 };

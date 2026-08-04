@@ -1,6 +1,7 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Tahoma, Arial, sans-serif;
+    font-weight: 700;
     background: #ffffff;
     color: #111111;
 }
@@ -427,4 +428,14 @@ main{
 }
 *{
     -webkit-tap-highlight-color: transparent;
+}
+
+/* ==============================
+   ضبط مقاس ولون أيقونات Lucide
+============================== */
+svg.lucide {
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: -0.2em;
+    stroke: currentColor;
 }

@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Savio</title>
+
+    <!-- خط Inter (أقرب بديل ويب لـ SF Pro بتاع آيفون) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- مكتبة أيقونات Lucide -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+
     <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/income.css">
   <link rel="stylesheet" href="css/expense.css">
@@ -14,7 +23,7 @@
 
 <body>
 <header class="dashboard">
-  <button id="themeBtn">🌙</button>
+  <button id="themeBtn"><span id="themeIconWrap"><i data-lucide="moon"></i></span></button>
     <div class="balance-box">
         <h3>Balance</h3>
         <h2 id="balance">EGP 0.00</h2>
@@ -23,13 +32,13 @@
     <div class="stats">
 
         <div class="stat">
-            <span>↗️</span>
+            <span><i data-lucide="trending-up"></i></span>
             <h4>Income</h4>
             <p id="totalIncome">EGP 0.00</p>
         </div>
 
         <div class="stat">
-            <span>↙️</span>
+            <span><i data-lucide="trending-down"></i></span>
             <h4>Expenses</h4>
             <p id="totalExpense">EGP 0.00</p>
         </div>
@@ -59,19 +68,56 @@
                 <option>Other</option>
             </select>
 <button id="addCategoryBtn" type="button">
-    ➕ Add Category
+    <i data-lucide="plus"></i> Add Category
 </button>
             <button id="saveBtn">Save</button>
             <button id="closeBtn">Cancel</button>
 
         </div>
     </div>
+  <!-- نافذة إضافة الدخل -->
+<div id="incomeModal" class="modal">
+    <div class="modal-content">
+        <h2 class="income-title">Income</h2>
+        <label>Account</label>
+
+<select id="incomeAccount">
+</select>
+
+<label>Description</label>
+
+<input
+    type="text"
+    id="incomeDescription"
+    placeholder="Description">
+
+<label>Date</label>
+
+<input
+    type="date"
+    id="incomeDate">
+
+<label>Amount</label>
+
+<input
+    type="text"
+    id="incomeAmount"
+    inputmode="numeric"
+    placeholder="0">
+        <select id="incomeCategory">
+        </select>
+
+        <button id="saveIncomeBtn">Save</button>
+        <button id="closeIncomeBtn">Cancel</button>
+
+    </div>
+</div>
 
 <!-- نافذة إضافة التصنيف -->
 <div id="categoryModal" class="modal">
     <div class="modal-content">
 
-        <h2>➕ Add Category</h2>
+        <h2><i data-lucide="tag"></i> Add Category</h2>
 
         <input
             type="text"
@@ -104,7 +150,7 @@
 <nav class="bottom-nav">
 
     <button class="nav-item active">
-        🏠
+        <i data-lucide="home"></i>
         <span>Home</span>
     </button>
 
@@ -114,23 +160,23 @@
 <div id="fabMenu" class="fab-menu">
 
     <button id="fabIncome">
-        ↗️
+        <i data-lucide="trending-up"></i>
         <span>Income</span>
     </button>
 
     <button id="fabExpense">
-        ↙️
+        <i data-lucide="trending-down"></i>
         <span>Expense</span>
     </button>
 
     <button id="fabTransfer">
-        🔄
+        <i data-lucide="repeat"></i>
         <span>Transfer</span>
     </button>
 
 </div>
     <button class="nav-item">
-        ⚙️
+        <i data-lucide="settings"></i>
         <span>Settings</span>
     </button>
 
@@ -142,5 +188,13 @@
 <script src="js/expense.js"></script>
 <script src="js/statistics.js"></script>
 <script src="js/script.js"></script>
+<script>
+    // تفعيل رسم أيقونات Lucide بعد تحميل الصفحة
+    document.addEventListener("DOMContentLoaded", function () {
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    });
+</script>
 </body>
 </html>

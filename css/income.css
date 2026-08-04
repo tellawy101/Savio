@@ -1,16 +1,32 @@
 /* ==============================
    إصلاح السكرول والمسافات
-   (مقصورة على صفحة الدخل بس - class has-scroll)
 ============================== */
 body.has-scroll {
-    margin: 0;
-    background: #F6F8FA;
-    padding-bottom: 0 !important;
+    overflow: hidden;
+    padding-bottom: 0;
 }
 
 /* ==============================
    عنوان صفحة الدخل
 ============================== */
+.income-title {
+    text-align: center;
+    font-size: 24px;
+    padding-top: 30px !important; /* استخدمنا padding وقويناها بـ important */
+    margin-bottom: 10px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.income-title {
+    order: 1 !important;
+}
+
 #incomeAmount::placeholder {
     color: #111;
 }
@@ -19,46 +35,71 @@ body.has-scroll {
     border: none;
     outline: none;
 }
+/* ==============================
+   عنوان صفحة الدخل
+============================== */
 
+.income-title {
+    margin: 0;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #111;
+}
+/* ==============================
+   صفحة إضافة الدخل
+============================== */
 
-
-.back-btn{
-    width:40px;
-    height:40px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:none;
-    border-radius:50%;
-
-    background:#0F766E;
-
-    color:#fff;
-
-    font-size:22px;
-    font-weight:bold;
-
-    cursor:pointer;
-    padding:0;
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Tahoma, Arial, sans-serif;
+    font-weight: 700;
+    background: #F8F8F7;
+    overflow-y: auto;
 }
 
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 24px 20px 100px;
+}
+/* ==============================
+   رأس صفحة الدخل
+============================== */
+
 .income-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 20px;
-
-    background: #F6F8FA;
-
-    border-bottom: 1px solid #eee;
-
     position: sticky;
     top: 0;
     z-index: 100;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    padding: 18px 20px;
+    
+    background: #F8F8F7;
+    border-bottom: 1px solid #E5E7EB;
 }
+
+.income-header h1 {
+    margin: 0 auto;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.back-btn {
+    border: none;
+    background: transparent;
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+/* ==============================
+   رأس صفحة الدخل
+============================== */
 
 .income-header h1 {
     margin: 0;
@@ -70,27 +111,41 @@ body.has-scroll {
 
     color: #111;
 }
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+
+    border: none;
+    background: transparent;
+
+    font-size: 24px;
+    color: #111;
+
+    cursor: pointer;
+}
+/* ==============================
+   قسم المبلغ
+============================== */
 .amount-section {
     text-align: center;
-    padding: 10px 20px;
-    margin-top: -30px;
+    padding: 0 20px 12px;
+    margin-top: -10px;
 }
+
 
 .amount-display {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-
-    width: 100%;
-    margin: 10px 0;
 }
 
 #incomeAmount {
     transition: width 0.10s ease;
     width: 2ch;
     min-width: 20px;
-    max-width: none;
+    max-width: 220px;
 
     border: none;
     outline: none;
@@ -104,44 +159,86 @@ body.has-scroll {
     text-align: left;
     padding: 0;
 }
+/* ==============================
+   Select Box
+============================== */
+
+.select-box {
+    position: relative;
+}
+
+.select-box select {
+
+    width: 100%;
+    height: 56px;
+
+    padding: 0 50px 0 16px;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 14px;
+
+    background: #fff;
+
+    font-size: 16px;
+    color: #111;
+
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+}
+
+.select-box .arrow {
+
+    position: absolute;
+
+    right: 18px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 18px;
+
+    color: #777;
+
+    pointer-events: none;
+}
 .currency {
     font-size: 24px;
     font-weight: 700;
     color: #777;
     line-height: 1;
 }
-
+/* ==============================
+   Category Select Card
+============================== */
 .category-select-box {
     position: relative;
     display: flex;
     align-items: center;
     gap: 12px;
-
-    background: #FFFFFF;
+    
+    background: #F9FAFB;
     border: 1px solid #E5E7EB;
     border-radius: 16px;
     padding: 14px 16px;
 }
-
 .category-icon {
     width: 36px;
     height: 36px;
     flex-shrink: 0;
-
+    
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background: #2c2c2c;
+    
+    background: #F3F4F6;
     border-radius: 50%;
-
+    
     font-size: 16px;
 }
 
 .category-select {
     flex: 1;
-    min-height: 24px;
-    cursor: pointer;
 
     appearance: none;
     -webkit-appearance: none;
@@ -150,11 +247,12 @@ body.has-scroll {
     outline: none;
     background: transparent;
 
-    color: #111827;
+    color: #fff;
     font-size: 16px;
 
     padding-right: 24px;
 }
+
 .category-select option {
     background: #1e1e1e;
     color: #fff;
@@ -163,390 +261,274 @@ body.has-scroll {
 .category-arrow {
     position: absolute;
     right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
 
     font-size: 20px;
     color: #999;
 
     pointer-events: none;
 }
-.account-select-box {
-    position: relative;
+/* ==============================
+   إظهار المودالات (account/category/toast) - income.js بيستخدم class="show"
+============================== */
+/* ==============================
+   إظهار المودالات (account/category/toast) - income.js بيستخدم class="show"
+============================== */
+.modal.show {
     display: flex;
-    align-items: center;
-    gap: 12px;
-
-    background: #FFFFFF;
-    border: 1px solid #E5E7EB;
-    border-radius: 16px;
-    padding: 14px 16px;
 }
 
-.account-icon {
-    width: 36px;
-    height: 36px;
-
+/* ==============================
+   Header الجديد (زرار الحفظ ✓)
+============================== */
+.save-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: #0F766E;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
 
-    background: #2c2c2c;
+/* ==============================
+   مجموعات الفورم (Label + الحقل)
+============================== */
+.form-group {
+    padding: 0 20px;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #777;
+    margin-bottom: 8px;
+}
+
+/* ==============================
+   صندوق اختيار الحساب (Account)
+============================== */
+.account-select-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 14px 16px;
+    
+    cursor: pointer;
+}
+.account.account-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background: #F3F4F6;
     border-radius: 50%;
-
+    
     font-size: 16px;
 }
 
 .account-select {
     flex: 1;
-    min-height: 24px;
-    cursor: pointer;
-
-    appearance: none;
-    -webkit-appearance: none;
-
-    border: none;
-    outline: none;
-    background: transparent;
-
-    color: #111827;
-    font-size: 16px;
-
-    padding-right: 24px;
-}
-
-.account-select option {
-    background: #1e1e1e;
     color: #fff;
+    font-size: 16px;
 }
 
 .account-arrow {
-    margin-left: auto;
-    
-    color: #999;
     font-size: 20px;
-    
+    color: #999;
     pointer-events: none;
 }
-.form-group {
-    margin-bottom: 24px;
-}
+
+/* ==============================
+   حقل الوصف والتاريخ (Description / Date)
+============================== */
 .description-box {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-    background: #FFFFFF;
-    border: 1px solid #E5E7EB;
-    border-radius: 16px;
-    padding: 14px 16px;
-    cursor: text;
+    position: relative;
 }
 
 .description-input {
     width: 100%;
-    min-height: 24px;
-    max-height: 120px;
-
-    resize: none;
-    overflow-y: auto;
-
-    border: none;
-    outline: none;
-    background: transparent;
-
-    color: #000;
+    height: 56px;
+    padding: 0 16px;
+    border: 1px solid #e5e5e5;
+    border-radius: 14px;
+    background: #F9FAFB;
     font-size: 16px;
-    font-family: inherit;
+    color: #111;
+    outline: none;
+    box-sizing: border-box;
 }
-.description-input::placeholder {
-    color: #999;
-}
+
+/* ==============================
+   مودالات اختيار/إضافة الحساب والتصنيف
+============================== */
 .form-input {
     width: 100%;
-    height: 56px;
-
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
     box-sizing: border-box;
-
-    padding: 0 16px;
-
-    border: none;
-    border-radius: 16px;
-
-    background: #1e1e1e;
-
-    color: #fff;
     font-size: 16px;
-
-    outline: none;
 }
 
-.form-input::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    cursor: pointer;
-}
-.date-box{
-    background:#1e1e1e;
-    border-radius:16px;
-    padding:14px 16px;
-}
-
-.date-input{
-    width:100%;
-    border:none;
-    outline:none;
-    background:transparent;
-    color:#fff;
-    font-size:16px;
-    font-family:inherit;
-}
-
-.date-input::-webkit-calendar-picker-indicator{
-    filter:invert(1);
-    cursor:pointer;
-}
-.income-footer{
-    position: fixed;
-    left: 20px;
-    right: 20px;
-    bottom: 30px;
-}
-
-#saveIncomeBtn{
-    margin: 0;
-}
-.save-btn{
-    width: 40px;
-    height: 40px;
-
-    margin: 0;
-    padding: 0;
-
+.account-save-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
     border: none;
-    border-radius: 50%;
-
+    border-radius: 12px;
     background: #0F766E;
     color: #fff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 22px;
-    font-weight: bold;
-
+    font-size: 16px;
     cursor: pointer;
 }
-/* ==============================
-   Income Dark Mode
-============================== */
 
-.dark {
-    background: #121212;
-    color: #fff;
+/* ==============================
+   عناصر ليستة الحسابات/التصنيفات (accountsList / categoriesList)
+============================== */
+#accountsList, #categoriesList {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
 }
 
-.dark .income-header {
-    background: #121212;
-    border-bottom: 1px solid #2c2c2c;
+.account-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    background: #f8f8f8;
+    cursor: pointer;
+    user-select: none;
+}
+
+.account-item-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eee;
+    border-radius: 50%;
+    font-size: 16px;
+}
+
+.account-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.account-name {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.account-balance {
+    font-size: 13px;
+    color: #777;
+}
+
+/* ==============================
+   قائمة تعديل/حذف الحساب أو التصنيف (accountMenu / categoryMenu)
+============================== */
+#accountMenu .modal-content,
+#categoryMenu .modal-content {
+    width: auto;
+    min-width: 220px;
+}
+
+/* ==============================
+   Toast (رسالة التنبيه العائمة)
+============================== */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%) translateY(20px);
+    background: #E53935;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(0,0,0,.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    z-index: 3000;
+    max-width: 85%;
+    text-align: center;
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ==============================
+   الوضع الليلي لعناصر صفحة الدخل
+============================== */
+.dark .income-header,
+.dark .description-input {
+    background: #1e1e1e;
+    color: #ffffff;
+    border-color: #444;
 }
 
 .dark .income-header h1 {
-    color: #fff;
+    color: #ffffff;
 }
-.dark .currency,
-.dark label {
+
+.dark .back-btn {
+    color: #ffffff;
+}
+
+.dark .account-item {
+    background: #2c2c2c;
     color: #fff;
 }
 
-.dark #incomeAmount {
-    color: #4FD1C5;
+.dark .account-item-icon {
+    background: #3a3a3a;
 }
 
-.dark .description-input::placeholder {
-    color: #888;
+.dark .account-balance {
+    color: #bbb;
 }
+/* ==========================
+   Dark Mode
+========================== */
+
 .dark .account-select-box,
 .dark .category-select-box,
-.dark .description-box {
-    background: #1f1f1f;
+.dark .description-input,
+.dark .date-input {
+    background: #232323;
+    border: 1px solid #333;
+    color: #fff;
 }
-
 .dark .account-icon,
 .dark .category-icon {
-    background: #2b2b2b;
-}
-
-.dark .account-arrow,
-.dark .category-arrow {
-    color: #4FD1C5;
-}
-.dark #incomeDate {
-    color: #fff;
-}
-
-.dark #incomeDate::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    cursor: pointer;
-}
-
-.dark #incomeDate::-webkit-datetime-edit {
-    color: #fff;
-}
-
-.dark .account-select-box {
-    border-color: #2B2B2B;
-}
-.dark .category-select-box {
-    border-color: #2B2B2B;
-}
-.dark .description-box {
-    border-color: #2B2B2B;
-}
-.dark .modal .modal-content{
-    background:#1E1E1E;
-}
-.description-box input,
-.account-select-box select,
-.category-select-box select,
-.description-box input[type="date"]{
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
-}
-/* ===========================
-   Account Bottom Sheet
-=========================== */
-
-.modal{
-    position: fixed;
-    inset: 0;
-
-    display: none;
-    align-items: flex-end;
-    justify-content: center;
-
-    background: rgba(0,0,0,.35);
-
-    z-index: 9999;
-}
-
-.modal.show{
-    display:flex;
-}
-
-.modal .modal-content{
-
-    width:100%;
-    max-width:500px;
-
-    background:#fff;
-
-    border-radius:24px 24px 0 0;
-
-    padding:24px;
-
-    animation:slideUp .25s ease;
-}
-
-@keyframes slideUp{
-
-    from{
-        transform:translateY(100%);
-    }
-
-    to{
-        transform:translateY(0);
-    }
-
-}
-.account-save-btn{
-    width:100%;
-    height:52px;
-
-    margin-top:20px;
-
-    border:none;
-    border-radius:14px;
-
-    background:#0F766E;
-    color:#fff;
-
-    font-size:18px;
-    font-weight:600;
-
-    cursor:pointer;
-}
-.account-item {
-    position: relative;
-    
-    display: flex;
-    align-items: center;
-    
-    padding: 14px 16px;
-    margin-bottom: 12px;
-    
-    background: #F7F7F7;
-    border-radius: 16px;
-    
-    cursor: pointer;
-}
-
-.account-item-icon{
-    font-size:28px;
-    margin-right:14px;
-}
-
-.account-info{
-    flex:1;
-}
-
-.account-name{
-    font-size:18px;
-    font-weight:700;
-    color:#111;
-}
-
-.account-balance{
-    margin-top:4px;
-    font-size:14px;
-    color:#777;
-}
-.toast{
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-
-    background: #E53935;
-    color: #fff;
-
-    padding: 14px 22px;
-    border-radius: 14px;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    opacity: 0;
-    transition: .3s ease;
-
-    z-index: 9999;
-}
-
-.toast.show{
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-body.dark {
-    background: #121212 !important;
-    color: #fff;
-}
-
-body.dark main {
-    background: #121212 !important;
-}
-.dark .account-select,
-.dark .category-select {
-    color: #fff;
+    background: #2F2F2F;
 }

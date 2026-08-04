@@ -192,14 +192,14 @@ if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
 }
 
-const accountBox = document.getElementById("incomeAccount");
+const accountBox = document.querySelector(".account-select-box");
 const accountModal = document.getElementById("accountModal");
 
 accountBox.onclick = function () {
     accountModal.classList.add("show");
 };
 
-const categoryBox = document.getElementById("incomeCategory");
+const categoryBox = document.querySelector(".category-select-box");
 const categoryModal = document.getElementById("categoryModal");
 const addCategoryBtn = document.getElementById("addCategoryBtn");
 const addCategoryModal = document.getElementById("addCategoryModal");

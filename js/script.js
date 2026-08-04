@@ -65,17 +65,22 @@ function renderExpenses() {
         const li = document.createElement("li");
         
         li.innerHTML = `
-    <div>
-        <strong>${expense.category}</strong><br>
-        EGP ${expense.amount}<br>
-        📅 ${expense.date}<br>
-        🕒 ${expense.time}
-    </div>
+<div>
+    <strong>${expense.category}</strong><br>
+    EGP ${expense.amount}<br>
+    📅 ${expense.date}<br>
+    🕒 ${expense.time}
+</div>
 
-    <div>
-        <button class="editBtn">✏️</button>
-        <button class="deleteBtn">🗑</button>
-    </div>
+<div>
+    <button class="editBtn">
+        <i data-lucide="pencil"></i>
+    </button>
+
+    <button class="deleteBtn">
+        <i data-lucide="trash-2"></i>
+    </button>
+</div>
 `;
         li.querySelector(".editBtn").onclick = () => {
 
@@ -113,7 +118,11 @@ function renderExpenses() {
 
 totalIncome.innerText = "EGP " + Math.round(income).toLocaleString("en-US");
 
-balance.innerText = "EGP " + Math.round(income - total).toLocaleString("en-US");
+balance.innerText = "EGP " + (income - total).toFixed(2);
+
+if (window.lucide) {
+    lucide.createIcons();
+}
 }
 // حفظ المصروف
 saveBtn.onclick = () => {
@@ -148,6 +157,8 @@ if (editIndex === -1) {
 
 // // تشغيل التطبيق
 renderExpenses();
+console.log(addMenuBtn);
+console.log(fabMenu);
 addMenuBtn.onclick = function () {
 
     if (fabMenu.classList.contains("show")) {
