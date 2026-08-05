@@ -76,7 +76,8 @@ body {
     align-items: center;
     justify-content: space-between;
     
-    padding: 18px 20px;
+    height: 64px;
+    padding: 0 20px;
     
     background: #F8F8F7;
     border-bottom: 1px solid #E5E7EB;
@@ -90,10 +91,18 @@ body {
 }
 
 .back-btn {
+    width: 40px;
+    height: 40px;
+
     border: none;
     background: transparent;
 
     font-size: 24px;
+    color: #0F766E;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     cursor: pointer;
 }
@@ -110,19 +119,6 @@ body {
     font-weight: 700;
 
     color: #111;
-}
-
-.back-btn {
-    width: 40px;
-    height: 40px;
-
-    border: none;
-    background: transparent;
-
-    font-size: 24px;
-    color: #111;
-
-    cursor: pointer;
 }
 /* ==============================
    قسم المبلغ
@@ -542,7 +538,7 @@ body {
 }
 
 .dark .back-btn {
-    color: #ffffff;
+    color: #22c55e;
 }
 
 .dark .account-item {
