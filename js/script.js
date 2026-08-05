@@ -87,7 +87,17 @@ function renderExpenses() {
         const catStyle = getCategoryStyle(expense.category);
         
         li.innerHTML = `
-<div class="expense-main">
+<div class="expense-swipe">
+
+    <div class="swipe-action swipe-delete">
+        <i data-lucide="trash-2"></i>
+    </div>
+
+    <div class="swipe-action swipe-edit">
+        <i data-lucide="pencil"></i>
+    </div>
+
+    <div class="expense-main">
 
     <div class="expense-icon-box" style="background:${catStyle.color}33;">
         <span>${catStyle.icon}</span>
@@ -114,14 +124,57 @@ function renderExpenses() {
     </div>
 
 </div>
+</div>
 `;
         expenseList.appendChild(li);
+        if (window.lucide) {
+    lucide.createIcons();
+}
         let startX = 0;
         let currentX = 0;
         let offsetX = 0;
         let startY = 0;
 
 const card = li.querySelector(".expense-main");
+const deleteBtn = li.querySelector(".swipe-delete");
+const editBtn = li.querySelector(".swipe-edit");
+
+const leftAction = deleteBtn;
+const rightAction = editBtn;
+
+deleteBtn.addEventListener("click", (e) => {
+
+    e.stopPropagation();
+
+    if (confirm("Delete this item?")) {
+
+        expenses.splice(index, 1);
+        saveTransactions(expenses);
+        renderExpenses();
+
+    }
+
+});
+
+editBtn.addEventListener("click", (e) => {
+
+    e.stopPropagation();
+
+    if (expense.type === "income") {
+
+        window.location.href = "pages/income.html?edit=" + index;
+        return;
+
+    }
+
+    amount.value = expense.amount;
+    category.value = expense.category;
+
+    editIndex = index;
+
+    modal.style.display = "flex";
+
+});
 
 card.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
@@ -169,6 +222,8 @@ card.addEventListener("touchend", () => {
         offsetX = 0;
         
     }
+    
+    
     card.style.transition = "transform .25s ease";
     card.style.transform = `translateX(${offsetX}px)`;
     
@@ -186,15 +241,19 @@ card.addEventListener("touchend", () => {
     
 });
 document.addEventListener("touchstart", (e) => {
-
+    
     if (!li.contains(e.target)) {
-
+        
         offsetX = 0;
         currentX = 0;
-
+        
         card.style.transform = "translateX(0px)";
+        
+        leftAction.style.opacity = 0;
+        rightAction.style.opacity = 0;
+        
     }
-
+    
 });
 
 });
