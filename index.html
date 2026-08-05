@@ -24,10 +24,13 @@
 <body>
 <header class="dashboard">
   <button id="themeBtn"><span id="themeIconWrap"><i data-lucide="moon"></i></span></button>
-    <div class="balance-box">
-        <h3>Balance</h3>
-        <h2 id="balance">EGP 0.00</h2>
-    </div>
+   <div class="balance-box">
+    <h3>Balance</h3>
+    <h2 class="balance-amount">
+        <span class="balance-currency">EGP</span>
+        <span id="balanceValue">0</span>
+    </h2>
+</div>
 
     <div class="stats">
 
@@ -154,9 +157,9 @@
         <span>Home</span>
     </button>
 
-    <button id="addMenuBtn" class="fab-nav">
-        +
-    </button>
+   <button id="addMenuBtn" class="fab-nav">
+    <i data-lucide="plus"></i>
+</button>
 <div id="fabMenu" class="fab-menu">
 
     <button id="fabIncome">

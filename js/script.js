@@ -65,21 +65,32 @@ function renderExpenses() {
         const li = document.createElement("li");
         
         li.innerHTML = `
-<div>
-    <strong>${expense.category}</strong><br>
-    EGP ${expense.amount}<br>
-    📅 ${expense.date}<br>
-    🕒 ${expense.time}
+<div class="expense-left">
+    <div class="expense-icon">
+        ${expense.icon || "💰"}
+    </div>
+
+    <div class="expense-info">
+        <div class="expense-title">${expense.description}</div>
+        <div class="expense-category">${expense.category}</div>
+        <div class="expense-account">🟢 ${expense.account || "Cash"}</div>
+    </div>
 </div>
 
-<div>
-    <button class="editBtn">
-        <i data-lucide="pencil"></i>
-    </button>
+<div class="expense-right">
+    <div class="expense-amount">EGP ${expense.amount}</div>
+    <div class="expense-date">${expense.date}</div>
+    <div class="expense-time">${expense.time}</div>
 
-    <button class="deleteBtn">
-        <i data-lucide="trash-2"></i>
-    </button>
+    <div class="expense-actions">
+        <button class="editBtn">
+            <i data-lucide="pencil"></i>
+        </button>
+
+        <button class="deleteBtn">
+            <i data-lucide="trash-2"></i>
+        </button>
+    </div>
 </div>
 `;
         li.querySelector(".editBtn").onclick = () => {
@@ -118,8 +129,8 @@ function renderExpenses() {
 
 totalIncome.innerText = "EGP " + Math.round(income).toLocaleString("en-US");
 
-balance.innerText = "EGP " + (income - total).toFixed(2);
-
+document.getElementById("balanceValue").innerText =
+    Math.round(income - total).toLocaleString("en-US");
 if (window.lucide) {
     lucide.createIcons();
 }

@@ -80,15 +80,6 @@ button:hover {
     border-radius: 10px;
     box-sizing: border-box;
 }
-#expenseList li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8f8f8;
-    margin-bottom: 10px;
-    padding: 12px;
-    border-radius: 10px;
-}
 
 .deleteBtn {
     width: auto;
@@ -254,7 +245,7 @@ header p{
 #expenseList li{
     background:#f8f8f8;
     border-radius:15px;
-    padding:15px;
+    padding:10px 12px;
     margin-bottom:12px;
     display:flex;
     justify-content:space-between;
@@ -351,23 +342,26 @@ main{
     height:65px;
 
     border-radius:50%;
-    background:#0F766E;
+    background: rgba(255,255,255,.75);
     color:#fff;
 
-    border:4px solid #fff;
+    border:1px solid rgba(255,255,255,.9);
 
     display:flex;
     justify-content:center;
     align-items:center;
 
-    font-size:36px;
+    font-size:30px;
     font-weight:bold;
 
-    box-shadow:0 8px 20px rgba(0,0,0,.25);
-
+    box-shadow: 0 8px 30px rgba(0,0,0,.12);
     margin:0;
     padding:0;
     transition: .3s;
+    padding: 0;
+    backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+color: #0F766E;
 }
 
 .dark .fab-nav{
@@ -438,4 +432,55 @@ svg.lucide {
     height: 1.2em;
     vertical-align: -0.2em;
     stroke: currentColor;
+}
+.expense-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+}
+
+.expense-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.expense-category {
+    font-size: 14px;
+}
+
+.expense-account {
+    font-size: 14px;
+}
+
+.expense-amount {
+    font-size: 18px;
+}
+
+.expense-date,
+.expense-time {
+    font-size: 13px;
+}
+.expense-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex:1;
+}
+
+.expense-right{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    text-align:right;
+    gap:3px;
+    min-width:110px;
+}
+
+.expense-info{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:2px;
+    flex:1;
+    min-width: 0;   
 }

@@ -208,6 +208,18 @@ body {
     color: #777;
     line-height: 1;
 }
+.balance-amount {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.balance-currency {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(255,255,255,.85);
+}
 /* ==============================
    Category Select Card
 ============================== */
@@ -531,4 +543,23 @@ body {
 .dark .account-icon,
 .dark .category-icon {
     background: #2F2F2F;
+}
+.balance-amount {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 8px;
+    margin: 0;
+}
+
+.balance-amount .currency {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+
+#balanceValue {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
 }
