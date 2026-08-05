@@ -116,9 +116,50 @@ function renderExpenses() {
 </div>
 `;
         expenseList.appendChild(li);
-        expenseList.appendChild(li);
+        let startX = 0;
+let currentX = 0;
+let offsetX = 0;
+
+const card = li.querySelector(".expense-main");
+
+card.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+});
+
+card.addEventListener("touchmove", (e) => {
+    
+    currentX = offsetX + (e.touches[0].clientX - startX);
+    
+    if (currentX > 80) currentX = 80;
+    if (currentX < -80) currentX = -80;
+    
+    card.style.transform = `translateX(${currentX}px)`;
+    
+});
+
+card.addEventListener("touchend", () => {
+    
+    if (currentX > 50) {
         
-    });
+        offsetX = 70;
+        
+    } else if (currentX < -50) {
+        
+        offsetX = -70;
+        
+    } else {
+        
+        offsetX = 0;
+        
+    }
+    
+    card.style.transform = `translateX(${offsetX}px)`;
+    
+    currentX = 0;
+    
+});
+
+});
     
     totalExpense.innerText = "EGP " + Math.round(total).toLocaleString("en-US");
     

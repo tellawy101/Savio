@@ -241,23 +241,30 @@ header p{
     padding:0;
     margin:0;
 }
-#expenseList li{
-    background:#f8f8f8;
-    border-radius:15px;
-    padding:12px;
-    margin-bottom:12px;
-
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+#expenseList li {
+    margin-bottom: 12px;
+    
+    list-style: none;
+    
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
 }
-
-.expense-main{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.expense-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    background: #f8f8f8;
+    border-radius: 15px;
+    padding: 12px;
+    
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    
+    position: relative;
+    z-index: 2;
+    
+    transition: transform .3s ease;
 }
 
 .expense-icon-box{
@@ -515,4 +522,40 @@ svg.lucide {
     height: 1.2em;
     vertical-align: -0.2em;
     stroke: currentColor;
+}
+/* ==========================
+   Swipe Card
+========================== */
+
+.expense-swipe {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    margin-bottom: 12px;
+}
+
+.swipe-action {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    width: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.swipe-delete {
+    left: 0;
+    background: #E53935;
+}
+
+.swipe-edit {
+    right: 0;
+    background: #1976D2;
 }

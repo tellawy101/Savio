@@ -100,8 +100,8 @@ function getMissingField() {
     const date = incomeDate.value;
 
     if (amount <= 0) return "المبلغ";
-    if (account.length === 0) return "الحساب";
-    if (category.length === 0) return "التصنيف";
+    if (account === "Select Account") return "الحساب";
+if (category === "Select Category") return "التصنيف";
     if (date.length === 0) return "التاريخ";
     return null;
 }
@@ -167,7 +167,7 @@ saveIncomeBtn.onclick = function () {
     const entryData = {
         amount: Number(incomeAmount.value.replace(/,/g, "")),
         account: incomeAccount.textContent.trim(),
-        description: incomeDescription.value,
+        description: incomeDescription.value.trim(),
         category: incomeCategory.textContent.trim(),
         type: "income",
         date: incomeDate.value,
@@ -184,6 +184,12 @@ saveIncomeBtn.onclick = function () {
     }
 
     saveTransactions(transactions);
+    
+    incomeAmount.value = "0";
+incomeAccount.textContent = "Select Account";
+incomeCategory.textContent = "Select Category";
+incomeDescription.value = "";
+incomeDate.value = today;
 
     window.location.href = "../index.html";
 };
