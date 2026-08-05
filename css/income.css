@@ -597,3 +597,11 @@ body {
 .dark #incomeCategory {
     color: #fff !important;
 }
+body{
+    opacity: 1;
+    transition: opacity .22s ease;
+}
+
+body.page-exit{
+    opacity: 0;
+}

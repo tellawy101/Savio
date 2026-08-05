@@ -7,7 +7,11 @@ const incomeAmount = document.getElementById("incomeAmount");
 
 // زر الرجوع
 backBtn.onclick = function () {
+    document.body.classList.add("page-exit");
+
+setTimeout(() => {
     window.location.href = "../index.html";
+}, 220);
 };
 
 // السماح بالسكرول مؤقتًا بس وقت ما الكيبورد يكون فاتح (خانة متركز عليها)،
@@ -191,7 +195,11 @@ incomeCategory.textContent = "Select Category";
 incomeDescription.value = "";
 incomeDate.value = today;
 
+    document.body.classList.add("page-exit");
+
+setTimeout(() => {
     window.location.href = "../index.html";
+}, 220);
 };
 
 if (localStorage.getItem("theme") === "dark") {
