@@ -331,7 +331,7 @@ saveAccountBtn.onclick = function () {
 
     localStorage.setItem("accounts", JSON.stringify(accounts));
 
-    incomeAccount.textContent = icon + " " + name;
+    incomeAccount.textContent = `${icon} ${name}`;
 
     renderAccounts();
 
@@ -398,14 +398,13 @@ function renderAccounts() {
 
         });
 
-        item.onclick = function () {
-
-            incomeAccount.textContent =
-                account.icon + " " + account.name;
-
-            accountModal.classList.remove("show");
-            checkIncomeForm();
-        };
+        item.onclick = function() {
+    
+    incomeAccount.textContent = `${account.icon} ${account.name}`;
+    
+    accountModal.classList.remove("show");
+    checkIncomeForm();
+};
 
         accountsList.appendChild(item);
 

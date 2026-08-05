@@ -2,7 +2,7 @@
 // scrip الرئيسي 
 // ==============================
 
-    
+
 const modal = document.getElementById("expenseModal");
 const closeBtn = document.getElementById("closeBtn");
 const saveBtn = document.getElementById("saveBtn");
@@ -12,11 +12,11 @@ const saveBtn = document.getElementById("saveBtn");
 const amount = document.getElementById("amount");
 const category = document.getElementById("category");
 
-const  expenseList = document.getElementById("expenseList");
+const expenseList = document.getElementById("expenseList");
 const searchInput = document.getElementById("searchInput");
 const totalExpense = document.getElementById("totalExpense");
 const totalIncome = document.getElementById("totalIncome");
-const balance = document.getElementById("balance");
+const balance = document.getElementById("balanceValue");
 const addMenuBtn = document.getElementById("addMenuBtn");
 const fabMenu = document.getElementById("fabMenu");
 
@@ -40,6 +40,26 @@ closeBtn.onclick = () => {
     modal.style.display = "none";
 };
 
+// ألوان وأيقونات كل فئة
+const CATEGORY_STYLES = {
+    "Food": { icon: "🍔", color: "#F59E0B" },
+    "Transport": { icon: "🚗", color: "#3B82F6" },
+    "Bills": { icon: "🧾", color: "#EF4444" },
+    "Shopping": { icon: "🛍️", color: "#EC4899" },
+    "Health": { icon: "💊", color: "#10B981" },
+    "Entertainment": { icon: "🎬", color: "#8B5CF6" },
+    "Other": { icon: "📦", color: "#6B7280" }
+};
+
+function getCategoryStyle(category) {
+    const firstWord = category.split(" ")[0];
+    // لو أول حرف في اسم الفئة مش إنجليزي، يبقى الأرجح إنه إيموجي مختار يدوي
+    if (firstWord && firstWord.codePointAt(0) > 127) {
+        return { icon: firstWord, color: "#0F766E" };
+    }
+    return CATEGORY_STYLES[category] || { icon: "💰", color: "#0F766E" };
+}
+
 // عرض البيانات
 function renderExpenses() {
     
@@ -47,93 +67,95 @@ function renderExpenses() {
     total = 0;
     income = 0;
     expenses.forEach((expense, index) => {
-
-    if (
-        !expense.category
+        
+        if (
+            !expense.category
             .toLowerCase()
             .includes(searchInput.value.toLowerCase())
-    ) {
-        return;
-    }
+        ) {
+            return;
+        }
         
         if (expense.type === "expense") {
-    total += expense.amount;
-} else if (expense.type === "income") {
-    income += expense.amount;
-}
+            total += expense.amount;
+        } else if (expense.type === "income") {
+            income += expense.amount;
+        }
         
         const li = document.createElement("li");
         
+        const catStyle = getCategoryStyle(expense.category);
+        
         li.innerHTML = `
-<div class="expense-left">
-    <div class="expense-icon">
-        ${expense.icon || "💰"}
-    </div>
+    <div class="expense-main">
+        <div class="expense-icon-box" style="background:${catStyle.color}33;">
+            <span>${catStyle.icon}</span>
+        </div>
 
-    <div class="expense-info">
-        <div class="expense-title">${expense.description}</div>
-        <div class="expense-category">${expense.category}</div>
-        <div class="expense-account">🟢 ${expense.account || "Cash"}</div>
-    </div>
+       <div class="expense-info">
+
+    <div class="expense-desc">
+    ${expense.description || expense.category}
 </div>
 
-<div class="expense-right">
-    <div class="expense-amount">EGP ${expense.amount}</div>
-    <div class="expense-date">${expense.date}</div>
-    <div class="expense-time">${expense.time}</div>
+<div class="expense-account">
+    ${expense.account || ""}
+</div>
+</div>
+        </div>
+
+        <div class="expense-right">
+            <div class="expense-amount">EGP ${expense.amount}</div>
+            <div class="expense-meta">${expense.date}</div>
+        </div>
+    </div>
 
     <div class="expense-actions">
-        <button class="editBtn">
-            <i data-lucide="pencil"></i>
-        </button>
-
-        <button class="deleteBtn">
-            <i data-lucide="trash-2"></i>
-        </button>
+        <button class="editBtn"><i data-lucide="pencil"></i></button>
+        <button class="deleteBtn"><i data-lucide="trash-2"></i></button>
     </div>
-</div>
 `;
         li.querySelector(".editBtn").onclick = () => {
-
-    // عنصر الدخل ليه صفحته الخاصة، فبنبعت المستخدم يعدّل هناك
-    if (expense.type === "income") {
-        window.location.href = "pages/income.html?edit=" + index;
-        return;
-    }
-
-    amount.value = expense.amount;
-    category.value = expense.category;
-
-    editIndex = index;
-
-    modal.style.display = "flex";
-
-};
+            
+            // عنصر الدخل ليه صفحته الخاصة، فبنبعت المستخدم يعدّل هناك
+            if (expense.type === "income") {
+                window.location.href = "pages/income.html?edit=" + index;
+                return;
+            }
+            
+            amount.value = expense.amount;
+            category.value = expense.category;
+            
+            editIndex = index;
+            
+            modal.style.display = "flex";
+            
+        };
         li.querySelector(".deleteBtn").onclick = () => {
-
-    if (confirm("Delete this item?")) {
-
-        expenses.splice(index, 1);
-
-        saveTransactions(expenses);
-        renderExpenses();
-    }
-
-};
+            
+            if (confirm("Delete this item?")) {
+                
+                expenses.splice(index, 1);
+                
+                saveTransactions(expenses);
+                renderExpenses();
+            }
+            
+        };
         
         expenseList.appendChild(li);
         
     });
     
     totalExpense.innerText = "EGP " + Math.round(total).toLocaleString("en-US");
-
-totalIncome.innerText = "EGP " + Math.round(income).toLocaleString("en-US");
-
-document.getElementById("balanceValue").innerText =
-    Math.round(income - total).toLocaleString("en-US");
-if (window.lucide) {
-    lucide.createIcons();
-}
+    
+    totalIncome.innerText = "EGP " + Math.round(income).toLocaleString("en-US");
+    
+   balance.innerText = (income - total).toLocaleString("en-US");
+    
+    if (window.lucide) {
+        lucide.createIcons();
+    }
 }
 // حفظ المصروف
 saveBtn.onclick = () => {
@@ -144,15 +166,15 @@ saveBtn.onclick = () => {
     }
     
     const expenseData = createExpenseData(
-    amount.value,
-    category.value
-);
-if (editIndex === -1) {
-    expenses.push(expenseData);
-} else {
-    expenses[editIndex] = expenseData;
-    editIndex = -1;
-}
+        amount.value,
+        category.value
+    );
+    if (editIndex === -1) {
+        expenses.push(expenseData);
+    } else {
+        expenses[editIndex] = expenseData;
+        editIndex = -1;
+    }
     
     saveTransactions(expenses);
     
@@ -168,10 +190,8 @@ if (editIndex === -1) {
 
 // // تشغيل التطبيق
 renderExpenses();
-console.log(addMenuBtn);
-console.log(fabMenu);
-addMenuBtn.onclick = function () {
-
+addMenuBtn.onclick = function() {
+    
     if (fabMenu.classList.contains("show")) {
         fabMenu.classList.remove("show");
         addMenuBtn.classList.remove("open");
@@ -179,7 +199,7 @@ addMenuBtn.onclick = function () {
         fabMenu.classList.add("show");
         addMenuBtn.classList.add("open");
     }
-
+    
 };
 
 fabExpense.onclick = function() {
@@ -196,27 +216,27 @@ addCategoryBtn.onclick = function() {
     categoryModal.style.display = "flex";
 };
 
-closeCategoryBtn.onclick = function () {
+closeCategoryBtn.onclick = function() {
     categoryModal.style.display = "none";
 };
-saveCategoryBtn.onclick = function () {
-
+saveCategoryBtn.onclick = function() {
+    
     if (newCategoryName.value === "" || newCategoryIcon.value === "") {
         alert("Enter category name and icon");
         return;
     }
-
+    
     const option = document.createElement("option");
     option.value = `${newCategoryIcon.value} ${newCategoryName.value}`;
     option.textContent = `${newCategoryIcon.value} ${newCategoryName.value}`;
-
+    
     category.appendChild(option);
-
+    
     category.value = option.value;
-
+    
     newCategoryName.value = "";
     newCategoryIcon.value = "";
-
+    
     categoryModal.style.display = "none";
-
+    
 };
