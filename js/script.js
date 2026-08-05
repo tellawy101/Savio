@@ -240,21 +240,6 @@ card.addEventListener("touchend", () => {
     currentX = 0;
     
 });
-document.addEventListener("touchstart", (e) => {
-    
-    if (!li.contains(e.target)) {
-        
-        offsetX = 0;
-        currentX = 0;
-        
-        card.style.transform = "translateX(0px)";
-        
-        leftAction.style.opacity = 0;
-        rightAction.style.opacity = 0;
-        
-    }
-    
-});
 
 });
     
@@ -301,6 +286,26 @@ saveBtn.onclick = () => {
 
 // // تشغيل التطبيق
 renderExpenses();
+
+document.addEventListener("touchstart", (e) => {
+
+    document.querySelectorAll(".expense-main").forEach(card => {
+
+        if (!card.contains(e.target)) {
+
+            card.style.transform = "translateX(0px)";
+
+            const swipe = card.parentElement;
+
+            swipe.querySelector(".swipe-delete").style.opacity = 0;
+            swipe.querySelector(".swipe-edit").style.opacity = 0;
+
+        }
+
+    });
+
+});
+
 addMenuBtn.onclick = function() {
     
     if (fabMenu.classList.contains("show")) {
