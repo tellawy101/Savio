@@ -87,62 +87,35 @@ function renderExpenses() {
         const catStyle = getCategoryStyle(expense.category);
         
         li.innerHTML = `
-    <div class="expense-main">
-        <div class="expense-icon-box" style="background:${catStyle.color}33;">
-            <span>${catStyle.icon}</span>
+<div class="expense-main">
+
+    <div class="expense-icon-box" style="background:${catStyle.color}33;">
+        <span>${catStyle.icon}</span>
+    </div>
+
+    <div class="expense-info">
+        <div class="expense-desc">
+            ${expense.description || expense.category}
         </div>
 
-       <div class="expense-info">
-
-    <div class="expense-desc">
-    ${expense.description || expense.category}
-</div>
-
-<div class="expense-account">
-    ${expense.account || ""}
-</div>
-</div>
-        </div>
-
-        <div class="expense-right">
-            <div class="expense-amount">EGP ${expense.amount}</div>
-            <div class="expense-meta">${expense.date}</div>
+        <div class="expense-account">
+            ${expense.account || ""}
         </div>
     </div>
 
-    <div class="expense-actions">
-        <button class="editBtn"><i data-lucide="pencil"></i></button>
-        <button class="deleteBtn"><i data-lucide="trash-2"></i></button>
+    <div class="expense-right">
+        <div class="expense-amount">
+            EGP ${expense.amount}
+        </div>
+
+        <div class="expense-meta">
+            ${expense.date}
+        </div>
     </div>
+
+</div>
 `;
-        li.querySelector(".editBtn").onclick = () => {
-            
-            // عنصر الدخل ليه صفحته الخاصة، فبنبعت المستخدم يعدّل هناك
-            if (expense.type === "income") {
-                window.location.href = "pages/income.html?edit=" + index;
-                return;
-            }
-            
-            amount.value = expense.amount;
-            category.value = expense.category;
-            
-            editIndex = index;
-            
-            modal.style.display = "flex";
-            
-        };
-        li.querySelector(".deleteBtn").onclick = () => {
-            
-            if (confirm("Delete this item?")) {
-                
-                expenses.splice(index, 1);
-                
-                saveTransactions(expenses);
-                renderExpenses();
-            }
-            
-        };
-        
+        expenseList.appendChild(li);
         expenseList.appendChild(li);
         
     });
