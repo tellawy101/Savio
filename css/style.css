@@ -397,10 +397,34 @@ border:1px solid rgba(255, 255, 255, .2);
     color:#777;
     font-size:14px;
     cursor:pointer;
+    position:relative;
 }
 .nav-item span{
+    position:absolute;
+    top:20px;
+
     font-size:12px;
-    margin-top:4px;
+
+    opacity:0;
+    transform:translateY(8px);
+
+    transition:.25s;
+}
+
+.nav-item i{
+    font-size:24px;
+    transition:.25s;
+}
+
+.nav-item.active i{
+    transform:translateY(-8px);
+    color:#0F766E;
+}
+
+.nav-item.active span{
+    opacity:1;
+    transform:translateY(0);
+    color:#0F766E;
 }
 
 .nav-item.active{
@@ -512,21 +536,12 @@ color: #0F766E;
     position:absolute;
     bottom:12px;
 
-    opacity:0;
-    transform:translateY(10px);
-
-    transition:.3s;
+    opacity:1;
+    transform:none;
 
     font-size:13px;
 }
-.fab-menu button.active i{
-    transform:translateY(-10px);
-}
 
-.fab-menu button.active span{
-    opacity:1;
-    transform:translateY(0);
-}
 .dark .fab-menu button{
     background:#0b5d56;
 }

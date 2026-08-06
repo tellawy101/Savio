@@ -273,21 +273,35 @@ fabButtons.forEach(btn => {
 
         fabButtons.forEach(b => b.classList.remove("active"));
 
-        this.classList.add("active");
 
     });
 });
 
 fabExpense.onclick = function () {
-
-    this.classList.add("active");
-
-    setTimeout(() => {
-        window.location.href = "pages/expense.html";
-    }, 300);
-
+    location.href = "pages/expense.html";
 };
 
-fabIncome.onclick = function() {
+fabIncome.onclick = function () {
     window.location.href = "pages/income.html";
 };
+
+fabTransfer.onclick = function () {
+    window.location.href = "pages/transfer.html";
+};
+const settingsBtn = document.getElementById("settingsBtn");
+
+settingsBtn.onclick = function () {
+    window.location.href = "pages/settings.html";
+};
+const debtsBtn = document.getElementById("debtsBtn");
+
+debtsBtn.onclick = function () {
+    window.location.href = "pages/debts.html";
+};
+
+const accountsBtn = document.getElementById("accountsBtn");
+
+accountsBtn.onclick = function () {
+    window.location.href = "pages/accounts.html";
+};
+
