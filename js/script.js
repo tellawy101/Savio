@@ -1,6 +1,14 @@
-// ==============================
-// scrip الرئيسي 
-// ==============================
+// =====================================================
+// File: Script.js
+// Purpose: Home Page
+//
+// مسؤول عن:
+// - عرض العمليات
+// - حساب الرصيد
+// - البحث
+// - Swipe Edit / Delete
+// - Floating Action Button
+// =====================================================
 
 const amount = document.getElementById("amount");
 const category = document.getElementById("category");

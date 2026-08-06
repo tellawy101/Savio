@@ -1,14 +1,116 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debts</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/debts.css">
 </head>
 
 <body>
-  
-</body>
 
+<header class="page-header">
+
+    <button id="backBtn" class="back-btn">
+        ←
+    </button>
+
+    <h2>Debts</h2>
+
+</header>
+
+<div class="debts-summary">
+
+    <div class="summary-card receivable">
+
+        <span class="summary-title">Money Owed To Me</span>
+
+        <h2 id="totalReceivable">EGP 0</h2>
+
+    </div>
+
+    <div class="summary-card payable">
+
+        <span class="summary-title">Money I Owe</span>
+
+        <h2 id="totalPayable">EGP 0</h2>
+
+    </div>
+
+</div>
+
+<div class="debts-header">
+
+    <h3>Debts List</h3>
+
+    <button id="addDebtBtn" class="add-debt-btn">
+        + Add Debt
+    </button>
+
+</div>
+
+<div id="debtsList" class="debts-list">
+</div>
+<!-- Debt Modal -->
+<div id="debtModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Add New Debt</h2>
+
+        <select id="debtType">
+            <option value="receivable">💰 Money Owed To Me</option>
+            <option value="payable">💸 Money I Owe</option>
+        </select>
+
+        <input
+            type="text"
+            id="debtPerson"
+            placeholder="Person Name">
+
+        <input
+            type="tel"
+            id="debtAmount"
+            placeholder="Amount">
+
+        <input
+            type="date"
+            id="debtDueDate">
+
+        <textarea
+            id="debtNotes"
+            placeholder="Notes (Optional)"></textarea>
+
+        <div class="modal-actions">
+
+            <button id="cancelDebtBtn">
+                Cancel
+            </button>
+
+            <button id="saveDebtBtn">
+                Save
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="toast" class="toast"></div>
+<!-- Debt Menu -->
+<div id="debtMenu" class="popup-menu">
+
+    <button id="editDebtBtn">✏️ Edit</button>
+
+    <button id="payDebtBtn">💵 Record Payment</button>
+
+    <button id="deleteDebtBtn" class="danger-btn">🗑 Delete</button>
+
+</div>
+<script src="../js/storage.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/debts.js"></script>
+</body>
 </html>

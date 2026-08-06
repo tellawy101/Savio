@@ -1,0 +1,220 @@
+/* ===========================
+   Debts Page
+=========================== */
+
+.page-header{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:20px;
+}
+
+.back-btn{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:12px;
+    background:#0F766E;
+    color:#fff;
+    font-size:22px;
+}
+
+.page-header h2{
+    font-size:24px;
+    color:#222;
+}
+
+.debts-summary{
+    display:flex;
+    gap:15px;
+    padding:0 20px;
+    margin-top:10px;
+}
+
+.summary-card{
+    flex:1;
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.summary-title{
+    display:block;
+    color:#777;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.summary-card h2{
+    font-size:24px;
+    color:#0F766E;
+}
+
+.receivable{
+    border-left:5px solid #10B981;
+}
+
+.payable{
+    border-left:5px solid #EF4444;
+}
+
+.debts-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+}
+
+.debts-header h3{
+    font-size:20px;
+}
+
+.add-debt-btn{
+    border:none;
+    background:#0F766E;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:12px;
+    font-size:14px;
+}
+
+.debts-list{
+    padding:0 20px 120px;
+}
+/* ===========================
+   Debt Modal
+=========================== */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+
+    display:none;
+    justify-content:center;
+    align-items:center;
+
+    z-index:2000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-content{
+
+    width:90%;
+    max-width:420px;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:24px;
+
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+
+    animation:popup .25s ease;
+}
+
+.modal-content h2{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ddd;
+
+    border-radius:14px;
+
+    font-size:15px;
+
+    outline:none;
+}
+
+.modal-content textarea{
+
+    min-height:90px;
+
+    resize:none;
+}
+
+.modal-actions{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:10px;
+}
+
+.modal-actions button{
+
+    flex:1;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-size:15px;
+}
+
+#cancelDebtBtn{
+    background:#EF4444;
+    color:#fff;
+}
+
+#saveDebtBtn{
+
+    background:#0F766E;
+
+    color:#fff;
+}
+
+@keyframes popup{
+
+    from{
+        transform:scale(.9);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+.debt-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+
+.debt-actions.hidden{
+    display:none;
+}
+
+.debt-actions button{
+    border:none;
+    background:#f3f3f3;
+    padding:8px 10px;
+    border-radius:10px;
+    font-size:18px;
+}
+
+.debt-actions button:active{
+    transform:scale(.95);
+}
