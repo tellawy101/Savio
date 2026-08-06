@@ -7,7 +7,7 @@ body.has-scroll {
 }
 
 /* ==============================
-   عنوان صفحة الدخل
+   عنوان صفحة المصروف
 ============================== */
 .income-title {
     text-align: center;
@@ -36,7 +36,7 @@ html, body {
     outline: none;
 }
 /* ==============================
-   عنوان صفحة الدخل
+   عنوان صفحة المصروف
 ============================== */
 
 .income-title {
@@ -47,7 +47,7 @@ html, body {
     color: #111;
 }
 /* ==============================
-   صفحة إضافة الدخل
+   صفحة إضافة المصروف
 ============================== */
 
 body {
@@ -64,10 +64,10 @@ body {
     padding: 24px 20px 100px;
 }
 /* ==============================
-   رأس صفحة الدخل
+   رأس صفحة المصروف 
 ============================== */
 
-.income-header {
+.expense-header {
     position: sticky;
     top: 0;
     z-index: 100;
@@ -83,7 +83,7 @@ body {
     border-bottom: 1px solid #E5E7EB;
 }
 
-.income-header h1 {
+.expense-header h1 {
     margin: 0 auto;
 
     font-size: 22px;
@@ -107,17 +107,15 @@ body {
     cursor: pointer;
 }
 /* ==============================
-   رأس صفحة الدخل
+   رأس صفحة المصروف
 ============================== */
 
-.income-header h1 {
+.expense-header h1 {
     margin: 0;
     flex: 1;
     text-align: center;
-
     font-size: 24px;
     font-weight: 700;
-
     color: #111;
 }
 /* ==============================
@@ -137,7 +135,7 @@ body {
     gap: 6px;
 }
 
-#incomeAmount {
+#expenseAmount {
     transition: width 0.10s ease;
     width: 2ch;
     min-width: 20px;
@@ -328,15 +326,16 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-
+    
     background: #F9FAFB;
     border: 1px solid #E5E7EB;
     border-radius: 16px;
     padding: 14px 16px;
-
+    
     cursor: pointer;
-
-    color: #111827; /* لون النص */
+    
+    color: #111827;
+    /* لون النص */
 }
 
 .account-select-box span,
@@ -344,21 +343,7 @@ body {
 .account-select-box div {
     color: #111827;
     font-weight: 600;
-}.account-select-box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    background: #F9FAFB;
-    border: 1px solid #E5E7EB;
-    border-radius: 16px;
-    padding: 14px 16px;
-
-    cursor: pointer;
-
-    color: #111827; /* لون النص */
 }
-
 .account-select-box span,
 .account-select-box p,
 .account-select-box div {
@@ -524,16 +509,15 @@ body {
 }
 
 /* ==============================
-   الوضع الليلي لعناصر صفحة الدخل
+   الوضع الليلي لعناصر صفحة المصروف
 ============================== */
-.dark .income-header,
+.dark .expense-header,
 .dark .description-input {
     background: #1e1e1e;
-    color: #ffffff;
+    color: #fff;
     border-color: #444;
 }
-
-.dark .income-header h1 {
+.dark .expense-header h1 {
     color: #ffffff;
 }
 
@@ -593,7 +577,7 @@ body {
     color: #fff !important;
 }
 
-.dark #incomeAccount,
-.dark #incomeCategory {
+.dark #expenseAccount,
+.dark #expenseCategory {
     color: #fff !important;
 }

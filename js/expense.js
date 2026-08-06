@@ -92,7 +92,9 @@ const today = new Date().toISOString().split("T")[0];
 expenseDate.value = today;
 // وضع التعديل: لو جاي من الصفحة الرئيسية بـ ?edit=index
 const urlParams = new URLSearchParams(window.location.search);
-const editIndex = urlParams.has("edit") ? Number(urlParams.get("edit")) : -1;
+let editIndex = urlParams.has("edit") ?
+    Number(urlParams.get("edit")) :
+    -1;
 
 // دالة بترجع اسم أول حقل ناقص، أو null لو كله تمام
 function getMissingField() {

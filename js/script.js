@@ -2,12 +2,6 @@
 // scrip الرئيسي 
 // ==============================
 
-
-const modal = document.getElementById("expenseModal");
-const closeBtn = document.getElementById("closeBtn");
-const saveBtn = document.getElementById("saveBtn");
-
-
 const amount = document.getElementById("amount");
 const category = document.getElementById("category");
 
@@ -34,10 +28,6 @@ let income = 0;
 let total = 0;
 let editIndex = -1;
 
-// غلق نافذة المصروف
-closeBtn.onclick = () => {
-    modal.style.display = "none";
-};
 
 // ألوان وأيقونات كل فئة
 const CATEGORY_STYLES = {
@@ -166,12 +156,7 @@ editBtn.addEventListener("click", (e) => {
 
     }
 
-    amount.value = expense.amount;
-    category.value = expense.category;
-
-    editIndex = index;
-
-    modal.style.display = "flex";
+    
 
 });
 
@@ -203,6 +188,7 @@ if (currentX > 0) {
     rightAction.style.opacity = Math.abs(currentX) / 80;
     leftAction.style.opacity = 0;
 }
+
 card.style.transition = "none";
 
 }, { passive: false });
@@ -252,36 +238,6 @@ card.addEventListener("touchend", () => {
         lucide.createIcons();
     }
 }
-// حفظ المصروف
-saveBtn.onclick = () => {
-    
-    if (amount.value === "") {
-        alert("Please enter an amount.");
-        return;
-    }
-    
-    const expenseData = createExpenseData(
-        amount.value,
-        category.value
-    );
-    if (editIndex === -1) {
-        expenses.push(expenseData);
-    } else {
-        expenses[editIndex] = expenseData;
-        editIndex = -1;
-    }
-    
-    saveTransactions(expenses);
-    
-    renderExpenses();
-    
-    amount.value = "";
-    category.selectedIndex = 0;
-    editIndex = -1;
-    
-    modal.style.display = "none";
-    
-};
 
 // // تشغيل التطبيق
 renderExpenses();
@@ -317,10 +273,11 @@ addMenuBtn.onclick = function() {
     
 };
 
-fabExpense.onclick = function() {
+fabExpense.onclick = function () {
     fabMenu.classList.remove("show");
     addMenuBtn.classList.remove("open");
-    modal.style.display = "flex";
+
+    window.location.href = "pages/expense.html";
 };
 
 fabIncome.onclick = function() {
