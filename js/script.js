@@ -8,7 +8,6 @@ const closeBtn = document.getElementById("closeBtn");
 const saveBtn = document.getElementById("saveBtn");
 
 
-
 const amount = document.getElementById("amount");
 const category = document.getElementById("category");
 
