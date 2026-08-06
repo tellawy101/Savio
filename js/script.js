@@ -256,7 +256,7 @@ document.addEventListener("touchstart", (e) => {
 });
 
 addMenuBtn.onclick = function() {
-    
+
     if (fabMenu.classList.contains("show")) {
         fabMenu.classList.remove("show");
         addMenuBtn.classList.remove("open");
@@ -266,15 +266,28 @@ addMenuBtn.onclick = function() {
     }
     
 };
+const fabButtons = document.querySelectorAll(".fab-menu button");
+
+fabButtons.forEach(btn => {
+    btn.addEventListener("click", function () {
+
+        fabButtons.forEach(b => b.classList.remove("active"));
+
+        this.classList.add("active");
+
+    });
+});
 
 fabExpense.onclick = function () {
-    fabMenu.classList.remove("show");
-    addMenuBtn.classList.remove("open");
 
-    window.location.href = "pages/expense.html";
+    this.classList.add("active");
+
+    setTimeout(() => {
+        window.location.href = "pages/expense.html";
+    }, 300);
+
 };
 
 fabIncome.onclick = function() {
     window.location.href = "pages/income.html";
 };
-
