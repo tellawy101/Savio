@@ -261,7 +261,7 @@ addAccountModal.onclick = function (e) {
 
 let editingAccount = null;
 let editingCategory = null;
-const editAccountBtn = document.getElementById("editAccountBtn");
+
 const editCategoryBtn = document.getElementById("editCategoryBtn");
 const saveAccountBtn = document.getElementById("saveAccountBtn");
 const saveCategoryBtn = document.getElementById("saveCategoryBtn");

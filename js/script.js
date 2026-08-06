@@ -15,13 +15,7 @@ const fabMenu = document.getElementById("fabMenu");
 
 const fabExpense = document.getElementById("fabExpense");
 const fabIncome = document.getElementById("fabIncome");
-const addCategoryBtn = document.getElementById("addCategoryBtn");
-const categoryModal = document.getElementById("categoryModal");
-const closeCategoryBtn = document.getElementById("closeCategoryBtn");
-const saveCategoryBtn = document.getElementById("saveCategoryBtn");
 
-const newCategoryName = document.getElementById("newCategoryName");
-const newCategoryIcon = document.getElementById("newCategoryIcon");
 // تحميل البيانات
 let expenses = loadTransactions();
 let income = 0;
@@ -284,31 +278,3 @@ fabIncome.onclick = function() {
     window.location.href = "pages/income.html";
 };
 
-addCategoryBtn.onclick = function() {
-    categoryModal.style.display = "flex";
-};
-
-closeCategoryBtn.onclick = function() {
-    categoryModal.style.display = "none";
-};
-saveCategoryBtn.onclick = function() {
-    
-    if (newCategoryName.value === "" || newCategoryIcon.value === "") {
-        alert("Enter category name and icon");
-        return;
-    }
-    
-    const option = document.createElement("option");
-    option.value = `${newCategoryIcon.value} ${newCategoryName.value}`;
-    option.textContent = `${newCategoryIcon.value} ${newCategoryName.value}`;
-    
-    category.appendChild(option);
-    
-    category.value = option.value;
-    
-    newCategoryName.value = "";
-    newCategoryIcon.value = "";
-    
-    categoryModal.style.display = "none";
-    
-};
