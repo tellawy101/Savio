@@ -17,7 +17,10 @@
     
    <h3>Net Balance</h3>
     
-    <h1 id="netBalance">EGP 0</h1>
+    <h1 id="netBalance">
+    <span class="currency">EGP</span>
+    <span class="amount">0</span>
+</h1>
     
     <div class="balance-grid">
         
@@ -64,10 +67,22 @@
 
         <h2>Add New Debt</h2>
 
-        <select id="debtType">
-            <option value="receivable">💰 Money Owed To Me</option>
-            <option value="payable">💸 Money I Owe</option>
-        </select>
+       <div class="debt-type-buttons">
+
+    <button type="button" class="debt-type-btn active" data-type="receivable">
+        Owed to Me
+    </button>
+
+    <button type="button" class="debt-type-btn" data-type="payable">
+        I Owe
+    </button>
+
+</div>
+
+<select id="debtType" style="display:none;">
+    <option value="receivable">Owed to Me</option>
+    <option value="payable">I Owe</option>
+</select>
 
         <input
             type="text"
@@ -103,6 +118,62 @@
 
 </div>
 <div id="toast" class="toast"></div>
+<!-- Edit Debt Modal -->
+<div id="editDebtModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Edit Debt</h2>
+
+        <div class="debt-type-buttons">
+
+            <button type="button"
+                    class="edit-debt-type-btn active"
+                    data-type="receivable">
+                Owed to Me
+            </button>
+
+            <button type="button"
+                    class="edit-debt-type-btn"
+                    data-type="payable">
+                I Owe
+            </button>
+
+        </div>
+
+        <input
+            type="text"
+            id="editDebtPerson"
+            placeholder="Person Name">
+
+        <input
+            type="number"
+            id="editDebtAmount"
+            placeholder="Amount">
+
+        <input
+            type="date"
+            id="editDebtDueDate">
+
+        <textarea
+            id="editDebtNotes"
+            placeholder="Notes (Optional)"></textarea>
+
+        <div class="modal-actions">
+
+            <button id="cancelEditDebtBtn">
+                Cancel
+            </button>
+
+            <button id="saveEditDebtBtn">
+                Save Changes
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 <script src="../js/storage.js"></script>
 <script src="../js/ui.js"></script>
 <script src="../js/debts.js"></script>

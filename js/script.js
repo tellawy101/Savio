@@ -158,10 +158,14 @@ editBtn.addEventListener("click", (e) => {
 
     }
 
-    
+    if (expense.type === "expense") {
+
+        window.location.href = "pages/expense.html?edit=" + index;
+        return;
+
+    }
 
 });
-
 card.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;

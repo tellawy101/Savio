@@ -20,6 +20,43 @@ const saveDebtBtn = document.getElementById("saveDebtBtn");
 
 const debtType = document.getElementById("debtType");
 
+const editDebtModal = document.getElementById("editDebtModal");
+
+const editDebtPerson = document.getElementById("editDebtPerson");
+
+const editDebtAmount = document.getElementById("editDebtAmount");
+
+const editDebtDueDate = document.getElementById("editDebtDueDate");
+
+const editDebtNotes = document.getElementById("editDebtNotes");
+
+const cancelEditDebtBtn = document.getElementById("cancelEditDebtBtn");
+
+const saveEditDebtBtn = document.getElementById("saveEditDebtBtn");
+
+const editDebtTypeButtons =
+    document.querySelectorAll(".edit-debt-type-btn");
+    let editingDebt = null;
+
+const debtTypeButtons = document.querySelectorAll(".debt-type-btn");
+
+debtTypeButtons.forEach(button => {
+
+    button.onclick = function () {
+
+        debtType.value = this.dataset.type;
+
+        debtTypeButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        this.classList.add("active");
+
+    };
+
+});
+
+
 const debtPerson = document.getElementById("debtPerson");
 
 const debtAmount = document.getElementById("debtAmount");
@@ -33,7 +70,7 @@ const debtsList = document.getElementById("debtsList");
 const totalReceivable = document.getElementById("totalReceivable");
 
 const totalPayable = document.getElementById("totalPayable");
-
+const netBalance = document.getElementById("netBalance");
 
 // ==============================
 // Storage
@@ -76,30 +113,36 @@ debtModal.onclick = function (e) {
 
 saveDebtBtn.onclick = function () {
 
-    if (
-        debtPerson.value.trim() === "" ||
-        debtAmount.value.trim() === ""
-    ) {
+    const person = debtPerson.value.trim();
+    const amount = Number(debtAmount.value);
 
-        alert("Please enter person name and amount");
-
+    // التحقق من البيانات
+    if (person === "") {
+        alert("Please enter person name");
+        debtPerson.focus();
         return;
-
     }
 
+    if (!amount || amount <= 0) {
+        alert("Please enter a valid amount");
+        debtAmount.focus();
+        return;
+    }
+
+    // إنشاء الدين
     const debt = {
 
         id: Date.now(),
 
         type: debtType.value,
 
-        person: debtPerson.value.trim(),
+        person: person,
 
-        amount: Number(debtAmount.value),
+        amount: amount,
 
         paid: 0,
 
-        remaining: Number(debtAmount.value),
+        remaining: amount,
 
         dueDate: debtDueDate.value,
 
@@ -111,39 +154,54 @@ saveDebtBtn.onclick = function () {
 
     };
 
+    // إضافة الدين
     debts.push(debt);
 
-    localStorage.setItem("debts", JSON.stringify(debts));
+    // حفظ في الجهاز
+    localStorage.setItem(
+        "debts",
+        JSON.stringify(debts)
+    );
 
+    // تحديث القائمة والأرقام
     renderDebts();
+
+    // تنظيف الحقول
     clearForm();
 
+    // إغلاق النافذة
     debtModal.classList.remove("show");
 
+    // رسالة نجاح
     showToast("Debt Added", "success");
 
 };
-
-
 
 // ==============================
 // Clear Form
 // ==============================
 
 function clearForm() {
-
-    debtType.selectedIndex = 0;
-
+    
+    debtType.value = "receivable";
+    
+    debtTypeButtons.forEach(btn => {
+        btn.classList.remove("active");
+    });
+    
+    document
+        .querySelector('.debt-type-btn[data-type="receivable"]')
+        .classList.add("active");
+    
     debtPerson.value = "";
-
+    
     debtAmount.value = "";
-
+    
     debtDueDate.value = "";
-
+    
     debtNotes.value = "";
-
-}
-// ==============================
+    
+}// ==============================
 // Render Debts
 // ==============================
 
@@ -202,11 +260,89 @@ const editBtn = card.querySelector(".edit-btn");
 const payBtn = card.querySelector(".pay-btn");
 const deleteBtn = card.querySelector(".delete-btn");
 
+editBtn.onclick = function (e) {
+
+    e.stopPropagation();
+
+    editingDebt = debt;
+
+    editDebtPerson.value = debt.person;
+
+    editDebtAmount.value = debt.amount;
+
+    editDebtDueDate.value = debt.dueDate || "";
+
+    editDebtNotes.value = debt.notes || "";
+
+    editDebtTypeButtons.forEach(btn => {
+
+        btn.classList.remove("active");
+
+        if (btn.dataset.type === debt.type) {
+            btn.classList.add("active");
+        }
+
+    });
+
+    editDebtModal.classList.add("show");
+
+};
+
+payBtn.onclick = function (e) {
+
+    e.stopPropagation();
+
+    const payment = Number(
+        prompt(`Enter payment amount\nRemaining: ${debt.remaining} EGP`)
+    );
+
+    if (!payment || payment <= 0) {
+        return;
+    }
+
+    if (payment > debt.remaining) {
+        showToast("Payment is greater than remaining amount", "error");
+        return;
+    }
+
+    debt.paid += payment;
+
+    debt.remaining -= payment;
+
+    if (debt.remaining === 0) {
+        debt.status = "paid";
+    } else {
+        debt.status = "open";
+    }
+
+    localStorage.setItem(
+        "debts",
+        JSON.stringify(debts)
+    );
+
+    renderDebts();
+
+    showToast("Payment Added", "success");
+
+};
+
 deleteBtn.onclick = function (e) {
 
     e.stopPropagation();
 
-    alert("Delete .debt-actions button works");
+    const confirmed = confirm("Are you sure you want to delete this debt?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    debts = debts.filter(d => d.id !== debt.id);
+
+    localStorage.setItem("debts", JSON.stringify(debts));
+
+    renderDebts();
+
+    showToast("Debt Deleted", "success");
 
 };
 
@@ -234,7 +370,15 @@ card.onclick = function () {
 
 totalPayable.innerText =
     "EGP " + Math.round(payable).toLocaleString("en-US");
-    lucide.createIcons();
+
+const net = receivable - payable;
+
+netBalance.querySelector(".currency").innerText = "EGP";
+
+netBalance.querySelector(".amount").innerText =
+    Math.round(net).toLocaleString("en-US");
+
+lucide.createIcons();
 
 }
 renderDebts();
