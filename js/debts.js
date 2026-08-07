@@ -8,7 +8,7 @@
 // Elements
 // ==============================
 
-const backBtn = document.getElementById("backBtn");
+
 
 const debtModal = document.getElementById("debtModal");
 
@@ -41,17 +41,6 @@ const totalPayable = document.getElementById("totalPayable");
 
 
 let debts = JSON.parse(localStorage.getItem("debts")) || [];
-
-
-// ==============================
-// Navigation
-// ==============================
-
-backBtn.onclick = function () {
-
-    window.location.href = "../index.html";
-
-};
 
 
 // ==============================
@@ -226,9 +215,11 @@ card.addEventListener("touchend", function () {
 
     });
 
-    totalReceivable.innerText = "EGP " + receivable.toFixed(2);
+    totalReceivable.innerText =
+    "EGP " + Math.round(receivable).toLocaleString("en-US");
 
-    totalPayable.innerText = "EGP " + payable.toFixed(2);
+totalPayable.innerText =
+    "EGP " + Math.round(payable).toLocaleString("en-US");
 
 }
 renderDebts();

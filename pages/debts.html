@@ -11,34 +11,37 @@
 
 <body>
 
-<header class="page-header">
 
-    <button id="backBtn" class="back-btn">
-        ←
-    </button>
-
-    <h2>Debts</h2>
-
-</header>
-
-<div class="debts-summary">
-
-    <div class="summary-card receivable">
-
-        <span class="summary-title">Money Owed To Me</span>
-
-        <h2 id="totalReceivable">EGP 0</h2>
-
+<div class="balance-card">
+    
+    <h3 class="balance-title">Net Balance</h3>
+    
+    <h1 id="netBalance">EGP 0</h1>
+    
+    <div class="balance-grid">
+        
+        <div class="mini-card receivable">
+            
+            <span>↗</span>
+            
+            <h4>Receivable</h4>
+            
+            <h3 id="totalReceivable">EGP 0</h3>
+            
+        </div>
+        
+        <div class="mini-card payable">
+            
+            <span>↘</span>
+            
+            <h4>Payable</h4>
+            
+            <h3 id="totalPayable">EGP 0</h3>
+            
+        </div>
+        
     </div>
-
-    <div class="summary-card payable">
-
-        <span class="summary-title">Money I Owe</span>
-
-        <h2 id="totalPayable">EGP 0</h2>
-
-    </div>
-
+    
 </div>
 
 <div class="debts-header">

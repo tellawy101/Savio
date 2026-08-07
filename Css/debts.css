@@ -2,63 +2,6 @@
    Debts Page
 =========================== */
 
-.page-header{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:20px;
-}
-
-.back-btn{
-    width:45px;
-    height:45px;
-    border:none;
-    border-radius:12px;
-    background:#0F766E;
-    color:#fff;
-    font-size:22px;
-}
-
-.page-header h2{
-    font-size:24px;
-    color:#222;
-}
-
-.debts-summary{
-    display:flex;
-    gap:15px;
-    padding:0 20px;
-    margin-top:10px;
-}
-
-.summary-card{
-    flex:1;
-    background:#fff;
-    border-radius:18px;
-    padding:18px;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-}
-
-.summary-title{
-    display:block;
-    color:#777;
-    font-size:13px;
-    margin-bottom:10px;
-}
-
-.summary-card h2{
-    font-size:24px;
-    color:#0F766E;
-}
-
-.receivable{
-    border-left:5px solid #10B981;
-}
-
-.payable{
-    border-left:5px solid #EF4444;
-}
-
 .debts-header{
     display:flex;
     justify-content:space-between;
@@ -82,10 +25,6 @@
 .debts-list{
     padding:0 20px 120px;
 }
-/* ===========================
-   Debt Modal
-=========================== */
-
 .modal{
     position:fixed;
     inset:0;
@@ -217,4 +156,119 @@
 
 .debt-actions button:active{
     transform:scale(.95);
+}
+/* ===========================
+   Balance Card
+=========================== */
+
+.balance-card {
+    background: linear-gradient(180deg, #0f766e, #115e59);
+    color: #fff;
+    border-radius: 0 0 28px 28px;
+    padding: 25px;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: none;
+}
+
+.balance-title{
+
+    font-size:22px;
+
+    font-weight:500;
+
+    opacity:.9;
+
+    margin-bottom:15px;
+
+}
+
+#netBalance{
+
+    font-size:48px;
+
+    font-weight:700;
+
+    margin-bottom:30px;
+
+}
+
+.balance-grid {
+    display: flex;
+    
+    justify-content: center;
+    
+    align-items: center;
+    
+    gap: 15px;
+}
+
+.mini-card{
+    background: rgba(255,255,255,.15);
+
+    width:140px;
+    height:140px;
+
+    border-radius:20px;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:12px;
+
+    flex-shrink:0;
+}
+
+.mini-card span{
+    font-size:22px;
+    margin-bottom:6px;
+}
+
+.mini-card h4{
+    font-size:15px;
+    margin:0;
+}
+
+.mini-card h3{
+    margin-top:8px;
+    font-size:24px;
+    font-weight:700;
+}
+.debt-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:.25s;
+
+}
+
+.debt-card:active{
+
+    transform:scale(.98);
+
+}
+
+.debt-title{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    margin-bottom:12px;
+
 }
