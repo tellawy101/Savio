@@ -1,0 +1,635 @@
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    background: #ffffff;
+    color: #111111;
+}
+
+main {
+    padding: 20px;
+}
+
+.card {
+    background: #FAFAFA;
+    border: 1px solid #E5E7EB;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+}
+
+.card h2 {
+    margin: 0;
+    color: #0F766E;
+}
+
+.card p {
+    margin-top: 15px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 12px;
+    background: #0F766E;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+font-weight: 600;
+}
+
+button:hover {
+    opacity: .9;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 360px;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #0F766E;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.deleteBtn {
+    width: auto;
+    margin: 0;
+    padding: 8px 12px;
+    background: #dc3545;
+    border-radius: 8px;
+}
+.dark {
+    background: #0D1B1E;
+    color: #ffffff;
+}
+
+.dark header {
+    background: #0b5d56;
+}
+
+.dark .card {
+    background: #1F2937;
+    border: 1px solid #374151;
+    color: #FFFFFF;
+}
+
+.dark .card h2 {
+    color: #4fd1c5;
+}
+
+.dark #saveBtn,
+.dark #closeBtn,
+.dark #saveIncomeBtn,
+.dark #closeIncomeBtn,
+.dark #themeBtn{
+    background:#0b5d56;
+}
+
+.dark .modal-content {
+    background: #1e1e1e;
+    color: #ffffff;
+}
+
+.dark input,
+.dark select {
+    background: #2c2c2c;
+    color: white;
+    border: 1px solid #555;
+}
+
+.dark #expenseList li {
+    border-bottom: 1px solid #444;
+}
+#searchInput{
+    width:100%;
+    padding:12px;
+    margin:15px 0;
+    border:1px solid #ddd;
+    border-radius:12px;
+    box-sizing:border-box;
+    font-size:16px;
+}
+.dark #searchInput {
+    background: #2c2c2c;
+    color: white;
+    border: 1px solid #555;
+}
+/* 
+===================
+كود تنسيق الوضع الليلي
+===================
+*/
+#themeBtn {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.2);
+    color: #fff;
+    font-size: 18px;
+
+    cursor: pointer;
+    z-index: 10;
+}
+header{
+    position: relative;
+    background:#0F766E;
+    color:white;
+    padding:30px 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+header h1{
+    margin:0;
+    font-size:32px;
+}
+
+header p{
+    margin:5px 0 25px;
+    opacity:.8;
+}
+.balance-box{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.balance-box h3{
+    margin:0;
+    font-size:18px;
+    font-weight:normal;
+}
+
+.balance-box h2 {
+    margin: 10px 0 0;
+    font-size: 40px;
+    font-weight: 800;
+}
+.stats{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.stat{
+    flex:1;
+    background:rgba(255,255,255,.15);
+    border-radius:15px;
+    padding:10px;
+    text-align:center;
+    backdrop-filter:blur(10px);
+    min-width:0;
+}
+
+.stat span{
+    font-size:22px;
+}
+.stat h4 {
+    margin: 6px 0 4px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.stat p {
+    margin: 6px 0;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+#expenseList{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+#expenseList li {
+    margin-bottom: 12px;
+    
+    list-style: none;
+    
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+}
+.expense-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    background: #f8f8f8;
+    border-radius: 15px;
+    padding: 12px;
+    
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    
+    position: relative;
+    z-index: 2;
+    
+    transition: transform .3s ease;
+}
+
+.expense-icon-box{
+    width:44px;
+    height:44px;
+    flex-shrink:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:12px;
+    font-size:20px;
+}
+
+.expense-info{
+    flex:1;
+    min-width:0;
+
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.expense-desc{
+    font-weight:bold;
+    font-size:15px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.expense-category-text{
+    font-size:12px;
+    color:#777;
+}
+
+.expense-account{
+    font-size:11px;
+    color:#aaa;
+}
+
+.expense-right{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:2px;
+    flex-shrink:0;
+}
+
+.expense-amount{
+    font-weight:bold;
+    color:#0F766E;
+    font-size:16px;
+    white-space:nowrap;
+}
+
+.expense-meta{
+    font-size:12px;
+    color:#999;
+    white-space:nowrap;
+}
+
+.expense-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+}
+
+.expense-actions button{
+    width:auto;
+    padding:4px 6px;
+    margin:0;
+    background:none;
+    font-size:16px;
+}
+
+#expenseList strong{
+    color:#0F766E;
+    font-size:18px;
+}
+
+.editBtn,
+.deleteBtn{
+    border:none;
+    background:none;
+    font-size:22px;
+    cursor:pointer;
+    margin-left:8px;
+}
+
+.editBtn:hover{
+    transform:scale(1.2);
+}
+
+.deleteBtn:hover{
+    transform:scale(1.2);
+}
+.bottom-nav{
+    position:fixed;
+    overflow: visible;
+    bottom:15px;
+    left:15px;
+    right:15px;
+    height:70px;
+    background:rgba(255, 255, 255, .25);
+border:1px solid rgba(255, 255, 255, .2);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    border-radius:25px;
+    box-shadow:0 8px 30px rgba(0,0,0,.12);
+    z-index:1000;
+}
+.nav-item{
+    background:none;
+    border:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:auto;
+    margin:0;
+    padding:0;
+    color:#777;
+    font-size:14px;
+    cursor:pointer;
+    position:relative;
+}
+.nav-item span{
+    position:absolute;
+    top:20px;
+
+    font-size:12px;
+
+    opacity:0;
+    transform:translateY(8px);
+
+    transition:.25s;
+}
+
+.nav-item i{
+    font-size:24px;
+    transition:.25s;
+}
+
+.nav-item.active i{
+    transform:translateY(-8px);
+    color:#0F766E;
+}
+
+.nav-item.active span{
+    opacity:1;
+    transform:translateY(0);
+    color:#0F766E;
+}
+
+.nav-item.active{
+    color:#0F766E;
+    font-weight:bold;
+}
+main{
+    padding-bottom:90px;
+}
+.dark .bottom-nav{
+    background:rgba(30,30,30,.25);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.dark .nav-item{
+    color:#bbb;
+}
+
+.dark .nav-item.active{
+    color:#4fd1c5;
+}
+.fab-nav{
+    position:absolute;
+    top:-60px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:65px;
+    height:65px;
+
+    border-radius:50%;
+    background: rgba(255,255,255,.75);
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.9);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:30px;
+    font-weight:bold;
+
+    box-shadow: 0 8px 30px rgba(0,0,0,.12);
+    margin:0;
+    padding:0;
+    transition: .3s;
+    padding: 0;
+    backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+color: #0F766E;
+}
+
+.dark .fab-nav{
+    border:4px solid #121212;
+}
+.fab-menu{
+    position:absolute;
+    bottom:150px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+
+    display:flex;
+    flex-direction:row;
+    gap:12px;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:1002;
+}
+.fab-menu.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateX(-50%) translateY(0);
+}
+.fab-menu button{
+    width:90px;
+    height:90px;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    border:none;
+    border-radius:18px;
+
+    background:#0F766E;
+    color:#fff;
+
+    font-size:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+    overflow:hidden;
+    position:relative;
+}
+.fab-menu button i{
+    font-size:30px;
+    transition:.3s;
+}
+
+.fab-menu button span{
+    position:absolute;
+    bottom:12px;
+
+    opacity:1;
+    transform:none;
+
+    font-size:13px;
+}
+
+.dark .fab-menu button{
+    background:#0b5d56;
+}
+.fab-nav.open{
+    transform:translateX(-50%) rotate(45deg);
+}
+*{
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ==============================
+   ضبط مقاس ولون أيقونات Lucide
+============================== */
+svg.lucide {
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: -0.2em;
+    stroke: currentColor;
+}
+/* ==========================
+   Swipe Card
+========================== */
+
+.expense-swipe {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    margin-bottom: 12px;
+}
+
+.swipe-action {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    width: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity .2s ease;
+    pointer-events: auto;
+    z-index: 5;
+}
+
+.swipe-delete {
+    left: 0;
+    background: #E53935;
+}
+
+.swipe-edit {
+    right: 0;
+    background: #1976D2;
+}
+.dark .expense-main {
+    background: #1F2937;
+    border: 1px solid rgba(255, 255, 255, .03);
+    border-radius: 16px;
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, .18),
+        0 12px 28px rgba(0, 0, 0, .32);
+}
+
+.dark .expense-desc {
+    color: #fff;
+}
+
+.dark .expense-category-text {
+    color: #cbd5e1;
+}
+
+.dark .expense-account {
+    color: #94a3b8;
+}
+
+.dark .expense-meta {
+    color: #94a3b8;
+}
+
+.dark .expense-amount {
+    color: #4fd1c5;
+}

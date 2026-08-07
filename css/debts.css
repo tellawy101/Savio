@@ -1,0 +1,162 @@
+/* ===========================
+   Debts Page
+=========================== */
+
+.debts-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+}
+
+.debts-header h3{
+    font-size:20px;
+}
+
+.add-debt-btn{
+    border:none;
+    background:#0F766E;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:12px;
+    font-size:14px;
+}
+
+.debts-list{
+    padding:0 20px 120px;
+}
+
+/* ===========================
+   Balance Card
+=========================== */
+
+.balance-card {
+    background: linear-gradient(180deg, #0f766e, #115e59);
+    color: #fff;
+    
+    border-radius: 0 0 15px 15px;
+    
+    padding: 30px 20px;
+    
+    margin: 0;
+    
+    box-sizing: border-box;
+    
+    box-shadow: none;
+    text-align:center;
+    display: flex;
+flex-direction: column;
+justify-content: flex-start;
+transform: translateY(-10px);
+}
+
+.balance-box h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: normal;
+    opacity: .8;
+}
+
+#netBalance{
+    font-size:40px;
+    font-weight:700;
+    margin-top:5px;
+    margin-bottom:20px;
+}
+.balance-grid {
+    display: flex;
+    
+    justify-content: center;
+    
+    align-items: center;
+    
+    gap: 15px;
+}
+
+.debt-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 15px;
+    
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+    
+    transition: .25s;
+    cursor: pointer;
+}
+
+.debt-card:hover {
+    transform: translateY(-2px);
+}
+
+.dark .debt-card {
+    background: #1F2937;
+    border: 1px solid #374151;
+}
+.debt-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0F766E;
+    margin-bottom: 12px;
+}
+
+.dark .debt-title {
+    color: #4fd1c5;
+}
+.balance-grid .stat{
+    background: rgba(255,255,255,.15);
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    flex: 1;
+}
+
+.balance-grid .stat span{
+    font-size: 22px;
+}
+
+.balance-grid .stat h4{
+    margin: 6px 0 4px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.balance-grid .stat p{
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
+.debt-actions{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.debt-actions button{
+    flex:1;
+    width:auto;
+    margin:0;
+    padding:12px;
+    border-radius:12px;
+}
+
+.edit-btn{
+    background:#3B82F6;
+    color:#fff;
+}
+
+.pay-btn{
+    background:#10B981;
+    color:#fff;
+}
+
+.delete-btn{
+    background:#EF4444;
+    color:#fff;
+}
+
+.hidden{
+    display:none;
+}
