@@ -168,6 +168,8 @@ function renderDebts() {
         }
 
         const card = document.createElement("div");
+        
+        
 
         card.className = "debt-card";
 
@@ -182,37 +184,49 @@ function renderDebts() {
 
     <div>Status : ${debt.status}</div>
 
-    <div class="debt-actions hidden">
+   <div class="debt-actions hidden">
+    <button class="edit-btn">
+        <i data-lucide="pen"></i>
+    </button>
 
-        <button class="edit-btn">✏️</button>
+    <button class="pay-btn">
+        <i data-lucide="hand-coins"></i>
+    </button>
 
-        <button class="pay-btn">💵</button>
-
-        <button class="delete-btn">🗑</button>
-
-    </div>
+    <button class="delete-btn">
+        <i data-lucide="trash-2"></i>
+    </button>
+</div>
 `;
-const actions = card.querySelector(".debt-actions");
+const editBtn = card.querySelector(".edit-btn");
+const payBtn = card.querySelector(".pay-btn");
+const deleteBtn = card.querySelector(".delete-btn");
 
-let pressTimer;
+deleteBtn.onclick = function (e) {
 
-card.addEventListener("touchstart", function () {
+    e.stopPropagation();
 
-    pressTimer = setTimeout(function () {
+    alert("Delete .debt-actions button works");
 
-        actions.classList.remove("hidden");
+};
 
-    }, 600);
-
-});
-
-card.addEventListener("touchend", function () {
-
-    clearTimeout(pressTimer);
-
-});
         debtsList.appendChild(card);
+card.onclick = function () {
 
+    const actions = card.querySelector(".debt-actions");
+    const isHidden = actions.classList.contains("hidden");
+
+    // يقفل كل القوائم
+    document.querySelectorAll(".debt-actions").forEach(menu => {
+        menu.classList.add("hidden");
+    });
+
+    // لو كانت مقفولة يفتحها، ولو مفتوحة يسيبها مقفولة
+    if (isHidden) {
+        actions.classList.remove("hidden");
+    }
+
+};
     });
 
     totalReceivable.innerText =
@@ -220,6 +234,7 @@ card.addEventListener("touchend", function () {
 
 totalPayable.innerText =
     "EGP " + Math.round(payable).toLocaleString("en-US");
+    lucide.createIcons();
 
 }
 renderDebts();
