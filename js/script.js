@@ -322,20 +322,36 @@ fabTransfer.onclick = function () {
     window.location.href = "pages/transfer.html";
 };
 const settingsBtn = document.getElementById("settingsBtn");
-
-settingsBtn.onclick = function () {
-    window.location.href = "pages/settings.html";
-};
 const debtsBtn = document.getElementById("debtsBtn");
-
-debtsBtn.onclick = function () {
-    window.location.href = "pages/debts.html";
-};
-
 const accountsBtn = document.getElementById("accountsBtn");
 
+function navigateWithAnimation(button, url) {
+    
+    const nav = button.closest(".bottom-nav");
+    const current = nav.querySelector(".nav-item.active");
+    
+    if (current && current !== button) {
+        current.classList.remove("active");
+    }
+    
+    button.classList.add("active");
+    
+    setTimeout(() => {
+        window.location.href = url;
+    }, 400);
+    
+}
+
+settingsBtn.onclick = function () {
+    navigateWithAnimation(this, "pages/settings.html");
+};
+
+debtsBtn.onclick = function () {
+    navigateWithAnimation(this, "pages/debts.html");
+};
+
 accountsBtn.onclick = function () {
-    window.location.href = "pages/accounts.html";
+    navigateWithAnimation(this, "pages/accounts.html");
 };
 const searchBtn = document.getElementById("searchBtn");
 const expensesTitle = document.querySelector(".expenses-header h2");

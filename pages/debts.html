@@ -174,9 +174,35 @@
     </div>
 
 </div>
+<nav class="bottom-nav no-fab">
+
+    <button class="nav-item" onclick="window.location.href='../index.html'">
+        <i data-lucide="home"></i>
+        <span>Home</span>
+    </button>
+
+    <button class="nav-item active">
+        <i data-lucide="hand-coins"></i>
+        <span>Debts</span>
+    </button>
+
+    <button class="nav-item" onclick="window.location.href='accounts.html'">
+        <i data-lucide="wallet"></i>
+        <span>Accounts</span>
+    </button>
+
+    <button class="nav-item" onclick="window.location.href='settings.html'">
+        <i data-lucide="settings"></i>
+        <span>Settings</span>
+    </button>
+
+</nav>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
 <script src="../js/storage.js"></script>
 <script src="../js/ui.js"></script>
 <script src="../js/debts.js"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
