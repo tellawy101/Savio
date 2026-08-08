@@ -86,10 +86,12 @@ let debts = JSON.parse(localStorage.getItem("debts")) || [];
 
 addDebtBtn.onclick = function () {
 
+    debtDueDate.value =
+        new Date().toISOString().split("T")[0];
+
     debtModal.classList.add("show");
 
 };
-
 cancelDebtBtn.onclick = function () {
 
     debtModal.classList.remove("show");
@@ -115,6 +117,9 @@ saveDebtBtn.onclick = function () {
 
     const person = debtPerson.value.trim();
     const amount = Number(debtAmount.value);
+
+const dueDate = debtDueDate.value || new Date().toISOString().split("T")[0];
+
 
     // التحقق من البيانات
     if (person === "") {
@@ -144,7 +149,7 @@ saveDebtBtn.onclick = function () {
 
         remaining: amount,
 
-        dueDate: debtDueDate.value,
+        dueDate: dueDate,
 
         notes: debtNotes.value.trim(),
 
@@ -213,8 +218,8 @@ function renderDebts() {
 
     let payable = 0;
 
-    debts.forEach(debt => {
-
+    [...debts].reverse().forEach(debt => {
+        
         if (debt.type === "receivable") {
 
             receivable += debt.remaining;
@@ -231,30 +236,71 @@ function renderDebts() {
 
         card.className = "debt-card";
 
-        card.innerHTML = `
-    <div class="debt-title">${debt.person}</div>
+       card.innerHTML = `
+    <div class="debt-card-header">
 
-    <div>Original : ${debt.amount} EGP</div>
+        <h3 class="debt-person-name">
+            ${debt.person}
+        </h3>
 
-    <div>Paid : ${debt.paid} EGP</div>
+        <span class="debt-badge ${
+            debt.type === "receivable"
+                ? "receivable"
+                : "payable"
+        }">
+            ${
+                debt.type === "receivable"
+                    ? "Owed to You"
+                    : "You Owe"
+            }
+        </span>
 
-    <div>Remaining : ${debt.remaining} EGP</div>
+    </div>
 
-    <div>Status : ${debt.status}</div>
 
-   <div class="debt-actions hidden">
-    <button class="edit-btn">
-        <i data-lucide="pen"></i>
-    </button>
+<div class="debt-card-main-row">
 
-    <button class="pay-btn">
-        <i data-lucide="hand-coins"></i>
-    </button>
+    <div class="debt-card-amount">
 
-    <button class="delete-btn">
-        <i data-lucide="trash-2"></i>
-    </button>
+        ${
+            debt.type === "receivable"
+                ? "+"
+                : "-"
+        }
+
+        EGP ${Number(debt.remaining).toLocaleString("en-US")}
+
+    </div>
+
+
+    <div class="debt-card-details">
+
+        ${
+            debt.dueDate
+                ? debt.dueDate
+                : "No due date"
+        }
+
+    </div>
+
 </div>
+
+
+    <div class="debt-actions hidden">
+
+        <button class="edit-btn">
+            <i data-lucide="pen"></i>
+        </button>
+
+        <button class="pay-btn">
+            <i data-lucide="hand-coins"></i>
+        </button>
+
+        <button class="delete-btn">
+            <i data-lucide="trash-2"></i>
+        </button>
+
+    </div>
 `;
 const editBtn = card.querySelector(".edit-btn");
 const payBtn = card.querySelector(".pay-btn");

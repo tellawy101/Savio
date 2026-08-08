@@ -18,7 +18,6 @@
   <link rel="stylesheet" href="css/expense.css">
 <link rel="stylesheet" href="css/settings.css">
 <link rel="stylesheet" href="css/statistics.css">
-<link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
@@ -111,17 +110,24 @@
 
     </div>
     </div>
-     <div class="card">
-    <h2>Expenses</h2>
+     <div class="expenses-section">
 
-    <input
+    <div class="expenses-header">
+        <h2>Expenses</h2>
+
+        <button id="searchBtn" class="search-btn">
+            <i data-lucide="search"></i>
+        </button>
+         <input
         type="text"
         id="searchInput"
         placeholder="Search by category...">
 
-    <ul id="expenseList"></ul>
-</div>
+    </div>
 
+    <ul id="expenseList"></ul>
+
+</div>
 </main>
 <nav class="bottom-nav">
 

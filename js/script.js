@@ -77,48 +77,69 @@ function renderExpenses() {
         
         const catStyle = getCategoryStyle(expense.category);
         
-        li.innerHTML = `
-<div class="expense-swipe">
+        // إزالة الإيموجي من النص وإبقاء الاسم فقط
+function cleanLabel(text) {
+    return String(text || "")
+        .replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\s]+/u, "")
+        .trim();
+}
 
-    <div class="swipe-action swipe-delete">
-        <i data-lucide="trash-2"></i>
-    </div>
+const cleanCategory = cleanLabel(expense.category);
+const cleanAccount = cleanLabel(expense.account);
 
-    <div class="swipe-action swipe-edit">
-        <i data-lucide="pencil"></i>
-    </div>
+li.innerHTML = `
+    <div class="expense-swipe">
 
-    <div class="expense-main">
-
-    <div class="expense-icon-box" style="background:${catStyle.color}33;">
-        <span>${catStyle.icon}</span>
-    </div>
-
-    <div class="expense-info">
-        <div class="expense-desc">
-            ${expense.description || expense.category}
+        <div class="swipe-action swipe-delete">
+            <i data-lucide="trash-2"></i>
         </div>
 
-        <div class="expense-account">
-            ${expense.account || ""}
+        <div class="swipe-action swipe-edit">
+            <i data-lucide="pencil"></i>
         </div>
+
+        <div class="expense-main">
+
+            <div class="expense-icon-box"
+                 style="background:${catStyle.color}33;">
+                <span>${catStyle.icon}</span>
+            </div>
+
+            <div class="expense-info">
+
+                <div class="expense-desc">
+                    ${expense.description || ""}
+                </div>
+
+                <div class="expense-category">
+                    ${cleanCategory}
+                </div>
+
+                <div class="expense-account">
+                    ${cleanAccount}
+                </div>
+
+            </div>
+
+            <div class="expense-right">
+
+                <div class="expense-amount">
+                    EGP ${Number(expense.amount).toLocaleString("en-US")}
+                </div>
+
+                <div class="expense-meta">
+                    ${expense.date}
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-
-    <div class="expense-right">
-        <div class="expense-amount">
-            EGP ${expense.amount}
-        </div>
-
-        <div class="expense-meta">
-            ${expense.date}
-        </div>
-    </div>
-
-</div>
-</div>
 `;
-        expenseList.appendChild(li);
-        if (window.lucide) {
+expenseList.appendChild(li);
+
+if (window.lucide) {
     lucide.createIcons();
 }
         let startX = 0;
@@ -316,4 +337,47 @@ const accountsBtn = document.getElementById("accountsBtn");
 accountsBtn.onclick = function () {
     window.location.href = "pages/accounts.html";
 };
+const searchBtn = document.getElementById("searchBtn");
+const expensesTitle = document.querySelector(".expenses-header h2");
 
+searchBtn.addEventListener("click", function() {
+    
+    expensesTitle.style.display = "none";
+    searchBtn.style.display = "none";
+    
+    searchInput.style.display = "block";
+    
+    document.body.style.paddingBottom = "300px"; // مساحة إضافية عشان الاسكرول يشتغل
+    
+    searchInput.focus();
+    
+    setTimeout(() => {
+        searchInput.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }, 400);
+    
+});
+document.addEventListener("click", function(e) {
+    
+    // لو الخانة مش ظاهرة، متعملش حاجة
+    if (searchInput.style.display !== "block") return;
+    
+    // لو اللي اتدوس عليه مش الخانة نفسها ولا زرار البحث
+    if (!searchInput.contains(e.target) && e.target !== searchBtn) {
+        
+        searchInput.style.display = "none";
+        searchInput.value = "";
+        
+        expensesTitle.style.display = "block";
+        searchBtn.style.display = "flex";
+        
+        document.body.style.paddingBottom = "";
+        
+        if (typeof renderExpenses === "function") {
+            renderExpenses();
+        }
+    }
+    
+});
