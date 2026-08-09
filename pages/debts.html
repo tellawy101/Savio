@@ -181,20 +181,20 @@
         <span>Home</span>
     </button>
 
-    <button class="nav-item active">
+    <button id="settingsNavBtn" class="nav-item">
         <i data-lucide="hand-coins"></i>
         <span>Debts</span>
     </button>
 
-    <button class="nav-item" onclick="window.location.href='accounts.html'">
-        <i data-lucide="wallet"></i>
-        <span>Accounts</span>
-    </button>
+   <button id="accountsBtn" class="nav-item">
+    <i data-lucide="wallet"></i>
+    <span>Accounts</span>
+</button>
 
-    <button class="nav-item" onclick="window.location.href='settings.html'">
-        <i data-lucide="settings"></i>
-        <span>Settings</span>
-    </button>
+    <button id="settingsBtn" class="nav-item">
+    <i data-lucide="settings"></i>
+    <span>Settings</span>
+</button>
 
 </nav>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -207,6 +207,31 @@
 document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
 });
+</script>
+<script>
+function navigateWithAnimation(button, url) {
+
+    const nav = button.closest(".bottom-nav");
+    const current = nav.querySelector(".nav-item.active");
+
+    if (current && current !== button) {
+        current.classList.remove("active");
+    }
+
+    button.classList.add("active");
+
+    setTimeout(() => {
+        window.location.href = url;
+    }, 400);
+}
+
+document.getElementById("accountsBtn").onclick = function () {
+    navigateWithAnimation(this, "accounts.html");
+};
+
+document.getElementById("settingsBtn").onclick = function () {
+    navigateWithAnimation(this, "settings.html");
+};
 </script>
 </body>
 </html>

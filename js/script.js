@@ -326,22 +326,18 @@ const debtsBtn = document.getElementById("debtsBtn");
 const accountsBtn = document.getElementById("accountsBtn");
 
 function navigateWithAnimation(button, url) {
-    
+
     const nav = button.closest(".bottom-nav");
     const current = nav.querySelector(".nav-item.active");
-    
+
     if (current && current !== button) {
         current.classList.remove("active");
     }
-    
-    button.classList.add("active");
-    
-    setTimeout(() => {
-        window.location.href = url;
-    }, 400);
-    
-}
 
+    button.classList.add("active");
+
+    window.location.href = url;
+}
 settingsBtn.onclick = function () {
     navigateWithAnimation(this, "pages/settings.html");
 };
