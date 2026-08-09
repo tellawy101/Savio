@@ -1,8 +1,3 @@
-// ==============================
-// accountsPage.js
-// صفحة عرض كل الحسابات ورصيدها بالتفصيل
-// ==============================
-
 applyStoredTheme();
 
 const backBtn = document.getElementById("backBtn");
@@ -11,15 +6,22 @@ backBtn.onclick = function() {
   window.location.href = "../index.html";
 };
 
-// بترجع مجموع الدخل والمصروف المسجلين على حساب معيّن
+const openAddAccountBtn = document.getElementById("openAddAccountBtn");
+
+if (openAddAccountBtn) {
+  openAddAccountBtn.onclick = function() {
+    document.getElementById("addAccountModal").classList.add("show");
+  };
+}
+
+window.onFormFieldChanged = renderAccountsPage;
+
 function getAccountActivity(accountKey, transactions) {
-  
   let income = 0;
   let expense = 0;
   
   transactions.forEach(t => {
     if (t.account !== accountKey) return;
-    
     if (t.type === "income") {
       income += Number(t.amount) || 0;
     } else if (t.type === "expense") {
@@ -31,31 +33,23 @@ function getAccountActivity(accountKey, transactions) {
 }
 
 function renderAccountsPage() {
-  
   const container = document.getElementById("accountsContainer");
-  
   if (!container) return;
   
   const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
   const transactions = loadTransactions();
   
-  // الرصيد الحالي لكل حساب = الرصيد الابتدائي + الدخل - المصروف المسجل عليه
   const accountsWithBalance = accounts.map(account => {
     const key = `${account.icon} ${account.name}`;
     const { income, expense } = getAccountActivity(key, transactions);
     const currentBalance = Number(account.balance) + income - expense;
-    
     return { ...account, income, expense, currentBalance };
   });
   
-  const totalBalance = accountsWithBalance.reduce(
-    (sum, a) => sum + a.currentBalance,
-    0
-  );
+  const totalBalance = accountsWithBalance.reduce((sum, a) => sum + a.currentBalance, 0);
   
   container.innerHTML = "";
   
-  // بطاقة الرصيد الإجمالي
   const summary = document.createElement("div");
   summary.className = "balance-card";
   summary.innerHTML = `
@@ -67,28 +61,22 @@ function renderAccountsPage() {
     `;
   container.appendChild(summary);
   
-  // قائمة الحسابات
   const list = document.createElement("div");
   list.className = "accounts-list";
   
   if (accountsWithBalance.length === 0) {
-    
     list.innerHTML = `
             <p class="accounts-empty">
-                لسه معندكش حسابات. ضيف حساب من صفحة الدخل أو المصروف.
+                لسه معندكش حسابات. دوس على + فوق عشان تضيف أول حساب.
             </p>
         `;
-    
   } else {
-    
     accountsWithBalance.forEach(account => {
-      
       const item = document.createElement("div");
       item.className = "account-item account-detail-item";
       
       item.innerHTML = `
                 <div class="account-item-icon">${account.icon}</div>
-
                 <div class="account-info">
                     <div class="account-name">${account.name}</div>
                     <div class="account-activity">
@@ -96,11 +84,28 @@ function renderAccountsPage() {
                         <span class="activity-expense">↘ ${Math.round(account.expense).toLocaleString("en-US")}</span>
                     </div>
                 </div>
-
                 <div class="account-balance-detail">
                     EGP ${Math.round(account.currentBalance).toLocaleString("en-US")}
                 </div>
             `;
+      
+      let pressTimer;
+      item.addEventListener("touchstart", function() {
+        pressTimer = setTimeout(function() {
+          selectedAccount = account.name;
+          document.getElementById("accountMenu").classList.add("show");
+        }, 700);
+      });
+      item.addEventListener("touchend", function() {
+        clearTimeout(pressTimer);
+      });
+      item.addEventListener("touchmove", function() {
+        clearTimeout(pressTimer);
+      });
+      item.onclick = function() {
+        selectedAccount = account.name;
+        document.getElementById("accountMenu").classList.add("show");
+      };
       
       list.appendChild(item);
     });

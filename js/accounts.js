@@ -226,8 +226,11 @@ if (deleteAccountBtn) {
         renderAccounts();
         
         accountMenu.classList.remove("show");
+        notifyFormFieldChanged();
     };
 }
+
+
 
 // ==============================
 // إغلاق قائمة تعديل/حذف الحساب عند الضغط برّه
