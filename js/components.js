@@ -116,22 +116,54 @@ function renderSharedModals() {
                 id="newAccountName"
                 class="form-input"
                 placeholder="Account name">
-            <select id="newAccountIcon" class="form-input">
-                <option value="💳">💳 Bank Card</option>
-                <option value="💵">💵 Cash</option>
-                <option value="👛">👛 Wallet</option>
-                <option value="🏦">🏦 Bank</option>
-                <option value="💰">💰 Savings</option>
-                <option value="📈">📈 Investment</option>
-            </select>
+                
+               <input
+    type="text"
+    id="newAccountDescription"
+    class="form-input"
+    placeholder="Description (optional)"> 
+                
+<div class="icon-dropdown" id="iconDropdown">
+    <button type="button" class="icon-dropdown-trigger" id="iconDropdownTrigger">
+        <span id="selectedIconPreviewWrap"><i data-lucide="wallet" id="selectedIconPreview"></i></span>
+        <span id="selectedIconLabel">اختر أيقونة</span>
+        <i data-lucide="chevron-right"></i>
+    </button>
+    <div class="icon-dropdown-list" id="iconDropdownList">
+        <div class="icon-option" data-icon="wallet" data-label="Wallet">
+            <i data-lucide="wallet"></i><span>Wallet</span>
+        </div>
+        <div class="icon-option" data-icon="credit-card" data-label="Bank Card">
+            <i data-lucide="credit-card"></i><span>Bank Card</span>
+        </div>
+        <div class="icon-option" data-icon="banknote" data-label="Cash">
+            <i data-lucide="banknote"></i><span>Cash</span>
+        </div>
+        <div class="icon-option" data-icon="landmark" data-label="Bank">
+            <i data-lucide="landmark"></i><span>Bank</span>
+        </div>
+        <div class="icon-option" data-icon="piggy-bank" data-label="Savings">
+            <i data-lucide="piggy-bank"></i><span>Savings</span>
+        </div>
+        <div class="icon-option" data-icon="trending-up" data-label="Investment">
+            <i data-lucide="trending-up"></i><span>Investment</span>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="newAccountIcon" value="wallet">
             <input
                 type="tel"
                 id="newAccountBalance"
                 class="form-input"
                 placeholder="Initial Balance">
-            <button id="saveAccountBtn" class="account-save-btn">
-                Save
-            </button>
+            <div class="modal-actions">
+    <button id="cancelAddAccountBtn" class="account-cancel-btn">
+        Cancel
+    </button>
+    <button id="saveAccountBtn" class="account-save-btn">
+        Save
+    </button>
+</div>
         </div>
     </div>
 

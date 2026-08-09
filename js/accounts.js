@@ -131,13 +131,18 @@ if (saveAccountBtn) {
     saveAccountBtn.onclick = function() {
         
         let name = document.getElementById("newAccountName").value.trim();
-        let icon = document.getElementById("newAccountIcon").value;
-        let balance = document.getElementById("newAccountBalance").value.trim();
-        
-        if (name === "" || balance === "") {
-            alert("Please fill all fields");
-            return;
-        }
+let description = document.getElementById("newAccountDescription").value.trim();
+let icon = document.getElementById("newAccountIcon").value;
+let balance = document.getElementById("newAccountBalance").value.trim();
+
+if (balance === "") {
+    balance = "0";
+}
+
+if (name === "") {
+    alert("Please enter account name");
+    return;
+}
         
         let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
         
@@ -155,23 +160,25 @@ if (saveAccountBtn) {
             let index = accounts.findIndex(a => a.name === editingAccount.name);
             
             accounts[index] = {
-                name,
-                icon,
-                balance: Number(balance.replace(/,/g, ""))
-            };
-            
+    name,
+    description,
+    icon,
+    balance: Number(balance.replace(/,/g, ""))
+};
+
             editingAccount = null;
             
         } else {
             
             accounts.push({
-                name,
-                icon,
-                balance: Number(balance.replace(/,/g, ""))
-            });
-        }
-        
-        localStorage.setItem("accounts", JSON.stringify(accounts));
+    name,
+    description,
+    icon,
+    balance: Number(balance.replace(/,/g, ""))
+});
+}
+
+localStorage.setItem("accounts", JSON.stringify(accounts));
         
         const field = getAccountFieldEl();
         if (field) field.textContent = `${icon} ${name}`;
@@ -183,8 +190,12 @@ if (saveAccountBtn) {
         addAccountModal.classList.remove("show");
         
         document.getElementById("newAccountName").value = "";
-        document.getElementById("newAccountIcon").selectedIndex = 0;
-        document.getElementById("newAccountBalance").value = "";
+document.getElementById("newAccountDescription").value = "";
+document.getElementById("newAccountBalance").value = "";
+selectedIconPreview.setAttribute("data-lucide", "wallet");
+selectedIconLabel.textContent = "اختر أيقونة";
+newAccountIconInput.value = "wallet";
+if (window.lucide) lucide.createIcons();
         
         notifyFormFieldChanged();
     };
@@ -200,7 +211,12 @@ if (editAccountBtn) {
         if (!editingAccount) return;
         
         document.getElementById("newAccountName").value = editingAccount.name;
-        document.getElementById("newAccountIcon").value = editingAccount.icon;
+document.getElementById("newAccountDescription").value = editingAccount.description || "";
+document.getElementById("selectedIconPreviewWrap").innerHTML =
+    `<i data-lucide="${editingAccount.icon}" id="selectedIconPreview"></i>`;
+selectedIconLabel.textContent = editingAccount.icon;
+newAccountIconInput.value = editingAccount.icon;
+if (window.lucide) lucide.createIcons();
         document.getElementById("newAccountBalance").value =
             Number(editingAccount.balance).toLocaleString("en-US");
         
@@ -246,3 +262,58 @@ if (accountMenu) {
 
 // فواصل الآلاف تلقائيًا في خانة "رصيد الحساب الجديد" (من formHelpers.js)
 attachThousandsFormatter(document.getElementById("newAccountBalance"));
+
+// ==============================
+// Icon Dropdown
+// ==============================
+
+const iconDropdownTrigger = document.getElementById("iconDropdownTrigger");
+const iconDropdownList = document.getElementById("iconDropdownList");
+const selectedIconPreview = document.getElementById("selectedIconPreview");
+const selectedIconLabel = document.getElementById("selectedIconLabel");
+const newAccountIconInput = document.getElementById("newAccountIcon");
+
+if (iconDropdownTrigger) {
+    iconDropdownTrigger.onclick = function(e) {
+        e.stopPropagation();
+        iconDropdownList.classList.toggle("show");
+    };
+}
+
+document.querySelectorAll(".icon-option").forEach(option => {
+    option.onclick = function() {
+        const icon = this.dataset.icon;
+        const label = this.dataset.label;
+
+        newAccountIconInput.value = icon;
+document.getElementById("selectedIconPreviewWrap").innerHTML =
+    `<i data-lucide="${icon}" id="selectedIconPreview"></i>`;
+selectedIconLabel.textContent = label;
+
+        iconDropdownList.classList.remove("show");
+
+        if (window.lucide) lucide.createIcons();
+    };
+});
+
+document.addEventListener("click", function(e) {
+    if (iconDropdownList && !iconDropdownList.contains(e.target) && e.target !== iconDropdownTrigger) {
+        iconDropdownList.classList.remove("show");
+    }
+});
+const cancelAddAccountBtn = document.getElementById("cancelAddAccountBtn");
+
+if (cancelAddAccountBtn) {
+    cancelAddAccountBtn.onclick = function() {
+        addAccountModal.classList.remove("show");
+        editingAccount = null;
+
+        document.getElementById("newAccountName").value = "";
+        document.getElementById("newAccountDescription").value = "";
+        document.getElementById("newAccountBalance").value = "";
+        selectedIconPreview.setAttribute("data-lucide", "wallet");
+        selectedIconLabel.textContent = "اختر أيقونة";
+        newAccountIconInput.value = "wallet";
+        if (window.lucide) lucide.createIcons();
+    };
+}

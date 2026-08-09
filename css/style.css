@@ -67,7 +67,8 @@ button:hover {
     background: rgba(0, 0, 0, 0);
 
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding-top: 6vh;
 
     z-index: 999;
 
@@ -91,6 +92,8 @@ button:hover {
     max-width: 360px;
     border-radius: 15px;
     padding: 20px;
+    max-height: 65vh;
+    overflow-y: auto;
 }
 
 .modal-content h2 {
