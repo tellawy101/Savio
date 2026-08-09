@@ -129,49 +129,12 @@
 
 </div>
 </main>
-<nav class="bottom-nav">
-
-   <button id="settingsNavBtn" class="nav-item">
-        <i data-lucide="home"></i>
-        <span>Home</span>
-    </button>
-<button id="debtsBtn" class="nav-item">
-    <i data-lucide="hand-coins"></i>
-    <span>Debts</span>
-</button>
-   <button id="addMenuBtn" class="fab-nav">
-    <i data-lucide="plus"></i>
-</button>
-<div id="fabMenu" class="fab-menu">
-
-    <button id="fabIncome">
-        <i data-lucide="trending-up"></i>
-        <span>Income</span>
-    </button>
-
-    <button id="fabExpense">
-        <i data-lucide="trending-down"></i>
-        <span>Expense</span>
-    </button>
-
-    <button id="fabTransfer">
-        <i data-lucide="repeat"></i>
-        <span>Transfer</span>
-    </button>
-
-</div>
-
-<button id="accountsBtn" class="nav-item">
-    <i data-lucide="wallet"></i>
-    <span>Accounts</span>
-</button>
-
-    <button id="settingsBtn" class="nav-item">
-    <i data-lucide="settings"></i>
-    <span>Settings</span>
-</button>
-
-</nav>
+<div id="nav-placeholder"></div>
+<script src="js/components.js"></script>
+<script>
+    document.getElementById("nav-placeholder").innerHTML = renderBottomNav('home');
+    setupBottomNav('');
+</script>
 <script src="js/storage.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/theme.js"></script>
@@ -179,11 +142,8 @@
 <script src="js/statistics.js"></script>
 <script src="js/script.js"></script>
 <script>
-    // تفعيل رسم أيقونات Lucide بعد تحميل الصفحة
     document.addEventListener("DOMContentLoaded", function () {
-        if (window.lucide) {
-            lucide.createIcons();
-        }
+        initIcons();
     });
 </script>
 </body>

@@ -25,65 +25,19 @@
 </header>
 
 
-<nav class="bottom-nav">
-
-    <button class="nav-item" onclick="window.location.href='../index.html'">
-        <i data-lucide="home"></i>
-        <span>Home</span>
-    </button>
-
-    <button id="debtsBtn" class="nav-item">
-    <i data-lucide="hand-coins"></i>
-    <span>Debts</span>
-</button>
-
-    <button id="accountsBtn" class="nav-item">
-    <i data-lucide="wallet"></i>
-    <span>Accounts</span>
-</button>
-
-    <button id="settingsNavBtn" class="nav-item">
-        <i data-lucide="settings"></i>
-        <span>Settings</span>
-    </button>
-
-</nav>
+<div id="nav-placeholder"></div>
+<script src="../js/components.js"></script>
+<script>
+    document.getElementById("nav-placeholder").innerHTML = renderBottomNav('settings');
+    setupBottomNav('../');
+</script>
 
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        lucide.createIcons();
-        
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                document.getElementById("settingsNavBtn").classList.add("active");
-            });
-        });
+    document.addEventListener("DOMContentLoaded", function () {
+        initIcons();
     });
-</script>
-<script>
-function navigateWithAnimation(button, url) {
-
-    const nav = button.closest(".bottom-nav");
-    const current = nav.querySelector(".nav-item.active");
-
-    if (current && current !== button) {
-        current.classList.remove("active");
-    }
-
-    button.classList.add("active");
-
-    window.location.href = url;
-}
-document.getElementById("debtsBtn").onclick = function () {
-    navigateWithAnimation(this, "debts.html");
-};
-
-document.getElementById("accountsBtn").onclick = function () {
-    navigateWithAnimation(this, "accounts.html");
-};
 </script>
 </body>
 </html>

@@ -1,0 +1,185 @@
+// ============================
+// components.js
+// مكان موحد للأجزاء المتكررة بين الصفحات (DRY)
+// ============================
+
+// 1) بناء الـ Bottom Navigation حسب الصفحة الحالية
+function renderBottomNav(activePage) {
+    // activePage تكون: 'home' | 'debts' | 'accounts' | 'settings'
+
+    const isHome = activePage === 'home';
+
+    return `
+    <nav class="bottom-nav ${isHome ? '' : 'no-fab'}">
+        <button class="nav-item ${activePage === 'home' ? 'active' : ''}" data-page="home">
+            <i data-lucide="home"></i>
+            <span>Home</span>
+        </button>
+
+        <button class="nav-item ${activePage === 'debts' ? 'active' : ''}" data-page="debts">
+            <i data-lucide="hand-coins"></i>
+            <span>Debts</span>
+        </button>
+
+        ${isHome ? `
+        <button id="addMenuBtn" class="fab-nav">
+            <i data-lucide="plus"></i>
+        </button>
+        <div id="fabMenu" class="fab-menu">
+            <button id="fabIncome">
+                <i data-lucide="trending-up"></i>
+                <span>Income</span>
+            </button>
+            <button id="fabExpense">
+                <i data-lucide="trending-down"></i>
+                <span>Expense</span>
+            </button>
+            <button id="fabTransfer">
+                <i data-lucide="repeat"></i>
+                <span>Transfer</span>
+            </button>
+        </div>
+        ` : ''}
+
+        <button class="nav-item ${activePage === 'accounts' ? 'active' : ''}" data-page="accounts">
+            <i data-lucide="wallet"></i>
+            <span>Accounts</span>
+        </button>
+
+        <button class="nav-item ${activePage === 'settings' ? 'active' : ''}" data-page="settings">
+            <i data-lucide="settings"></i>
+            <span>Settings</span>
+        </button>
+    </nav>
+    `;
+}
+
+// 2) دالة الانتقال بين الصفحات مع أنيميشن (موحدة بدل ما كانت مكررة)
+function navigateWithAnimation(button, url) {
+    const nav = button.closest(".bottom-nav");
+    const current = nav ? nav.querySelector(".nav-item.active") : null;
+
+    if (current && current !== button) {
+        current.classList.remove("active");
+    }
+
+    button.classList.add("active");
+
+    setTimeout(() => {
+        window.location.href = url;
+    }, 400);
+}
+
+// 3) تفعيل أيقونات lucide (موحدة)
+function initIcons() {
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+}
+
+// 4) تجهيز الـ nav بعد إضافتها للصفحة (أيقونات + روابط الأزرار)
+function setupBottomNav(basePath = '') {
+    initIcons();
+
+    const routes = {
+        home: basePath + 'index.html',
+        debts: basePath + 'pages/debts.html',
+        accounts: basePath + 'pages/accounts.html',
+        settings: basePath + 'pages/settings.html'
+    };
+
+    document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const page = this.dataset.page;
+            navigateWithAnimation(this, routes[page]);
+        });
+    });
+}
+// 5) المودالز المشتركة بين صفحتي Expense و Income (Accounts + Categories)
+function renderSharedModals() {
+    return `
+    <div id="accountModal" class="modal">
+        <div class="modal-content">
+            <h2>Accounts</h2>
+            <div id="accountsList"></div>
+            <button id="addAccountBtn">
+                + Add Account
+            </button>
+        </div>
+    </div>
+
+    <div id="addAccountModal" class="modal">
+        <div class="modal-content">
+            <h2>New Account</h2>
+            <input
+                type="text"
+                id="newAccountName"
+                class="form-input"
+                placeholder="Account name">
+            <select id="newAccountIcon" class="form-input">
+                <option value="💳">💳 Bank Card</option>
+                <option value="💵">💵 Cash</option>
+                <option value="👛">👛 Wallet</option>
+                <option value="🏦">🏦 Bank</option>
+                <option value="💰">💰 Savings</option>
+                <option value="📈">📈 Investment</option>
+            </select>
+            <input
+                type="tel"
+                id="newAccountBalance"
+                class="form-input"
+                placeholder="Initial Balance">
+            <button id="saveAccountBtn" class="account-save-btn">
+                Save
+            </button>
+        </div>
+    </div>
+
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <h2>Categories</h2>
+            <div id="categoriesList"></div>
+            <button id="addCategoryBtn">
+                + Add Category
+            </button>
+        </div>
+    </div>
+
+    <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <h2>New Category</h2>
+            <input
+                type="text"
+                id="newCategoryName"
+                class="form-input"
+                placeholder="Category name">
+            <input
+                type="text"
+                id="newCategoryIcon"
+                class="form-input"
+                placeholder="Category Icon (😀)">
+            <button id="saveCategoryBtn" class="account-save-btn">
+                Save
+            </button>
+        </div>
+    </div>
+
+    <div id="accountMenu" class="modal">
+        <div class="modal-content">
+            <button id="editAccountBtn">✏️ Edit</button>
+            <button id="deleteAccountBtn">🗑 Delete</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">
+        Account name already exists
+    </div>
+
+    <div id="categoryMenu" class="modal">
+        <div class="modal-content">
+            <button id="editCategoryBtn">✏️ Edit</button>
+            <button id="deleteCategoryBtn">🗑 Delete</button>
+        </div>
+    </div>
+    `;
+}

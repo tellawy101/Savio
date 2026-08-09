@@ -321,34 +321,7 @@ fabIncome.onclick = function () {
 fabTransfer.onclick = function () {
     window.location.href = "pages/transfer.html";
 };
-const settingsBtn = document.getElementById("settingsBtn");
-const debtsBtn = document.getElementById("debtsBtn");
-const accountsBtn = document.getElementById("accountsBtn");
 
-function navigateWithAnimation(button, url) {
-
-    const nav = button.closest(".bottom-nav");
-    const current = nav.querySelector(".nav-item.active");
-
-    if (current && current !== button) {
-        current.classList.remove("active");
-    }
-
-    button.classList.add("active");
-
-    window.location.href = url;
-}
-settingsBtn.onclick = function () {
-    navigateWithAnimation(this, "pages/settings.html");
-};
-
-debtsBtn.onclick = function () {
-    navigateWithAnimation(this, "pages/debts.html");
-};
-
-accountsBtn.onclick = function () {
-    navigateWithAnimation(this, "pages/accounts.html");
-};
 const searchBtn = document.getElementById("searchBtn");
 const expensesTitle = document.querySelector(".expenses-header h2");
 
