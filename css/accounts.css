@@ -1,0 +1,157 @@
+/* ===========================
+   Accounts Page
+=========================== */
+
+body {
+    background-color: #F4F5F7;
+}
+
+/* ==============================
+   الهيدر (مشترك بصريًا مع باقي صفحات التفاصيل)
+============================== */
+
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 16px 20px;
+
+    background: #fff;
+}
+
+.page-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.back-btn {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background: #F3F4F6;
+
+    font-size: 18px;
+    color: #111827;
+
+    cursor: pointer;
+}
+
+/* ==============================
+   بطاقة الرصيد الإجمالي (بنفس روح debts.css)
+============================== */
+
+.balance-card {
+    background: linear-gradient(180deg, #0f766e, #115e59);
+    color: #fff;
+
+    border-radius: 0 0 15px 15px;
+
+    padding: 30px 20px;
+
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.balance-card h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: normal;
+    opacity: .8;
+}
+
+.balance-card h1 {
+    margin: 5px 0 0;
+}
+
+.balance-card .currency {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.balance-card .amount {
+    font-size: 40px;
+    font-weight: 800;
+    font-family: "Inter", sans-serif;
+}
+
+/* ==============================
+   قائمة الحسابات
+============================== */
+
+.accounts-list {
+    padding: 20px 20px 120px;
+}
+
+.account-detail-item {
+    cursor: default;
+    align-items: center;
+}
+
+.account-activity {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+.activity-income {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.activity-expense {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.account-balance-detail {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+    white-space: nowrap;
+}
+
+.accounts-empty {
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+    padding: 40px 20px;
+}
+
+/* ==============================
+   الوضع الليلي
+============================== */
+
+.dark {
+    background-color: #121212;
+}
+
+.dark .page-header {
+    background: #1e1e1e;
+}
+
+.dark .page-header h2 {
+    color: #ffffff;
+}
+
+.dark .back-btn {
+    background: #2c2c2c;
+    color: #22c55e;
+}
+
+.dark .account-balance-detail {
+    color: #f9fafb;
+}
+
+.dark .accounts-empty {
+    color: #9ca3af;
+}
