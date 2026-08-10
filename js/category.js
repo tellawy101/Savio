@@ -125,6 +125,9 @@ if (saveCategoryBtn) {
             selectedCategory = null;
         } else {
             categories.push({ name, icon });
+
+            const field = getCategoryFieldEl();
+            if (field) field.textContent = `${icon} ${name}`;
         }
 
         localStorage.setItem("categories", JSON.stringify(categories));
