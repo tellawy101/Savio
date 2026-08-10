@@ -40,8 +40,7 @@ function renderAccountsPage() {
   const transactions = loadTransactions();
 
   const accountsWithBalance = accounts.map(account => {
-    const key = `${account.icon} ${account.name}`;
-    const { income, expense } = getAccountActivity(key, transactions);
+    const { income, expense } = getAccountActivity(account.name, transactions);
     const currentBalance = Number(account.balance) + income - expense;
     return { ...account, income, expense, currentBalance };
   });
@@ -96,7 +95,7 @@ function renderAccountsPage() {
             `}
           </div>
           <div class="account-card-balance">
-            <div class="account-card-balance-amount">${account.currentBalance.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+            <div class="account-card-balance-amount">${Math.round(account.currentBalance).toLocaleString("en-US")}</div>
             <div class="account-card-balance-currency">EGP</div>
           </div>
         </div>
@@ -110,7 +109,7 @@ function renderAccountsPage() {
             </div>
             <div class="stat-texts">
               <div class="stat-label">Income</div>
-              <div class="stat-value stat-value-income">${account.income.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+              <div class="stat-value stat-value-income">${Math.round(account.income).toLocaleString("en-US")}</div>
               <div class="stat-currency">EGP</div>
             </div>
             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
@@ -124,7 +123,7 @@ function renderAccountsPage() {
             </div>
             <div class="stat-texts">
               <div class="stat-label">Expense</div>
-              <div class="stat-value stat-value-expense">${account.expense.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+              <div class="stat-value stat-value-expense">${Math.round(account.expense).toLocaleString("en-US")}</div>
               <div class="stat-currency">EGP</div>
             </div>
             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
@@ -138,7 +137,7 @@ function renderAccountsPage() {
             </div>
             <div class="stat-texts">
               <div class="stat-label">Net Balance</div>
-              <div class="stat-value stat-value-balance">${netBalance.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+              <div class="stat-value stat-value-balance">${Math.round(netBalance).toLocaleString("en-US")}</div>
               <div class="stat-currency">EGP</div>
             </div>
           </div>
@@ -160,7 +159,7 @@ if (incomeStat) {
     e.stopPropagation();
 
     window.location.href =
-  `account-transactions.html?account=${encodeURIComponent(account.icon + " " + account.name)}&type=income`;
+ `account-transactions.html?account=${encodeURIComponent(account.name)}&type=income`;
   };
 }
 
@@ -169,7 +168,7 @@ if (expenseStat) {
     e.stopPropagation();
 
     window.location.href =
-      `account-transactions.html?account=${encodeURIComponent(account.icon + " " + account.name)}&type=expense`;
+    `account-transactions.html?account=${encodeURIComponent(account.name)}&type=expense`;
   };
 }
       let pressTimer;

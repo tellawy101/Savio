@@ -77,8 +77,20 @@ function renderAccounts() {
     accountsList.innerHTML = "";
     
     let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+    let transactions = typeof loadTransactions === "function" ? loadTransactions() : [];
     
     accounts.forEach(account => {
+        
+        let income = 0;
+        let expense = 0;
+        
+        transactions.forEach(t => {
+            if (t.account !== account.name) return;
+            if (t.type === "income") income += Number(t.amount) || 0;
+            else if (t.type === "expense") expense += Number(t.amount) || 0;
+        });
+        
+        const currentBalance = Number(account.balance) + income - expense;
         
         const item = document.createElement("div");
         
@@ -92,10 +104,9 @@ function renderAccounts() {
     <div class="account-info">
         <div class="account-name">${account.name}</div>
         <div class="account-balance">
-            ${Number(account.balance).toLocaleString()} EGP
+            ${currentBalance.toLocaleString()} EGP
         </div>
     </div>
-
     <div class="account-arrow">›</div>
 `;
         let pressTimer;

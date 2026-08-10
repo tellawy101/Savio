@@ -67,7 +67,7 @@ if (accountName && accountIconEl) {
         JSON.parse(localStorage.getItem("accounts")) || [];
 
     const account = accounts.find(
-        a => `${a.icon} ${a.name}` === accountName
+        a => a.name === accountName
     );
 
     if (account) {
@@ -109,11 +109,19 @@ const total = accountTransactions.reduce(
 
 
 totalAmountEl.textContent =
-    total.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
+    total.toLocaleString("en-US");
 
+const totalLen = String(Math.round(total)).length;
+
+if (totalLen <= 3) {
+    totalAmountEl.style.fontSize = "48px";
+} else if (totalLen <= 6) {
+    totalAmountEl.style.fontSize = "38px";
+} else if (totalLen <= 8) {
+    totalAmountEl.style.fontSize = "30px";
+} else {
+    totalAmountEl.style.fontSize = "24px";
+}
 
 /* =========================================
    TRANSACTION COUNT
@@ -159,10 +167,7 @@ accountTransactions.forEach(transaction => {
         </div>
 
         <strong>
-            EGP ${amount.toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            })}
+            EGP ${amount.toLocaleString("en-US")}
         </strong>
     `;
 
