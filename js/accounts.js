@@ -112,12 +112,15 @@ function renderAccounts() {
         });
         
         item.onclick = function() {
-            const field = getAccountFieldEl();
-            if (field) field.textContent = `${account.icon} ${account.name}`;
-            
-            accountModal.classList.remove("show");
-            notifyFormFieldChanged();
-        };
+    const field = getAccountFieldEl();
+    if (field) {
+        field.innerHTML = `<i data-lucide="${account.icon}"></i> ${account.name}`;
+        if (window.lucide) lucide.createIcons();
+    }
+    
+    accountModal.classList.remove("show");
+    notifyFormFieldChanged();
+};
         
         accountsList.appendChild(item);
     });
