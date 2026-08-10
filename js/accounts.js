@@ -214,7 +214,8 @@ if (editAccountBtn) {
 document.getElementById("newAccountDescription").value = editingAccount.description || "";
 document.getElementById("selectedIconPreviewWrap").innerHTML =
     `<i data-lucide="${editingAccount.icon}" id="selectedIconPreview"></i>`;
-selectedIconLabel.textContent = editingAccount.icon;
+const matchedOption = document.querySelector(`.icon-option[data-icon="${editingAccount.icon}"]`);
+selectedIconLabel.textContent = matchedOption ? matchedOption.dataset.label : editingAccount.icon;
 newAccountIconInput.value = editingAccount.icon;
 if (window.lucide) lucide.createIcons();
         document.getElementById("newAccountBalance").value =
