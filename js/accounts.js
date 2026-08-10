@@ -87,7 +87,7 @@ function renderAccounts() {
         item.className = "account-item";
         
         item.innerHTML = `
-    <div class="account-item-icon">${account.icon}</div>
+    <div class="account-item-icon"><i data-lucide="${account.icon}"></i></div>
 
     <div class="account-info">
         <div class="account-name">${account.name}</div>
@@ -112,18 +112,20 @@ function renderAccounts() {
         });
         
         item.onclick = function() {
-    const field = getAccountFieldEl();
-    if (field) {
-        field.innerHTML = `<i data-lucide="${account.icon}"></i> ${account.name}`;
-        if (window.lucide) lucide.createIcons();
-    }
-    
-    accountModal.classList.remove("show");
-    notifyFormFieldChanged();
-};
+            const field = getAccountFieldEl();
+            if (field) {
+                field.innerHTML = `<i data-lucide="${account.icon}"></i> ${account.name}`;
+                if (window.lucide) lucide.createIcons();
+            }
+            
+            accountModal.classList.remove("show");
+            notifyFormFieldChanged();
+        };
         
         accountsList.appendChild(item);
     });
+    
+    if (window.lucide) lucide.createIcons();
 }
 
 // ==============================
@@ -184,7 +186,10 @@ if (name === "") {
 localStorage.setItem("accounts", JSON.stringify(accounts));
         
         const field = getAccountFieldEl();
-        if (field) field.textContent = `${icon} ${name}`;
+        if (field) {
+            field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
+            if (window.lucide) lucide.createIcons();
+        }
         
         renderAccounts();
         
