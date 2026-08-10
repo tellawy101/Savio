@@ -193,10 +193,17 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: var(--stats-gap);
     padding-right: 12px;
     border-right: 1px solid #F1F1F1;
     position: relative;
+}
+.stat-texts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .stat-item-last {
@@ -268,7 +275,7 @@ body {
     border-radius: 50%;
     background: #fff;
     border: 1.5px solid #0f766e;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);

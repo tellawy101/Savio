@@ -1,0 +1,593 @@
+/* =========================================
+   ACCOUNT TRANSACTIONS PAGE
+   تنسيق صفحة عمليات الحساب
+   ========================================= */
+
+
+
+
+/* =========================================
+   ACCOUNT TOTAL HEADER
+   Header + Total
+   ========================================= */
+/* =========================================
+   ACCOUNT TRANSACTIONS HEADER
+========================================= */
+
+.total-card {
+    width: 100%;    
+    min-height: 360px;
+
+    padding: 36px 28px 30px;
+    box-sizing: border-box;
+
+    margin: 0;
+
+    background: #0F8F92;
+
+    color: #ffffff;
+
+    border-radius: 0 0 30px 30px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   HEADER TOP
+========================================= */
+
+.account-header {
+    display: flex;
+    align-items: center;
+position: relative;
+    width: 100%;
+    min-height: 100px;
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.total-card .back-btn {
+    position: static;
+
+    width: 88px;
+    height: 88px;
+
+    flex: 0 0 88px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    color: #ffffff;
+
+    font-size: 48px;
+    line-height: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================
+   INCOME TITLE
+========================================= */
+
+.transaction-title {
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+
+    margin-left: 38px;
+}
+
+
+.transaction-title h1 {
+    margin: 0;
+
+    font-size: 34px;
+    font-weight: 800;
+
+    line-height: 1;
+
+    color: #ffffff;
+}
+
+
+/* =========================================
+   INCOME ICON
+========================================= */
+
+.transaction-type-icon {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    font-size: 44px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   ACCOUNT INFO
+========================================= */
+
+.account-info {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+
+    direction: rtl;
+
+    white-space: nowrap;
+}
+
+
+#accountName {
+    font-size: 34px;
+    font-weight: 800;
+
+    color: #ffffff;
+}
+
+
+.account-divider {
+    width: 2px;
+    height: 62px;
+
+    background: rgba(255, 255, 255, 0.35);
+}
+
+
+.account-icon {
+    font-size: 48px;
+
+    line-height: 1;
+}
+
+
+/* =========================================
+   HEADER DIVIDER
+========================================= */
+
+.header-divider {
+    width: 100%;
+    height: 2px;
+
+    margin-top: 58px;
+
+    background: rgba(255, 255, 255, 0.38);
+}
+
+
+/* =========================================
+   TOTAL ROW
+========================================= */
+
+.total-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 48px;
+    position: relative;
+}
+
+.total-row::after {
+    content: "";
+
+    position: absolute;
+
+    width: 1px;
+    height: 40px;
+
+    background: rgba(255, 255, 255, 0.35);
+
+    left: 50%;
+}
+
+.total-label {
+    margin: 0 0 0 -5px;
+
+    font-size: 28px;
+    font-weight: 800;
+
+    color: #ffffff;
+}
+
+
+.total-value {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 18px;
+
+    direction: ltr;
+}
+
+
+.total-value .currency {
+    font-size: 30px;
+
+    font-weight: 700;
+
+    color: rgba(255, 255, 255, 0.78);
+}
+
+
+#totalAmount {
+    font-size: 48px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    color: #ffffff;
+}
+
+/* =========================================
+   TRANSACTIONS SECTION
+   ========================================= */
+
+.transactions-section {
+    padding: 48px 46px 120px;
+}
+
+
+/* =========================================
+   TRANSACTIONS TITLE
+   ========================================= */
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    margin: 0 2px 12px;
+}
+
+.section-title h3 {
+    margin: 0;
+    
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.section-title span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    min-width: 24px;
+    height: 24px;
+    
+    padding: 0 7px;
+    
+    border-radius: 20px;
+    
+    background: #f1f3f5;
+    
+    font-size: 12px;
+    font-weight: 600;
+    
+    opacity: 0.7;
+}
+
+
+
+/* =========================================
+   TRANSACTIONS LIST
+   ========================================= */
+
+#transactionsList {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    list-style: none;
+
+    padding: 0;
+    margin: 0;
+}
+
+
+#transactionsList li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 58px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #e8eaed;
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    box-sizing: border-box;
+}
+
+
+#transactionsList li > div {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+
+#transactionsList li strong {
+    font-size: 14px;
+    font-weight: 650;
+}
+
+
+#transactionsList li small {
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    opacity: 0.55;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+#transactionsList li > strong {
+    margin-left: 12px;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.empty-state {
+    display: none;
+
+    text-align: center;
+
+    padding: 55px 20px;
+
+    opacity: 0.55;
+}
+
+
+.empty-state div {
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+
+.empty-state p {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   DARK MODE
+   ========================================= */
+   
+
+
+body.dark .total-card {
+    background: #0F766E;
+}
+
+
+body.dark .section-title span {
+    background: #24272b;
+}
+
+
+body.dark #transactionsList li {
+    background: #1d2023;
+    border-color: #30343a;
+}
+
+
+/* =========================================
+   SMALL SCREENS
+   ========================================= */
+
+@media (max-width: 380px) {
+
+    .total-card {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .transactions-section {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    #totalAmount {
+        font-size: 28px;
+    }
+
+}
+/* =========================================
+   MOBILE HEADER FIX
+========================================= */
+
+@media (max-width: 700px) {
+
+    .total-card {
+           min-height: 0;
+   padding: 16px 20px 20px;
+    }
+
+   .account-header {
+    align-items: center;
+    min-width: 0;
+    min-height: 0;
+}
+
+ .total-card .back-btn {
+    align-self: flex-start;
+
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    border-radius: 12px;
+
+    font-size: 18px;
+}
+
+   .transaction-title {
+    align-items: flex-start;
+
+    min-width: 0;
+
+    gap: 8px;
+
+    margin-left: 18px;
+}
+   .transaction-title h1 {
+    font-size: 20px;
+
+    white-space: nowrap;
+}
+
+    .transaction-type-icon {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    font-size: 20px;
+}
+
+.account-info {
+    margin-left: auto;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    direction: rtl;
+
+    white-space: nowrap;
+
+}
+#accountName {
+    display: block;
+
+    width: auto;
+    min-width: 0;
+max-width: 140px;
+    font-size: 17px;
+    font-weight: 700;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.account-divider {
+    width: 1px;
+    height: 36px;
+    
+    flex-shrink: 0;
+    
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.account-icon {
+    order: -1;
+
+    font-size: 16px;
+
+    width: 20px;
+    min-width: 20px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+}
+
+.account-icon svg {
+    width: 18px;
+    height: 18px;
+
+    stroke: currentColor;
+}
+    .header-divider {
+        margin-top: 16px;
+    }
+
+    .total-row {
+        min-width: 0;
+
+        margin-top: 30px;
+
+        gap: 12px;
+    }
+
+    .total-label {
+    font-size: 21px;
+    white-space: nowrap;
+    flex-shrink: 1;
+}
+
+.total-value {
+    gap: 6px;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.total-value .currency {
+    font-size: 18px;
+}
+
+#totalAmount {
+    font-size: 34px;
+}
+.account-info .account-divider {
+    display: none;
+}
+}

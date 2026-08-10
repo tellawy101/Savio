@@ -91,6 +91,7 @@ function renderAccountsPage() {
                 <span>Main Account</span>
               </div>
             ` : `
+            
               <div class="account-sub-name">${account.description || ""}</div>
             `}
           </div>
@@ -147,7 +148,30 @@ function renderAccountsPage() {
           </div>
         </div>
       `;
+// =========================================
+// ACCOUNT INCOME / EXPENSE NAVIGATION
+// =========================================
 
+const incomeStat = item.querySelector(".stat-item:nth-child(1)");
+const expenseStat = item.querySelector(".stat-item:nth-child(2)");
+
+if (incomeStat) {
+  incomeStat.onclick = function(e) {
+    e.stopPropagation();
+
+    window.location.href =
+  `account-transactions.html?account=${encodeURIComponent(account.icon + " " + account.name)}&type=income`;
+  };
+}
+
+if (expenseStat) {
+  expenseStat.onclick = function(e) {
+    e.stopPropagation();
+
+    window.location.href =
+      `account-transactions.html?account=${encodeURIComponent(account.icon + " " + account.name)}&type=expense`;
+  };
+}
       let pressTimer;
       item.addEventListener("touchstart", function() {
         pressTimer = setTimeout(function() {
