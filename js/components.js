@@ -175,11 +175,9 @@ function renderSharedModals() {
         <div class="icon-option" data-icon="shield-check" data-label="Insurance">
             <i data-lucide="shield-check"></i><span>Insurance</span>
         </div>
-        <div class="icon-option" data-icon="gift" data-label="Gift">
+<div class="icon-option" data-icon="gift" data-label="Gift">
             <i data-lucide="gift"></i><span>Gift</span>
         </div>
-    </div>
-</div>
     </div>
 </div>
 <input type="hidden" id="newAccountIcon" value="wallet">

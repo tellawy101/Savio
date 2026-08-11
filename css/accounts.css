@@ -454,13 +454,3 @@ body {
 .dark .accounts-empty {
     color: #9ca3af;
 }
-/* تصحيح مشكلة overflow:hidden القادمة من form-page.css
-   عشان المودال يطفو فوق الصفحة صح */
-html {
-    overflow: visible !important;
-    height: auto !important;
-}
-
-body {
-    overflow-y: auto !important;
-}
