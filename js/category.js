@@ -315,6 +315,7 @@ function renderCategories() {
             const field = getCategoryFieldEl();
             if (field) {
                 field.innerHTML = `<i data-lucide="${category.icon}"></i> ${category.name}`;
+                field.dataset.icon = category.icon;
                 if (window.lucide) lucide.createIcons();
             }
             categoryModal.classList.remove("show");
@@ -354,6 +355,7 @@ if (saveCategoryBtn) {
             const field = getCategoryFieldEl();
             if (field && field.textContent.includes(editingCategory.name)) {
                 field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
+                field.dataset.icon = icon;
                 if (window.lucide) lucide.createIcons();
             }
 
@@ -365,6 +367,7 @@ if (saveCategoryBtn) {
             const field = getCategoryFieldEl();
             if (field) {
                 field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
+                field.dataset.icon = icon;
                 if (window.lucide) lucide.createIcons();
             }
         }

@@ -61,7 +61,11 @@ function loadEditingExpense() {
     resizeAmountInput(expenseAmount, formatted);
     
     expenseAccount.textContent = entry.account || "Select Account";
-    expenseCategory.textContent = entry.category || "Select Category";
+expenseCategory.innerHTML = entry.categoryIcon
+    ? `<i data-lucide="${entry.categoryIcon}"></i> ${entry.category}`
+    : (entry.category || "Select Category");
+expenseCategory.dataset.icon = entry.categoryIcon || "tag";
+if (window.lucide) lucide.createIcons();
     expenseDescription.value = entry.description || "";
     expenseDate.value = entry.date || today;
     
@@ -79,14 +83,15 @@ saveExpenseBtn.onclick = function() {
     let transactions = loadTransactions();
     
     const entryData = {
-        amount: Number(expenseAmount.value.replace(/,/g, "")),
-        account: expenseAccount.textContent.trim(),
-        description: expenseDescription.value.trim(),
-        category: expenseCategory.textContent.trim(),
-        type: "expense",
-        date: expenseDate.value,
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-    };
+    amount: Number(expenseAmount.value.replace(/,/g, "")),
+    account: expenseAccount.textContent.trim(),
+    description: expenseDescription.value.trim(),
+    category: expenseCategory.textContent.trim(),
+    categoryIcon: expenseCategory.dataset.icon || "tag",
+    type: "expense",
+    date: expenseDate.value,
+    time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+};
     
     if (editIndex !== -1 && transactions[editIndex]) {
         transactions[editIndex] = { ...transactions[editIndex], ...entryData };

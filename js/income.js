@@ -60,7 +60,11 @@ function loadEditingIncome() {
     resizeAmountInput(incomeAmount, formatted);
 
     incomeAccount.textContent = entry.account;
-    incomeCategory.textContent = entry.category;
+    incomeCategory.innerHTML = entry.categoryIcon
+        ? `<i data-lucide="${entry.categoryIcon}"></i> ${entry.category}`
+        : entry.category;
+    incomeCategory.dataset.icon = entry.categoryIcon || "tag";
+    if (window.lucide) lucide.createIcons();
     incomeDescription.value = entry.description || "";
     incomeDate.value = entry.date;
 
@@ -82,6 +86,7 @@ saveIncomeBtn.onclick = function () {
         account: incomeAccount.textContent.trim(),
         description: incomeDescription.value.trim(),
         category: incomeCategory.textContent.trim(),
+        categoryIcon: incomeCategory.dataset.icon || "tag",
         type: "income",
         date: incomeDate.value,
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })

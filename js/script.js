@@ -30,27 +30,6 @@ let income = 0;
 let total = 0;
 let editIndex = -1;
 
-
-// ألوان وأيقونات كل فئة
-const CATEGORY_STYLES = {
-    "Food": { icon: "🍔", color: "#F59E0B" },
-    "Transport": { icon: "🚗", color: "#3B82F6" },
-    "Bills": { icon: "🧾", color: "#EF4444" },
-    "Shopping": { icon: "🛍️", color: "#EC4899" },
-    "Health": { icon: "💊", color: "#10B981" },
-    "Entertainment": { icon: "🎬", color: "#8B5CF6" },
-    "Other": { icon: "📦", color: "#6B7280" }
-};
-
-function getCategoryStyle(category) {
-    const firstWord = category.split(" ")[0];
-    // لو أول حرف في اسم الفئة مش إنجليزي، يبقى الأرجح إنه إيموجي مختار يدوي
-    if (firstWord && firstWord.codePointAt(0) > 127) {
-        return { icon: firstWord, color: "#0F766E" };
-    }
-    return CATEGORY_STYLES[category] || { icon: "💰", color: "#0F766E" };
-}
-
 // عرض البيانات
 function renderExpenses() {
     
@@ -75,7 +54,6 @@ function renderExpenses() {
         
         const li = document.createElement("li");
         
-        const catStyle = getCategoryStyle(expense.category);
         
         // إزالة الإيموجي من النص وإبقاء الاسم فقط
 function cleanLabel(text) {
@@ -100,10 +78,9 @@ li.innerHTML = `
 
         <div class="expense-main">
 
-            <div class="expense-icon-box"
-                 style="background:${catStyle.color}33;">
-                <span>${catStyle.icon}</span>
-            </div>
+<div class="expense-icon-box">
+    <i data-lucide="${expense.categoryIcon || "tag"}"></i>
+</div>
 
             <div class="expense-info">
 
