@@ -155,8 +155,12 @@ accountTransactions.forEach(transaction => {
 
     const amount = Number(transaction.amount || 0);
 
-    li.innerHTML = `
-        <div>
+li.innerHTML = `
+        <div class="transaction-icon-box">
+            <i data-lucide="${transaction.categoryIcon || "tag"}"></i>
+        </div>
+
+        <div class="transaction-info">
             <strong>
                 ${transaction.category || "Transaction"}
             </strong>
@@ -166,7 +170,7 @@ accountTransactions.forEach(transaction => {
             </small>
         </div>
 
-        <strong>
+        <strong class="transaction-amount">
             EGP ${amount.toLocaleString("en-US")}
         </strong>
     `;
@@ -174,3 +178,7 @@ accountTransactions.forEach(transaction => {
     transactionsListEl.appendChild(li);
 
 });
+
+if (window.lucide) {
+    lucide.createIcons();
+}

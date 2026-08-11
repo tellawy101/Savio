@@ -254,7 +254,7 @@ position: relative;
    ========================================= */
 
 .transactions-section {
-    padding: 48px 46px 120px;
+    padding: 48px 24px 120px;
 }
 
 
@@ -315,29 +315,55 @@ position: relative;
     margin: 0;
 }
 
-
 #transactionsList li {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    min-height: 58px;
+    min-height: 72px;
 
-    padding: 10px 12px;
+    padding: 14px 18px;
 
-    border: 1px solid #e8eaed;
+    border: 1px solid #eef0f2;
     border-radius: 14px;
 
-    background: #ffffff;
+    background: #FAFAFA;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 
     box-sizing: border-box;
+} 
+
+#transactionsList li .transaction-icon-box {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 12px;
+    
+    margin-right: 12px;
+    
+    background: rgba(15, 118, 110, 0.12);
+    color: #0F766E;
+    
+    font-size: 18px;
+}
+
+#transactionsList li .transaction-icon-box svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
 }
 
 
-#transactionsList li > div {
+#transactionsList li>div {
     display: flex;
     flex-direction: column;
-
+    
     min-width: 0;
 }
 
@@ -367,6 +393,17 @@ position: relative;
     font-size: 14px;
 
     white-space: nowrap;
+}
+
+
+#transactionsList li .transaction-amount {
+    color: #0F766E;
+    font-weight: 700;
+}
+
+
+body.dark #transactionsList li .transaction-icon-box {
+    background: rgba(15, 118, 110, 0.22);
 }
 
 

@@ -70,7 +70,7 @@ button:hover {
     align-items: flex-start;
     padding-top: 6vh;
 
-    z-index: 999;
+    z-index: 2000;
 
     visibility: hidden;
     opacity: 0;

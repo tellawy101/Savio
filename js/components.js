@@ -145,9 +145,41 @@ function renderSharedModals() {
         <div class="icon-option" data-icon="piggy-bank" data-label="Savings">
             <i data-lucide="piggy-bank"></i><span>Savings</span>
         </div>
-        <div class="icon-option" data-icon="trending-up" data-label="Investment">
+<div class="icon-option" data-icon="trending-up" data-label="Investment">
             <i data-lucide="trending-up"></i><span>Investment</span>
         </div>
+        <div class="icon-option" data-icon="briefcase" data-label="Business">
+            <i data-lucide="briefcase"></i><span>Business</span>
+        </div>
+        <div class="icon-option" data-icon="target" data-label="Goal">
+            <i data-lucide="target"></i><span>Goal</span>
+        </div>
+        <div class="icon-option" data-icon="vault" data-label="Vault">
+            <i data-lucide="vault"></i><span>Vault</span>
+        </div>
+        <div class="icon-option" data-icon="coins" data-label="Coins">
+            <i data-lucide="coins"></i><span>Coins</span>
+        </div>
+        <div class="icon-option" data-icon="circle-dollar-sign" data-label="Dollar">
+            <i data-lucide="circle-dollar-sign"></i><span>Dollar</span>
+        </div>
+        <div class="icon-option" data-icon="gem" data-label="Gem">
+            <i data-lucide="gem"></i><span>Gem</span>
+        </div>
+        <div class="icon-option" data-icon="smartphone" data-label="Mobile Wallet">
+            <i data-lucide="smartphone"></i><span>Mobile Wallet</span>
+        </div>
+        <div class="icon-option" data-icon="building-2" data-label="Company">
+            <i data-lucide="building-2"></i><span>Company</span>
+        </div>
+        <div class="icon-option" data-icon="shield-check" data-label="Insurance">
+            <i data-lucide="shield-check"></i><span>Insurance</span>
+        </div>
+        <div class="icon-option" data-icon="gift" data-label="Gift">
+            <i data-lucide="gift"></i><span>Gift</span>
+        </div>
+    </div>
+</div>
     </div>
 </div>
 <input type="hidden" id="newAccountIcon" value="wallet">
