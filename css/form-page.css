@@ -615,6 +615,43 @@ body.has-scroll {
     min-height: 52px;
 }
 
+.icon-search-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 8px;
+    background: var(--input-bg, #fff);
+    border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.icon-search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 10px;
+    font-size: 14px;
+    background: var(--card-bg, #f7f7f7);
+    color: inherit;
+}
+
+.icon-option-custom {
+    border-top: 1px dashed var(--border-color, #ddd);
+    font-style: italic;
+    color: var(--brand-color, #0f766e);
+}
+
+.dark .icon-search-wrap {
+    background: #232323;
+    border-bottom-color: #333;
+}
+
+.dark .icon-search-input {
+    background: #1a1a1a;
+    border-color: #333;
+    color: #fff;
+}
+
 .dark #categoryIconDropdown .icon-dropdown-trigger {
     background: #232323;
     border-color: #333;

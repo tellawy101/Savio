@@ -212,145 +212,15 @@ function renderSharedModals() {
                 class="icon-dropdown-list"
                 id="categoryIconDropdownList">
 
-                <div class="icon-option"
-                     data-icon="utensils"
-                     data-label="Food">
-                    <i data-lucide="utensils"></i>
-                    <span>Food</span>
+                <div class="icon-search-wrap">
+                    <input
+                        type="text"
+                        id="categoryIconSearchInput"
+                        class="icon-search-input"
+                        placeholder="Search any icon (English)...">
                 </div>
 
-                <div class="icon-option"
-                     data-icon="car"
-                     data-label="Transport">
-                    <i data-lucide="car"></i>
-                    <span>Transport</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="shopping-cart"
-                     data-label="Shopping">
-                    <i data-lucide="shopping-cart"></i>
-                    <span>Shopping</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="receipt"
-                     data-label="Bills">
-                    <i data-lucide="receipt"></i>
-                    <span>Bills</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="heart-pulse"
-                     data-label="Health">
-                    <i data-lucide="heart-pulse"></i>
-                    <span>Health</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="gamepad-2"
-                     data-label="Entertainment">
-                    <i data-lucide="gamepad-2"></i>
-                    <span>Entertainment</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="home"
-                     data-label="Home">
-                    <i data-lucide="home"></i>
-                    <span>Home</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="briefcase"
-                     data-label="Work">
-                    <i data-lucide="briefcase"></i>
-                    <span>Work</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="gift"
-                     data-label="Gifts">
-                    <i data-lucide="gift"></i>
-                    <span>Gifts</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="graduation-cap"
-                     data-label="Education">
-                    <i data-lucide="graduation-cap"></i>
-                    <span>Education</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="plane"
-                     data-label="Travel">
-                    <i data-lucide="plane"></i>
-                    <span>Travel</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="music"
-                     data-label="Music">
-                    <i data-lucide="music"></i>
-                    <span>Music</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="wifi"
-                     data-label="Internet">
-                    <i data-lucide="wifi"></i>
-                    <span>Internet</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="smartphone"
-                     data-label="Phone">
-                    <i data-lucide="smartphone"></i>
-                    <span>Phone</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="wallet"
-                     data-label="Money">
-                    <i data-lucide="wallet"></i>
-                    <span>Money</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="banknote"
-                     data-label="Cash">
-                    <i data-lucide="banknote"></i>
-                    <span>Cash</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="landmark"
-                     data-label="Bank">
-                    <i data-lucide="landmark"></i>
-                    <span>Bank</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="chart-no-axes-combined"
-                     data-label="Investment">
-                    <i data-lucide="chart-no-axes-combined"></i>
-                    <span>Investment</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="circle-dollar-sign"
-                     data-label="Income">
-                    <i data-lucide="circle-dollar-sign"></i>
-                    <span>Income</span>
-                </div>
-
-                <div class="icon-option"
-                     data-icon="ellipsis"
-                     data-label="Other">
-                    <i data-lucide="ellipsis"></i>
-                    <span>Other</span>
-                </div>
+                <div id="categoryIconResults"></div>
 
             </div>
         </div>
