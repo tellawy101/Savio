@@ -288,7 +288,7 @@ function renderCategories() {
         const item = document.createElement("div");
         item.className = "account-item";
         item.innerHTML = `
-    <div class="account-item-icon">${category.icon}</div>
+    <div class="account-item-icon"><i data-lucide="${category.icon}"></i></div>
     <div class="account-info">
         <div class="account-name">${category.name}</div>
     </div>
@@ -313,13 +313,20 @@ function renderCategories() {
 
         item.onclick = function () {
             const field = getCategoryFieldEl();
-            if (field) field.textContent = `${category.icon} ${category.name}`;
+            if (field) {
+                field.innerHTML = `<i data-lucide="${category.icon}"></i> ${category.name}`;
+                if (window.lucide) lucide.createIcons();
+            }
             categoryModal.classList.remove("show");
             notifyFormFieldChanged();
         };
 
         categoriesList.appendChild(item);
     });
+
+    if (window.lucide) {
+        lucide.createIcons();
+    }
 }
 
 if (saveCategoryBtn) {
@@ -346,7 +353,8 @@ if (saveCategoryBtn) {
 
             const field = getCategoryFieldEl();
             if (field && field.textContent.includes(editingCategory.name)) {
-                field.textContent = `${icon} ${name}`;
+                field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
+                if (window.lucide) lucide.createIcons();
             }
 
             editingCategory = null;
@@ -355,7 +363,10 @@ if (saveCategoryBtn) {
             categories.push({ name, icon });
 
             const field = getCategoryFieldEl();
-            if (field) field.textContent = `${icon} ${name}`;
+            if (field) {
+                field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
+                if (window.lucide) lucide.createIcons();
+            }
         }
 
         localStorage.setItem("categories", JSON.stringify(categories));
