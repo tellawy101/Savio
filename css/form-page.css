@@ -545,3 +545,82 @@ body.has-scroll {
     font-weight: 700;
     line-height: 1;
 }
+/* ==============================
+   CATEGORY ICON PICKER
+============================== */
+
+#categoryIconDropdown {
+    position: relative;
+    width: 100%;
+    margin-top: 14px;
+    margin-bottom: 18px;
+}
+
+#categoryIconDropdown .icon-dropdown-trigger {
+    width: 100%;
+    min-height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 14px;
+
+    background: var(--input-bg, #fff);
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#selectedCategoryIconPreviewWrap {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #f1f5f5;
+}
+
+#selectedCategoryIconPreviewWrap svg {
+    width: 21px;
+    height: 21px;
+}
+
+#selectedCategoryIconLabel {
+    flex: 1;
+    text-align: left;
+}
+
+#categoryIconDropdownList {
+    width: 100%;
+
+    max-height: 280px;
+
+    overflow-y: auto;
+
+    box-sizing: border-box;
+}
+
+#categoryIconDropdownList .icon-option {
+    min-height: 52px;
+}
+
+.dark #categoryIconDropdown .icon-dropdown-trigger {
+    background: #232323;
+    border-color: #333;
+    color: #fff;
+}
+
+.dark #selectedCategoryIconPreviewWrap {
+    background: #333;
+}

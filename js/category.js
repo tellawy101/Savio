@@ -16,6 +16,79 @@ const deleteCategoryBtn = document.getElementById("deleteCategoryBtn");
 let selectedCategory = null;
 let editingCategory = null;
 
+// ==============================
+// Category Icon Picker
+// ==============================
+
+const categoryIconDropdownTrigger =
+    document.getElementById("categoryIconDropdownTrigger");
+
+const categoryIconDropdownList =
+    document.getElementById("categoryIconDropdownList");
+
+const selectedCategoryIconLabel =
+    document.getElementById("selectedCategoryIconLabel");
+
+const newCategoryIconInput =
+    document.getElementById("newCategoryIcon");
+
+if (categoryIconDropdownTrigger) {
+
+    categoryIconDropdownTrigger.onclick = function (e) {
+
+        e.stopPropagation();
+
+        categoryIconDropdownList.classList.toggle("show");
+
+    };
+}
+
+if (categoryIconDropdownList) {
+
+    categoryIconDropdownList
+        .querySelectorAll(".icon-option")
+        .forEach(option => {
+
+            option.onclick = function () {
+
+                const icon = this.dataset.icon;
+                const label = this.dataset.label;
+
+                newCategoryIconInput.value = icon;
+
+                document.getElementById(
+                    "selectedCategoryIconPreviewWrap"
+                ).innerHTML =
+                    `<i data-lucide="${icon}"
+                        id="selectedCategoryIconPreview"></i>`;
+
+                selectedCategoryIconLabel.textContent = label;
+
+                categoryIconDropdownList.classList.remove("show");
+
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+
+            };
+
+        });
+}
+
+document.addEventListener("click", function (e) {
+
+    if (
+        categoryIconDropdownList &&
+        !categoryIconDropdownList.contains(e.target) &&
+        e.target !== categoryIconDropdownTrigger
+    ) {
+
+        categoryIconDropdownList.classList.remove("show");
+
+    }
+
+});
+
 if (categoryBox) {
     categoryBox.onclick = function () {
         categoryModal.classList.add("show");
@@ -150,6 +223,32 @@ if (editCategoryBtn) {
 
         document.getElementById("newCategoryName").value = editingCategory.name;
         document.getElementById("newCategoryIcon").value = editingCategory.icon;
+        
+        const icon = editingCategory.icon || "tag";
+
+document.getElementById(
+    "selectedCategoryIconPreviewWrap"
+).innerHTML =
+    `<i data-lucide="${icon}"
+        id="selectedCategoryIconPreview"></i>`;
+
+const selectedOption =
+    categoryIconDropdownList?.querySelector(
+        `.icon-option[data-icon="${icon}"]`
+    );
+
+if (selectedOption) {
+    selectedCategoryIconLabel.textContent =
+        selectedOption.dataset.label;
+} else {
+    selectedCategoryIconLabel.textContent =
+        "Choose Icon";
+}
+
+if (window.lucide) {
+    lucide.createIcons();
+}
+        
 
         if (categoryMenu) categoryMenu.classList.remove("show");
         addCategoryModal.classList.add("show");
