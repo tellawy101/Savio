@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/form-page.css">
+    <link rel="stylesheet" href="../css/accounts.css">
+    <link rel="stylesheet" href="../css/income.css">
+</head>
+<body class="has-scroll">
+    <!-- رأس الصفحة -->
+ <header class="income-header">
+
+    <button id="backBtn" class="back-btn">←</button>
+
+    <h1>Income</h1>
+
+    <button id="saveIncomeBtn" class="save-btn">✓</button>
+
+</header>
+    
+    <!-- محتوى الصفحة -->
+    <main class="income-content">
+    
+<div class="amount-section">
+
+    <div class="amount-display">
+    <span class="currency">EGP</span>
+
+    <input
+        type="tel"
+        id="incomeAmount"
+        inputmode="numeric"
+        value="0">
+</div>
+
+</div>
+
+<div class="form-group">
+
+    <label>Account</label>
+
+    <div class="account-select-box">
+
+        <span class="account-icon">💳</span>
+
+       <div id="incomeAccount" class="account-select">
+    Select Account
+</div>
+        <span class="account-arrow">›</span>
+
+    </div>
+    
+
+</div>
+<div class="form-group">
+    <label>Category</label>
+    <div class="category-select-box">
+        <span class="category-icon">🏷️</span>
+     <div id="incomeCategory" class="category-select">
+    Select Category
+</div>
+        <span class="category-arrow">›</span>
+    </div>
+</div>
+
+<div class="form-group">
+
+    <label>Description</label>
+
+    
+    <div class="description-box">
+
+        <input
+            type="text"
+            id="incomeDescription"
+            class="description-input"
+            placeholder="Write a note">
+
+    </div>
+
+</div>
+
+<div class="form-group">
+    <label>Date</label>
+   <div class="description-box">
+    <input
+        type="date"
+        id="incomeDate"
+        class="description-input"
+        placeholder="Write the date">
+</div>
+</div>
+
+    </main>
+<div id="modals-placeholder"></div>
+</div>
+<script src="../js/components.js"></script>
+<script>
+    document.getElementById("modals-placeholder").innerHTML = renderSharedModals();
+</script>
+<script src="../js/storage.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/formHelpers.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="../js/accounts.js"></script>
+<script src="../js/category.js"></script>
+<script src="../js/income.js"></script>
+<script>
+    if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>
