@@ -79,6 +79,21 @@ const debtNotes = document.getElementById("debtNotes");
 
 const debtsList = document.getElementById("debtsList");
 
+const personDetailModal = document.getElementById("personDetailModal");
+const personDetailName = document.getElementById("personDetailName");
+const personDetailList = document.getElementById("personDetailList");
+const closePersonDetailBtn = document.getElementById("closePersonDetailBtn");
+
+closePersonDetailBtn.onclick = function () {
+    personDetailModal.classList.remove("show");
+};
+
+personDetailModal.onclick = function (e) {
+    if (e.target === personDetailModal) {
+        personDetailModal.classList.remove("show");
+    }
+};
+
 const totalReceivable = document.getElementById("totalReceivable");
 
 const totalPayable = document.getElementById("totalPayable");
@@ -293,217 +308,320 @@ function renderDebts() {
     debtsList.innerHTML = "";
 
     let receivable = 0;
-
     let payable = 0;
 
-    [...debts].reverse().forEach(debt => {
-        
+    // ==============================
+    // حساب الإجماليات
+    // ==============================
+
+    debts.forEach(debt => {
+
+        const remaining = Number(debt.remaining) || 0;
+
+        if (debt.type === "receivable") {
+            receivable += remaining;
+        } else {
+            payable += remaining;
+        }
+
+    });
+
+
+    // ==============================
+    // تجميع الديون حسب الشخص
+    // ==============================
+
+    const people = {};
+
+    debts.forEach(debt => {
+
+        const personKey =
+            debt.person.trim().toLowerCase();
+
+        if (!people[personKey]) {
+
+            people[personKey] = {
+
+                person: debt.person,
+
+                receivable: 0,
+
+                payable: 0,
+
+                debts: []
+
+            };
+
+        }
+
+        people[personKey].debts.push(debt);
+
+        const remaining =
+            Number(debt.remaining) || 0;
+
         if (debt.type === "receivable") {
 
-            receivable += debt.remaining;
+            people[personKey].receivable += remaining;
 
         } else {
 
-            payable += debt.remaining;
+            people[personKey].payable += remaining;
 
-        }
-
-        const card = document.createElement("div");
-        
-        
-
-        card.className = "debt-card";
-
-       card.innerHTML = `
-    <div class="debt-card-header">
-
-        <h3 class="debt-person-name">
-            ${debt.person}
-        </h3>
-
-        <span class="debt-badge ${
-            debt.type === "receivable"
-                ? "receivable"
-                : "payable"
-        }">
-            ${
-                debt.type === "receivable"
-                    ? "Owed to You"
-                    : "You Owe"
-            }
-        </span>
-
-    </div>
-
-
-<div class="debt-card-main-row">
-
-    <div class="debt-card-amount">
-
-        ${
-            debt.type === "receivable"
-                ? "+"
-                : "-"
-        }
-
-        EGP ${Number(debt.remaining).toLocaleString("en-US")}
-
-    </div>
-
-
-    <div class="debt-card-details">
-
-        ${
-            debt.dueDate
-                ? debt.dueDate
-                : "No due date"
-        }
-
-    </div>
-
-</div>
-
-
-    <div class="debt-actions hidden">
-
-        <button class="edit-btn">
-            <i data-lucide="pen"></i>
-        </button>
-
-        <button class="pay-btn">
-            <i data-lucide="hand-coins"></i>
-        </button>
-
-        <button class="delete-btn">
-            <i data-lucide="trash-2"></i>
-        </button>
-
-    </div>
-`;
-const editBtn = card.querySelector(".edit-btn");
-const payBtn = card.querySelector(".pay-btn");
-const deleteBtn = card.querySelector(".delete-btn");
-
-editBtn.onclick = function (e) {
-
-    e.stopPropagation();
-
-    editingDebt = debt;
-
-    editDebtPerson.value = debt.person;
-
-    editDebtAmount.value = debt.amount;
-
-    editDebtDueDate.value = debt.dueDate || "";
-
-    editDebtNotes.value = debt.notes || "";
-
-    editDebtTypeButtons.forEach(btn => {
-
-        btn.classList.remove("active");
-
-        if (btn.dataset.type === debt.type) {
-            btn.classList.add("active");
         }
 
     });
 
-    editDebtModal.classList.add("show");
 
-};
+    // ==============================
+    // إنشاء كارت لكل شخص
+    // ==============================
 
-payBtn.onclick = function (e) {
+    Object.values(people)
+        .reverse()
+        .forEach(person => {
 
-    e.stopPropagation();
+            const total =
+                person.receivable -
+                person.payable;
 
-    const payment = Number(
-        prompt(`Enter payment amount\nRemaining: ${debt.remaining} EGP`)
-    );
 
-    if (!payment || payment <= 0) {
-        return;
-    }
+            const card =
+                document.createElement("div");
 
-    if (payment > debt.remaining) {
-        showToast("Payment is greater than remaining amount", "error");
-        return;
-    }
+            card.className = "debt-card";
 
-    debt.paid += payment;
 
-    debt.remaining -= payment;
+            card.innerHTML = `
 
-    if (debt.remaining === 0) {
-        debt.status = "paid";
-    } else {
-        debt.status = "open";
-    }
+                <div class="debt-card-header">
 
-    localStorage.setItem(
-        "debts",
-        JSON.stringify(debts)
-    );
+                    <h3 class="debt-person-name">
+                        ${person.person}
+                    </h3>
 
-    renderDebts();
+                    <span class="debt-badge ${
+                        total >= 0
+                            ? "receivable"
+                            : "payable"
+                    }">
 
-    showToast("Payment Added", "success");
+                        ${
+                            total >= 0
+                                ? "Owed to You"
+                                : "You Owe"
+                        }
 
-};
+                    </span>
 
-deleteBtn.onclick = function (e) {
+                </div>
 
-    e.stopPropagation();
 
-    const confirmed = confirm("Are you sure you want to delete this debt?");
+                <div class="debt-card-main-row">
 
-    if (!confirmed) {
-        return;
-    }
+                    <div class="debt-card-details">
 
-    debts = debts.filter(d => d.id !== debt.id);
+                        ${
+                            person.debts.length
+                        }
 
-    localStorage.setItem("debts", JSON.stringify(debts));
+                        ${
+                            person.debts.length === 1
+                                ? "Debt"
+                                : "Debts"
+                        }
 
-    renderDebts();
+                    </div>
 
-    showToast("Debt Deleted", "success");
 
-};
+                    <div class="debt-card-amount">
 
-        debtsList.appendChild(card);
-card.onclick = function () {
+                        ${
+                            total >= 0
+                                ? "+"
+                                : "-"
+                        }
 
-    const actions = card.querySelector(".debt-actions");
-    const isHidden = actions.classList.contains("hidden");
+                        EGP ${
+                            Math.abs(total)
+                                .toLocaleString("en-US")
+                        }
 
-    // يقفل كل القوائم
-    document.querySelectorAll(".debt-actions").forEach(menu => {
-        menu.classList.add("hidden");
-    });
+                    </div>
 
-    // لو كانت مقفولة يفتحها، ولو مفتوحة يسيبها مقفولة
-    if (isHidden) {
-        actions.classList.remove("hidden");
-    }
+                </div>
 
-};
-    });
+            `;
+
+
+            // ==============================
+            // فتح صفحة الشخص
+            // ==============================
+
+            card.onclick = function () {
+
+                window.location.href =
+                    `person-debt.html?person=${encodeURIComponent(
+                        person.person
+                    )}`;
+
+            };
+
+
+            debtsList.appendChild(card);
+
+        });
+
+
+    // ==============================
+    // تحديث الإجماليات
+    // ==============================
 
     totalReceivable.innerText =
-    "EGP " + Math.round(receivable).toLocaleString("en-US");
+        "EGP " +
+        Math.round(receivable)
+            .toLocaleString("en-US");
 
-totalPayable.innerText =
-    "EGP " + Math.round(payable).toLocaleString("en-US");
 
-const net = receivable - payable;
+    totalPayable.innerText =
+        "EGP " +
+        Math.round(payable)
+            .toLocaleString("en-US");
 
-netBalance.querySelector(".currency").innerText = "EGP";
 
-netBalance.querySelector(".amount").innerText =
-    Math.round(net).toLocaleString("en-US");
+    const net =
+        receivable - payable;
 
-lucide.createIcons();
+
+    netBalance
+        .querySelector(".currency")
+        .innerText = "EGP";
+
+
+    netBalance
+        .querySelector(".amount")
+        .innerText =
+        Math.round(net)
+            .toLocaleString("en-US");
+
+
+    lucide.createIcons();
+
+}
+
+function openPersonDetail(personName) {
+
+    const personDebts = debts.filter(d => d.person === personName);
+
+    personDetailName.innerText = personName;
+
+    personDetailList.innerHTML = "";
+
+    personDebts.forEach(debt => {
+
+        const row = document.createElement("div");
+        row.className = "debt-card";
+
+        row.innerHTML = `
+            <div class="debt-card-main-row">
+                <div class="debt-card-amount">
+                    ${debt.type === "receivable" ? "+" : "-"} EGP ${Number(debt.remaining).toLocaleString("en-US")}
+                </div>
+                <div class="debt-card-details">
+                    ${debt.dueDate || "No due date"}
+                </div>
+            </div>
+
+            <div class="debt-actions">
+                <button class="edit-btn">
+                    <i data-lucide="pen"></i>
+                </button>
+                <button class="pay-btn">
+                    <i data-lucide="hand-coins"></i>
+                </button>
+                <button class="delete-btn">
+                    <i data-lucide="trash-2"></i>
+                </button>
+            </div>
+        `;
+
+        personDetailList.appendChild(row);
+        const editBtn = row.querySelector(".edit-btn");
+        const payBtn = row.querySelector(".pay-btn");
+        const deleteBtn = row.querySelector(".delete-btn");
+
+        editBtn.onclick = function () {
+
+            editingDebt = debt;
+
+            editDebtPerson.value = debt.person;
+            editDebtAmount.value = debt.amount;
+            editDebtDueDate.value = debt.dueDate || "";
+            editDebtNotes.value = debt.notes || "";
+
+            editDebtTypeButtons.forEach(btn => {
+                btn.classList.remove("active");
+                if (btn.dataset.type === debt.type) {
+                    btn.classList.add("active");
+                }
+            });
+
+            personDetailModal.classList.remove("show");
+            editDebtModal.classList.add("show");
+
+        };
+
+        payBtn.onclick = function () {
+
+            const payment = Number(
+                prompt(`Enter payment amount\nRemaining: ${debt.remaining} EGP`)
+            );
+
+            if (!payment || payment <= 0) return;
+
+            if (payment > debt.remaining) {
+                showToast("Payment is greater than remaining amount", "error");
+                return;
+            }
+
+            debt.paid += payment;
+            debt.remaining -= payment;
+            debt.status = debt.remaining === 0 ? "paid" : "open";
+
+            localStorage.setItem("debts", JSON.stringify(debts));
+
+            renderDebts();
+            openPersonDetail(personName);
+
+            showToast("Payment Added", "success");
+
+        };
+
+        deleteBtn.onclick = function () {
+
+            const confirmed = confirm("Are you sure you want to delete this debt?");
+            if (!confirmed) return;
+
+            debts = debts.filter(d => d.id !== debt.id);
+
+            localStorage.setItem("debts", JSON.stringify(debts));
+
+            renderDebts();
+
+            if (debts.some(d => d.person === personName)) {
+                openPersonDetail(personName);
+            } else {
+                personDetailModal.classList.remove("show");
+            }
+
+            showToast("Debt Deleted", "success");
+
+        };
+
+    });
+
+    lucide.createIcons();
+
+    personDetailModal.classList.add("show");
 
 }
 renderDebts();
-

@@ -1,0 +1,885 @@
+/* =========================================
+   Person Debt Page
+========================================= */
+
+body {
+    background: #FAFAFA;
+}
+
+
+/* =========================================
+   Total Card
+========================================= */
+
+.total-card {
+    margin: 0 0 22px;
+
+    padding: 18px 20px 22px;
+
+    border-radius: 0 0 24px 24px;
+
+    background: #0F766E;
+
+    color: #fff;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   Header
+========================================= */
+
+.account-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.16);
+
+    color: #fff;
+
+    font-size: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.transaction-title {
+    flex: 1;
+}
+
+
+.transaction-title h1 {
+    margin: 0;
+
+    font-size: 22px;
+
+    font-weight: 800;
+}
+
+
+.account-info {
+    text-align: right;
+}
+
+
+.account-info span {
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================
+   Divider
+========================================= */
+
+.header-divider {
+    height: 1px;
+
+    margin: 18px 0;
+
+    background: rgba(255,255,255,.20);
+}
+
+
+/* =========================================
+   Total
+========================================= */
+
+.total-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.total-label {
+    font-size: 16px;
+
+    font-weight: 700;
+
+    opacity: .85;
+}
+
+
+.total-value {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 7px;
+}
+
+
+.total-value .currency {
+    font-size: 17px;
+
+    font-weight: 700;
+
+    opacity: .85;
+}
+
+
+#personTotal {
+    font-size: 40px;
+
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+/* =========================================
+   Debts Section
+========================================= */
+
+.transactions-section {
+    padding: 0 20px 30px;
+}
+
+
+.section-title {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+
+.section-title h3 {
+    margin: 0;
+
+    font-size: 26px;
+
+    color: #111827;
+}
+
+
+.section-title span {
+    min-width: 34px;
+
+    height: 34px;
+
+    padding: 0 10px;
+
+    border-radius: 50%;
+
+    background: #E5E7EB;
+
+    color: #374151;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* =========================================
+   Debt Card
+========================================= */
+
+#personDebtsList {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+.person-debt-card {
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background: #fff;
+
+    border: 1px solid #E5E7EB;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,.05);
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   Card Header
+========================================= */
+
+.person-debt-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+}
+
+
+.person-debt-type {
+
+    padding: 7px 11px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.person-debt-type.receivable {
+
+    background: #DCFCE7;
+
+    color: #16A34A;
+}
+
+
+.person-debt-type.payable {
+
+    background: #FEE2E2;
+
+    color: #DC2626;
+}
+
+
+.person-debt-status {
+
+    padding: 6px 10px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.person-debt-status.open {
+
+    background: #DBEAFE;
+
+    color: #2563EB;
+}
+
+
+.person-debt-status.paid {
+
+    background: #E5E7EB;
+
+    color: #6B7280;
+}
+
+
+/* =========================================
+   Amount
+========================================= */
+
+.person-debt-amount {
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    color: #111827;
+
+    margin-bottom: 12px;
+}
+
+
+/* =========================================
+   Info
+========================================= */
+
+.person-debt-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    margin-bottom: 16px;
+
+    color: #6B7280;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   Actions
+========================================= */
+
+.person-debt-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    gap: 8px;
+
+    padding-top: 14px;
+
+    border-top: 1px solid #E5E7EB;
+}
+
+
+.person-debt-actions button {
+
+    min-height: 40px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.person-edit-btn {
+
+    background: #DBEAFE;
+
+    color: #2563EB;
+}
+
+
+.person-pay-btn {
+
+    background: #D1FAE5;
+
+    color: #059669;
+}
+
+
+.person-delete-btn {
+
+    background: #FEE2E2;
+
+    color: #DC2626;
+}
+
+
+/* =========================================
+   Empty State
+========================================= */
+
+.empty-state {
+
+    padding: 70px 20px;
+
+    text-align: center;
+
+    color: #9CA3AF;
+}
+
+
+.empty-state div {
+
+    font-size: 52px;
+
+    margin-bottom: 12px;
+}
+
+
+.empty-state p {
+
+    margin: 0;
+
+    font-size: 16px;
+
+    font-weight: 600;
+}
+/* =========================================
+   Person Debt Bottom Actions
+========================================= */
+
+.person-debt-nav {
+
+    position: fixed;
+
+    left: 20px;
+    right: 20px;
+    bottom: 18px;
+
+    height: 76px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    gap: 6px;
+
+    padding: 7px;
+
+    box-sizing: border-box;
+
+    background: #FFFFFF;
+
+    border: 1px solid #E5E7EB;
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, .12);
+
+    z-index: 1000;
+}
+
+
+.person-nav-item {
+
+    border: none;
+
+    border-radius: 18px;
+
+    background: transparent;
+
+    color: #6B7280;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+
+.person-nav-item span {
+
+    font-size: 23px;
+
+    line-height: 1;
+
+    font-weight: 700;
+}
+
+
+.person-nav-item small {
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+
+.person-nav-item:active {
+
+    transform: scale(.96);
+
+}
+
+
+/* ألوان العمليات */
+
+.settlement-btn {
+
+    color: #7C3AED;
+
+}
+
+
+.payable-btn {
+
+    color: #DC2626;
+
+}
+
+
+.receivable-btn {
+
+    color: #059669;
+
+}
+
+
+/* مساحة أسفل الصفحة */
+
+.transactions-section {
+
+    padding-bottom: 120px;
+
+}
+
+
+/* =========================================
+   Action Modal
+========================================= */
+
+.person-action-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, .45);
+
+    z-index: 2000;
+}
+
+
+.person-action-modal.show {
+
+    display: flex;
+
+}
+
+
+.person-action-box {
+
+    width: 100%;
+
+    max-width: 520px;
+
+    background: #FFFFFF;
+
+    border-radius: 24px 24px 18px 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 -5px 30px rgba(0, 0, 0, .15);
+
+    animation: personActionUp .25s ease;
+}
+
+
+@keyframes personActionUp {
+
+    from {
+
+        transform: translateY(40px);
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        transform: translateY(0);
+
+        opacity: 1;
+
+    }
+
+}
+
+
+/* =========================================
+   Modal Header
+========================================= */
+
+.person-action-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 20px;
+
+    border-bottom: 1px solid #E5E7EB;
+}
+
+
+.person-action-header h2 {
+
+    margin: 0;
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+    color: #111827;
+}
+
+
+.close-action-btn {
+
+    width: 38px;
+
+    height: 38px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #F3F4F6;
+
+    color: #374151;
+
+    font-size: 26px;
+
+    line-height: 1;
+
+}
+
+
+/* =========================================
+   Modal Body
+========================================= */
+
+.person-action-body {
+
+    padding: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+
+.person-action-body label {
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #374151;
+
+    margin-top: 5px;
+}
+
+
+.person-action-body input,
+.person-action-body textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid #D1D5DB;
+
+    border-radius: 12px;
+
+    padding: 13px 14px;
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+    outline: none;
+
+    background: #FAFAFA;
+}
+
+
+.person-action-body input:focus,
+.person-action-body textarea:focus {
+
+    border-color: #0F766E;
+
+    background: #FFFFFF;
+
+}
+
+
+.person-action-body textarea {
+
+    resize: none;
+}
+
+
+/* =========================================
+   Modal Footer
+========================================= */
+
+.person-action-footer {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    padding: 0 20px 20px;
+}
+
+
+.person-action-footer button {
+
+    min-height: 48px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+
+.action-cancel-btn {
+
+    background: #F3F4F6;
+
+    color: #374151;
+}
+
+
+.action-save-btn {
+
+    background: #0F766E;
+
+    color: #FFFFFF;
+}
+/* =========================================
+   Person Debt Actions
+========================================= */
+
+.person-actions {
+
+    margin: 30px 20px 20px;
+
+    padding: 20px 10px;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 8px;
+
+    background: #fff;
+
+    border: 1px solid #E5E7EB;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.06);
+
+}
+
+
+.person-action {
+
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 70px;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+}
+
+
+.person-action .action-icon {
+
+    font-size: 34px;
+
+    font-weight: 900;
+
+    line-height: 1;
+}
+
+
+.person-action.settlement {
+
+    color: #8B5CF6;
+
+}
+
+
+.person-action.payables {
+
+    color: #DC2626;
+
+}
+
+
+.person-action.receivables {
+
+    color: #059669;
+
+}
+
+
+.person-action:active {
+
+    transform: scale(.94);
+
+}

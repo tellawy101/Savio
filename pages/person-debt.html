@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Person Debt</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/debts.css">
+    <link rel="stylesheet" href="../css/person-debt.css">
+</head>
+
+<body>
+
+<section class="total-card">
+
+    <div class="account-header">
+
+        <button class="back-btn" onclick="history.back()">
+            ←
+        </button>
+
+        <div class="transaction-title">
+            <h1 id="personStatus">Owed to You</h1>
+        </div>
+
+        <div class="account-info">
+            <span id="personName">Person</span>
+        </div>
+
+    </div>
+
+    <div class="header-divider"></div>
+
+    <div class="total-row">
+        <div class="total-label">Total</div>
+        <div class="total-value">
+            <span class="currency">EGP</span>
+            <span id="personTotal">0</span>
+        </div>
+    </div>
+
+</section>
+
+<section class="transactions-section">
+
+    <div class="section-title">
+        <h3>Debts</h3>
+        <span id="personDebtCount">0</span>
+    </div>
+
+    <div id="personDebtsList"></div>
+
+    <div id="personEmptyState" class="empty-state">
+        <div>📭</div>
+        <p>No debts yet</p>
+    </div>
+<!-- Person Debt Actions -->
+
+<div class="person-actions">
+
+    <button id="settlementBtn" class="person-action settlement">
+        <span class="action-icon">↔</span>
+        <span>Settlement</span>
+    </button>
+
+    <button id="payablesBtn" class="person-action payables">
+        <span class="action-icon">↘</span>
+        <span>Payables</span>
+    </button>
+
+    <button id="receivablesBtn" class="person-action receivables">
+        <span class="action-icon">↗</span>
+        <span>Receivables</span>
+    </button>
+
+</div>
+</section>
+<!-- =========================================
+     Person Debt Actions
+========================================= -->
+
+<nav class="person-debt-nav">
+
+    <button
+        class="person-nav-item settlement-btn"
+        data-action="settlement">
+
+        <span>↔</span>
+        <small>Settlement</small>
+
+    </button>
+
+
+    <button
+        class="person-nav-item payable-btn"
+        data-action="payable">
+
+        <span>↘</span>
+        <small>Payables</small>
+
+    </button>
+
+
+    <button
+        class="person-nav-item receivable-btn"
+        data-action="receivable">
+
+        <span>↗</span>
+        <small>Receivables</small>
+
+    </button>
+
+</nav>
+
+
+<!-- =========================================
+     Action Modal
+========================================= -->
+
+<div id="personActionModal" class="person-action-modal">
+
+    <div class="person-action-box">
+
+        <div class="person-action-header">
+
+            <h2 id="personActionTitle">
+                Settlement
+            </h2>
+
+            <button
+                id="closePersonActionModal"
+                class="close-action-btn">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="person-action-body">
+
+            <label>
+                Amount
+            </label>
+
+            <input
+                type="number"
+                id="personActionAmount"
+                placeholder="0"
+                inputmode="decimal"
+                min="0"
+            >
+
+
+            <label>
+                Due Date
+            </label>
+
+            <input
+                type="date"
+                id="personActionDate"
+            >
+
+
+            <label>
+                Note
+            </label>
+
+            <textarea
+                id="personActionNote"
+                placeholder="Optional note..."
+                rows="3"
+            ></textarea>
+
+        </div>
+
+
+        <div class="person-action-footer">
+
+            <button
+                id="cancelPersonAction"
+                class="action-cancel-btn">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                id="savePersonAction"
+                class="action-save-btn">
+
+                Save
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="../js/personDebt.js"></script>
+</body>
+</html>
