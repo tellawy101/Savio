@@ -546,7 +546,7 @@ receivablesBtn.onclick = function () {
         JSON.stringify(debts)
     );
 
-    renderPersonDebts();
+    renderPersonDebt();
 
     showToast(
         "Receivable Added",
