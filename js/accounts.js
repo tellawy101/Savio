@@ -12,7 +12,8 @@
 // ======================================
 
 // Elements
-const accountBox = document.querySelector(".account-select-box");
+const accountBoxes = document.querySelectorAll(".account-select-box");
+let activeAccountBox = null; // الصندوق اللي المستخدم داس عليه آخر مرة
 const accountModal = document.getElementById("accountModal");
 const addAccountBtn = document.getElementById("addAccountBtn");
 const addAccountModal = document.getElementById("addAccountModal");
@@ -30,11 +31,12 @@ let editingAccount = null;
 // Events
 // ==============================
 
-if (accountBox) {
-    accountBox.onclick = function() {
+accountBoxes.forEach(function (box) {
+    box.onclick = function() {
+        activeAccountBox = box;
         accountModal.classList.add("show");
     };
-}
+});
 
 if (accountModal) {
     accountModal.onclick = function(e) {

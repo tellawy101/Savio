@@ -101,6 +101,10 @@ function applyStoredTheme() {
 
 // بترجع خانة "الحساب" الظاهرة في الصفحة الحالية (Income أو Expense)
 function getAccountFieldEl() {
+    if (typeof activeAccountBox !== "undefined" && activeAccountBox) {
+        const field = activeAccountBox.querySelector(".account-select");
+        if (field) return field;
+    }
     return document.getElementById("incomeAccount") || document.getElementById("expenseAccount");
 }
 

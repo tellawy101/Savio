@@ -280,11 +280,60 @@ function renderSharedModals() {
         Account name already exists
     </div>
 
-    <div id="categoryMenu" class="modal">
+   <div id="categoryMenu" class="modal">
         <div class="modal-content">
             <button id="editCategoryBtn">✏️ Edit</button>
             <button id="deleteCategoryBtn">🗑 Delete</button>
         </div>
     </div>
+
+    <div id="noAccountsModal" class="modal">
+        <div class="modal-content" style="text-align:center;">
+            <div style="width:56px;height:56px;border-radius:50%;background:#F3F4F6;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                <i data-lucide="wallet-cards"></i>
+            </div>
+            <h2 id="noAccountsTitle">Add Accounts First</h2>
+            <p id="noAccountsMessage" style="color:#777;font-size:14px;margin:8px 0 18px;">
+                You need at least two accounts to make a transfer.
+            </p>
+            <div class="modal-actions">
+                <button id="noAccountsCancelBtn" class="account-cancel-btn">Cancel</button>
+                <button id="noAccountsAddBtn" class="account-save-btn">+ Add Account</button>
+            </div>
+        </div>
+    </div>
     `;
+}
+
+// بيفتح مودال "محتاج تعمل حسابين" برسالة تختلف حسب عدد الحسابات الموجود
+// existingAccountsCount = عدد الحسابات الحالي (0 أو 1)
+function showNoAccountsModal(existingAccountsCount) {
+    const modal = document.getElementById("noAccountsModal");
+    const title = document.getElementById("noAccountsTitle");
+    const message = document.getElementById("noAccountsMessage");
+
+    if (!modal) return;
+
+    if (existingAccountsCount === 0) {
+        title.textContent = "لسه معملتش أي حساب";
+        message.textContent = "لازم تعمل حسابين على الأقل عشان تقدر تحوّل فلوس بينهم.";
+    } else {
+        title.textContent = "محتاج حساب واحد كمان";
+        message.textContent = "عندك حساب واحد بس دلوقتي. اعمل حساب تاني عشان تقدر تحوّل.";
+    }
+
+    modal.classList.add("show");
+
+    modal.onclick = function (e) {
+        if (e.target === modal) modal.classList.remove("show");
+    };
+
+    document.getElementById("noAccountsCancelBtn").onclick = function () {
+        modal.classList.remove("show");
+    };
+
+    document.getElementById("noAccountsAddBtn").onclick = function () {
+        const insidePagesFolder = window.location.pathname.includes("/pages/");
+        window.location.href = insidePagesFolder ? "accounts.html" : "pages/accounts.html";
+    };
 }

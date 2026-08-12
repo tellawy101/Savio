@@ -38,7 +38,8 @@ body.has-scroll {
    رأس الصفحة (Income + Expense)
 ============================== */
 .income-header,
-.expense-header {
+.expense-header,
+.transfer-header{
     position: sticky;
     top: 0;
     z-index: 100;
@@ -55,7 +56,8 @@ body.has-scroll {
 }
 
 .income-header h1,
-.expense-header h1 {
+.expense-header h1,
+.transfer-header h1 {
     margin: 0;
     flex: 1;
     text-align: center;
@@ -117,7 +119,8 @@ body.has-scroll {
 }
 
 #incomeAmount,
-#expenseAmount {
+#expenseAmount, 
+#transferAmount {
     transition: width 0.10s ease;
     width: 2ch;
     min-width: 20px;
@@ -137,12 +140,15 @@ body.has-scroll {
 }
 
 #incomeAmount::placeholder,
-#expenseAmount::placeholder {
+#expenseAmount::placeholder,
+#transferAmount::placeholder
+{
     color: #111;
 }
 
 #incomeAmount:focus,
-#expenseAmount:focus {
+#expenseAmount:focus,
+#transferAmount:focus{
     border: none;
     outline: none;
 }
@@ -463,6 +469,7 @@ body.has-scroll {
 ============================== */
 .dark .income-header,
 .dark .expense-header,
+.dark .transfer-header,
 .dark .description-input {
     background: #1e1e1e;
     color: #ffffff;
@@ -470,7 +477,8 @@ body.has-scroll {
 }
 
 .dark .income-header h1,
-.dark .expense-header h1 {
+.dark .expense-header h1,
+.dark .transfer-header h1 {
     color: #ffffff;
 }
 
@@ -513,7 +521,9 @@ body.has-scroll {
 .dark #incomeAccount,
 .dark #incomeCategory,
 .dark #expenseAccount,
-.dark #expenseCategory {
+.dark #expenseCategory,
+.dark #transferFromAccount,
+.dark #transferToAccount {
     color: #fff !important;
 }
 

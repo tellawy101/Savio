@@ -46,11 +46,15 @@ function renderExpenses() {
             return;
         }
         
-        if (expense.type === "expense") {
-            total += expense.amount;
-        } else if (expense.type === "income") {
-            income += expense.amount;
-        }
+        // معاملات الترانسفير بتتحسب في رصيد كل حساب بس مش في إجمالي الدخل/المصروف
+// (لأنها مش دخل أو مصروف حقيقي، مجرد نقل بين حسابات المستخدم نفسه)
+if (!expense.isTransfer) {
+    if (expense.type === "expense") {
+        total += expense.amount;
+    } else if (expense.type === "income") {
+        income += expense.amount;
+    }
+}
         
         const li = document.createElement("li");
         
@@ -136,18 +140,30 @@ deleteBtn.addEventListener("click", (e) => {
     e.stopPropagation();
 
     if (confirm("Delete this item?")) {
-
+    
+    if (expense.isTransfer) {
+        // التحويل بيتخزن كنصين (خصم + إضافة)، فلازم يتشالوا مع بعض
+        expenses = expenses.filter(t => t.transferId !== expense.transferId);
+    } else {
         expenses.splice(index, 1);
-        saveTransactions(expenses);
-        renderExpenses();
-
     }
-
+    
+    saveTransactions(expenses);
+    renderExpenses();
+    
+}
 });
 
 editBtn.addEventListener("click", (e) => {
 
     e.stopPropagation();
+
+    if (expense.isTransfer) {
+
+        window.location.href = "pages/transfer.html?edit=" + expense.transferId;
+        return;
+
+    }
 
     if (expense.type === "income") {
 
@@ -163,8 +179,7 @@ editBtn.addEventListener("click", (e) => {
 
     }
 
-});
-card.addEventListener("touchstart", (e) => {
+});card.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
 });
@@ -295,7 +310,7 @@ fabIncome.onclick = function () {
     window.location.href = "pages/income.html";
 };
 
-fabTransfer.onclick = function () {
+fabTransfer.onclick = function() {
     window.location.href = "pages/transfer.html";
 };
 
