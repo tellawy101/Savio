@@ -34,6 +34,7 @@ let editingAccount = null;
 accountBoxes.forEach(function (box) {
     box.onclick = function() {
         activeAccountBox = box;
+        renderAccounts(); // نبني القائمة تاني عشان تاخد آخر حالة (الحساب المعطل يتحدث)
         accountModal.classList.add("show");
     };
 });
@@ -78,8 +79,14 @@ function renderAccounts() {
     
     accountsList.innerHTML = "";
     
-    let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
     let transactions = typeof loadTransactions === "function" ? loadTransactions() : [];
+
+    // لو الصفحة الحالية (زي Transfer) محددة دالة getDisabledAccountName
+    // هنستخدمها عشان نعرف الحساب اللي المفروض يبقى باهت ومش قابل للاختيار
+    const disabledAccountName = (typeof window.getDisabledAccountName === "function")
+        ? window.getDisabledAccountName()
+        : null;
     
     accounts.forEach(account => {
         
@@ -98,7 +105,9 @@ function renderAccounts() {
         
         item.dataset.name = account.name;
         
-        item.className = "account-item";
+        const isDisabled = disabledAccountName && account.name === disabledAccountName;
+
+item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
         
         item.innerHTML = `
     <div class="account-item-icon"><i data-lucide="${account.icon}"></i></div>
@@ -125,6 +134,8 @@ function renderAccounts() {
         });
         
         item.onclick = function() {
+            if (isDisabled) return;
+
             const field = getAccountFieldEl();
             if (field) {
                 field.innerHTML = `<i data-lucide="${account.icon}"></i> ${account.name}`;

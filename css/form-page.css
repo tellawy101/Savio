@@ -426,6 +426,12 @@ body.has-scroll {
     color: #777;
 }
 
+.account-item-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
 /* ==============================
    قائمة تعديل/حذف الحساب أو التصنيف (accountMenu / categoryMenu)
 ============================== */

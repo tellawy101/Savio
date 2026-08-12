@@ -468,3 +468,50 @@ transform: translateY(-10px);
 body {
     background-color: #F4F5F7;
 }
+
+/* ==============================
+   ألوان زراري Cancel / Save في المودالز
+============================== */
+
+#cancelDebtBtn,
+#cancelEditDebtBtn {
+    background: #E5E7EB;
+    color: #374151;
+}
+
+#saveDebtBtn,
+#saveEditDebtBtn {
+    background: #0F766E;
+    color: #fff;
+}
+
+/* ==============================
+   خانة الملاحظات في مودال التعديل (نفس شكل مودال الإضافة)
+============================== */
+
+#editDebtNotes {
+    width: 100%;
+    min-height: 100px;
+    
+    padding: 14px 16px;
+    
+    box-sizing: border-box;
+    
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    
+    background: #fff;
+    color: #111;
+    
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    
+    resize: vertical;
+}
+
+#editDebtNotes::placeholder {
+    color: #777;
+    font-size: 16px;
+    font-weight: 500;
+}

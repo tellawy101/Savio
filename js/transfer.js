@@ -35,6 +35,31 @@ const urlParams = new URLSearchParams(window.location.search);
 const editTransferId = urlParams.get("edit"); // transferId مش index
 
 // ==============================
+// منع اختيار نفس الحساب في From وTo
+// ==============================
+
+// بيقول لـ accounts.js إن الحساب المختار في الخانة التانية (From أو To)
+// المفروض يبقى باهت ومش قابل للاختيار تاني في القائمة
+window.getDisabledAccountName = function () {
+    if (!activeAccountBox) return null;
+
+    const fromBox = transferFromAccount.closest(".account-select-box");
+    const toBox = transferToAccount.closest(".account-select-box");
+
+    if (activeAccountBox === toBox) {
+        const from = transferFromAccount.textContent.trim();
+        return from === "Select Account" ? null : from;
+    }
+
+    if (activeAccountBox === fromBox) {
+        const to = transferToAccount.textContent.trim();
+        return to === "Select Account" ? null : to;
+    }
+
+    return null;
+};
+
+// ==============================
 // تبديل حساب المصدر والوجهة
 // ==============================
 

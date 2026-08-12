@@ -35,8 +35,20 @@ function renderExpenses() {
     
     expenseList.innerHTML = "";
     total = 0;
-    income = 0;
-    expenses.forEach((expense, index) => {
+income = 0;
+
+// بنرتب المعاملات حسب التاريخ (الأحدث فوق)، ولو نفس التاريخ الأحدث إضافة الأول
+// من غير ما نغيّر ترتيبها الأصلي جوه الـ localStorage (عشان index يفضل صحيح للتعديل/الحذف)
+const sortedEntries = expenses
+    .map((expense, index) => ({ expense, index }))
+    .sort((a, b) => {
+        if (a.expense.date !== b.expense.date) {
+            return b.expense.date.localeCompare(a.expense.date);
+        }
+        return b.index - a.index;
+    });
+
+sortedEntries.forEach(({ expense, index }) => {
         
         if (
             !expense.category

@@ -55,7 +55,19 @@ debtTypeButtons.forEach(button => {
     };
 
 });
+editDebtTypeButtons.forEach(button => {
 
+    button.onclick = function () {
+
+        editDebtTypeButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        this.classList.add("active");
+
+    };
+
+});
 
 const debtPerson = document.getElementById("debtPerson");
 
@@ -103,6 +115,24 @@ debtModal.onclick = function (e) {
     if (e.target === debtModal) {
 
         debtModal.classList.remove("show");
+
+    }
+
+};
+
+cancelEditDebtBtn.onclick = function () {
+
+    editDebtModal.classList.remove("show");
+    editingDebt = null;
+
+};
+
+editDebtModal.onclick = function (e) {
+
+    if (e.target === editDebtModal) {
+
+        editDebtModal.classList.remove("show");
+        editingDebt = null;
 
     }
 
@@ -181,6 +211,54 @@ const dueDate = debtDueDate.value || new Date().toISOString().split("T")[0];
     showToast("Debt Added", "success");
 
 };
+
+// ==============================
+// Save Edited Debt
+// ==============================
+
+saveEditDebtBtn.onclick = function () {
+
+    if (!editingDebt) return;
+
+    const person = editDebtPerson.value.trim();
+    const amount = Number(editDebtAmount.value);
+    const dueDate = editDebtDueDate.value || editingDebt.dueDate;
+    const activeTypeBtn = document.querySelector(".edit-debt-type-btn.active");
+    const type = activeTypeBtn ? activeTypeBtn.dataset.type : editingDebt.type;
+
+    if (person === "") {
+        alert("Please enter person name");
+        editDebtPerson.focus();
+        return;
+    }
+
+    if (!amount || amount <= 0) {
+        alert("Please enter a valid amount");
+        editDebtAmount.focus();
+        return;
+    }
+
+    editingDebt.person = person;
+    editingDebt.amount = amount;
+    editingDebt.type = type;
+    editingDebt.dueDate = dueDate;
+    editingDebt.notes = editDebtNotes.value.trim();
+
+    // نحدّث "المتبقي" حسب المبلغ الجديد والمدفوع اللي فات، من غير ما يقل عن صفر
+    editingDebt.remaining = Math.max(0, editingDebt.amount - editingDebt.paid);
+    editingDebt.status = editingDebt.remaining === 0 ? "paid" : "open";
+
+    localStorage.setItem("debts", JSON.stringify(debts));
+
+    renderDebts();
+
+    editDebtModal.classList.remove("show");
+    editingDebt = null;
+
+    showToast("Debt Updated", "success");
+
+};
+
 
 // ==============================
 // Clear Form
