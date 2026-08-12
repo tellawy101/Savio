@@ -366,20 +366,28 @@ transform: translateY(-10px);
     margin: 10px 0;
 }
 
-.debt-type-btn {
+.debt-type-btn,
+.edit-debt-type-btn {
     flex: 1;
     width: auto;
     margin: 0;
     padding: 14px 10px;
-
+    
     background: #E5E7EB;
     color: #555;
-
+    
     border: 1px solid #D1D5DB;
     border-radius: 12px;
-
+    
     font-size: 15px;
     font-weight: 600;
+}
+
+.debt-type-btn.active,
+.edit-debt-type-btn.active {
+    background: #0F766E;
+    color: #fff;
+    border-color: #0F766E;
 }
 
 .debt-type-btn.active {
