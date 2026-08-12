@@ -500,15 +500,53 @@ body {
 }
 
 
-.person-nav-item span {
+.person-nav-icon {
 
-    font-size: 23px;
+    width: 38px;
+    height: 38px;
 
-    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    font-weight: 700;
+    border-radius: 50%;
+
+    background: currentColor;
 }
 
+.person-nav-icon i {
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    stroke-width: 2.4;
+}
+.person-nav-icon svg {
+    display: block;
+}
+
+.settlement-btn .person-nav-icon {
+    background: rgba(124, 58, 237, .15);
+}
+
+.payable-btn .person-nav-icon {
+    background: rgba(220, 38, 38, .15);
+}
+
+.receivable-btn .person-nav-icon {
+    background: rgba(5, 150, 105, .15);
+}
+
+.settlement-btn .person-nav-icon i {
+    color: #7C3AED;
+}
+
+.payable-btn .person-nav-icon i {
+    color: #DC2626;
+}
+
+.receivable-btn .person-nav-icon i {
+    color: #059669;
+}
 
 .person-nav-item small {
 

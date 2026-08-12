@@ -503,174 +503,145 @@ function editDebt(debt) {
 // =======================================
 
 renderPersonDebt();
-receivablesBtn.onclick = function () {
 
-    const amount = Number(
-        prompt("Enter receivable amount")
-    );
+// =======================================
+// Bottom Nav Actions (Settlement / Payable / Receivable)
+// =======================================
 
-    if (!amount || amount <= 0) {
-        return;
-    }
+const navButtons = document.querySelectorAll(".person-nav-item");
 
-    const debt = {
+const personActionModal = document.getElementById("personActionModal");
+const personActionTitle = document.getElementById("personActionTitle");
+const personActionAmount = document.getElementById("personActionAmount");
+const personActionDate = document.getElementById("personActionDate");
+const personActionNote = document.getElementById("personActionNote");
 
-        id: Date.now(),
+const closePersonActionModal = document.getElementById("closePersonActionModal");
+const cancelPersonAction = document.getElementById("cancelPersonAction");
+const savePersonAction = document.getElementById("savePersonAction");
 
-        type: "receivable",
+let currentAction = null; // "settlement" | "payable" | "receivable"
 
-        person: personName,
+navButtons.forEach(btn => {
 
-        amount: amount,
+    btn.onclick = function () {
 
-        paid: 0,
+        currentAction = this.dataset.action;
 
-        remaining: amount,
+        personActionTitle.innerText =
+            currentAction === "settlement"
+                ? "Settlement"
+                : currentAction === "payable"
+                    ? "Add Payable"
+                    : "Add Receivable";
 
-        dueDate:
-            new Date().toISOString().split("T")[0],
+        personActionAmount.value = "";
+        personActionDate.value = new Date().toISOString().split("T")[0];
+        personActionNote.value = "";
 
-        notes: "",
-
-        status: "open",
-
-        createdAt:
-            new Date().toLocaleDateString()
-
-    };
-
-    debts.push(debt);
-
-    localStorage.setItem(
-        "debts",
-        JSON.stringify(debts)
-    );
-
-    renderPersonDebt();
-
-    showToast(
-        "Receivable Added",
-        "success"
-    );
-
-};
-payablesBtn.onclick = function () {
-
-    const amount = Number(
-        prompt("Enter payable amount")
-    );
-
-    if (!amount || amount <= 0) {
-        return;
-    }
-
-    const debt = {
-
-        id: Date.now(),
-
-        type: "payable",
-
-        person: personName,
-
-        amount: amount,
-
-        paid: 0,
-
-        remaining: amount,
-
-        dueDate:
-            new Date().toISOString().split("T")[0],
-
-        notes: "",
-
-        status: "open",
-
-        createdAt:
-            new Date().toLocaleDateString()
+        personActionModal.classList.add("show");
+        personActionAmount.focus();
 
     };
 
-    debts.push(debt);
+});
 
-    localStorage.setItem(
-        "debts",
-        JSON.stringify(debts)
-    );
+function closePersonAction() {
+    personActionModal.classList.remove("show");
+    currentAction = null;
+}
 
-    renderPersonDebts();
+closePersonActionModal.onclick = closePersonAction;
+cancelPersonAction.onclick = closePersonAction;
 
-    showToast(
-        "Payable Added",
-        "success"
-    );
-
+personActionModal.onclick = function (e) {
+    if (e.target === personActionModal) {
+        closePersonAction();
+    }
 };
-settlementBtn.onclick = function () {
 
-    const personDebts = debts.filter(debt =>
-        debt.person.trim().toLowerCase() ===
-        personName.trim().toLowerCase() &&
-        Number(debt.remaining) > 0
-    );
+savePersonAction.onclick = function () {
 
-    if (personDebts.length === 0) {
+    const amount = Number(personActionAmount.value);
 
-        showToast(
-            "No open debts",
-            "error"
+    if (!amount || amount <= 0) {
+        alert("Please enter a valid amount");
+        personActionAmount.focus();
+        return;
+    }
+
+    if (currentAction === "settlement") {
+
+        const openDebts = debts.filter(d =>
+            String(d.person).trim().toLowerCase() ===
+            String(person).trim().toLowerCase() &&
+            Number(d.remaining) > 0
         );
 
-        return;
-    }
-
-    const amount = Number(
-        prompt("Enter settlement amount")
-    );
-
-    if (!amount || amount <= 0) {
-        return;
-    }
-
-    let remainingPayment = amount;
-
-    for (const debt of personDebts) {
-
-        if (remainingPayment <= 0) {
-            break;
+        if (openDebts.length === 0) {
+            showToast("No open debts", "error");
+            closePersonAction();
+            return;
         }
 
-        const payment = Math.min(
-            remainingPayment,
-            Number(debt.remaining)
+        let remainingPayment = amount;
+
+        for (const debt of openDebts) {
+
+            if (remainingPayment <= 0) break;
+
+            const payment = Math.min(remainingPayment, Number(debt.remaining));
+
+            debt.paid = Number(debt.paid || 0) + payment;
+            debt.remaining = Math.max(0, Number(debt.remaining) - payment);
+            debt.status = debt.remaining === 0 ? "paid" : "open";
+
+            remainingPayment -= payment;
+
+        }
+
+        localStorage.setItem("debts", JSON.stringify(debts));
+
+        showToast("Settlement Added", "success");
+
+    } else {
+
+        const debt = {
+
+            id: Date.now(),
+
+            type: currentAction, // "payable" or "receivable"
+
+            person: person,
+
+            amount: amount,
+
+            paid: 0,
+
+            remaining: amount,
+
+            dueDate: personActionDate.value || new Date().toISOString().split("T")[0],
+
+            notes: personActionNote.value.trim(),
+
+            status: "open",
+
+            createdAt: new Date().toLocaleDateString()
+
+        };
+
+        debts.push(debt);
+
+        localStorage.setItem("debts", JSON.stringify(debts));
+
+        showToast(
+            currentAction === "payable" ? "Payable Added" : "Receivable Added",
+            "success"
         );
 
-        debt.paid =
-            Number(debt.paid || 0) + payment;
-
-        debt.remaining =
-            Number(debt.remaining) - payment;
-
-        debt.remaining =
-            Math.max(0, debt.remaining);
-
-        debt.status =
-            debt.remaining === 0
-                ? "paid"
-                : "open";
-
-        remainingPayment -= payment;
     }
 
-    localStorage.setItem(
-        "debts",
-        JSON.stringify(debts)
-    );
-
-    renderPersonDebts();
-
-    showToast(
-        "Settlement Added",
-        "success"
-    );
+    closePersonAction();
+    renderPersonDebt();
 
 };

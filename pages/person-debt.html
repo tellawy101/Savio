@@ -56,27 +56,9 @@
         <div>📭</div>
         <p>No debts yet</p>
     </div>
-<!-- Person Debt Actions -->
 
-<div class="person-actions">
-
-    <button id="settlementBtn" class="person-action settlement">
-        <span class="action-icon">↔</span>
-        <span>Settlement</span>
-    </button>
-
-    <button id="payablesBtn" class="person-action payables">
-        <span class="action-icon">↘</span>
-        <span>Payables</span>
-    </button>
-
-    <button id="receivablesBtn" class="person-action receivables">
-        <span class="action-icon">↗</span>
-        <span>Receivables</span>
-    </button>
-
-</div>
 </section>
+
 <!-- =========================================
      Person Debt Actions
 ========================================= -->
@@ -87,7 +69,9 @@
         class="person-nav-item settlement-btn"
         data-action="settlement">
 
-        <span>↔</span>
+        <span class="person-nav-icon">
+            <i data-lucide="arrow-left-right"></i>
+        </span>
         <small>Settlement</small>
 
     </button>
@@ -97,7 +81,9 @@
         class="person-nav-item payable-btn"
         data-action="payable">
 
-        <span>↘</span>
+        <span class="person-nav-icon">
+            <i data-lucide="arrow-down-right"></i>
+        </span>
         <small>Payables</small>
 
     </button>
@@ -107,7 +93,9 @@
         class="person-nav-item receivable-btn"
         data-action="receivable">
 
-        <span>↗</span>
+        <span class="person-nav-icon">
+            <i data-lucide="arrow-up-right"></i>
+        </span>
         <small>Receivables</small>
 
     </button>
@@ -202,7 +190,11 @@
     </div>
 
 </div>
+
+<div id="toast" class="toast"></div>
+
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="../js/ui.js"></script>
 <script src="../js/personDebt.js"></script>
 </body>
 </html>
