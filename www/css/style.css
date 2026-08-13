@@ -5,6 +5,9 @@ body {
     background: #ffffff;
     color: #111111;
 }
+body.capacitor-app {
+    padding-top: env(safe-area-inset-top, 0px);
+}
 
 main {
     padding: 20px;
@@ -393,7 +396,7 @@ header p{
 .bottom-nav{
     position:fixed;
     overflow: visible;
-    bottom:calc(15px + env(safe-area-inset-bottom, 0px));
+    bottom:15px;
     left:15px;
     right:15px;
     height:70px;
@@ -407,6 +410,9 @@ border:1px solid rgba(255, 255, 255, .2);
     border-radius:25px;
     box-shadow:0 8px 30px rgba(0,0,0,.12);
     z-index:1000;
+}
+body.capacitor-app .bottom-nav {
+    bottom: 45px;
 }
 .nav-item{
     background:none;
