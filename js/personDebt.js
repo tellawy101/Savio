@@ -273,74 +273,9 @@ function createDebtCard(debt) {
 
         </div>
 
-
-        <div class="person-debt-actions">
-
-            <button
-                class="person-edit-btn"
-                data-id="${debt.id}">
-
-                ✏️ Edit
-
-            </button>
-
-
-            <button
-                class="person-pay-btn"
-                data-id="${debt.id}">
-
-                💰 Pay
-
-            </button>
-
-
-            <button
-                class="person-delete-btn"
-                data-id="${debt.id}">
-
-                🗑️ Delete
-
-            </button>
-
-        </div>
-
     `;
 
 
-    // ==============================
-    // Edit
-    // ==============================
-
-    card.querySelector(".person-edit-btn")
-        .onclick = function () {
-
-            editDebt(debt);
-
-        };
-
-
-    // ==============================
-    // Pay
-    // ==============================
-
-    card.querySelector(".person-pay-btn")
-        .onclick = function () {
-
-            payDebt(debt);
-
-        };
-
-
-    // ==============================
-    // Delete
-    // ==============================
-
-    card.querySelector(".person-delete-btn")
-        .onclick = function () {
-
-            deleteDebt(debt);
-
-        };
 
 
     personDebtsList.appendChild(card);
