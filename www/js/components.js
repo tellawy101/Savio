@@ -10,7 +10,7 @@ function renderBottomNav(activePage) {
     const isHome = activePage === 'home';
 
     return `
-    <nav class="bottom-nav ${isHome ? '' : 'no-fab'}">
+    <nav class="bottom-nav test-bottom ${isHome ? '' : 'no-fab'}">
         <button class="nav-item ${activePage === 'home' ? 'active' : ''}" data-page="home">
             <i data-lucide="home"></i>
             <span>Home</span>
