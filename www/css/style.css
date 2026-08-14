@@ -413,7 +413,7 @@ border:1px solid rgba(255, 255, 255, .2);
     z-index:1000;
 }
 body.capacitor-app .bottom-nav {
-    bottom: 45px;
+   bottom: calc(15px + env(safe-area-inset-bottom, 0px));
 }
 .nav-item{
     background:none;
@@ -717,4 +717,3 @@ svg.lucide {
 .test-bottom {
     bottom: 5px !important;
 }
-/*testsavio123*/
