@@ -412,6 +412,7 @@ header p{
     box-shadow: 0 8px 30px rgba(0,0,0,.12);
     z-index: 1000;
 }
+/* APK ONLY */
 body.capacitor-app .bottom-nav {
     bottom: 40px;
 }

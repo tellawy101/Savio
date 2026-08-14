@@ -4,6 +4,13 @@
 // ============================
 
 // 1) بناء الـ Bottom Navigation حسب الصفحة الحالية
+
+if (
+    window.Capacitor &&
+    window.Capacitor.isNativePlatform()
+) {
+    document.body.classList.add('capacitor-app');
+}
 function renderBottomNav(activePage) {
     // activePage تكون: 'home' | 'debts' | 'accounts' | 'settings'
 
