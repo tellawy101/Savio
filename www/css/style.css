@@ -397,7 +397,7 @@ header p{
 .bottom-nav{
     position: fixed;
     overflow: visible;
-    bottom: 105px;
+    bottom: 15px;
     left: 15px;
     right: 15px;
     height: 70px;
