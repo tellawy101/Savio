@@ -397,7 +397,7 @@ header p{
 .bottom-nav{
     position:fixed;
     overflow: visible;
-    bottom:calc(15px + env(safe-area-inset-bottom, 0px));
+    bottom: 105px;
     left:15px;
     right:15px;
     height:70px;
