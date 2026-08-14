@@ -413,7 +413,7 @@ border:1px solid rgba(255, 255, 255, .2);
     z-index:1000;
 }
 body.capacitor-app .bottom-nav {
-   bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+   bottom: 165px;
 }
 .nav-item{
     background:none;
