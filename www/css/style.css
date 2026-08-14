@@ -717,3 +717,6 @@ svg.lucide {
 .test-bottom {
     bottom: 5px !important;
 }
+.bottom-nav {
+    bottom: 200px !important;
+}
