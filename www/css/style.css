@@ -413,7 +413,7 @@ header p{
     z-index: 1000;
 }
 body.capacitor-app .bottom-nav {
-    bottom: 15px;
+    bottom: 25px;
 }
 
 .nav-item{
