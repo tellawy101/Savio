@@ -19,6 +19,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Capacitor Android
+        run: |
+          CAP_VERSION=$(node -p "require('./node_modules/@capacitor/core/package.json').version")
+          npm install --no-save "@capacitor/android@$CAP_VERSION"
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
