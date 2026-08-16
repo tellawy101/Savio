@@ -577,26 +577,19 @@ padding: 7px;
 /* =========================================
    Action Modal
 ========================================= */
-
 .person-action-modal {
-
     position: fixed;
-
     inset: 0;
-
     display: none;
-
     align-items: flex-end;
-
     justify-content: center;
-
-    padding: 20px;
-
+    padding: 10px;
     background: rgba(0, 0, 0, .45);
-
     z-index: 2000;
-}
 
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
 
 .person-action-modal.show {
 
@@ -606,24 +599,23 @@ padding: 7px;
 
 
 .person-action-box {
-
     width: 100%;
-
     max-width: 520px;
+    max-height: calc(100dvh - 20px);
 
     background: #FFFFFF;
-
     border-radius: 24px 24px 18px 18px;
 
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     box-shadow:
         0 -5px 30px rgba(0, 0, 0, .15);
 
     animation: personActionUp .25s ease;
+
+    box-sizing: border-box;
 }
-
-
 @keyframes personActionUp {
 
     from {
@@ -899,4 +891,33 @@ padding: 7px;
 
     transform: scale(.94);
 
+}
+/* =========================================
+   Keyboard / Small Screen Fix
+========================================= */
+
+@media (max-height: 700px) {
+
+    .person-action-modal {
+        padding: 5px 10px;
+        align-items: flex-end;
+    }
+
+    .person-action-box {
+        max-height: calc(100dvh - 10px);
+        border-radius: 20px 20px 14px 14px;
+    }
+
+    .person-action-header {
+        padding: 14px 18px;
+    }
+
+    .person-action-body {
+        padding: 14px 18px;
+        gap: 7px;
+    }
+
+    .person-action-footer {
+        padding: 0 18px 14px;
+    }
 }
