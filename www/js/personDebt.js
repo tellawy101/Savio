@@ -272,6 +272,11 @@ function createDebtCard(debt) {
             }
 
         </div>
+        <div class="person-debt-actions">
+            <button class="debt-action-btn edit-btn" data-id="${debt.id}">✏️ Edit</button>
+            <button class="debt-action-btn pay-btn" data-id="${debt.id}">💵 Pay</button>
+            <button class="debt-action-btn delete-btn" data-id="${debt.id}">🗑️ Delete</button>
+        </div>
 
     `;
 
@@ -295,8 +300,7 @@ function payDebt(debt) {
 
     if (remaining <= 0) {
 
-        alert("This debt is already paid.");
-
+        showToast("This debt is already paid.", "error");
         return;
 
     }
@@ -317,10 +321,7 @@ function payDebt(debt) {
 
     if (payment > remaining) {
 
-        alert(
-            "Payment is greater than remaining amount."
-        );
-
+        showToast("Payment is greater than remaining amount.", "error");
         return;
 
     }
@@ -340,21 +341,21 @@ function payDebt(debt) {
             : "open";
 
 
-    localStorage.setItem(
+localStorage.setItem(
         "debts",
         JSON.stringify(debts)
     );
 
+    showToast("Payment Added", "success");
 
     renderPersonDebt();
 
 }
 
 
-// =======================================
+// ======================
 // Delete Debt
-// =======================================
-
+//======================
 function deleteDebt(debt) {
 
     const confirmed =
@@ -386,51 +387,112 @@ function deleteDebt(debt) {
 
 
 // =======================================
-// Edit Debt
+// Edit Debt (Modal)
 // =======================================
 
-function editDebt(debt) {
+const editDebtModal = document.getElementById("editDebtModal");
+const editDebtPerson = document.getElementById("editDebtPerson");
+const editDebtAmount = document.getElementById("editDebtAmount");
+const editDebtDueDate = document.getElementById("editDebtDueDate");
+const editDebtNotes = document.getElementById("editDebtNotes");
 
-    const newAmount =
-        Number(
-            prompt(
-                `Edit amount\nCurrent: ${debt.amount} EGP`,
-                debt.amount
-            )
-        );
+const editTypeReceivable = document.getElementById("editTypeReceivable");
+const editTypePayable = document.getElementById("editTypePayable");
 
+const closeEditDebtModal = document.getElementById("closeEditDebtModal");
+const cancelEditDebt = document.getElementById("cancelEditDebt");
+const saveEditDebt = document.getElementById("saveEditDebt");
 
-    if (!newAmount || newAmount <= 0) {
+let currentEditDebt = null;
+let currentEditType = "receivable";
+
+function setEditType(type) {
+
+    currentEditType = type;
+
+    editTypeReceivable.classList.toggle("active", type === "receivable");
+    editTypePayable.classList.toggle("active", type === "payable");
+
+}
+
+editTypeReceivable.onclick = function () {
+    setEditType("receivable");
+};
+
+editTypePayable.onclick = function () {
+    setEditType("payable");
+};
+
+function openEditDebtModal(debt) {
+
+    currentEditDebt = debt;
+
+    editDebtPerson.value = debt.person || "";
+    editDebtAmount.value = debt.amount || "";
+    editDebtDueDate.value = debt.dueDate || "";
+    editDebtNotes.value = debt.notes || "";
+
+    setEditType(debt.type === "payable" ? "payable" : "receivable");
+
+    editDebtModal.classList.add("show");
+    editDebtAmount.focus();
+
+}
+
+function closeEditDebt() {
+    editDebtModal.classList.remove("show");
+    currentEditDebt = null;
+}
+
+closeEditDebtModal.onclick = closeEditDebt;
+cancelEditDebt.onclick = closeEditDebt;
+
+editDebtModal.onclick = function (e) {
+    if (e.target === editDebtModal) {
+        closeEditDebt();
+    }
+};
+
+saveEditDebt.onclick = function () {
+
+    if (!currentEditDebt) return;
+
+    const newPerson = editDebtPerson.value.trim();
+    const newAmount = Number(editDebtAmount.value);
+
+    if (!newPerson) {
+        showToast("Please enter person name", "error");
+        editDebtPerson.focus();
         return;
     }
 
+    if (!newAmount || newAmount <= 0) {
+        showToast("Please enter a valid amount", "error");
+        editDebtAmount.focus();
+        return;
+    }
 
-    debt.amount =
-        newAmount;
+    currentEditDebt.person = newPerson;
+    currentEditDebt.type = currentEditType;
+    currentEditDebt.amount = newAmount;
 
+    currentEditDebt.remaining =
+        Math.max(0, newAmount - Number(currentEditDebt.paid || 0));
 
-    debt.remaining =
-        Math.max(
-            0,
-            newAmount - Number(debt.paid || 0)
-        );
+    currentEditDebt.status =
+        currentEditDebt.remaining === 0 ? "paid" : "open";
 
+    currentEditDebt.dueDate = editDebtDueDate.value || currentEditDebt.dueDate;
+    currentEditDebt.notes = editDebtNotes.value.trim();
 
-    debt.status =
-        debt.remaining === 0
-            ? "paid"
-            : "open";
+    localStorage.setItem("debts", JSON.stringify(debts));
 
+    showToast("Debt Updated", "success");
 
-    localStorage.setItem(
-        "debts",
-        JSON.stringify(debts)
-    );
-
-
+    closeEditDebt();
     renderPersonDebt();
 
-}
+};
 
 
 // =======================================
@@ -580,3 +642,32 @@ savePersonAction.onclick = function () {
     renderPersonDebt();
 
 };
+// =======================================
+// Debt Card Actions (Edit / Pay / Delete)
+// =======================================
+
+personDebtsList.addEventListener("click", function (e) {
+
+    const btn = e.target.closest(".debt-action-btn");
+
+    if (!btn) return;
+
+    const id = Number(btn.dataset.id);
+
+    const debt = debts.find(d => d.id === id);
+
+    if (!debt) return;
+
+    if (btn.classList.contains("edit-btn")) {
+        openEditDebtModal(debt);
+    }
+
+    if (btn.classList.contains("pay-btn")) {
+        payDebt(debt);
+    }
+
+    if (btn.classList.contains("delete-btn")) {
+        deleteDebt(debt);
+    }
+
+});

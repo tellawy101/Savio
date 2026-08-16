@@ -191,6 +191,33 @@
 
 </div>
 
+<div id="editDebtModal" class="person-action-modal">
+    <div class="person-action-box">
+        <div class="person-action-header">
+            <h2>Edit Debt</h2>
+            <button id="closeEditDebtModal" class="close-action-btn">×</button>
+        </div>
+        <div class="person-action-body">
+            <div class="debt-type-buttons">
+                <button type="button" class="debt-type-btn active" data-type="receivable" id="editTypeReceivable">Owed to Me</button>
+                <button type="button" class="debt-type-btn" data-type="payable" id="editTypePayable">I Owe</button>
+            </div>
+            <label>Person Name</label>
+            <input type="text" id="editDebtPerson" placeholder="Person Name">
+            <label>Amount</label>
+            <input type="number" id="editDebtAmount" placeholder="0" inputmode="decimal" min="0">
+            <label>Due Date</label>
+            <input type="date" id="editDebtDueDate">
+            <label>Notes</label>
+            <textarea id="editDebtNotes" placeholder="Optional note..." rows="3"></textarea>
+        </div>
+        <div class="person-action-footer">
+            <button id="cancelEditDebt" class="action-cancel-btn">Cancel</button>
+            <button id="saveEditDebt" class="action-save-btn">Save</button>
+        </div>
+    </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
