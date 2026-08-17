@@ -57,6 +57,7 @@ const totalPayable = document.getElementById("totalPayable");
 const netBalance = document.getElementById("netBalance");
 const payDebtModal = document.getElementById("payDebtModal");
 const payAmount = document.getElementById("payAmount");
+const payAccount = document.getElementById("payAccount");
 const cancelPayBtn = document.getElementById("cancelPayBtn");
 const confirmPayBtn = document.getElementById("confirmPayBtn");
 
@@ -237,36 +238,60 @@ const dueDate = debtDueDate.value || new Date().toISOString().split("T")[0];
 // Confirm Pay
 // ==============================
 
-confirmPayBtn.onclick = function () {
-
+confirmPayBtn.onclick = function() {
+    
     if (!currentPayDebt) return;
-
+    
     const payment = Number(payAmount.value);
-
+    const account = payAccount.value;
+    
+    if (!account) {
+        alert("Please select an account");
+        return;
+    }
+    
     if (!payment || payment <= 0) {
         alert("Please enter a valid amount");
         payAmount.focus();
         return;
     }
-
+    
     if (payment > currentPayDebt.remaining) {
         alert("Payment is greater than remaining amount");
         return;
     }
-
+    
     currentPayDebt.paid += payment;
     currentPayDebt.remaining -= payment;
     currentPayDebt.status = currentPayDebt.remaining === 0 ? "paid" : "open";
-
+    
     localStorage.setItem("debts", JSON.stringify(debts));
-
+    
+    // تسجيل المبلغ كمعاملة Income أو Expense حسب نوع الدين
+    const transactions = loadTransactions();
+    
+    transactions.push({
+        amount: payment,
+        account: account,
+        description: currentPayDebt.type === "receivable" ?
+            `Debt payment from ${currentPayDebt.person}` :
+            `Debt payment to ${currentPayDebt.person}`,
+        category: "Debt Payment",
+        categoryIcon: "hand-coins",
+        type: currentPayDebt.type === "receivable" ? "income" : "expense",
+        date: new Date().toISOString().split("T")[0],
+        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    });
+    
+    saveTransactions(transactions);
+    
     renderDebts();
-
+    
     payDebtModal.classList.remove("show");
     currentPayDebt = null;
-
+    
     showToast("Payment Added", "success");
-
+    
 };
 
 // ==============================
@@ -418,6 +443,12 @@ function renderDebts() {
                 e.stopPropagation();
                 currentPayDebt = debt;
                 payAmount.value = "";
+
+                const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+
+                payAccount.innerHTML = `<option value="">Select Account</option>` +
+                    accounts.map(acc => `<option value="${acc.name}">${acc.name}</option>`).join("");
+
                 payDebtModal.classList.add("show");
             };
         }
