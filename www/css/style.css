@@ -237,7 +237,7 @@ header p{
 }
 .balance-box{
     text-align:center;
-    margin-bottom:25px;
+    margin-bottom:0px;
 }
 
 .balance-box h3{
@@ -715,4 +715,138 @@ svg.lucide {
         opacity 0.25s ease,
         transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
         visibility 0s;
+}
+/* =========================
+   BUDGET BUTTON
+========================= */
+
+/* =========================
+   BUDGET BUTTON
+========================= */
+
+.dashboard {
+    position: relative !important;
+}
+
+.budget-btn {
+    position: absolute !important;
+    top: 18px !important;
+    right: 18px !important;
+    left: auto !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: auto !important;
+    height: auto !important;
+
+    gap: 6px !important;
+    padding: 7px 12px !important;
+    margin: 0 !important;
+
+    border: none !important;
+    border-radius: 14px !important;
+
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+
+    font-size: 11px !important;
+    font-weight: 700 !important;
+
+    cursor: pointer;
+    z-index: 20 !important;
+}
+
+.budget-btn svg {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.budget-btn:active {
+    transform: scale(0.95);
+}
+
+#budgetValue {
+    white-space: nowrap !important;
+}
+/* =========================
+   BALANCE CHART
+========================= */
+
+.balance-chart {
+    width: calc(100% - 36px);
+    margin: 8px auto 5px;
+    position: relative;
+}
+
+.balance-chart svg {
+    width: 100%;
+    height: 105px;
+    display: block;
+    overflow: hidden;
+}
+
+.balance-chart line {
+    stroke: rgba(255, 255, 255, 0.12);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 6;
+}
+
+.chart-line {
+    fill: none;
+    stroke: #8fffc8;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.chart-area {
+    fill: rgba(143, 255, 200, 0.10);
+}
+
+.chart-days {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 2px 0;
+
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 11px;
+    font-weight: 500;
+}
+/* =========================
+   BUDGET MODAL
+========================= */
+
+#budgetModal {
+    display: none;
+}
+
+#budgetModal.show {
+    display: flex;
+}
+/* =========================
+   BUDGET ACTIONS
+========================= */
+
+.budget-actions {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.budget-actions button {
+    flex: 1;
+    margin: 0 !important;
+}
+
+.budget-actions #saveBudgetBtn {
+    background: #0F766E;
+    color: #ffffff;
+}
+
+.budget-actions #closeBudgetBtn {
+    background: #e5e7eb;
+    color: #333333;
 }

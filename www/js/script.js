@@ -370,3 +370,446 @@ document.addEventListener("click", function(e) {
     }
     
 });
+// =========================
+// Balance Chart Days
+// Starts from today
+// =========================
+
+// =========================
+// Balance Chart Days
+// Last 7 days
+// =========================
+
+// =========================
+// Balance Chart Days
+// Week starts Saturday
+// =========================
+
+function updateChartDays() {
+
+    const days = [
+        "Sat",
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri"
+    ];
+
+    for (let i = 0; i < 7; i++) {
+
+        const element =
+            document.getElementById(`day${i}`);
+
+        if (element) {
+            element.textContent = days[i];
+        }
+    }
+}
+
+document.addEventListener(
+    "DOMContentLoaded",
+    updateChartDays
+);
+
+document.addEventListener(
+    "DOMContentLoaded",
+    updateChartDays
+);
+
+document.addEventListener("DOMContentLoaded", updateChartDays);
+// ================================
+// SAVIO BALANCE CHART
+// ================================
+
+function getLocalDateKey(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+function updateBalanceChart() {
+    
+    const chartLine = document.getElementById("chartLine");
+    const chartArea = document.getElementById("chartArea");
+    
+    if (!chartLine || !chartArea) return;
+    
+    const transactions = loadTransactions();
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // =========================
+    // تحديد بداية الأسبوع
+    // السبت = بداية الأسبوع
+    // =========================
+    
+    const currentDay = today.getDay();
+    
+    const daysFromSaturday =
+        (currentDay + 1) % 7;
+    
+    const weekStart = new Date(today);
+    
+    weekStart.setDate(
+        today.getDate() - daysFromSaturday
+    );
+    
+    // =========================
+    // إنشاء أيام السبت → الجمعة
+    // =========================
+    
+    const dates = [];
+    
+    for (let i = 0; i < 7; i++) {
+        
+        const date = new Date(weekStart);
+        
+        date.setDate(
+            weekStart.getDate() + i
+        );
+        
+        dates.push(date);
+    }
+    
+    // =========================
+    // حساب الرصيد قبل بداية الأسبوع
+    // =========================
+    
+    let runningBalance = 0;
+    
+    const firstDayKey =
+        getLocalDateKey(weekStart);
+    
+    transactions.forEach(transaction => {
+        
+        if (!transaction.date) return;
+        
+        if (transaction.date >= firstDayKey) return;
+        
+        if (transaction.isTransfer) return;
+        
+        const amount =
+            Number(transaction.amount) || 0;
+        
+        if (transaction.type === "income") {
+            runningBalance += amount;
+        }
+        
+        if (transaction.type === "expense") {
+            runningBalance -= amount;
+        }
+        
+    });
+    
+    // =========================
+    // رصيد كل يوم
+    // =========================
+    
+    const balances = [];
+    
+    dates.forEach(date => {
+        
+        const dateKey =
+            getLocalDateKey(date);
+        
+        // الأيام المستقبلية
+        if (date > today) {
+            
+            balances.push(runningBalance);
+            
+            return;
+        }
+        
+        transactions.forEach(transaction => {
+            
+            if (transaction.date !== dateKey) {
+                return;
+            }
+            
+            if (transaction.isTransfer) {
+                return;
+            }
+            
+            const amount =
+                Number(transaction.amount) || 0;
+            
+            if (transaction.type === "income") {
+                runningBalance += amount;
+            }
+            
+            if (transaction.type === "expense") {
+                runningBalance -= amount;
+            }
+            
+        });
+        
+        balances.push(runningBalance);
+        
+    });
+    
+    // =========================
+    // تحديد نطاق الرسم
+    // =========================
+    
+    let minValue =
+        Math.min(...balances);
+    
+    let maxValue =
+        Math.max(...balances);
+    
+    if (minValue === maxValue) {
+        
+        minValue -= 100;
+        maxValue += 100;
+        
+    } else {
+        
+        const padding =
+            (maxValue - minValue) * 0.15;
+        
+        minValue -= padding;
+        maxValue += padding;
+        
+    }
+    
+    // =========================
+    // إعداد SVG
+    // =========================
+    
+    const width = 700;
+    const height = 120;
+    
+    const topPadding = 15;
+    const bottomPadding = 15;
+    
+    const chartHeight =
+        height -
+        topPadding -
+        bottomPadding;
+    
+    // =========================
+    // تحويل القيم لنقاط
+    // =========================
+    
+    const points =
+        balances.map((value, index) => {
+            
+            const x =
+                (width / 6) * index;
+            
+            const ratio =
+                (value - minValue) /
+                (maxValue - minValue);
+            
+            const y =
+                height -
+                bottomPadding -
+                (ratio * chartHeight);
+            
+            return {
+                x,
+                y
+            };
+            
+        });
+    
+    // =========================
+    // رسم المنحنى
+    // =========================
+    
+    let linePath = "";
+    
+    points.forEach((point, index) => {
+        
+        if (index === 0) {
+            
+            linePath =
+                `M ${point.x} ${point.y}`;
+            
+        } else {
+            
+            const previous =
+                points[index - 1];
+            
+            const midX =
+                (previous.x + point.x) / 2;
+            
+            linePath += `
+                C ${midX} ${previous.y},
+                  ${midX} ${point.y},
+                  ${point.x} ${point.y}
+            `;
+            
+        }
+        
+    });
+    
+    // =========================
+    // المنطقة تحت الخط
+    // =========================
+    
+    const areaPath =
+        linePath +
+        ` L ${width} ${height}
+          L 0 ${height}
+          Z`;
+    
+    chartLine.setAttribute(
+        "d",
+        linePath
+    );
+    
+    chartArea.setAttribute(
+        "d",
+        areaPath
+    );
+}
+updateBalanceChart();
+// =========================
+// Budget Modal
+// =========================
+
+const budgetBtn = document.getElementById("budgetBtn");
+const budgetModal = document.getElementById("budgetModal");
+const closeBudgetBtn = document.getElementById("closeBudgetBtn");
+
+if (budgetBtn && budgetModal) {
+
+    budgetBtn.addEventListener("click", () => {
+        budgetModal.classList.add("show");
+    });
+
+}
+
+if (closeBudgetBtn && budgetModal) {
+
+    closeBudgetBtn.addEventListener("click", () => {
+        budgetModal.classList.remove("show");
+    });
+
+}
+// =========================
+// Save Budget
+// =========================
+
+const saveBudgetBtn = document.getElementById("saveBudgetBtn");
+const budgetAmountInput = document.getElementById("budgetAmount");
+
+if (saveBudgetBtn && budgetAmountInput) {
+
+    saveBudgetBtn.addEventListener("click", () => {
+
+        const amount = Number(
+            budgetAmountInput.value.replace(/,/g, "")
+        );
+
+        if (!amount || amount <= 0) {
+            alert("Please enter a valid budget.");
+            return;
+        }
+
+        localStorage.setItem(
+    "savioBudget",
+    amount
+);
+
+budgetAmountInput.value = "";
+
+if (budgetModal) {
+    budgetModal.classList.remove("show");
+}
+
+// تحديث قيمة Budget فورًا
+updateBudgetButton();
+
+    });
+
+}
+
+// =========================
+// Update Monthly Budget
+// =========================
+
+function updateBudgetButton() {
+
+    const budgetValue =
+        document.getElementById("budgetValue");
+
+    if (!budgetValue) return;
+
+    const budget =
+        Number(localStorage.getItem("savioBudget")) || 0;
+
+    // مفيش ميزانية
+    if (budget <= 0) {
+        budgetValue.textContent = "Budget";
+        return;
+    }
+
+    const transactions = loadTransactions();
+
+    // الشهر الحالي
+    const now = new Date();
+
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+
+    // مصاريف الشهر الحالي فقط
+    const totalExpenses = transactions
+        .filter(transaction => {
+
+            if (transaction.type !== "expense") {
+                return false;
+            }
+
+            if (!transaction.date) {
+                return false;
+            }
+
+            const parts = transaction.date.split("-");
+
+            if (parts.length !== 3) {
+                return false;
+            }
+
+            const year = Number(parts[0]);
+            const month = Number(parts[1]) - 1;
+
+            return (
+                year === currentYear &&
+                month === currentMonth
+            );
+
+        })
+        .reduce((total, transaction) => {
+
+            return total +
+                (Number(transaction.amount) || 0);
+
+        }, 0);
+
+    // المتبقي من ميزانية الشهر
+    const remaining =
+        budget - totalExpenses;
+
+    if (remaining >= 0) {
+
+        budgetValue.textContent =
+            `EGP ${remaining.toLocaleString("en-US")}`;
+
+    } else {
+
+        budgetValue.textContent =
+            `EGP ${Math.abs(remaining).toLocaleString("en-US")} over`;
+
+    }
+}
+
+// تشغيل الحساب عند فتح الصفحة
+updateBudgetButton();

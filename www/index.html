@@ -24,6 +24,10 @@
 <body>
 <header class="dashboard">
   <button id="themeBtn"><span id="themeIconWrap"><i data-lucide="moon"></i></span></button>
+  <button id="budgetBtn" class="budget-btn">
+    <i data-lucide="wallet"></i>
+    <span id="budgetValue">Budget</span>
+</button>
    <div class="balance-box">
     <h3>Balance</h3>
     <h2 class="balance-amount">
@@ -31,7 +35,36 @@
         <span id="balanceValue">0</span>
     </h2>
 </div>
+<!-- Balance Chart -->
+<div class="balance-chart">
+    <svg viewBox="0 0 700 120" preserveAspectRatio="none">
+<!-- خطوط الخلفية -->
+<line x1="0" y1="35" x2="700" y2="35"></line>
+<line x1="0" y1="90" x2="700" y2="90"></line>
+<line x1="0" y1="145" x2="700" y2="145"></line>
+        <!-- الرسم -->
+       <path
+    id="chartArea"
+    class="chart-area">
+</path>
 
+<path
+    id="chartLine"
+    class="chart-line">
+</path>
+
+    </svg>
+
+    <div class="chart-days">
+    <span id="day0"></span>
+    <span id="day1"></span>
+    <span id="day2"></span>
+    <span id="day3"></span>
+    <span id="day4"></span>
+    <span id="day5"></span>
+    <span id="day6"></span>
+</div>
+</div>
     <div class="stats">
 
         <div class="stat">
@@ -50,6 +83,37 @@
 
 </header>
 <main>
+    <!-- Budget Modal -->
+<div id="budgetModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Budget</h2>
+
+        <label for="budgetAmount">
+            Monthly Budget
+        </label>
+
+        <input
+            type="text"
+            id="budgetAmount"
+            inputmode="decimal"
+            placeholder="0">
+<div class="budget-actions">
+    
+    <button id="saveBudgetBtn">
+        Save
+    </button>
+    
+    <button id="closeBudgetBtn">
+        Cancel
+    </button>
+    
+</div>
+
+    </div>
+
+</div>
  
   <!-- نافذة إضافة الدخل -->
 <div id="incomeModal" class="modal">
@@ -149,4 +213,3 @@
 </script>
 </body>
 </html>
-    <!-- تعديل -->
