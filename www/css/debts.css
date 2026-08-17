@@ -523,3 +523,82 @@ body {
     font-size: 16px;
     font-weight: 500;
 }
+/* ==============================
+   Single Debt Card (Swipeable)
+============================== */
+
+.debt-card-wrapper {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto 15px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.debt-card-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 24px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.debt-card-bg.show {
+    opacity: 1;
+}
+
+.debt-card-bg.bg-delete {
+    background: #EF4444;
+    justify-content: flex-start;
+}
+
+.debt-card-bg.bg-edit {
+    background: #3B82F6;
+    justify-content: flex-end;
+}
+
+.debt-card-bg svg {
+    width: 20px;
+    height: 20px;
+}
+.debt-card-wrapper .debt-card {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    touch-action: pan-y;
+}
+
+.debt-badge.settled {
+    color: #6b7280;
+    background: #f3f4f6;
+}
+
+.debt-card-pay-btn {
+    width: auto;
+    margin: 0 0 0 auto;
+    background: #17202B;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.debt-paid-note {
+    display: inline-block;
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}

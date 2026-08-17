@@ -117,6 +117,86 @@
     </div>
 
 </div>
+<!-- Pay Modal -->
+<div id="payDebtModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Pay Debt</h2>
+
+        <input
+            type="tel"
+            id="payAmount"
+            placeholder="Amount">
+
+        <div class="modal-actions">
+
+            <button id="cancelPayBtn">
+                Cancel
+            </button>
+
+            <button id="confirmPayBtn">
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Edit Debt Modal -->
+<div id="editDebtModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Edit Debt</h2>
+
+        <div class="debt-type-buttons">
+
+            <button type="button" class="edit-debt-type-btn active" data-type="receivable">
+                Owed to Me
+            </button>
+
+            <button type="button" class="edit-debt-type-btn" data-type="payable">
+                I Owe
+            </button>
+
+        </div>
+
+        <input
+            type="text"
+            id="editDebtPerson"
+            placeholder="Person Name">
+
+        <input
+            type="tel"
+            id="editDebtAmount"
+            placeholder="Amount">
+
+        <input
+            type="date"
+            id="editDebtDueDate">
+
+        <textarea
+            id="editDebtNotes"
+            placeholder="Notes (Optional)"></textarea>
+
+        <div class="modal-actions">
+
+            <button id="cancelEditDebtBtn">
+                Cancel
+            </button>
+
+            <button id="saveEditDebtBtn">
+                Save
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 <div id="toast" class="toast"></div>
 
 
