@@ -12,8 +12,8 @@ if (
     document.body.classList.add('capacitor-app');
 }
 function renderBottomNav(activePage) {
-    // activePage تكون: 'home' | 'debts' | 'accounts' | 'settings'
-
+   // activePage تكون: 'home' | 'debts' | 'statistics' | 'accounts' | 'settings'
+   
     const isHome = activePage === 'home';
 
     return `
@@ -27,7 +27,10 @@ function renderBottomNav(activePage) {
             <i data-lucide="hand-coins"></i>
             <span>Debts</span>
         </button>
-
+<button class="nav-item ${activePage === 'statistics' ? 'active' : ''}" data-page="statistics">
+    <i data-lucide="chart-no-axes-combined"></i>
+    <span>Statistics</span>
+</button>
         ${isHome ? `
         <button id="addMenuBtn" class="fab-nav">
             <i data-lucide="plus"></i>
@@ -89,11 +92,12 @@ function setupBottomNav(basePath = '') {
     initIcons();
 
     const routes = {
-        home: basePath + 'index.html',
-        debts: basePath + 'pages/debts.html',
-        accounts: basePath + 'pages/accounts.html',
-        settings: basePath + 'pages/settings.html'
-    };
+    home: basePath + 'index.html',
+    debts: basePath + 'pages/debts.html',
+    statistics: basePath + 'pages/statistics.html',
+    accounts: basePath + 'pages/accounts.html',
+    settings: basePath + 'pages/settings.html'
+};
 
     document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
         btn.addEventListener('click', function () {

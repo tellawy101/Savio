@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Savio - Statistics</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/statistics.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+    <header class="page-header">
+
+        <div class="header-left">
+            <button class="back-btn" onclick="history.back()">
+                <i data-lucide="arrow-left"></i>
+            </button>
+
+            <div>
+                <h1>Statistics</h1>
+                <p>Track your financial activity</p>
+            </div>
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+    <main class="statistics-container">
+
+        <!-- Period Selector -->
+        <div class="period-selector">
+
+            <button class="period-btn active" data-period="week">
+                Week
+            </button>
+
+            <button class="period-btn" data-period="month">
+                Month
+            </button>
+
+            <button class="period-btn" data-period="year">
+                Year
+            </button>
+
+            <button class="period-btn" data-period="all">
+                All
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             SUMMARY
+        ========================== -->
+        <section class="stats-summary">
+
+            <div class="stat-card balance-stat">
+                <div class="stat-icon">
+                    <i data-lucide="wallet"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>Net Balance</span>
+                    <strong id="netBalance">0 EGP</strong>
+                </div>
+            </div>
+
+
+            <div class="stat-card income-stat">
+                <div class="stat-icon">
+                    <i data-lucide="trending-up"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>Total Income</span>
+                    <strong id="totalIncome">0 EGP</strong>
+                </div>
+            </div>
+
+
+            <div class="stat-card expense-stat">
+                <div class="stat-icon">
+                    <i data-lucide="trending-down"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>Total Expense</span>
+                    <strong id="totalExpense">0 EGP</strong>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CASH FLOW
+        ========================== -->
+        <section class="statistics-card">
+
+            <div class="section-header">
+                <div>
+                    <h2>Cash Flow</h2>
+                    <p>Income vs Expense</p>
+                </div>
+            </div>
+
+            <div class="chart-wrapper">
+                <canvas id="cashFlowChart"></canvas>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             EXPENSE CATEGORIES
+        ========================== -->
+        <section class="statistics-card">
+
+            <div class="section-header">
+                <div>
+                    <h2>Expenses by Category</h2>
+                    <p>Where your money goes</p>
+                </div>
+            </div>
+
+            <div id="categoryStats" class="category-stats">
+
+                <div class="empty-stat">
+                    <i data-lucide="pie-chart"></i>
+                    <span>No expense data yet</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ACCOUNTS
+        ========================== -->
+        <section class="statistics-card">
+
+            <div class="section-header">
+                <div>
+                    <h2>Activity by Account</h2>
+                    <p>Financial activity across accounts</p>
+                </div>
+            </div>
+
+            <div id="accountStats" class="account-stats">
+
+                <div class="empty-stat">
+                    <i data-lucide="wallet-cards"></i>
+                    <span>No account data yet</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         BOTTOM NAVIGATION
+    ========================== -->
+    <div id="nav-placeholder"></div>
+
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Lucide -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script src="../js/components.js"></script>
+<script>
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+    }
+</script>
+
+<script>
+    document.getElementById("nav-placeholder").innerHTML =
+        renderBottomNav('statistics');
+
+    setupBottomNav('../');
+</script>
+
+<script src="../js/statistics.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        initIcons();
+    });
+</script>
+
+</body>
+</html>
