@@ -765,9 +765,12 @@ function updateBudgetButton() {
         .filter(transaction => {
 
             if (transaction.type !== "expense") {
-                return false;
-            }
+    return false;
+}
 
+if (transaction.isTransfer) {
+    return false;
+}
             if (!transaction.date) {
                 return false;
             }
