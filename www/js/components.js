@@ -75,9 +75,7 @@ function navigateWithAnimation(button, url) {
 
     button.classList.add("active");
 
-    setTimeout(() => {
         window.location.href = url;
-    }, 400);
 }
 
 // 3) تفعيل أيقونات lucide (موحدة)
