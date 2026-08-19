@@ -1,32 +1,123 @@
 // ==============================
 // Theme (Dark / Light Mode)
 // ==============================
+
 const themeBtn = document.getElementById("themeBtn");
 const themeIconWrap = document.getElementById("themeIconWrap");
+const darkModeToggle = document.getElementById("darkModeToggle");
+
+
+// ==============================
+// Set Theme Icon
+// ==============================
 
 function setThemeIcon(iconName) {
+
     if (!themeIconWrap) return;
-    themeIconWrap.innerHTML = `<i data-lucide="${iconName}"></i>`;
+
+    themeIconWrap.innerHTML = `
+        <i data-lucide="${iconName}"></i>
+    `;
+
     if (window.lucide) {
         lucide.createIcons();
     }
 }
 
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
+
+// ==============================
+// Apply Theme
+// ==============================
+
+function applyTheme(theme) {
+
+    if (theme === "dark") {
+
+        document.body.classList.add("dark");
+
+    } else {
+
+        document.body.classList.remove("dark");
+
+    }
+
+
+    // Update Settings Toggle
+
+    if (darkModeToggle) {
+        darkModeToggle.checked = theme === "dark";
+    }
+
+
+    // Update Header Theme Icon
+
+    if (themeIconWrap) {
+        setThemeIcon(theme === "dark" ? "sun" : "moon");
+    }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    setThemeIcon(document.body.classList.contains("dark") ? "sun" : "moon");
+
+// ==============================
+// Load Saved Theme
+// ==============================
+
+const savedTheme = localStorage.getItem("theme") || "light";
+
+applyTheme(savedTheme);
+
+
+// ==============================
+// DOM Loaded
+// ==============================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const currentTheme =
+        localStorage.getItem("theme") || "light";
+
+    applyTheme(currentTheme);
+
+
+    // ==========================
+    // Settings Dark Mode Toggle
+    // ==========================
+
+    if (darkModeToggle) {
+
+        darkModeToggle.addEventListener("change", function () {
+
+            const newTheme =
+                this.checked ? "dark" : "light";
+
+            localStorage.setItem("theme", newTheme);
+
+            applyTheme(newTheme);
+
+        });
+
+    }
+
 });
 
-themeBtn.onclick = () => {
-    document.body.classList.toggle("dark");
-    if (document.body.classList.contains("dark")) {
-        localStorage.setItem("theme", "dark");
-        setThemeIcon("sun");
-    } else {
-        localStorage.setItem("theme", "light");
-        setThemeIcon("moon");
-    }
-};
+
+// ==============================
+// Header Theme Button
+// ==============================
+
+if (themeBtn) {
+
+    themeBtn.onclick = function () {
+
+        const isDark =
+            document.body.classList.contains("dark");
+
+        const newTheme =
+            isDark ? "light" : "dark";
+
+        localStorage.setItem("theme", newTheme);
+
+        applyTheme(newTheme);
+
+    };
+
+}

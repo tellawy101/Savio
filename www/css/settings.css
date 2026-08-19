@@ -1,0 +1,232 @@
+.settings-page {
+    padding: 20px 16px 100px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.settings-section {
+    margin-bottom: 24px;
+}
+
+.settings-section h3 {
+    margin: 0 0 10px 4px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.65;
+}
+
+.settings-card {
+    background: var(--card-bg, #ffffff);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.settings-item {
+    min-height: 70px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.settings-item:active {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.settings-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 118, 110, 0.10);
+    color: #0F766E;
+    flex-shrink: 0;
+}
+
+.settings-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+.settings-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.settings-info span {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.settings-info small {
+    display: block;
+    margin-top: 3px;
+    font-size: 12px;
+    opacity: 0.55;
+}
+
+.settings-arrow {
+    width: 18px;
+    height: 18px;
+    opacity: 0.45;
+    flex-shrink: 0;
+}
+
+.settings-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.07);
+    margin-left: 72px;
+}
+
+
+/* Currency */
+
+.settings-select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: inherit;
+    cursor: pointer;
+}
+
+
+/* Dark Mode Switch */
+
+.switch {
+    position: relative;
+    width: 46px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #d1d5db;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.25s;
+}
+
+.switch input:checked + .slider {
+    background: #0F766E;
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(20px);
+}
+
+
+/* Danger */
+
+.settings-item.danger {
+    color: #dc2626;
+}
+
+.settings-item.danger .settings-icon {
+    background: rgba(220, 38, 38, 0.10);
+    color: #dc2626;
+}
+
+.settings-item.danger .settings-info small {
+    color: #dc2626;
+    opacity: 0.65;
+}
+
+
+/* App Version */
+
+.app-version {
+    text-align: center;
+    margin: 30px 0 20px;
+    opacity: 0.5;
+}
+
+.app-version span {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.app-version small {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+}
+
+
+/* Dark Theme */
+
+body.dark .settings-card {
+    background: #1f2937;
+}
+
+body.dark .settings-divider {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+body.dark .settings-item:active {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark .settings-select {
+    color: white;
+}
+
+
+/* Mobile */
+
+@media (max-width: 480px) {
+
+    .settings-page {
+        padding: 16px 12px 100px;
+    }
+
+    .settings-section {
+        margin-bottom: 20px;
+    }
+
+    .settings-item {
+        min-height: 66px;
+        padding: 10px 14px;
+        gap: 12px;
+    }
+
+    .settings-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .settings-info span {
+        font-size: 14px;
+    }
+
+    .settings-info small {
+        font-size: 11px;
+    }
+
+}

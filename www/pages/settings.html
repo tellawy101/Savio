@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <title>Settings</title>
 
@@ -25,19 +26,246 @@
 </header>
 
 
+<main class="settings-page">
+
+    <!-- Account -->
+    <section class="settings-section">
+
+        <h3>Account</h3>
+
+        <div class="settings-card">
+
+            <div class="settings-item">
+                <div class="settings-icon">
+                    <i data-lucide="user"></i>
+                </div>
+
+                <div class="settings-info">
+                    <span>Profile</span>
+                    <small>Manage your profile</small>
+                </div>
+
+                <i class="settings-arrow" data-lucide="chevron-right"></i>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Appearance -->
+    <section class="settings-section">
+
+        <h3>Appearance</h3>
+
+        <div class="settings-card">
+
+            <div class="settings-item">
+
+                <div class="settings-icon">
+                    <i data-lucide="moon"></i>
+                </div>
+
+                <div class="settings-info">
+                    <span>Dark Mode</span>
+                    <small>Change the app appearance</small>
+                </div>
+
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Currency -->
+    <section class="settings-section">
+
+        <h3>Currency</h3>
+
+        <div class="settings-card">
+
+            <div class="settings-item">
+
+                <div class="settings-icon">
+                    <i data-lucide="wallet"></i>
+                </div>
+
+                <div class="settings-info">
+                    <span>Currency</span>
+                    <small>Choose your default currency</small>
+                </div>
+
+                <select id="currencySelect" class="settings-select">
+
+                    <option value="EGP">EGP</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="SAR">SAR</option>
+                    <option value="AED">AED</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Data -->
+    <section class="settings-section">
+
+        <h3>Data</h3>
+
+        <div class="settings-card">
+
+            <div class="settings-item" id="exportData">
+
+                <div class="settings-icon">
+                    <i data-lucide="download"></i>
+                </div>
+
+                <div class="settings-info">
+                    <span>Export Data</span>
+                    <small>Save a backup of your data</small>
+                </div>
+
+                <i class="settings-arrow" data-lucide="chevron-right"></i>
+
+            </div>
+
+
+            <div class="settings-divider"></div>
+
+
+            <div class="settings-item" id="importData">
+
+                <div class="settings-icon">
+                    <i data-lucide="upload"></i>
+                </div>
+
+                <div class="settings-info">
+                    <span>Import Data</span>
+                    <small>Restore your saved data</small>
+                </div>
+
+                <i class="settings-arrow" data-lucide="chevron-right"></i>
+
+            </div>
+
+
+            <div class="settings-divider"></div>
+
+
+            <div class="settings-item danger" id="clearData">
+
+                <div class="settings-icon">
+                    <i data-lucide="trash-2"></i>
+                </div>
+
+                <div class="settings-info">
+                    <span>Clear All Data</span>
+                    <small>Delete all your saved data</small>
+                </div>
+
+                <i class="settings-arrow" data-lucide="chevron-right"></i>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- About -->
+    <section class="settings-section">
+
+        <h3>About</h3>
+
+        <div class="settings-card">
+
+            <div class="settings-item">
+
+                <div class="settings-icon">
+                    <i data-lucide="info"></i>
+                </div>
+
+                <div class="settings-info">
+                    <span>About Savio</span>
+                    <small>Learn more about the app</small>
+                </div>
+
+                <i class="settings-arrow" data-lucide="chevron-right"></i>
+
+            </div>
+
+
+            <div class="settings-divider"></div>
+
+
+            <div class="settings-item">
+
+                <div class="settings-icon">
+                    <i data-lucide="shield-check"></i>
+                </div>
+
+                <div class="settings-info">
+                    <span>Privacy</span>
+                    <small>Your data stays on your device</small>
+                </div>
+
+                <i class="settings-arrow" data-lucide="chevron-right"></i>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Version -->
+    <div class="app-version">
+        <span>Savio</span>
+        <small>Version 1.0.0</small>
+    </div>
+
+</main>
+
+
+<!-- Bottom Navigation -->
+
 <div id="nav-placeholder"></div>
+
 <script src="../js/components.js"></script>
+<script src="../js/theme.js"></script>
+
 <script>
-    document.getElementById("nav-placeholder").innerHTML = renderBottomNav('settings');
+    document.getElementById("nav-placeholder").innerHTML =
+        renderBottomNav('settings');
+
     setupBottomNav('../');
 </script>
 
 
+<!-- Lucide Icons -->
+
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
 <script>
+
     document.addEventListener("DOMContentLoaded", function () {
+
         initIcons();
+
     });
+
 </script>
+
 </body>
 </html>
