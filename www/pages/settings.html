@@ -243,6 +243,7 @@
 <div id="nav-placeholder"></div>
 
 <script src="../js/components.js"></script>
+<script src="../js/storage.js"></script>
 <script src="../js/theme.js"></script>
 
 <script>
@@ -264,6 +265,30 @@
         initIcons();
 
     });
+
+</script>
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const currencySelect =
+        document.getElementById("currencySelect");
+
+    if (!currencySelect) return;
+
+
+    // عرض العملة المحفوظة
+    currencySelect.value = getCurrency();
+
+
+    // عند تغيير العملة
+    currencySelect.addEventListener("change", function () {
+
+        setCurrency(this.value);
+
+    });
+
+});
 
 </script>
 

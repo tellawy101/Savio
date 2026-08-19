@@ -850,6 +850,15 @@ svg.lucide {
     background: #e5e7eb;
     color: #333333;
 }
+#balanceCurrency {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#balanceValue {
+    font-size: 36px;
+    font-weight: 800;
+}
 /* =========================================
    DARK MODE
 ========================================= */

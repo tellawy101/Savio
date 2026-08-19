@@ -23,6 +23,9 @@ const fabMenu = document.getElementById("fabMenu");
 
 const fabExpense = document.getElementById("fabExpense");
 const fabIncome = document.getElementById("fabIncome");
+const fabTransfer = document.getElementById("fabTransfer");
+const balanceCurrency = document.getElementById("balanceCurrency");
+
 
 // تحميل البيانات
 let expenses = loadTransactions();
@@ -117,8 +120,8 @@ li.innerHTML = `
             <div class="expense-right">
 
                 <div class="expense-amount">
-                    EGP ${Number(expense.amount).toLocaleString("en-US")}
-                </div>
+    ${formatCurrency(expense.amount)}
+</div>
 
                 <div class="expense-meta">
                     ${expense.date}
@@ -259,11 +262,12 @@ card.addEventListener("touchend", () => {
 
 });
     
-    totalExpense.innerText = "EGP " + Math.round(total).toLocaleString("en-US");
-    
-    totalIncome.innerText = "EGP " + Math.round(income).toLocaleString("en-US");
-    
-   balance.innerText = (income - total).toLocaleString("en-US");
+    totalExpense.innerText = formatCurrency(Math.round(total));
+
+totalIncome.innerText = formatCurrency(Math.round(income));
+
+balanceCurrency.innerText = getCurrency();
+balance.innerText = Math.round(income - total).toLocaleString("en-US");
     
     if (window.lucide) {
         lucide.createIcons();
@@ -407,17 +411,6 @@ function updateChartDays() {
         }
     }
 }
-
-document.addEventListener(
-    "DOMContentLoaded",
-    updateChartDays
-);
-
-document.addEventListener(
-    "DOMContentLoaded",
-    updateChartDays
-);
-
 document.addEventListener("DOMContentLoaded", updateChartDays);
 // ================================
 // SAVIO BALANCE CHART
@@ -803,15 +796,15 @@ if (transaction.isTransfer) {
 
     if (remaining >= 0) {
 
-        budgetValue.textContent =
-            `EGP ${remaining.toLocaleString("en-US")}`;
+    budgetValue.textContent =
+        formatCurrency(remaining);
 
-    } else {
+} else {
 
-        budgetValue.textContent =
-            `EGP ${Math.abs(remaining).toLocaleString("en-US")} over`;
+    budgetValue.textContent =
+        `${formatCurrency(Math.abs(remaining))} over`;
 
-    }
+}
 }
 
 // تشغيل الحساب عند فتح الصفحة

@@ -16,6 +16,8 @@ backBtn.onclick = function () {
 
 fixScrollOnFocusOut();
 applyStoredTheme();
+const incomeCurrencyEl = document.querySelector(".amount-display .currency");
+if (incomeCurrencyEl) incomeCurrencyEl.textContent = getCurrency();
 
 const today = new Date().toISOString().split("T")[0];
 incomeDate.value = today;

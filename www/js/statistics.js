@@ -2,34 +2,16 @@
    SAVIO - STATISTICS
 ========================================= */
 
-const STORAGE_KEY = "transactions";
-
 let currentPeriod = "week";
 let cashFlowChart = null;
-
-
-/* =========================================
-   LOAD TRANSACTIONS
-========================================= */
-
-function loadTransactions() {
-    try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch (error) {
-        console.error("Failed to load transactions:", error);
-        return [];
-    }
-}
-
 
 /* =========================================
    FORMAT MONEY
 ========================================= */
 
 function formatMoney(amount) {
-    return `${Number(amount || 0).toLocaleString("en-US")} EGP`;
+    return formatCurrency(amount);
 }
-
 
 /* =========================================
    GET DATE

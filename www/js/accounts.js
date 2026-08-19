@@ -224,7 +224,8 @@ localStorage.setItem("accounts", JSON.stringify(accounts));
         document.getElementById("newAccountName").value = "";
 document.getElementById("newAccountDescription").value = "";
 document.getElementById("newAccountBalance").value = "";
-selectedIconPreview.setAttribute("data-lucide", "wallet");
+document.getElementById("selectedIconPreviewWrap").innerHTML =
+    `<i data-lucide="wallet" id="selectedIconPreview"></i>`;
 selectedIconLabel.textContent = "اختر أيقونة";
 newAccountIconInput.value = "wallet";
 if (window.lucide) lucide.createIcons();
@@ -344,7 +345,8 @@ if (cancelAddAccountBtn) {
         document.getElementById("newAccountName").value = "";
         document.getElementById("newAccountDescription").value = "";
         document.getElementById("newAccountBalance").value = "";
-        selectedIconPreview.setAttribute("data-lucide", "wallet");
+        document.getElementById("selectedIconPreviewWrap").innerHTML =
+            `<i data-lucide="wallet" id="selectedIconPreview"></i>`;
         selectedIconLabel.textContent = "اختر أيقونة";
         newAccountIconInput.value = "wallet";
         if (window.lucide) lucide.createIcons();
