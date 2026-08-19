@@ -1,4 +1,3 @@
-/* test */
 body {
     margin: 0;
     font-family: "Inter", sans-serif;
@@ -186,36 +185,6 @@ button:hover {
     background: #2c2c2c;
     color: white;
     border: 1px solid #555;
-}
-/* 
-===================
-كود تنسيق الوضع الليلي
-===================
-*/
-#themeBtn {
-    position: absolute;
-    top: 18px;
-    left: 18px;
-
-    width: 38px;
-    height: 38px;
-
-    margin: 0;
-    padding: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border: none;
-    border-radius: 50%;
-
-    background: rgba(255,255,255,.2);
-    color: #fff;
-    font-size: 18px;
-
-    cursor: pointer;
-    z-index: 10;
 }
 header{
     position: relative;

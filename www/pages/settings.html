@@ -14,18 +14,6 @@
 </head>
 
 <body>
-
-<header class="page-header">
-
-    <button class="back-btn" onclick="window.location.href='../index.html'">
-        ←
-    </button>
-
-    <h2>Settings</h2>
-
-</header>
-
-
 <main class="settings-page">
 
     <!-- Account -->
@@ -190,7 +178,7 @@
 
         <div class="settings-card">
 
-            <div class="settings-item">
+            <div class="settings-item" id="aboutSavioBtn">
 
                 <div class="settings-icon">
                     <i data-lucide="info"></i>
@@ -228,7 +216,32 @@
 
     </section>
 
+<!-- About Savio Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
 
+            <h2>About Savio</h2>
+
+            <p style="margin: 10px 0; line-height: 1.6;">
+                Savio هو تطبيق لإدارة مصاريفك ودخلك اليومي بسهولة، ومتابعة ميزانيتك أول بأول.
+            </p>
+
+            <p style="margin: 15px 0 5px; font-weight: 600;">Developer</p>
+            <p style="margin: 0 0 15px;">Mahmoud Tellawy</p>
+
+            <p style="margin: 15px 0 5px; font-weight: 600;">Contact</p>
+            <p style="margin: 0 0 15px;">
+                <a href="https://wa.me/201208526652" target="_blank" style="color:#0F766E; text-decoration:none; font-weight:600;">
+                    WhatsApp: 01208526652
+                </a>
+            </p>
+
+            <p style="margin: 15px 0 0; opacity:.6; font-size:13px;">Version 1.0.0</p>
+
+            <button id="closeAboutBtn">Close</button>
+
+        </div>
+    </div>
     <!-- Version -->
     <div class="app-version">
         <span>Savio</span>
@@ -290,6 +303,64 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+</script>
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    
+    const aboutBtn = document.getElementById("aboutSavioBtn");
+    const aboutModal = document.getElementById("aboutModal");
+    const closeAboutBtn = document.getElementById("closeAboutBtn");
+    
+    if (aboutBtn && aboutModal) {
+        aboutBtn.addEventListener("click", function() {
+            aboutModal.classList.add("show");
+        });
+    }
+    
+    if (closeAboutBtn && aboutModal) {
+        closeAboutBtn.addEventListener("click", function() {
+            aboutModal.classList.remove("show");
+        });
+    }
+    
+    if (aboutModal) {
+        aboutModal.addEventListener("click", function(e) {
+            if (e.target === aboutModal) {
+                aboutModal.classList.remove("show");
+            }
+        });
+    }
+    
+    // Clear All Data
+    const clearDataBtn = document.getElementById("clearData");
+    
+    if (clearDataBtn) {
+        
+        clearDataBtn.addEventListener("click", function() {
+            
+            const confirmClear = confirm(
+                "هل أنت متأكد؟ سيتم حذف كل بياناتك (المعاملات، الحسابات، الديون، الميزانية) نهائياً ولا يمكن التراجع عن هذه الخطوة."
+            );
+            
+            if (!confirmClear) return;
+            
+            localStorage.removeItem("transactions");
+            localStorage.removeItem("accounts");
+            localStorage.removeItem("categories");
+            localStorage.removeItem("customCategoryIcons");
+            localStorage.removeItem("debts");
+            localStorage.removeItem("savioBudget");
+            
+            alert("تم حذف جميع البيانات بنجاح.");
+            
+            window.location.href = "../index.html";
+            
+        });
+        
+    }
+    
+});
 </script>
 
 </body>

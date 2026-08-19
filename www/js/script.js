@@ -262,9 +262,8 @@ card.addEventListener("touchend", () => {
 
 });
     
-    totalExpense.innerText = formatCurrency(Math.round(total));
-
-totalIncome.innerText = formatCurrency(Math.round(income));
+totalExpense.innerHTML = formatCurrencyHTML(Math.round(total));
+totalIncome.innerHTML = formatCurrencyHTML(Math.round(income));
 
 balanceCurrency.innerText = getCurrency();
 balance.innerText = Math.round(income - total).toLocaleString("en-US");

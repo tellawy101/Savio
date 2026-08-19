@@ -58,3 +58,9 @@ function formatCurrency(amount) {
 
     return `${currency} ${Math.round(Number(amount) || 0).toLocaleString("en-US")}`;
 }
+function formatCurrencyHTML(amount) {
+    const currency = getCurrency();
+    const value = Math.round(Number(amount) || 0).toLocaleString("en-US");
+
+    return `<span class="stat-currency">${currency}</span> <span class="stat-value">${value}</span>`;
+}
