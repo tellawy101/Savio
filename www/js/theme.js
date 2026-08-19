@@ -98,26 +98,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-
-
-// ==============================
-// Header Theme Button
-// ==============================
-
-if (themeBtn) {
-
-    themeBtn.onclick = function () {
-
-        const isDark =
-            document.body.classList.contains("dark");
-
-        const newTheme =
-            isDark ? "light" : "dark";
-
-        localStorage.setItem("theme", newTheme);
-
-        applyTheme(newTheme);
-
-    };
-
-}
