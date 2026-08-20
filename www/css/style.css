@@ -394,6 +394,7 @@ body.capacitor-app .bottom-nav {
     align-items:center;
     justify-content:center;
     width:auto;
+    height:50px;
     margin:0;
     padding:0;
     color:#777;
@@ -401,34 +402,6 @@ body.capacitor-app .bottom-nav {
     cursor:pointer;
     position:relative;
 }
-.nav-item span{
-    position:absolute;
-    top:20px;
-
-    font-size:12px;
-
-    opacity:0;
-    transform:translateY(8px);
-
-    transition:.25s;
-}
-
-.nav-item i{
-    font-size:24px;
-    transition:.25s;
-}
-
-.nav-item.active i{
-    transform:translateY(-8px);
-    color:#0F766E;
-}
-
-.nav-item.active span{
-    opacity:1;
-    transform:translateY(0);
-    color:#0F766E;
-}
-
 .nav-item.active{
     color:#0F766E;
     font-weight:bold;
