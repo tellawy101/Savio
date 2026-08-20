@@ -275,11 +275,41 @@ body {
     pointer-events: none;
 }
 
-.dark .month-nav-btn {
-    background: #2c2c2c !important;
-    color: #fff !important;
+/* Dark mode - month navigation */
+body.dark .month-nav-btn {
+    background: #1E2B2A !important;
+    color: #F1F5F4 !important;
 }
 
-.dark .month-label-btn {
-    color: #fff !important;
+body.dark .month-label-btn {
+    color: #F1F5F4 !important;
+}
+body.dark .expense-main {
+    background: #1E2B2A !important;
+    border-color: #31403E !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .25) !important;
+}
+/* Dark mode - expense card text */
+body.dark .expense-main .expense-title {
+    color: #F1F5F4;
+}
+
+body.dark .expense-main .expense-account,
+body.dark .expense-main .expense-date {
+    color: #AAB8B5;
+}
+
+body.dark .expense-main .expense-amount {
+    color: #7FE0C0;
+}
+/* Dark mode - expense icon */
+body.dark .expense-icon-box {
+    color: #7FE0C0 !important;
+}
+body.dark .search-btn {
+    color: #F1F5F4 !important;
+}
+
+body.dark .search-btn svg {
+    stroke: currentColor !important;
 }

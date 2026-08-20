@@ -122,12 +122,12 @@ button:hover {
     border-radius: 8px;
 }
 .dark {
-    background: #0D1B1E;
-    color: #ffffff;
+    background: #101817;
+    color: #F1F5F4;
 }
 
 .dark header {
-    background: #0b5d56;
+    background: #164F4B;
 }
 
 .dark .card {
@@ -848,6 +848,10 @@ svg.lucide {
 ========================================= */
 
 body.dark {
-    background: #0F172A;
-    color: #F9FAFB;
+    background: #101817;
+    color: #F1F5F4;
+}
+body.dark .stat {
+    background: #285B57;
+    border: none;
 }
