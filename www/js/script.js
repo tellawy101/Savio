@@ -61,6 +61,14 @@ sortedEntries.forEach(({ expense, index }) => {
             return;
         }
         
+        if (
+            window.selectedMonth &&
+            expense.date &&
+            !expense.date.startsWith(window.selectedMonth)
+        ) {
+            return;
+        }
+        
         // معاملات الترانسفير بتتحسب في رصيد كل حساب بس مش في إجمالي الدخل/المصروف
 // (لأنها مش دخل أو مصروف حقيقي، مجرد نقل بين حسابات المستخدم نفسه)
 if (!expense.isTransfer) {
@@ -70,197 +78,6 @@ if (!expense.isTransfer) {
         income += expense.amount;
     }
 }
-        
-        const li = document.createElement("li");
-        
-        
-        // إزالة الإيموجي من النص وإبقاء الاسم فقط
-function cleanLabel(text) {
-    return String(text || "")
-        .replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\s]+/u, "")
-        .trim();
-}
-
-const cleanCategory = cleanLabel(expense.category);
-const cleanAccount = cleanLabel(expense.account);
-
-li.innerHTML = `
-    <div class="expense-swipe">
-
-        <div class="swipe-action swipe-delete">
-            <i data-lucide="trash-2"></i>
-        </div>
-
-        <div class="swipe-action swipe-edit">
-            <i data-lucide="pencil"></i>
-        </div>
-
-        <div class="expense-main">
-
-<div class="expense-icon-box">
-    <i data-lucide="${expense.categoryIcon || "tag"}"></i>
-</div>
-
-            <div class="expense-info">
-
-                <div class="expense-desc">
-                    ${expense.description || ""}
-                </div>
-
-                <div class="expense-category">
-                    ${cleanCategory}
-                </div>
-
-                <div class="expense-account">
-                    ${cleanAccount}
-                </div>
-
-            </div>
-
-            <div class="expense-right">
-
-                <div class="expense-amount">
-    ${formatCurrency(expense.amount)}
-</div>
-
-                <div class="expense-meta">
-                    ${expense.date}
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-`;
-expenseList.appendChild(li);
-
-if (window.lucide) {
-    lucide.createIcons();
-}
-        let startX = 0;
-        let currentX = 0;
-        let offsetX = 0;
-        let startY = 0;
-
-const card = li.querySelector(".expense-main");
-const deleteBtn = li.querySelector(".swipe-delete");
-const editBtn = li.querySelector(".swipe-edit");
-
-const leftAction = deleteBtn;
-const rightAction = editBtn;
-
-deleteBtn.addEventListener("click", (e) => {
-
-    e.stopPropagation();
-
-    if (confirm("Delete this item?")) {
-    
-    if (expense.isTransfer) {
-        // التحويل بيتخزن كنصين (خصم + إضافة)، فلازم يتشالوا مع بعض
-        expenses = expenses.filter(t => t.transferId !== expense.transferId);
-    } else {
-        expenses.splice(index, 1);
-    }
-    
-    saveTransactions(expenses);
-    renderExpenses();
-    
-}
-});
-
-editBtn.addEventListener("click", (e) => {
-
-    e.stopPropagation();
-
-    if (expense.isTransfer) {
-
-        window.location.href = "pages/transfer.html?edit=" + expense.transferId;
-        return;
-
-    }
-
-    if (expense.type === "income") {
-
-        window.location.href = "pages/income.html?edit=" + index;
-        return;
-
-    }
-
-    if (expense.type === "expense") {
-
-        window.location.href = "pages/expense.html?edit=" + index;
-        return;
-
-    }
-
-});card.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-});
-
-card.addEventListener("touchmove", (e) => {
-
-    const deltaX = e.touches[0].clientX - startX;
-const deltaY = e.touches[0].clientY - startY;
-
-if (Math.abs(deltaY) > Math.abs(deltaX)) return;
-e.preventDefault();
-currentX = offsetX + deltaX;
-
-    if (currentX > 80) currentX = 80;
-    if (currentX < -80) currentX = -80;
-
-    card.style.transform = `translateX(${currentX}px)`;
-    const leftAction = li.querySelector(".swipe-delete");
-const rightAction = li.querySelector(".swipe-edit");
-
-if (currentX > 0) {
-    leftAction.style.opacity = currentX / 80;
-    rightAction.style.opacity = 0;
-} else {
-    rightAction.style.opacity = Math.abs(currentX) / 80;
-    leftAction.style.opacity = 0;
-}
-
-card.style.transition = "none";
-
-}, { passive: false });
-card.addEventListener("touchend", () => {
-    
-    if (currentX > 50) {
-        
-        offsetX = 70;
-        
-    } else if (currentX < -50) {
-        
-        offsetX = -70;
-        
-    } else {
-        
-        offsetX = 0;
-        
-    }
-    
-    
-    card.style.transition = "transform .25s ease";
-    card.style.transform = `translateX(${offsetX}px)`;
-    
-    if (offsetX === 70) {
-    leftAction.style.opacity = 1;
-    rightAction.style.opacity = 0;
-} else if (offsetX === -70) {
-    rightAction.style.opacity = 1;
-    leftAction.style.opacity = 0;
-} else {
-    leftAction.style.opacity = 0;
-    rightAction.style.opacity = 0;
-}
-    currentX = 0;
-    
-});
-
-});
     
 totalExpense.innerHTML = formatCurrencyHTML(Math.round(total));
 totalIncome.innerHTML = formatCurrencyHTML(Math.round(income));

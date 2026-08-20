@@ -197,3 +197,89 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     padding: 10px 16px;
 }
+/* ==============================
+   Month Navigation (Filter)
+============================== */
+
+.month-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 5px 0 18px;
+    position: relative;
+}
+
+.month-nav-btn {
+    width: 20px !important;
+    height: 20px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border: none !important;
+    border-radius: 50% !important;
+    background: #F4F5F7 !important;
+
+    color: #111 !important;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.month-nav-btn:active {
+    opacity: .7;
+}
+
+.month-nav-btn svg {
+    width: 11px !important;
+    height: 11px !important;
+    stroke-width: 3 !important;
+}
+
+.month-label-btn {
+    width: auto !important;
+    padding: 2px 4px !important;
+    margin: 0 !important;
+
+    background: transparent !important;
+    color: #111 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1.1;
+
+    border: none !important;
+    cursor: pointer;
+}
+
+.month-label-month {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.month-label-year {
+    font-size: 10px;
+    font-weight: 600;
+    opacity: .75;
+}
+.month-picker-input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+.dark .month-nav-btn {
+    background: #2c2c2c !important;
+    color: #fff !important;
+}
+
+.dark .month-label-btn {
+    color: #fff !important;
+}

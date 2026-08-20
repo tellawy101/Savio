@@ -29,7 +29,12 @@
     <span id="budgetValue">Budget</span>
 </button>
    <div class="balance-box">
-    <h3>Balance</h3>
+    <div class="balance-header">
+        <h3>Balance</h3>
+        <button id="toggleBalanceBtn" class="eye-btn" aria-label="Toggle balance visibility">
+            <i data-lucide="eye"></i>
+        </button>
+    </div>
 <h2 class="balance-amount">
 
     <span id="balanceCurrency"></span>
@@ -177,22 +182,37 @@
     </div>
      <div class="expenses-section">
 
-    <div class="expenses-header">
-        <h2>Expenses</h2>
+   <div class="expenses-header">
+    <h2>Expenses</h2>
 
-        <button id="searchBtn" class="search-btn">
-            <i data-lucide="search"></i>
+    <div class="month-nav">
+        <button id="prevMonthBtn" class="month-nav-btn" aria-label="Previous month">
+            <i data-lucide="chevron-left"></i>
         </button>
-         <input
-        type="text"
-        id="searchInput"
-        placeholder="Search by category...">
 
+        <button id="monthLabelBtn" class="month-label-btn">August 2026</button>
+
+        <button id="nextMonthBtn" class="month-nav-btn" aria-label="Next month">
+            <i data-lucide="chevron-right"></i>
+        </button>
+
+        <input type="month" id="monthPicker" class="month-picker-input">
     </div>
+
+    <button id="searchBtn" class="search-btn">
+        <i data-lucide="search"></i>
+    </button>
+     <input
+    type="text"
+    id="searchInput"
+    placeholder="Search by category...">
+
+</div>
 
     <ul id="expenseList"></ul>
 
 </div>
+
 </main>
 <div id="nav-placeholder"></div>
 <script src="js/components.js"></script>
@@ -203,8 +223,10 @@
 <script src="js/storage.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/theme.js"></script>
+<script src="js/balanceVisibility.js"></script>
 <script src="js/search.js"></script>
 <script src="js/script.js"></script>
+<script src="js/monthFilter.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         initIcons();

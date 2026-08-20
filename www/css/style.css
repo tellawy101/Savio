@@ -209,10 +209,52 @@ header p{
     margin-bottom:0px;
 }
 
+.balance-header{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+}
+
 .balance-box h3{
     margin:0;
     font-size:18px;
     font-weight:normal;
+}
+
+.eye-btn{
+    position: absolute !important;
+    top: 18px !important;
+    left: 18px !important;
+    z-index: 10 !important;
+    width: auto !important;
+    margin: 0 !important;
+
+    background:none;
+    border:none;
+    padding:4px;
+    color:inherit;
+    opacity:.75;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+.eye-btn svg{
+    width:17px;
+    height:17px;
+}
+
+.eye-btn:active{
+    opacity:.4;
+}
+
+body.amounts-hidden .balance-amount,
+body.amounts-hidden .stat p{
+    filter:blur(7px);
+    -webkit-filter:blur(7px);
+    user-select:none;
+    transition:filter .2s ease;
 }
 
 .balance-box h2 {
