@@ -23,7 +23,7 @@ const today = new Date().toISOString().split("T")[0];
 expenseDate.value = today;
 
 const urlParams = new URLSearchParams(window.location.search);
-const editIndex = urlParams.has("edit") ? Number(urlParams.get("edit")) : -1;
+const editId = urlParams.get("edit") || null;
 
 function getMissingField() {
     const amount = Number(expenseAmount.value.replace(/,/g, ""));
@@ -51,10 +51,10 @@ attachAmountFormatter(expenseAmount, checkExpenseForm);
 attachThousandsFormatter(document.getElementById("newAccountBalance"));
 
 function loadEditingExpense() {
-    if (editIndex === -1) return;
+    if (!editId) return;
     
     const transactions = loadTransactions();
-    const entry = transactions[editIndex];
+    const entry = transactions.find(t => t.id === editId);
     
     if (!entry) return;
     
@@ -95,10 +95,22 @@ saveExpenseBtn.onclick = function() {
     time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
 };
     
-    if (editIndex !== -1 && transactions[editIndex]) {
-        transactions[editIndex] = { ...transactions[editIndex], ...entryData };
+    if (editId) {
+
+        const entryIndex = transactions.findIndex(t => t.id === editId);
+
+        if (entryIndex !== -1) {
+            transactions[entryIndex] = { ...transactions[entryIndex], ...entryData };
+        } else {
+            entryData.id = "tx_" + Date.now() + "_" + Math.random().toString(36).slice(2, 9);
+            transactions.push(entryData);
+        }
+
     } else {
+
+        entryData.id = "tx_" + Date.now() + "_" + Math.random().toString(36).slice(2, 9);
         transactions.push(entryData);
+
     }
     
     saveTransactions(transactions);
