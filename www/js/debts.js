@@ -446,7 +446,7 @@ function renderDebts() {
 
                 const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
 
-                payAccount.innerHTML = `<option value="">Select Account</option>` +
+                payAccount.innerHTML = `<option value="">${t("select_account")}</option>` +
                     accounts.map(acc => `<option value="${acc.name}">${acc.name}</option>`).join("");
 
                 payDebtModal.classList.add("show");

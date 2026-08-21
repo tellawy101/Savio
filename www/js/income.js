@@ -38,8 +38,8 @@ function getMissingField() {
     const date = incomeDate.value;
 
     if (amount <= 0) return "المبلغ";
-    if (account === "Select Account") return "الحساب";
-    if (category === "Select Category") return "التصنيف";
+    if (account === t("select_account")) return "الحساب";
+if (category === t("select_category")) return "التصنيف";
     if (date.length === 0) return "التاريخ";
     return null;
 }
@@ -67,16 +67,14 @@ function loadEditingIncome() {
     incomeAmount.value = formatted;
     resizeAmountInput(incomeAmount, formatted);
 
-    incomeAccount.textContent = entry.account;
-    incomeCategory.innerHTML = entry.categoryIcon
-        ? `<i data-lucide="${entry.categoryIcon}"></i> ${entry.category}`
-        : entry.category;
+    incomeAccount.textContent = entry.account || t("select_account");
+    incomeCategory.innerHTML = entry.categoryIcon ?
+    `<i data-lucide="${entry.categoryIcon}"></i> ${entry.category}` :
+    (entry.category || t("select_category"));
     incomeCategory.dataset.icon = entry.categoryIcon || "tag";
     if (window.lucide) lucide.createIcons();
     incomeDescription.value = entry.description || "";
     incomeDate.value = entry.date;
-
-    saveIncomeBtn.textContent = "✓";
 }
 
 saveIncomeBtn.onclick = function () {

@@ -109,9 +109,9 @@ function renderSharedModals() {
     return `
     <div id="accountModal" class="modal">
         <div class="modal-content">
-            <h2>Accounts</h2>
+            <h2 data-i18n="accounts_title">Accounts</h2>
             <div id="accountsList"></div>
-            <button id="addAccountBtn">
+            <button id="addAccountBtn" data-i18n="add_account_btn">
                 + Add Account
             </button>
         </div>
@@ -119,23 +119,23 @@ function renderSharedModals() {
 
     <div id="addAccountModal" class="modal">
         <div class="modal-content">
-            <h2>New Account</h2>
+            <h2 data-i18n="new_account_title">New Account</h2>
             <input
                 type="text"
                 id="newAccountName"
                 class="form-input"
-                placeholder="Account name">
+                placeholder="Account name" data-i18n-placeholder="account_name_placeholder">
                 
                <input
     type="text"
     id="newAccountDescription"
     class="form-input"
-    placeholder="Description (optional)"> 
+    placeholder="Description (optional)" data-i18n-placeholder="account_description_placeholder">
                 
 <div class="icon-dropdown" id="iconDropdown">
     <button type="button" class="icon-dropdown-trigger" id="iconDropdownTrigger">
         <span id="selectedIconPreviewWrap"><i data-lucide="wallet" id="selectedIconPreview"></i></span>
-        <span id="selectedIconLabel">اختر أيقونة</span>
+        <span id="selectedIconLabel" data-i18n="choose_icon_label">اختر أيقونة</span>
         <i data-lucide="chevron-right"></i>
     </button>
     <div class="icon-dropdown-list" id="iconDropdownList">
@@ -194,38 +194,38 @@ function renderSharedModals() {
                 type="tel"
                 id="newAccountBalance"
                 class="form-input"
-                placeholder="Initial Balance">
+                placeholder="Initial Balance" data-i18n-placeholder="initial_balance_placeholder">
             <div class="modal-actions">
-    <button id="cancelAddAccountBtn" class="account-cancel-btn">
-        Cancel
-    </button>
-    <button id="saveAccountBtn" class="account-save-btn">
-        Save
-    </button>
+    <button id="cancelAddAccountBtn" class="account-cancel-btn" data-i18n="cancel">
+    Cancel
+</button>
+<button id="saveAccountBtn" class="account-save-btn" data-i18n="save">
+    Save
+</button>
 </div>
         </div>
     </div>
 
     <div id="categoryModal" class="modal">
         <div class="modal-content">
-            <h2>Categories</h2>
+            <h2 data-i18n="categories_title">Categories</h2>
             <div id="categoriesList"></div>
-            <button id="addCategoryBtn">
-                + Add Category
-            </button>
+            <button id="addCategoryBtn" data-i18n="add_category_btn">
+    + Add Category
+</button>
         </div>
     </div>
 
 <div id="addCategoryModal" class="modal">
     <div class="modal-content">
 
-        <h2>New Category</h2>
+        <h2 data-i18n="new_category_title">New Category</h2>
 
         <input
             type="text"
             id="newCategoryName"
             class="form-input"
-            placeholder="Category name">
+            placeholder="Category name" data-i18n-placeholder="category_name_placeholder">
 
         <!-- Category Icon Picker -->
         <div class="icon-dropdown" id="categoryIconDropdown">
@@ -239,9 +239,9 @@ function renderSharedModals() {
                     <i data-lucide="tag" id="selectedCategoryIconPreview"></i>
                 </span>
 
-                <span id="selectedCategoryIconLabel">
-                    Choose Icon
-                </span>
+                <span id="selectedCategoryIconLabel" data-i18n="choose_icon_label">
+    Choose Icon
+</span>
 
                 <i data-lucide="chevron-right"></i>
 
@@ -256,7 +256,7 @@ function renderSharedModals() {
                         type="text"
                         id="categoryIconSearchInput"
                         class="icon-search-input"
-                        placeholder="Search any icon (English)...">
+                        placeholder="Search any icon (English)..." data-i18n-placeholder="icon_search_placeholder">
                 </div>
 
                 <div id="categoryIconResults"></div>
@@ -270,10 +270,11 @@ function renderSharedModals() {
             value="tag">
 
         <button
-            id="saveCategoryBtn"
-            class="account-save-btn">
-            Save
-        </button>
+    id="saveCategoryBtn"
+    class="account-save-btn"
+    data-i18n="save">
+    Save
+</button>
 
     </div>
 </div>

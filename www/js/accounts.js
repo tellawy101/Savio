@@ -169,7 +169,7 @@ if (balance === "") {
 }
 
 if (name === "") {
-    alert("Please enter account name");
+    alert(t("enter_account_name_alert"));
     return;
 }
         
@@ -180,7 +180,7 @@ if (name === "") {
         );
         
         if (sameAccount && (!editingAccount || sameAccount.name !== editingAccount.name)) {
-            showToast("Account name already exists");
+            showToast(t("account_exists_toast"));
             return;
         }
         
@@ -217,7 +217,7 @@ localStorage.setItem("accounts", JSON.stringify(accounts));
         
         renderAccounts();
         
-        showToast("Account added", "success");
+        showToast(t("account_added_toast"), "success");
         
         addAccountModal.classList.remove("show");
         
@@ -226,7 +226,7 @@ document.getElementById("newAccountDescription").value = "";
 document.getElementById("newAccountBalance").value = "";
 document.getElementById("selectedIconPreviewWrap").innerHTML =
     `<i data-lucide="wallet" id="selectedIconPreview"></i>`;
-selectedIconLabel.textContent = "اختر أيقونة";
+selectedIconLabel.textContent = t("choose_icon_label");
 newAccountIconInput.value = "wallet";
 if (window.lucide) lucide.createIcons();
         
@@ -347,7 +347,7 @@ if (cancelAddAccountBtn) {
         document.getElementById("newAccountBalance").value = "";
         document.getElementById("selectedIconPreviewWrap").innerHTML =
             `<i data-lucide="wallet" id="selectedIconPreview"></i>`;
-        selectedIconLabel.textContent = "اختر أيقونة";
+        selectedIconLabel.textContent = t("choose_icon_label");
         newAccountIconInput.value = "wallet";
         if (window.lucide) lucide.createIcons();
     };

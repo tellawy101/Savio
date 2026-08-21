@@ -47,15 +47,14 @@ window.getDisabledAccountName = function () {
     const toBox = transferToAccount.closest(".account-select-box");
 
     if (activeAccountBox === toBox) {
-        const from = transferFromAccount.textContent.trim();
-        return from === "Select Account" ? null : from;
-    }
+    const from = transferFromAccount.textContent.trim();
+    return from === t("select_account") ? null : from;
+}
 
-    if (activeAccountBox === fromBox) {
-        const to = transferToAccount.textContent.trim();
-        return to === "Select Account" ? null : to;
-    }
-
+if (activeAccountBox === fromBox) {
+    const to = transferToAccount.textContent.trim();
+    return to === t("select_account") ? null : to;
+}
     return null;
 };
 
@@ -84,8 +83,8 @@ function getMissingField() {
     const date = transferDate.value;
 
     if (amount <= 0) return "المبلغ";
-    if (from === "Select Account") return "حساب المصدر";
-    if (to === "Select Account") return "حساب الوجهة";
+    if (from === t("select_account")) return "حساب المصدر";
+if (to === t("select_account")) return "حساب الوجهة";
     if (from === to) return "حساب وجهة مختلف عن حساب المصدر";
     if (date.length === 0) return "التاريخ";
     return null;

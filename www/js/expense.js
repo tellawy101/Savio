@@ -37,8 +37,8 @@ function getMissingField() {
     const date = expenseDate.value;
     
     if (amount <= 0) return "المبلغ";
-    if (account === "Select Account") return "الحساب";
-    if (category === "Select Category") return "التصنيف";
+    if (account === t("select_account")) return "الحساب";
+if (category === t("select_category")) return "التصنيف";
     if (date.length === 0) return "التاريخ";
     return null;
 }
@@ -67,16 +67,14 @@ function loadEditingExpense() {
     expenseAmount.value = formatted;
     resizeAmountInput(expenseAmount, formatted);
     
-    expenseAccount.textContent = entry.account || "Select Account";
-expenseCategory.innerHTML = entry.categoryIcon
-    ? `<i data-lucide="${entry.categoryIcon}"></i> ${entry.category}`
-    : (entry.category || "Select Category");
+    expenseAccount.textContent = entry.account || t("select_account");
+expenseCategory.innerHTML = entry.categoryIcon ?
+    `<i data-lucide="${entry.categoryIcon}"></i> ${entry.category}` :
+    (entry.category || t("select_category"));
 expenseCategory.dataset.icon = entry.categoryIcon || "tag";
 if (window.lucide) lucide.createIcons();
     expenseDescription.value = entry.description || "";
     expenseDate.value = entry.date || today;
-    
-    saveExpenseBtn.textContent = "✓";
 }
 
 saveExpenseBtn.onclick = function() {

@@ -15,9 +15,9 @@
 
     <button id="backBtn" class="back-btn">←</button>
 
-    <h1>Income</h1>
+    <h1 data-i18n="income_title">Income</h1>
 
-    <button id="saveIncomeBtn" class="save-btn">✓</button>
+    <button id="saveIncomeBtn" class="save-btn"><i data-lucide="check"></i></button>
 
 </header>
     
@@ -41,13 +41,13 @@
 
 <div class="form-group">
 
-    <label>Account</label>
+    <label data-i18n="account_label">Account</label>
 
     <div class="account-select-box">
 
         <span class="account-icon">💳</span>
 
-       <div id="incomeAccount" class="account-select">
+      <div id="incomeAccount" class="account-select" data-i18n="select_account">
     Select Account
 </div>
         <span class="account-arrow">›</span>
@@ -57,10 +57,10 @@
 
 </div>
 <div class="form-group">
-    <label>Category</label>
+    <label data-i18n="category_label">Category</label>
     <div class="category-select-box">
         <span class="category-icon">🏷️</span>
-     <div id="incomeCategory" class="category-select">
+     <div id="incomeCategory" class="category-select" data-i18n="select_category">
     Select Category
 </div>
         <span class="category-arrow">›</span>
@@ -69,7 +69,7 @@
 
 <div class="form-group">
 
-    <label>Description</label>
+    <label data-i18n="description_label">Description</label>
 
     
     <div class="description-box">
@@ -78,14 +78,14 @@
             type="text"
             id="incomeDescription"
             class="description-input"
-            placeholder="Write a note">
+            placeholder="Write a note" data-i18n-placeholder="note_placeholder">
 
     </div>
 
 </div>
 
 <div class="form-group">
-    <label>Date</label>
+    <label data-i18n="date_label">Date</label>
    <div class="description-box">
     <input
         type="date"
@@ -112,7 +112,9 @@
 <script src="../js/category.js"></script>
 <script src="../js/income.js"></script>
 <script>
-    if (window.lucide) lucide.createIcons();
+    document.addEventListener("DOMContentLoaded", function() {
+        if (window.lucide) lucide.createIcons();
+    });
 </script>
 </body>
 </html>

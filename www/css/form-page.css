@@ -84,7 +84,9 @@ body.has-scroll {
 
     cursor: pointer;
 }
-
+[dir="rtl"] .back-btn {
+    transform: scaleX(-1);
+}
 .save-btn {
     width: 40px;
     height: 40px;
@@ -101,6 +103,10 @@ body.has-scroll {
     padding: 0;
     margin: 0;
 }
+.save-btn i {
+    width: 20px;
+    height: 20px;
+}
 
 /* ==============================
    قسم المبلغ
@@ -116,8 +122,8 @@ body.has-scroll {
     align-items: center;
     justify-content: center;
     gap: 6px;
+    direction: ltr;
 }
-
 #incomeAmount,
 #expenseAmount, 
 #transferAmount {
@@ -252,15 +258,10 @@ body.has-scroll {
 }
 
 .category-arrow {
-    position: absolute;
-    right: 16px;
-
     font-size: 20px;
     color: #999;
-
     pointer-events: none;
 }
-
 /* ==============================
    مجموعات الفورم (Label + الحقل)
 ============================== */

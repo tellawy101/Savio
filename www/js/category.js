@@ -184,7 +184,7 @@ function renderCategoryIconResults(filter) {
             customOption.onclick = function () {
                 const svg = customOption.querySelector("svg");
                 if (!svg) {
-                    showToast("Icon name not found, try another name");
+                    showToast(t("icon_not_found_toast"));
                     return;
                 }
                 const label = filter.charAt(0).toUpperCase() + filter.slice(1);
@@ -339,7 +339,7 @@ if (saveCategoryBtn) {
         const icon = iconInput.value.trim() || "tag";
 
         if (name === "") {
-            showToast("Please enter a category name");
+            showToast(t("enter_category_name_toast"));
             return;
         }
 
@@ -379,7 +379,7 @@ if (saveCategoryBtn) {
         nameInput.value = "";
         iconInput.value = "";
 
-        showToast(isEditing ? "Category updated" : "Category added", "success");
+        showToast(isEditing ? t("category_updated_toast") : t("category_added_toast"), "success");
         notifyFormFieldChanged();
     };
 }
@@ -428,11 +428,11 @@ if (deleteCategoryBtn) {
 
         const field = getCategoryFieldEl();
         if (field && field.textContent.includes(selectedCategory.name)) {
-            field.textContent = "Select Category";
+            field.textContent = t("select_category");
         }
 
         if (categoryMenu) categoryMenu.classList.remove("show");
-        showToast("Category deleted", "success");
+        showToast(t("category_deleted_toast"), "success");
         selectedCategory = null;
     };
 }
