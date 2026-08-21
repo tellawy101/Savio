@@ -328,7 +328,9 @@ body.has-scroll {
     color: #999;
     pointer-events: none;
 }
-
+.dark .account-arrow {
+    color: #999;
+}
 /* ==============================
    حقل الوصف والتاريخ (Description / Date)
 ============================== */
@@ -649,6 +651,10 @@ body.has-scroll {
     font-size: 14px;
     background: var(--card-bg, #f7f7f7);
     color: inherit;
+    outline: none;
+}
+.icon-search-input:focus {
+    border-color: #0f766e;
 }
 
 .icon-option-custom {

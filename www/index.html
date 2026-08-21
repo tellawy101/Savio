@@ -4,12 +4,7 @@
     <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Savio</title>
-
-    <!-- خط Inter (أقرب بديل ويب لـ SF Pro بتاع آيفون) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+    
     <!-- مكتبة أيقونات Lucide -->
     <script src="js/vendor/lucide.js" defer></script>
 
@@ -30,7 +25,7 @@
 </button>
    <div class="balance-box">
     <div class="balance-header">
-        <h3>Balance</h3>
+        <h3 data-i18n="balance">Balance</h3>
         <button id="toggleBalanceBtn" class="eye-btn" aria-label="Toggle balance visibility">
             <i data-lucide="eye"></i>
         </button>
@@ -74,13 +69,13 @@
 
         <div class="stat">
             <span><i data-lucide="trending-up"></i></span>
-            <h4>Income</h4>
+            <h4 data-i18n="income">Income</h4>
             <p id="totalIncome"><span class="stat-currency">EGP</span> <span class="stat-value">0</span></p>
         </div>
 
         <div class="stat">
             <span><i data-lucide="trending-down"></i></span>
-            <h4>Expenses</h4>
+            <h4 data-i18n="expenses">Expenses</h4>
             <p id="totalExpense"><span class="stat-currency">EGP</span> <span class="stat-value">0</span></p>
         </div>
 
@@ -93,11 +88,11 @@
 
     <div class="modal-content">
 
-        <h2>Budget</h2>
+        <h2 data-i18n="budget">Budget</h2>
 
-        <label for="budgetAmount">
-            Monthly Budget
-        </label>
+<label for="budgetAmount" data-i18n="monthly_budget">
+    Monthly Budget
+</label>
 
         <input
             type="text"
@@ -106,13 +101,13 @@
             placeholder="0">
 <div class="budget-actions">
     
-    <button id="saveBudgetBtn">
-        Save
-    </button>
-    
-    <button id="closeBudgetBtn">
-        Cancel
-    </button>
+    <button id="saveBudgetBtn" data-i18n="save">
+    Save
+</button>
+
+<button id="closeBudgetBtn" data-i18n="cancel">
+    Cancel
+</button>
     
 </div>
 
@@ -123,26 +118,27 @@
   <!-- نافذة إضافة الدخل -->
 <div id="incomeModal" class="modal">
     <div class="modal-content">
-        <h2 class="income-title">Income</h2>
-        <label>Account</label>
+        <h2 class="income-title" data-i18n="income_title">Income</h2>
+        <label data-i18n="account_label">Account</label>
 
 <select id="incomeAccount">
 </select>
 
-<label>Description</label>
+<label data-i18n="description_label">Description</label>
 
 <input
     type="text"
     id="incomeDescription"
-    placeholder="Description">
+    placeholder="Description"
+    data-i18n-placeholder="description_placeholder">
 
-<label>Date</label>
+<label data-i18n="date_label">Date</label>
 
 <input
     type="date"
     id="incomeDate">
 
-<label>Amount</label>
+<label data-i18n="amount_label">Amount</label>
 
 <input
     type="text"
@@ -152,8 +148,8 @@
         <select id="incomeCategory">
         </select>
 
-        <button id="saveIncomeBtn">Save</button>
-        <button id="closeIncomeBtn">Cancel</button>
+        <button id="saveIncomeBtn" data-i18n="save">Save</button>
+        <button id="closeIncomeBtn" data-i18n="cancel">Cancel</button>
 
     </div>
 </div>
@@ -162,28 +158,30 @@
 <div id="categoryModal" class="modal">
     <div class="modal-content">
 
-        <h2><i data-lucide="tag"></i> Add Category</h2>
+        <h2><i data-lucide="tag"></i> <span data-i18n="add_category">Add Category</span></h2>
 
         <input
             type="text"
             id="newCategoryName"
-            placeholder="Category Name">
+            placeholder="Category Name"
+            data-i18n-placeholder="category_name_placeholder">
 
         <input
             type="text"
             id="newCategoryIcon"
             placeholder="😀 Icon"
+            data-i18n-placeholder="category_icon_placeholder"
             maxlength="2">
 
-        <button id="saveCategoryBtn">Save</button>
-        <button id="closeCategoryBtn">Cancel</button>
+        <button id="saveCategoryBtn" data-i18n="save">Save</button>
+        <button id="closeCategoryBtn" data-i18n="cancel">Cancel</button>
 
     </div>
     </div>
      <div class="expenses-section">
 
    <div class="expenses-header">
-    <h2>Expenses</h2>
+   <h2 data-i18n="expenses_title">Expenses</h2>
 
     <div class="month-nav">
         <button id="prevMonthBtn" class="month-nav-btn" aria-label="Previous month">
@@ -202,10 +200,11 @@
     <button id="searchBtn" class="search-btn">
         <i data-lucide="search"></i>
     </button>
-     <input
+   <input
     type="text"
     id="searchInput"
-    placeholder="Search by category...">
+    placeholder="Search by category, description, or account..."
+    data-i18n-placeholder="search_placeholder">
 
 </div>
 
@@ -221,6 +220,7 @@
     setupBottomNav('');
 </script>
 <script src="js/storage.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/balanceVisibility.js"></script>

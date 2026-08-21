@@ -17,50 +17,50 @@ function renderBottomNav(activePage) {
     const isHome = activePage === 'home';
 
     return `
-    <nav class="bottom-nav test-bottom ${isHome ? '' : 'no-fab'}">
-        <button class="nav-item ${activePage === 'home' ? 'active' : ''}" data-page="home">
-            <i data-lucide="home"></i>
-            <span>Home</span>
-        </button>
+<nav class="bottom-nav test-bottom ${isHome ? '' : 'no-fab'}">
+    <button class="nav-item ${activePage === 'home' ? 'active' : ''}" data-page="home">
+        <i data-lucide="home"></i>
+        <span data-i18n="nav_home">Home</span>
+    </button>
 
-        <button class="nav-item ${activePage === 'debts' ? 'active' : ''}" data-page="debts">
-            <i data-lucide="hand-coins"></i>
-            <span>Debts</span>
-        </button>
+    <button class="nav-item ${activePage === 'debts' ? 'active' : ''}" data-page="debts">
+        <i data-lucide="hand-coins"></i>
+        <span data-i18n="nav_debts">Debts</span>
+    </button>
 <button class="nav-item ${activePage === 'statistics' ? 'active' : ''}" data-page="statistics">
     <i data-lucide="chart-no-axes-combined"></i>
-    <span>Statistics</span>
+    <span data-i18n="nav_stats">Statistics</span>
 </button>
-        ${isHome ? `
-        <button id="addMenuBtn" class="fab-nav">
-            <i data-lucide="plus"></i>
+    ${isHome ? `
+    <button id="addMenuBtn" class="fab-nav">
+        <i data-lucide="plus"></i>
+    </button>
+    <div id="fabMenu" class="fab-menu">
+        <button id="fabIncome">
+            <i data-lucide="trending-up"></i>
+            <span data-i18n="income">Income</span>
         </button>
-        <div id="fabMenu" class="fab-menu">
-            <button id="fabIncome">
-                <i data-lucide="trending-up"></i>
-                <span>Income</span>
-            </button>
-            <button id="fabExpense">
-                <i data-lucide="trending-down"></i>
-                <span>Expense</span>
-            </button>
-            <button id="fabTransfer">
-                <i data-lucide="repeat"></i>
-                <span>Transfer</span>
-            </button>
-        </div>
-        ` : ''}
+        <button id="fabExpense">
+            <i data-lucide="trending-down"></i>
+            <span data-i18n="nav_expense">Expense</span>
+        </button>
+        <button id="fabTransfer">
+            <i data-lucide="repeat"></i>
+            <span data-i18n="nav_transfer">Transfer</span>
+        </button>
+    </div>
+    ` : ''}
 
-        <button class="nav-item ${activePage === 'accounts' ? 'active' : ''}" data-page="accounts">
-            <i data-lucide="wallet"></i>
-            <span>Accounts</span>
-        </button>
+    <button class="nav-item ${activePage === 'accounts' ? 'active' : ''}" data-page="accounts">
+        <i data-lucide="wallet"></i>
+        <span data-i18n="nav_accounts">Accounts</span>
+    </button>
 
-        <button class="nav-item ${activePage === 'settings' ? 'active' : ''}" data-page="settings">
-            <i data-lucide="settings"></i>
-            <span>Settings</span>
-        </button>
-    </nav>
+    <button class="nav-item ${activePage === 'settings' ? 'active' : ''}" data-page="settings">
+        <i data-lucide="settings"></i>
+        <span data-i18n="nav_settings">Settings</span>
+    </button>
+</nav>
     `;
 }
 

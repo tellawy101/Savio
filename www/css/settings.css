@@ -95,8 +95,12 @@
     font-weight: 600;
     color: inherit;
     cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 4px 6px;
+    border-radius: 8px;
 }
-
 
 /* Dark Mode Switch */
 
@@ -195,8 +199,13 @@ body.dark .settings-item:active {
 
 body.dark .settings-select {
     color: white;
+    background: #1f2937;
 }
 
+body.dark .settings-select option {
+    background: #1f2937;
+    color: white;
+}
 
 /* Mobile */
 

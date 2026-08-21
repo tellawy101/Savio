@@ -51,15 +51,45 @@ const sortedEntries = expenses
         return b.index - a.index;
     });
 
-sortedEntries.forEach(({ expense, index }) => {
-        
-        if (
-            !expense.category
-            .toLowerCase()
-            .includes(searchInput.value.toLowerCase())
-        ) {
-            return;
+// إجمالي الدخل/المصروف/الرصيد بيتحسب من كل المعاملات (بعد فلتر الشهر بس)،
+// من غير ما يتأثر بالبحث - عشان الأرقام تفضل ثابتة وهو بيدور
+sortedEntries.forEach(({ expense }) => {
+
+    if (
+        window.selectedMonth &&
+        expense.date &&
+        !expense.date.startsWith(window.selectedMonth)
+    ) {
+        return;
+    }
+
+    if (!expense.isTransfer) {
+        if (expense.type === "expense") {
+            total += expense.amount;
+        } else if (expense.type === "income") {
+            income += expense.amount;
         }
+    }
+
+});
+
+// نص البحث بعد تنضيفه من المسافات الزيادة وتحويله لحروف صغيرة
+const searchTerm = searchInput.value.trim().toLowerCase();
+
+sortedEntries.forEach(({ expense, index }) => {
+
+    const searchableText = [
+        expense.description,
+        expense.category,
+        expense.account
+    ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+    if (searchTerm && !searchableText.includes(searchTerm)) {
+        return;
+    }
         
         if (
             window.selectedMonth &&
@@ -69,17 +99,7 @@ sortedEntries.forEach(({ expense, index }) => {
             return;
         }
         
-        // معاملات الترانسفير بتتحسب في رصيد كل حساب بس مش في إجمالي الدخل/المصروف
-// (لأنها مش دخل أو مصروف حقيقي، مجرد نقل بين حسابات المستخدم نفسه)
-if (!expense.isTransfer) {
-    if (expense.type === "expense") {
-        total += expense.amount;
-    } else if (expense.type === "income") {
-        income += expense.amount;
-    }
-}
-
-const li = document.createElement("li");
+        const li = document.createElement("li");
 
 
 // إزالة الإيموجي من النص وإبقاء الاسم فقط
@@ -162,7 +182,7 @@ deleteBtn.addEventListener("click", (e) => {
 
     e.stopPropagation();
 
-    if (confirm("Delete this item?")) {
+    if (confirm(typeof t === "function" ? t("delete_confirm") : "Delete this item?")) {
     
     if (expense.isTransfer) {
         expenses = expenses.filter(t => t.transferId !== expense.transferId);
@@ -366,7 +386,7 @@ document.addEventListener("click", function(e) {
     if (searchInput.style.display !== "block") return;
     
     // لو اللي اتدوس عليه مش الخانة نفسها ولا زرار البحث
-    if (!searchInput.contains(e.target) && e.target !== searchBtn) {
+    if (!searchInput.contains(e.target) && !searchBtn.contains(e.target)) {
         
         searchInput.style.display = "none";
         searchInput.value = "";

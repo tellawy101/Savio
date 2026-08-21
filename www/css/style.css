@@ -1,6 +1,35 @@
+@font-face {
+    font-family: "Supreme";
+    src: url("../fonts/Supreme-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Supreme";
+    src: url("../fonts/Supreme-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Supreme";
+    src: url("../fonts/Supreme-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Supreme";
+    src: url("../fonts/Supreme-Extrabold.woff2") format("woff2");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
 body {
     margin: 0;
-    font-family: "Inter", sans-serif;
+    font-family: "Supreme", sans-serif;
     font-weight: 400;
     background: #ffffff;
     color: #111111;
@@ -8,7 +37,6 @@ body {
 body.capacitor-app {
     padding-top: env(safe-area-inset-top, 0px);
 }
-
 main {
     padding: 20px;
 }
@@ -50,7 +78,7 @@ button {
     color: white;
     font-size: 18px;
     cursor: pointer;
-    font-family: "Inter", sans-serif;
+    font-family: "Supreme", sans-serif;
 font-weight: 600;
 }
 
@@ -121,12 +149,8 @@ button:hover {
     background: #dc3545;
     border-radius: 8px;
 }
-.dark {
-    background: #101817;
-    color: #F1F5F4;
-}
 
-.dark header {
+.header {
     background: #164F4B;
 }
 
@@ -612,21 +636,14 @@ svg.lucide {
 .swipe-delete {
     left: 0;
     background: #E53935;
+    border-radius: 18px 0 0 18px;
 }
 
 .swipe-edit {
     right: 0;
     background: #1976D2;
+    border-radius: 0 18px 18px 0;
 }
-.dark .expense-main {
-    background: #1F2937;
-    border: 1px solid rgba(255, 255, 255, .03);
-    border-radius: 16px;
-    box-shadow:
-        0 4px 8px rgba(0, 0, 0, .18),
-        0 12px 28px rgba(0, 0, 0, .32);
-}
-
 .dark .expense-desc {
     color: #fff;
 }
@@ -854,4 +871,67 @@ body.dark {
 body.dark .stat {
     background: #285B57;
     border: none;
+}
+/* =========================================
+   RTL (Arabic)
+========================================= */
+
+[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+[dir="rtl"] .eye-btn {
+    left: auto !important;
+    right: 18px !important;
+}
+
+[dir="rtl"] .budget-btn {
+    right: auto !important;
+    left: 18px !important;
+}
+
+[dir="rtl"] .expense-icon-box {
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+[dir="rtl"] .expense-info {
+    text-align: right;
+}
+
+[dir="rtl"] .expense-right {
+    align-items: flex-start;
+}
+
+[dir="rtl"] .swipe-delete {
+    left: auto;
+    right: 0;
+    border-radius: 0 18px 18px 0;
+}
+
+[dir="rtl"] .swipe-edit {
+    right: auto;
+    left: 0;
+    border-radius: 18px 0 0 18px;
+}
+
+[dir="rtl"] .settings-arrow {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .month-nav-btn svg {
+    transform: scaleX(-1);
+}
+[dir="rtl"] .settings-divider {
+    margin-left: 0;
+    margin-right: 72px;
+}
+
+[dir="rtl"] .slider::before {
+    left: auto;
+    right: 3px;
+}
+[dir="rtl"] .switch input:checked + .slider::before {
+    transform: translateX(-20px);
 }

@@ -19,7 +19,7 @@
     <!-- Account -->
     <section class="settings-section">
 
-        <h3>Account</h3>
+        <h3 data-i18n="settings_account">Account</h3>
 
         <div class="settings-card">
 
@@ -29,8 +29,8 @@
                 </div>
 
                 <div class="settings-info">
-                    <span>Profile</span>
-                    <small>Manage your profile</small>
+                  <span data-i18n="settings_profile">Profile</span>
+<small data-i18n="settings_profile_desc">Manage your profile</small>
                 </div>
 
                 <i class="settings-arrow" data-lucide="chevron-right"></i>
@@ -42,39 +42,58 @@
 
 
     <!-- Appearance -->
-    <section class="settings-section">
+   <section class="settings-section">
 
-        <h3>Appearance</h3>
+    <h3 data-i18n="settings_appearance">Appearance</h3>
 
-        <div class="settings-card">
+    <div class="settings-card">
 
-            <div class="settings-item">
+        <div class="settings-item">
 
-                <div class="settings-icon">
-                    <i data-lucide="moon"></i>
-                </div>
-
-                <div class="settings-info">
-                    <span>Dark Mode</span>
-                    <small>Change the app appearance</small>
-                </div>
-
-                <label class="switch">
-                    <input type="checkbox" id="darkModeToggle">
-                    <span class="slider"></span>
-                </label>
-
+            <div class="settings-icon">
+                <i data-lucide="moon"></i>
             </div>
+
+            <div class="settings-info">
+                <span data-i18n="settings_dark_mode">Dark Mode</span>
+                <small data-i18n="settings_dark_mode_desc">Change the app appearance</small>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
 
         </div>
 
-    </section>
+        <div class="settings-divider"></div>
 
+        <div class="settings-item">
+
+            <div class="settings-icon">
+                <i data-lucide="languages"></i>
+            </div>
+
+            <div class="settings-info">
+                <span data-i18n="settings_language">Language</span>
+                <small data-i18n="settings_language_desc">Change the app language</small>
+            </div>
+
+            <select id="languageSelect" class="settings-select">
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+            </select>
+
+        </div>
+
+    </div>
+
+</section>
 
     <!-- Currency -->
     <section class="settings-section">
 
-        <h3>Currency</h3>
+        <h3 data-i18n="settings_currency">Currency</h3>
 
         <div class="settings-card">
 
@@ -85,8 +104,8 @@
                 </div>
 
                 <div class="settings-info">
-                    <span>Currency</span>
-                    <small>Choose your default currency</small>
+                    <span data-i18n="settings_currency">Currency</span>
+<small data-i18n="settings_currency_desc">Choose your default currency</small>
                 </div>
 
                 <select id="currencySelect" class="settings-select">
@@ -109,7 +128,7 @@
     <!-- Data -->
     <section class="settings-section">
 
-        <h3>Data</h3>
+        <h3 data-i18n="settings_data">Data</h3>
 
         <div class="settings-card">
 
@@ -120,8 +139,8 @@
                 </div>
 
                 <div class="settings-info">
-                    <span>Export Data</span>
-                    <small>Save a backup of your data</small>
+                    <span data-i18n="settings_export">Export Data</span>
+<small data-i18n="settings_export_desc">Save a backup of your data</small>
                 </div>
 
                 <i class="settings-arrow" data-lucide="chevron-right"></i>
@@ -139,8 +158,8 @@
                 </div>
 
                 <div class="settings-info">
-                    <span>Import Data</span>
-                    <small>Restore your saved data</small>
+                    <span data-i18n="settings_import">Import Data</span>
+<small data-i18n="settings_import_desc">Restore your saved data</small>
                 </div>
 
                 <i class="settings-arrow" data-lucide="chevron-right"></i>
@@ -158,8 +177,8 @@
                 </div>
 
                 <div class="settings-info">
-                    <span>Clear All Data</span>
-                    <small>Delete all your saved data</small>
+                    <span data-i18n="settings_clear">Clear All Data</span>
+<small data-i18n="settings_clear_desc">Delete all your saved data</small>
                 </div>
 
                 <i class="settings-arrow" data-lucide="chevron-right"></i>
@@ -174,7 +193,7 @@
     <!-- About -->
     <section class="settings-section">
 
-        <h3>About</h3>
+        <h3 data-i18n="settings_about">About</h3>
 
         <div class="settings-card">
 
@@ -185,8 +204,8 @@
                 </div>
 
                 <div class="settings-info">
-                    <span>About Savio</span>
-                    <small>Learn more about the app</small>
+                    <span data-i18n="settings_about_savio">About Savio</span>
+<small data-i18n="settings_about_savio_desc">Learn more about the app</small>
                 </div>
 
                 <i class="settings-arrow" data-lucide="chevron-right"></i>
@@ -204,9 +223,9 @@
                 </div>
 
                 <div class="settings-info">
-                    <span>Privacy</span>
-                    <small>Your data stays on your device</small>
-                </div>
+                    <span data-i18n="settings_privacy">Privacy</span>
+<small data-i18n="settings_privacy_desc">Your data stays on your device</small>
+</div>
 
                 <i class="settings-arrow" data-lucide="chevron-right"></i>
 
@@ -220,16 +239,16 @@
     <div id="aboutModal" class="modal">
         <div class="modal-content">
 
-            <h2>About Savio</h2>
+<h2 data-i18n="settings_about_savio">About Savio</h2>
 
             <p style="margin: 10px 0; line-height: 1.6;">
                 Savio هو تطبيق لإدارة مصاريفك ودخلك اليومي بسهولة، ومتابعة ميزانيتك أول بأول.
             </p>
 
-            <p style="margin: 15px 0 5px; font-weight: 600;">Developer</p>
+            <p style="margin: 15px 0 5px; font-weight: 600;" data-i18n="settings_developer">Developer</p>
             <p style="margin: 0 0 15px;">Mahmoud Tellawy</p>
 
-            <p style="margin: 15px 0 5px; font-weight: 600;">Contact</p>
+            <p style="margin: 15px 0 5px; font-weight: 600;" data-i18n="settings_contact">Contact</p>
             <p style="margin: 0 0 15px;">
                 <a href="https://wa.me/201208526652" target="_blank" style="color:#0F766E; text-decoration:none; font-weight:600;">
                     WhatsApp: 01208526652
@@ -238,7 +257,7 @@
 
             <p style="margin: 15px 0 0; opacity:.6; font-size:13px;">Version 1.0.0</p>
 
-            <button id="closeAboutBtn">Close</button>
+            <button id="closeAboutBtn" data-i18n="settings_close">Close</button>
 
         </div>
     </div>
@@ -257,6 +276,7 @@
 
 <script src="../js/components.js"></script>
 <script src="../js/storage.js"></script>
+<script src="../js/i18n.js"></script>
 <script src="../js/theme.js"></script>
 
 <script>
@@ -305,6 +325,23 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <script>
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const languageSelect = document.getElementById("languageSelect");
+
+    if (!languageSelect) return;
+
+    languageSelect.value = getLanguage();
+
+    languageSelect.addEventListener("change", function () {
+        setLanguage(this.value);
+    });
+
+});
+
+</script>
+<script>
+
 document.addEventListener("DOMContentLoaded", function() {
     
     const aboutBtn = document.getElementById("aboutSavioBtn");
@@ -338,9 +375,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         clearDataBtn.addEventListener("click", function() {
             
-            const confirmClear = confirm(
-                "هل أنت متأكد؟ سيتم حذف كل بياناتك (المعاملات، الحسابات، الديون، الميزانية) نهائياً ولا يمكن التراجع عن هذه الخطوة."
-            );
+            const confirmClear = confirm(t("settings_clear_confirm"));
             
             if (!confirmClear) return;
             
@@ -351,7 +386,7 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.removeItem("debts");
             localStorage.removeItem("savioBudget");
             
-            alert("تم حذف جميع البيانات بنجاح.");
+            alert(t("settings_clear_done"));
             
             window.location.href = "../index.html";
             

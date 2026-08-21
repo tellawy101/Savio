@@ -73,7 +73,7 @@ body {
 .balance-card .amount {
     font-size: 40px;
     font-weight: 800;
-    font-family: "Inter", sans-serif;
+    font-family: "Supreme", sans-serif;
 }
 
 /* ==============================
@@ -169,7 +169,7 @@ body {
     font-size: 18px;
     font-weight: 800;
     color: #111827;
-    font-family: "Inter", sans-serif;
+    font-family: "Supreme", sans-serif;
 }
 
 .account-card-balance-currency {
@@ -249,7 +249,7 @@ body {
 .stat-value {
     font-size: 14px;
     font-weight: 700;
-    font-family: "Inter", sans-serif;
+    font-family: "Supreme", sans-serif;
 }
 
 .stat-value-income { color: #16a34a; }
@@ -364,27 +364,33 @@ body {
 
 .icon-dropdown-list {
     display: none;
-
-    width: 100%;
-    max-height: 450px;
-
-    overflow-y: auto;
-
-    margin-top: 6px;
-
-    box-sizing: border-box;
-
-    background: var(--input-bg, #fff);
-
-    border: 1px solid var(--border-color, #e0e0e0);
-    border-radius: 12px;
-
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
+
 .icon-dropdown-list.show {
     display: block;
+    
+    position: fixed;
+    left: 5%;
+    right: 5%;
+    top: 8vh;
+    
+    width: 90%;
+    max-height: 84vh;
+    
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    
+    z-index: 3000;
+    
+    box-sizing: border-box;
+    
+    background: var(--input-bg, #fff);
+    
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 12px;
+    
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
-
 .icon-option {
     display: flex;
     align-items: center;
@@ -400,6 +406,24 @@ body {
 .icon-option i {
     width: 18px;
     height: 18px;
+}
+.dark .icon-dropdown-trigger {
+    background: #2c2c2c;
+    border-color: #555;
+    color: #f9fafb;
+}
+
+.dark .icon-dropdown-list {
+    background: #2c2c2c;
+    border-color: #555;
+}
+
+.dark .icon-option:hover {
+    background: #2c2c2c;
+}
+
+.dark .icon-option span {
+    color: #f9fafb;
 }
 .modal-actions {
     display: flex;

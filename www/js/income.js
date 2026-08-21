@@ -2,6 +2,12 @@
 // income.js
 // ==============================
 
+window.addEventListener("DOMContentLoaded", function () {
+    setTimeout(() => {
+        document.getElementById("incomeAmount").focus();
+    }, 300);
+});
+
 const backBtn = document.getElementById("backBtn");
 const incomeAmount = document.getElementById("incomeAmount");
 const saveIncomeBtn = document.getElementById("saveIncomeBtn");

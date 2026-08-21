@@ -1,6 +1,11 @@
 // ==============================
 // expense.js
 // ==============================
+window.addEventListener("DOMContentLoaded", function () {
+    setTimeout(() => {
+        document.getElementById("expenseAmount").focus();
+    }, 300);
+});
 
 const backBtn = document.getElementById("backBtn");
 const expenseAmount = document.getElementById("expenseAmount");
