@@ -904,17 +904,7 @@ body.dark .stat {
     align-items: flex-start;
 }
 
-[dir="rtl"] .swipe-delete {
-    left: auto;
-    right: 0;
-    border-radius: 0 18px 18px 0;
-}
 
-[dir="rtl"] .swipe-edit {
-    right: auto;
-    left: 0;
-    border-radius: 18px 0 0 18px;
-}
 
 [dir="rtl"] .settings-arrow {
     transform: scaleX(-1);
