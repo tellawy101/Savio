@@ -182,20 +182,46 @@ deleteBtn.addEventListener("click", (e) => {
 
     e.stopPropagation();
 
-    if (confirm(typeof t === "function" ? t("delete_confirm") : "Delete this item?")) {
-    
-    if (expense.isTransfer) {
-        expenses = expenses.filter(t => t.transferId !== expense.transferId);
-    } else {
-        expenses = expenses.filter(t => t.id !== expense.id);
+    if (!confirm(typeof t === "function" ? t("delete_confirm") : "Delete this item?")) {
+        return;
     }
-    
+
+    // بنحفظ العناصر اللي هتتحذف مع مكانها الأصلي، عشان نقدر نرجّعها لو المستخدم دوس "تراجع"
+    // (في حالة التحويل بيتحذف قيدين مع بعض: من الحساب وللحساب)
+    const itemsToDelete = expense.isTransfer
+        ? expenses.filter(item => item.transferId === expense.transferId)
+        : expenses.filter(item => item.id === expense.id);
+
+    const deletedWithPositions = itemsToDelete.map(item => ({
+        item,
+        position: expenses.indexOf(item)
+    }));
+
+    expenses = expense.isTransfer
+        ? expenses.filter(item => item.transferId !== expense.transferId)
+        : expenses.filter(item => item.id !== expense.id);
+
     saveTransactions(expenses);
     renderExpenses();
-    
-}
-});
 
+    showUndoToast(
+        typeof t === "function" ? t("item_deleted_toast") : "Item Deleted",
+        function () {
+
+            deletedWithPositions
+                .sort((a, b) => a.position - b.position)
+                .forEach(({ item, position }) => {
+                    const insertAt = Math.min(position, expenses.length);
+                    expenses.splice(insertAt, 0, item);
+                });
+
+            saveTransactions(expenses);
+            renderExpenses();
+
+        }
+    );
+
+});
 editBtn.addEventListener("click", (e) => {
 
     e.stopPropagation();

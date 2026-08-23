@@ -935,3 +935,60 @@ body.dark .stat {
 [dir="rtl"] .switch input:checked + .slider::before {
     transform: translateX(-20px);
 }
+/* ==============================
+   Toast مع زرار تراجع (Undo)
+============================== */
+
+#toast.show.toast-with-undo {
+    display: block !important;
+
+    position: fixed;
+
+    padding: 3px !important;
+    border-radius: 16px !important;
+}
+
+.toast-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+
+    background: #17202B;
+    border-radius: 13px;
+
+    padding: 12px 20px;
+
+    white-space: nowrap;
+}
+
+.toast-message {
+    white-space: nowrap;
+}
+
+#toast .toast-undo-btn {
+    flex-shrink: 0;
+
+    background: none !important;
+    border: none;
+
+    color: #4fd1c5;
+
+    font-family: "Supreme", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    padding: 2px 0 !important;
+    margin: 0 !important;
+    width: auto !important;
+
+    cursor: pointer;
+}
+
+#toast .toast-undo-btn:hover {
+    opacity: .8;
+}
+/* خط العدّاد التنازلي تحت التوست */

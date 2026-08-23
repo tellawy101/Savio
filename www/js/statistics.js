@@ -203,12 +203,12 @@ function updateCategoryStats(transactions) {
 
     if (!entries.length) {
 
-        container.innerHTML = `
-            <div class="empty-stat">
-                <i data-lucide="pie-chart"></i>
-                <span>No expense data yet</span>
-            </div>
-        `;
+ container.innerHTML = `
+    <div class="empty-stat">
+        <i data-lucide="pie-chart"></i>
+        <span>${t("stats_no_expense_data")}</span>
+    </div>
+`;
 
         lucide.createIcons();
 
@@ -335,12 +335,12 @@ function updateAccountStats(transactions) {
     // لو مفيش بيانات
     if (!entries.length) {
         
-        container.innerHTML = `
-            <div class="empty-stat">
-                <i data-lucide="wallet-cards"></i>
-                <span>No account data yet</span>
-            </div>
-        `;
+     container.innerHTML = `
+    <div class="empty-stat">
+        <i data-lucide="wallet-cards"></i>
+        <span>${t("stats_no_account_data")}</span>
+    </div>
+`;
         
         lucide.createIcons();
         
@@ -365,19 +365,19 @@ function updateAccountStats(transactions) {
                         ${escapeHTML(data.account)}
                     </span>
 
-                    <div class="account-activity">
+                    <div <div class="account-activity">
 
-                        <span class="account-income">
-                            Income:
-                            ${formatMoney(data.income)}
-                        </span>
+    <span class="account-income">
+        ${t("stats_income")}:
+        ${formatMoney(data.income)}
+    </span>
 
-                        <span class="account-expense">
-                            Expense:
-                            ${formatMoney(data.expense)}
-                        </span>
+    <span class="account-expense">
+        ${t("stats_expense")}:
+        ${formatMoney(data.expense)}
+    </span>
 
-                    </div>
+</div>
 
                 </div>
 
@@ -428,20 +428,23 @@ function updateCashFlowChart(transactions) {
         let key;
 
 
-        if (currentPeriod === "year") {
+        const locale =
+    getLanguage() === "ar" ? "ar-EG" : "en-US";
 
-            key = date.toLocaleString("en-US", {
-                month: "short"
-            });
-
-        } else {
-
-            key =
-                date.toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric"
-                });
-        }
+if (currentPeriod === "year") {
+    
+    key = date.toLocaleString(locale, {
+        month: "short"
+    });
+    
+} else {
+    
+    key =
+        date.toLocaleDateString(locale, {
+            month: "short",
+            day: "numeric"
+        });
+}
 
 
         if (!grouped[key]) {
@@ -502,7 +505,7 @@ function updateCashFlowChart(transactions) {
             datasets: [
                     
                     {
-    label: "Income",
+    label: t("stats_income"),
     data: incomeData,
 
     borderColor: "#0F766E",
@@ -516,7 +519,7 @@ function updateCashFlowChart(transactions) {
 },
 
 {
-    label: "Expense",
+    label: t("stats_expense"),
     data: expenseData,
 
     borderColor: "#EF4444",

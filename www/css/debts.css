@@ -258,6 +258,18 @@ transform: translateY(-10px);
     background: #374151;
 }
 
+.dark #debtNotes,
+.dark #editDebtNotes {
+    background: #2c2c2c;
+    color: #ffffff;
+    border: 1px solid #555;
+}
+
+.dark #debtNotes::placeholder,
+.dark #editDebtNotes::placeholder {
+    color: #9ca3af;
+}
+
 .balance-grid .stat{
     background: rgba(255,255,255,.15);
     border-radius: 15px;

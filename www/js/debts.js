@@ -483,12 +483,29 @@ function renderDebts() {
 
             if (currentX > 80) {
 
-                const confirmed = confirm("Are you sure you want to delete this debt?");
+                const confirmed = confirm(
+                    typeof t === "function" ? t("debts_delete_confirm") : "Are you sure you want to delete this debt?"
+                );
+
                 if (confirmed) {
+
+                    // بنحفظ مكان الدين الأصلي عشان نرجّعه بنفس الترتيب لو حصل تراجع
+                    const deletedPosition = debts.indexOf(debt);
+
                     debts = debts.filter(d => d.id !== debt.id);
                     localStorage.setItem("debts", JSON.stringify(debts));
                     renderDebts();
-                    showToast("Debt Deleted", "success");
+
+                    showUndoToast(
+                        typeof t === "function" ? t("debts_deleted_toast") : "Debt Deleted",
+                        function () {
+                            const insertAt = Math.min(deletedPosition, debts.length);
+                            debts.splice(insertAt, 0, debt);
+                            localStorage.setItem("debts", JSON.stringify(debts));
+                            renderDebts();
+                        }
+                    );
+
                     return;
                 }
 

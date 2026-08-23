@@ -269,6 +269,9 @@ if (deleteAccountBtn) {
         
         let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
         
+        const deletedAccount = accounts.find(account => account.name === selectedAccount);
+        const deletedPosition = accounts.indexOf(deletedAccount);
+        
         accounts = accounts.filter(account => account.name !== selectedAccount);
         
         localStorage.setItem("accounts", JSON.stringify(accounts));
@@ -277,9 +280,22 @@ if (deleteAccountBtn) {
         
         accountMenu.classList.remove("show");
         notifyFormFieldChanged();
+        
+        if (deletedAccount) {
+            showUndoToast(
+                typeof t === "function" ? t("account_deleted_toast") : "Account Deleted",
+                function() {
+                    let currentAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
+                    const insertAt = Math.min(deletedPosition, currentAccounts.length);
+                    currentAccounts.splice(insertAt, 0, deletedAccount);
+                    localStorage.setItem("accounts", JSON.stringify(currentAccounts));
+                    renderAccounts();
+                    notifyFormFieldChanged();
+                }
+            );
+        }
     };
 }
-
 
 
 // ==============================

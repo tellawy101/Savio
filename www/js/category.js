@@ -246,6 +246,7 @@ document.addEventListener("click", function (e) {
 
 if (categoryBox) {
     categoryBox.onclick = function () {
+        renderCategories();
         categoryModal.classList.add("show");
     };
 }
@@ -259,23 +260,35 @@ if (categoryModal) {
 }
 
 if (addCategoryBtn) {
-    addCategoryBtn.onclick = function (e) {
+    addCategoryBtn.onclick = function(e) {
         e.stopPropagation();
+        
+        // بنتأكد إننا بنبدأ إضافة تصنيف جديد من الصفر، مش استكمال تعديل قديم
+        editingCategory = null;
+        
+        document.getElementById("newCategoryName").value = "";
+        document.getElementById("newCategoryIcon").value = "";
+        document.getElementById("selectedCategoryIconPreviewWrap").innerHTML =
+            `<i data-lucide="tag" id="selectedCategoryIconPreview"></i>`;
+        selectedCategoryIconLabel.textContent = t("choose_icon_label");
+        if (window.lucide) lucide.createIcons();
+        
         categoryModal.classList.remove("show");
-        setTimeout(function () {
+        setTimeout(function() {
             addCategoryModal.classList.add("show");
         }, 250);
     };
 }
 
 if (addCategoryModal) {
-    addCategoryModal.onclick = function (e) {
+    addCategoryModal.onclick = function(e) {
         if (e.target === addCategoryModal) {
             addCategoryModal.classList.remove("show");
+            // قفل المودال من غير حفظ = إلغاء أي تعديل كان شغال
+            editingCategory = null;
         }
     };
 }
-
 function renderCategories() {
     const categoriesList = document.getElementById("categoriesList");
     if (!categoriesList) return;
