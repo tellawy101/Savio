@@ -175,9 +175,11 @@ const card = li.querySelector(".expense-main");
 const deleteBtn = li.querySelector(".swipe-delete");
 const editBtn = li.querySelector(".swipe-edit");
 
-const leftAction = deleteBtn;
-const rightAction = editBtn;
+const isRTL = document.documentElement.dir === "rtl";
 
+// بنحدد مين اللي المفروض يتكشف مع كل اتجاه سحب، حسب مكانه الفعلي على الشاشة (RTL/LTR)
+const revealOnSwipeRight = isRTL ? editBtn : deleteBtn;
+const revealOnSwipeLeft = isRTL ? deleteBtn : editBtn;
 deleteBtn.addEventListener("click", (e) => {
 
     e.stopPropagation();
@@ -267,15 +269,12 @@ currentX = offsetX + deltaX;
     if (currentX < -80) currentX = -80;
 
     card.style.transform = `translateX(${currentX}px)`;
-    const leftAction = li.querySelector(".swipe-delete");
-const rightAction = li.querySelector(".swipe-edit");
-
 if (currentX > 0) {
-    leftAction.style.opacity = currentX / 80;
-    rightAction.style.opacity = 0;
+    revealOnSwipeRight.style.opacity = currentX / 80;
+    revealOnSwipeLeft.style.opacity = 0;
 } else {
-    rightAction.style.opacity = Math.abs(currentX) / 80;
-    leftAction.style.opacity = 0;
+    revealOnSwipeLeft.style.opacity = Math.abs(currentX) / 80;
+    revealOnSwipeRight.style.opacity = 0;
 }
 
 card.style.transition = "none";
@@ -302,14 +301,14 @@ card.addEventListener("touchend", () => {
     card.style.transform = `translateX(${offsetX}px)`;
     
     if (offsetX === 70) {
-    leftAction.style.opacity = 1;
-    rightAction.style.opacity = 0;
+    revealOnSwipeRight.style.opacity = 1;
+    revealOnSwipeLeft.style.opacity = 0;
 } else if (offsetX === -70) {
-    rightAction.style.opacity = 1;
-    leftAction.style.opacity = 0;
+    revealOnSwipeLeft.style.opacity = 1;
+    revealOnSwipeRight.style.opacity = 0;
 } else {
-    leftAction.style.opacity = 0;
-    rightAction.style.opacity = 0;
+    revealOnSwipeRight.style.opacity = 0;
+    revealOnSwipeLeft.style.opacity = 0;
 }
     currentX = 0;
     
