@@ -466,86 +466,49 @@ document.addEventListener("DOMContentLoaded", function () {
         showToast(t("settings_export_copied"), "success");
     });
 
-    exportBtn.addEventListener("click", async function() {
-    
-    const BACKUP_KEYS = [
-        "transactions",
-        "accounts",
-        "categories",
-        "customCategoryIcons",
-        "debts",
-        "savioBudget",
-        "theme",
-        "language",
-        "currency",
-        "balanceHidden"
-    ];
-    
-    const backup = {};
-    
-    BACKUP_KEYS.forEach(function(key) {
-        const value = localStorage.getItem(key);
-        if (value !== null) {
-            backup[key] = value;
-        }
-    });
-    
-    const payload = {
-        app: "Savio",
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        data: backup
-    };
-    
-const jsonText = JSON.stringify(payload, null, 2);
-    const fileName = "savio-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+    exportBtn.addEventListener("click", async function () {
 
-    // 1) Native app: write the file straight to the device's Documents folder, no dialogs.
-    try {
-        if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()
-            && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem) {
+        const BACKUP_KEYS = [
+            "transactions",
+            "accounts",
+            "categories",
+            "customCategoryIcons",
+            "debts",
+            "savioBudget",
+            "theme",
+            "language",
+            "currency",
+            "balanceHidden"
+        ];
 
-            await window.Capacitor.Plugins.Filesystem.writeFile({
-                path: fileName,
-                data: jsonText,
-                directory: "DOCUMENTS",
-                encoding: "utf8"
-            });
+        const backup = {};
 
-            showToast(t("settings_export_done"), "success");
-            return;
-        }
-    } catch (err) {
-        console.error("Filesystem export failed", err);
-    }
+        BACKUP_KEYS.forEach(function (key) {
+            const value = localStorage.getItem(key);
+            if (value !== null) {
+                backup[key] = value;
+            }
+        });
 
-    // 2) Browser preview: trigger an automatic download, no share sheet needed.
-    try {
-        const blob = new Blob([jsonText], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        const payload = {
+            app: "Savio",
+            version: 1,
+            exportedAt: new Date().toISOString(),
+            data: backup
+        };
 
-        showToast(t("settings_export_done"), "success");
-        return;
-    } catch (err) {
-        console.error("Blob download export failed", err);
-    }
+        const jsonText = JSON.stringify(payload, null, 2);
+        const fileName = "savio-backup-" + Date.now() + ".json";
 
-    // 3) Last-resort fallback if neither of the above is available.
-    fallbackText.value = jsonText;
-    fallbackModal.classList.add("show");
-    
-});
-
-});
-</script>
-<script>
+        // 1) تطبيق حقيقي على الموبايل: احفظ الملف تلقائي في مجلد Documents
+        try {
+            if (
+                window.Capacitor &&
+                window.Capacitor.isNativePlatform &&
+                window.Capacitor.isNativePlatform() &&
+                window.Capacitor.Plugins &&
+                window.Capacitor.Plugins.Filesystem
+            ) {<script>
 document.addEventListener("DOMContentLoaded", function () {
 
     const importBtn = document.getElementById("importData");
