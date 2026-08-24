@@ -7,8 +7,9 @@
     "build": "echo Savio web app ready"
   },
   "dependencies": {
-    "@capacitor/core": "^7.4.0"
-  },
+  "@capacitor/core": "^7.4.0",
+  "@capacitor/filesystem": "^7.0.0"
+},
   "devDependencies": {
     "@capacitor/cli": "^7.4.0"
   }

@@ -234,6 +234,44 @@
         </div>
 
     </section>
+<!-- Export Fallback Modal -->
+    <div id="exportFallbackModal" class="modal">
+        <div class="modal-content">
+
+<h2 data-i18n="settings_export_fallback_title">Backup Data</h2>
+
+            <p style="margin: 10px 0 15px; line-height: 1.6;" data-i18n="settings_export_fallback_desc">Copy the text below and save it as a .json file.</p>
+
+            <textarea id="exportFallbackText" readonly rows="8" style="width:100%; box-sizing:border-box; resize:vertical; font-family:monospace; font-size:12px;"></textarea>
+
+            <div class="modal-actions" style="margin-top:15px; display:flex; gap:10px;">
+                <button id="copyExportFallbackBtn" data-i18n="settings_export_copy">Copy</button>
+                <button id="closeExportFallbackBtn" data-i18n="settings_close">Close</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Import Manual Modal -->
+    <div id="importManualModal" class="modal">
+        <div class="modal-content">
+
+<h2 data-i18n="settings_import">Import Data</h2>
+
+            <p style="margin: 10px 0 15px; line-height: 1.6;" data-i18n="settings_import_manual_desc">Paste the backup text you copied earlier, then tap Restore.</p>
+
+            <input type="file" id="importFileInput" accept="application/json,.json" style="margin-bottom:10px; width:100%;">
+
+            <textarea id="importManualText" rows="8" style="width:100%; box-sizing:border-box; resize:vertical; font-family:monospace; font-size:12px;"></textarea>
+
+            <div class="modal-actions" style="margin-top:15px; display:flex; gap:10px;">
+                <button id="restoreImportManualBtn" data-i18n="settings_import_restore">Restore</button>
+                <button id="closeImportManualBtn" data-i18n="settings_close">Close</button>
+            </div>
+
+        </div>
+    </div>
+
 <!-- About Savio Modal -->
     <div id="aboutModal" class="modal">
         <div class="modal-content">
@@ -459,21 +497,47 @@ document.addEventListener("DOMContentLoaded", function () {
         data: backup
     };
     
-    const jsonText = JSON.stringify(payload, null, 2);
-    
+const jsonText = JSON.stringify(payload, null, 2);
+    const fileName = "savio-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+
+    // 1) Native app: write the file straight to the device's Documents folder, no dialogs.
     try {
-        if (navigator.canShare && navigator.share) {
-            const file = new File([jsonText], "savio-backup.json", { type: "application/json" });
-            if (navigator.canShare({ files: [file] })) {
-                await navigator.share({ files: [file], title: "Savio Backup" });
-                showToast(t("settings_export_done"), "success");
-                return;
-            }
+        if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()
+            && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem) {
+
+            await window.Capacitor.Plugins.Filesystem.writeFile({
+                path: fileName,
+                data: jsonText,
+                directory: "DOCUMENTS",
+                encoding: "utf8"
+            });
+
+            showToast(t("settings_export_done"), "success");
+            return;
         }
     } catch (err) {
-        if (err && err.name === "AbortError") return;
+        console.error("Filesystem export failed", err);
     }
-    
+
+    // 2) Browser preview: trigger an automatic download, no share sheet needed.
+    try {
+        const blob = new Blob([jsonText], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showToast(t("settings_export_done"), "success");
+        return;
+    } catch (err) {
+        console.error("Blob download export failed", err);
+    }
+
+    // 3) Last-resort fallback if neither of the above is available.
     fallbackText.value = jsonText;
     fallbackModal.classList.add("show");
     
@@ -488,9 +552,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const importManualModal = document.getElementById("importManualModal");
     const importManualText = document.getElementById("importManualText");
     const closeImportManualBtn = document.getElementById("closeImportManualBtn");
-    const restoreImportManualBtn = document.getElementById("restoreImportManualBtn");
+const restoreImportManualBtn = document.getElementById("restoreImportManualBtn");
+const importFileInput = document.getElementById("importFileInput");
 
-    if (!importBtn || !importManualModal) return;
+if (!importBtn || !importManualModal) return;
+
+if (importFileInput) {
+    importFileInput.addEventListener("change", function() {
+        const file = importFileInput.files && importFileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function() {
+            importManualText.value = reader.result;
+        };
+        reader.onerror = function() {
+            showToast(t("settings_import_invalid"), "error");
+        };
+        reader.readAsText(file);
+    });
+}
 
     const BACKUP_KEYS = [
         "transactions",
