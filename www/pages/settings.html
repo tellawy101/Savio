@@ -234,35 +234,6 @@
         </div>
 
     </section>
-<!-- Export Fallback Modal -->
-<div id="exportFallbackModal" class="modal">
-    <div class="modal-content">
-        <h2 data-i18n="settings_export_fallback_title">Backup Data</h2>
-        <p style="margin: 10px 0; line-height: 1.6; font-size: 13px; opacity: .75;" data-i18n="settings_export_fallback_desc">
-            Copy the text below and save it as a .json file.
-        </p>
-        <textarea id="exportFallbackText" readonly style="width:100%; height:180px; box-sizing:border-box; font-family:monospace; font-size:12px; padding:10px; border-radius:10px; border:1px solid rgba(0,0,0,.1); resize:vertical;"></textarea>
-        <div class="modal-actions" style="margin-top:12px;">
-            <button id="closeExportFallbackBtn" data-i18n="settings_close">Close</button>
-            <button id="copyExportFallbackBtn" data-i18n="settings_export_copy">Copy</button>
-        </div>
-    </div>
-</div>
-
-<!-- Manual Import Modal -->
-<div id="importManualModal" class="modal">
-    <div class="modal-content">
-        <h2 data-i18n="settings_import">Import Data</h2>
-        <p style="margin: 10px 0; line-height: 1.6; font-size: 13px; opacity: .75;" data-i18n="settings_import_manual_desc">
-            Paste the backup text you copied earlier, then tap Restore.
-        </p>
-        <textarea id="importManualText" placeholder='{"app":"Savio", ...}' style="width:100%; height:180px; box-sizing:border-box; font-family:monospace; font-size:12px; padding:10px; border-radius:10px; border:1px solid rgba(0,0,0,.1); resize:vertical;"></textarea>
-        <div class="modal-actions" style="margin-top:12px;">
-            <button id="closeImportManualBtn" data-i18n="settings_close">Close</button>
-            <button id="restoreImportManualBtn" data-i18n="settings_import_restore">Restore</button>
-        </div>
-    </div>
-</div>
 <!-- About Savio Modal -->
     <div id="aboutModal" class="modal">
         <div class="modal-content">
@@ -457,43 +428,56 @@ document.addEventListener("DOMContentLoaded", function () {
         showToast(t("settings_export_copied"), "success");
     });
 
-    exportBtn.addEventListener("click", function () {
-
-        const BACKUP_KEYS = [
-            "transactions",
-            "accounts",
-            "categories",
-            "customCategoryIcons",
-            "debts",
-            "savioBudget",
-            "theme",
-            "language",
-            "currency",
-            "balanceHidden"
-        ];
-
-        const backup = {};
-
-        BACKUP_KEYS.forEach(function (key) {
-            const value = localStorage.getItem(key);
-            if (value !== null) {
-                backup[key] = value;
-            }
-        });
-
-        const payload = {
-            app: "Savio",
-            version: 1,
-            exportedAt: new Date().toISOString(),
-            data: backup
-        };
-
-        const jsonText = JSON.stringify(payload, null, 2);
-
-        fallbackText.value = jsonText;
-        fallbackModal.classList.add("show");
-
+    exportBtn.addEventListener("click", async function() {
+    
+    const BACKUP_KEYS = [
+        "transactions",
+        "accounts",
+        "categories",
+        "customCategoryIcons",
+        "debts",
+        "savioBudget",
+        "theme",
+        "language",
+        "currency",
+        "balanceHidden"
+    ];
+    
+    const backup = {};
+    
+    BACKUP_KEYS.forEach(function(key) {
+        const value = localStorage.getItem(key);
+        if (value !== null) {
+            backup[key] = value;
+        }
     });
+    
+    const payload = {
+        app: "Savio",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        data: backup
+    };
+    
+    const jsonText = JSON.stringify(payload, null, 2);
+    
+    try {
+        if (navigator.canShare && navigator.share) {
+            const file = new File([jsonText], "savio-backup.json", { type: "application/json" });
+            if (navigator.canShare({ files: [file] })) {
+                await navigator.share({ files: [file], title: "Savio Backup" });
+                showToast(t("settings_export_done"), "success");
+                return;
+            }
+        }
+    } catch (err) {
+        if (err && err.name === "AbortError") return;
+    }
+    
+    fallbackText.value = jsonText;
+    fallbackModal.classList.add("show");
+    
+});
 
 });
 </script>
