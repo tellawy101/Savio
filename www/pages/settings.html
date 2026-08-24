@@ -234,7 +234,35 @@
         </div>
 
     </section>
+<!-- Export Fallback Modal -->
+<div id="exportFallbackModal" class="modal">
+    <div class="modal-content">
+        <h2 data-i18n="settings_export_fallback_title">Backup Data</h2>
+        <p style="margin: 10px 0; line-height: 1.6; font-size: 13px; opacity: .75;" data-i18n="settings_export_fallback_desc">
+            Copy the text below and save it as a .json file.
+        </p>
+        <textarea id="exportFallbackText" readonly style="width:100%; height:180px; box-sizing:border-box; font-family:monospace; font-size:12px; padding:10px; border-radius:10px; border:1px solid rgba(0,0,0,.1); resize:vertical;"></textarea>
+        <div class="modal-actions" style="margin-top:12px;">
+            <button id="closeExportFallbackBtn" data-i18n="settings_close">Close</button>
+            <button id="copyExportFallbackBtn" data-i18n="settings_export_copy">Copy</button>
+        </div>
+    </div>
+</div>
 
+<!-- Manual Import Modal -->
+<div id="importManualModal" class="modal">
+    <div class="modal-content">
+        <h2 data-i18n="settings_import">Import Data</h2>
+        <p style="margin: 10px 0; line-height: 1.6; font-size: 13px; opacity: .75;" data-i18n="settings_import_manual_desc">
+            Paste the backup text you copied earlier, then tap Restore.
+        </p>
+        <textarea id="importManualText" placeholder='{"app":"Savio", ...}' style="width:100%; height:180px; box-sizing:border-box; font-family:monospace; font-size:12px; padding:10px; border-radius:10px; border:1px solid rgba(0,0,0,.1); resize:vertical;"></textarea>
+        <div class="modal-actions" style="margin-top:12px;">
+            <button id="closeImportManualBtn" data-i18n="settings_close">Close</button>
+            <button id="restoreImportManualBtn" data-i18n="settings_import_restore">Restore</button>
+        </div>
+    </div>
+</div>
 <!-- About Savio Modal -->
     <div id="aboutModal" class="modal">
         <div class="modal-content">
@@ -271,12 +299,13 @@
 
 
 <!-- Bottom Navigation -->
-
+<div id="toast" class="toast"></div>
 <div id="nav-placeholder"></div>
 
 <script src="../js/components.js"></script>
 <script src="../js/storage.js"></script>
 <script src="../js/i18n.js"></script>
+<script src="../js/ui.js"></script>
 <script src="../js/theme.js"></script>
 
 <script>
@@ -396,6 +425,145 @@ document.addEventListener("DOMContentLoaded", function() {
     
 });
 </script>
+<script>
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const exportBtn = document.getElementById("exportData");
+    if (!exportBtn) return;
+
+    const fallbackModal = document.getElementById("exportFallbackModal");
+    const fallbackText = document.getElementById("exportFallbackText");
+    const closeFallbackBtn = document.getElementById("closeExportFallbackBtn");
+    const copyFallbackBtn = document.getElementById("copyExportFallbackBtn");
+
+    if (closeFallbackBtn) {
+        closeFallbackBtn.addEventListener("click", function () {
+            fallbackModal.classList.remove("show");
+        });
+    }
+
+    fallbackModal.addEventListener("click", function (e) {
+        if (e.target === fallbackModal) fallbackModal.classList.remove("show");
+    });
+
+    copyFallbackBtn.addEventListener("click", async function () {
+        fallbackText.select();
+        try {
+            await navigator.clipboard.writeText(fallbackText.value);
+        } catch (err) {
+            document.execCommand("copy");
+        }
+        showToast(t("settings_export_copied"), "success");
+    });
+
+    exportBtn.addEventListener("click", function () {
+
+        const BACKUP_KEYS = [
+            "transactions",
+            "accounts",
+            "categories",
+            "customCategoryIcons",
+            "debts",
+            "savioBudget",
+            "theme",
+            "language",
+            "currency",
+            "balanceHidden"
+        ];
+
+        const backup = {};
+
+        BACKUP_KEYS.forEach(function (key) {
+            const value = localStorage.getItem(key);
+            if (value !== null) {
+                backup[key] = value;
+            }
+        });
+
+        const payload = {
+            app: "Savio",
+            version: 1,
+            exportedAt: new Date().toISOString(),
+            data: backup
+        };
+
+        const jsonText = JSON.stringify(payload, null, 2);
+
+        fallbackText.value = jsonText;
+        fallbackModal.classList.add("show");
+
+    });
+
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const importBtn = document.getElementById("importData");
+    const importManualModal = document.getElementById("importManualModal");
+    const importManualText = document.getElementById("importManualText");
+    const closeImportManualBtn = document.getElementById("closeImportManualBtn");
+    const restoreImportManualBtn = document.getElementById("restoreImportManualBtn");
+
+    if (!importBtn || !importManualModal) return;
+
+    const BACKUP_KEYS = [
+        "transactions",
+        "accounts",
+        "categories",
+        "customCategoryIcons",
+        "debts",
+        "savioBudget",
+        "theme",
+        "language",
+        "currency",
+        "balanceHidden"
+    ];
+
+    importBtn.addEventListener("click", function () {
+        importManualText.value = "";
+        importManualModal.classList.add("show");
+    });
+
+    closeImportManualBtn.addEventListener("click", function () {
+        importManualModal.classList.remove("show");
+    });
+
+    importManualModal.addEventListener("click", function (e) {
+        if (e.target === importManualModal) importManualModal.classList.remove("show");
+    });
+
+    restoreImportManualBtn.addEventListener("click", function () {
+
+        const rawText = importManualText.value.trim();
+        if (!rawText) { showToast(t("settings_import_invalid"), "error"); return; }
+
+        try {
+            const payload = JSON.parse(rawText);
+            if (!payload || payload.app !== "Savio" || !payload.data) throw new Error("invalid");
+
+            if (!confirm(t("settings_import_confirm"))) return;
+
+            BACKUP_KEYS.forEach(function (key) {
+                if (Object.prototype.hasOwnProperty.call(payload.data, key)) {
+                    localStorage.setItem(key, payload.data[key]);
+                } else {
+                    localStorage.removeItem(key);
+                }
+            });
+
+            importManualModal.classList.remove("show");
+            showToast(t("settings_import_done"), "success");
+            setTimeout(function () { window.location.href = "../index.html"; }, 800);
+
+        } catch (error) {
+            showToast(t("settings_import_invalid"), "error");
+        }
+
+    });
+
+});
+</script>
 </body>
 </html>
