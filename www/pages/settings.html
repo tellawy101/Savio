@@ -508,10 +508,56 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.Capacitor.isNativePlatform() &&
                 window.Capacitor.Plugins &&
                 window.Capacitor.Plugins.Filesystem
-            ) {<script>
-document.addEventListener("DOMContentLoaded", function () {
+            ) {
+    
+    const { Filesystem, Directory, Encoding } = window.Capacitor.Plugins;
+    
+    await Filesystem.writeFile({
+        path: fileName,
+        data: jsonText,
+        directory: Directory.Documents,
+        encoding: Encoding.UTF8
+    });
+    
+    showToast(t("settings_export_done"), "success");
+    return;
+    
+}
+} catch (err) {
+    console.error("Filesystem export failed:", err);
+}
 
-    const importBtn = document.getElementById("importData");
+// 2) معاينة متصفح عادية: تحميل تلقائي عن طريق رابط
+try {
+    const blob = new Blob([jsonText], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showToast(t("settings_export_done"), "success");
+    return;
+} catch (err) {
+    console.error("Blob download export failed:", err);
+}
+
+// 3) الملاذ الأخير: النسخ اليدوي
+fallbackText.value = jsonText;
+fallbackModal.classList.add("show");
+
+});
+
+});
+
+</script> 
+<script >
+    document.addEventListener("DOMContentLoaded", function() {
+            
+            const importBtn = document.getElementById("importData");
     const importManualModal = document.getElementById("importManualModal");
     const importManualText = document.getElementById("importManualText");
     const closeImportManualBtn = document.getElementById("closeImportManualBtn");
