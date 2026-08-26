@@ -413,6 +413,60 @@ ${renderFormHeader(type, capitalize(type), '<i data-lucide="check"></i>')}
     `;
 }
 
+function renderTransferForm() {
+    return `
+${renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>')}
+
+<main class="transfer-content">
+
+<div class="amount-section">
+    <div class="amount-display">
+        <span class="currency">EGP</span>
+        <input type="tel" id="transferAmount" inputmode="numeric" value="0">
+    </div>
+</div>
+
+<div class="form-group">
+    <label>From Account</label>
+    <div class="account-select-box">
+        <span class="account-icon">💳</span>
+        <div id="transferFromAccount" class="account-select" data-i18n="select_account">Select Account</div>
+        <span class="account-arrow">›</span>
+    </div>
+</div>
+
+<div class="transfer-swap-row">
+    <button id="swapAccountsBtn" type="button" class="swap-accounts-btn">
+        <i data-lucide="arrow-down-up"></i>
+    </button>
+</div>
+
+<div class="form-group">
+    <label>To Account</label>
+    <div class="account-select-box">
+        <span class="account-icon">💳</span>
+        <div id="transferToAccount" class="account-select" data-i18n="select_account">Select Account</div>
+        <span class="account-arrow">›</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label data-i18n="description_label">Description</label>
+    <div class="description-box">
+        <input type="text" id="transferDescription" class="description-input" placeholder="Write a note" data-i18n-placeholder="note_placeholder">
+    </div>
+</div>
+
+<div class="form-group">
+    <label data-i18n="date_label">Date</label>
+    <div class="description-box">
+        <input type="date" id="transferDate" class="description-input">
+    </div>
+</div>
+
+</main>
+    `;
+}
 // 8) إغلاق أي مودال لما يتم الضغط برّه (خارج المحتوى) - نمط متكرر في كل المودالز
 
 function closeModalOnBackdropClick(modal, onClose) {

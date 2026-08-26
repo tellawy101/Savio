@@ -10,101 +10,11 @@
     <link rel="stylesheet" href="../css/transaction-pages.css">
 </head>
 <body class="has-scroll transfer-page">
-
-<!-- رأس الصفحة -->
-    <div id="header-placeholder"></div>
-    <!-- محتوى الصفحة -->
-    <main class="transfer-content">
-
-        <div class="amount-section">
-
-            <div class="amount-display">
-                <span class="currency">EGP</span>
-
-                <input
-                    type="tel"
-                    id="transferAmount"
-                    inputmode="numeric"
-                    value="0">
-            </div>
-
-        </div>
-
-        <div class="form-group">
-
-            <label>From Account</label>
-
-            <div class="account-select-box">
-
-                <span class="account-icon">💳</span>
-
-                <div id="transferFromAccount" class="account-select">
-                    Select Account
-                </div>
-
-                <span class="account-arrow">›</span>
-
-            </div>
-
-        </div>
-
-        <div class="transfer-swap-row">
-            <button id="swapAccountsBtn" type="button" class="swap-accounts-btn">
-                <i data-lucide="arrow-down-up"></i>
-            </button>
-        </div>
-
-        <div class="form-group">
-
-            <label>To Account</label>
-
-            <div class="account-select-box">
-
-                <span class="account-icon">💳</span>
-
-                <div id="transferToAccount" class="account-select">
-                    Select Account
-                </div>
-
-                <span class="account-arrow">›</span>
-
-            </div>
-
-        </div>
-
-        <div class="form-group">
-
-            <label>Description</label>
-
-            <div class="description-box">
-
-                <input
-                    type="text"
-                    id="transferDescription"
-                    class="description-input"
-                    placeholder="Write a note">
-
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            <label>Date</label>
-            <div class="description-box">
-                <input
-                    type="date"
-                    id="transferDate"
-                    class="description-input">
-            </div>
-        </div>
-
-    </main>
-
-    <div id="modals-placeholder"></div>
-
+<div id="form-placeholder"></div>
+<div id="modals-placeholder"></div>
 <script src="../js/components.js"></script>
 <script>
-    document.getElementById("header-placeholder").innerHTML = renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>');
+    document.getElementById("form-placeholder").innerHTML = renderTransferForm();
     document.getElementById("modals-placeholder").innerHTML = renderSharedModals();
 </script>
 <script src="../js/storage.js"></script>
@@ -116,7 +26,7 @@
 <script src="../js/transactionCommon.js"></script>
 <script src="../js/transfer.js"></script>
 <script>
-    if (window.lucide) lucide.createIcons();
+    document.addEventListener("DOMContentLoaded", initIcons);
 </script>
 </body>
 </html>
