@@ -108,7 +108,6 @@ body.has-scroll {
     width: 20px;
     height: 20px;
 }
-
 /* ==============================
    قسم المبلغ
 ============================== */
@@ -699,12 +698,13 @@ body.dark .save-btn svg {
 }
 
 #saveIncomeBtn svg,
-#saveExpenseBtn svg {
+#saveExpenseBtn svg,
+#saveTransferBtn svg {
     width: 24px !important;
     height: 24px !important;
     display: block !important;
     stroke: #0F766E !important;
     fill: none !important;
-    stroke-width: 3 !important;
+    stroke-width: 4.5 !important;
     opacity: 1 !important;
 }

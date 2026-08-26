@@ -14,6 +14,11 @@ body.transfer-page {
 body.expense-page {
     background: #F4F5F7;
 }
+body.dark.income-page,
+body.dark.transfer-page,
+body.dark.expense-page {
+    background: #101817;
+}
 
 /* ==============================================================
    تنسيق قائمة المصروفات في الداشبورد (index.html)

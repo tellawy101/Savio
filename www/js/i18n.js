@@ -34,6 +34,7 @@ const translations = {
         // Income modal
 income_title: "Income",
     expense_title: "Expense",
+    transfer_title: "Transfer",
     account_label: "Account",
     category_label: "Category",
     description_label: "Description",
@@ -196,6 +197,7 @@ stats_expense: "Expense",
         // Income modal
 income_title: "دخل",
     expense_title: "مصروف",
+       transfer_title: "تحويل",
     account_label: "الحساب",
     category_label: "التصنيف",
     description_label: "الوصف",
