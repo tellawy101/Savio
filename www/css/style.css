@@ -474,6 +474,9 @@ body.capacitor-app .bottom-nav {
 main{
     padding-bottom:90px;
 }
+body.capacitor-app main {
+    padding-bottom: 150px;
+}
 .dark .bottom-nav{
     background:rgba(30,30,30,.25);
     backdrop-filter:blur(25px);
