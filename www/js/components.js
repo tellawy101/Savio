@@ -351,14 +351,22 @@ function capitalize(str) {
 }
 
 // 7) بناء فورم الـ Income / Expense (نفس الشكل، بيتفرق بس بالـ type)
-function renderTransactionForm(type) {
+// 7) هيدر موحد (زرار رجوع + عنوان + زرار حفظ) لأي صفحة فورم - Income/Expense/Transfer
+function renderFormHeader(type, titleText, saveBtnContent) {
     const titleKey = type + "_title";
     return `
 <header class="${type}-header">
     <button id="backBtn" class="back-btn">←</button>
-    <h1 data-i18n="${titleKey}">${capitalize(type)}</h1>
-    <button id="save${capitalize(type)}Btn" class="save-btn"><i data-lucide="check"></i></button>
+    <h1 data-i18n="${titleKey}">${titleText}</h1>
+    <button id="save${capitalize(type)}Btn" class="save-btn">${saveBtnContent}</button>
 </header>
+    `;
+}
+
+// 7.1) بناء فورم الـ Income / Expense (نفس الشكل، بيتفرق بس بالـ type)
+function renderTransactionForm(type) {
+    return `
+${renderFormHeader(type, capitalize(type), '<i data-lucide="check"></i>')}
 
 <main class="${type}-content">
 

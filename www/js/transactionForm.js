@@ -16,16 +16,13 @@ function initTransactionForm(type) {
         setTimeout(() => amountEl.focus(), 300);
     });
 
-    backBtn.onclick = function () {
-        window.location.href = "../index.html";
-    };
+    initBackButton(backBtn);
 
-    fixScrollOnFocusOut();
-    applyStoredTheme();
+setupCommonFormPage();
     const currencyEl = document.querySelector(".amount-display .currency");
     if (currencyEl) currencyEl.textContent = getCurrency();
 
-    const today = new Date().toISOString().split("T")[0];
+    const today = getTodayDateString();
     dateEl.value = today;
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -90,7 +87,7 @@ function initTransactionForm(type) {
             categoryIcon: categoryEl.dataset.icon || "tag",
             type: type,
             date: dateEl.value,
-            time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+            time: getCurrentTimeString()
         };
 
         if (editId) {
@@ -98,11 +95,11 @@ function initTransactionForm(type) {
             if (entryIndex !== -1) {
                 transactions[entryIndex] = { ...transactions[entryIndex], ...entryData };
             } else {
-                entryData.id = "tx_" + Date.now() + "_" + Math.random().toString(36).slice(2, 9);
+                entryData.id = generateTransactionId("tx");
                 transactions.push(entryData);
             }
         } else {
-            entryData.id = "tx_" + Date.now() + "_" + Math.random().toString(36).slice(2, 9);
+            entryData.id = generateTransactionId("tx");
             transactions.push(entryData);
         }
 

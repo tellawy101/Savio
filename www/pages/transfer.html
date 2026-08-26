@@ -10,17 +10,9 @@
     <link rel="stylesheet" href="../css/transaction-pages.css">
 </head>
 <body class="has-scroll transfer-page">
-    <!-- رأس الصفحة -->
-    <header class="transfer-header">
 
-        <button id="backBtn" class="back-btn">←</button>
-
-        <h1>Transfer</h1>
-
-        <button id="saveTransferBtn" class="save-btn">✓</button>
-
-    </header>
-
+<!-- رأس الصفحة -->
+    <div id="header-placeholder"></div>
     <!-- محتوى الصفحة -->
     <main class="transfer-content">
 
@@ -112,6 +104,7 @@
 
 <script src="../js/components.js"></script>
 <script>
+    document.getElementById("header-placeholder").innerHTML = renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>');
     document.getElementById("modals-placeholder").innerHTML = renderSharedModals();
 </script>
 <script src="../js/storage.js"></script>
@@ -120,6 +113,7 @@
 <script src="../js/formHelpers.js"></script>
 <script src="../js/vendor/lucide.js" defer></script>
 <script src="../js/accounts.js"></script>
+<script src="../js/transactionCommon.js"></script>
 <script src="../js/transfer.js"></script>
 <script>
     if (window.lucide) lucide.createIcons();

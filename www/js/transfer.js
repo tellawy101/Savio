@@ -12,13 +12,9 @@ const transferDescription = document.getElementById("transferDescription");
 const transferDate = document.getElementById("transferDate");
 const swapAccountsBtn = document.getElementById("swapAccountsBtn");
 
-backBtn.onclick = function () {
-    window.location.href = "../index.html";
-};
+initBackButton(backBtn);
 
-fixScrollOnFocusOut();
-applyStoredTheme();
-
+setupCommonFormPage();
 const existingAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
 
 if (existingAccounts.length < 2) {
@@ -28,7 +24,7 @@ if (existingAccounts.length < 2) {
         window.location.href = "../index.html";
     };
 }
-const today = new Date().toISOString().split("T")[0];
+const today = getTodayDateString();
 transferDate.value = today;
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -145,11 +141,11 @@ saveTransferBtn.onclick = function () {
     const toAccount = transferToAccount.textContent.trim();
     const note = transferDescription.value.trim();
     const date = transferDate.value;
-    const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const time = getCurrentTimeString();
 
     let transactions = loadTransactions();
 
-    const transferId = editTransferId || ("tr_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7));
+    const transferId = editTransferId || generateTransactionId("tr");
 
     // لو بنعدّل تحويل قديم، نشيل النسختين القدام الأول
     if (editTransferId) {
