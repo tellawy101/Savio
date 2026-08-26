@@ -39,14 +39,7 @@ accountBoxes.forEach(function (box) {
     };
 });
 
-if (accountModal) {
-    accountModal.onclick = function(e) {
-        if (e.target === accountModal) {
-            accountModal.classList.remove("show");
-        }
-    };
-}
-
+closeModalOnBackdropClick(accountModal);
 if (addAccountBtn) {
     addAccountBtn.onclick = function(e) {
         e.stopPropagation();
@@ -59,14 +52,7 @@ if (addAccountBtn) {
     };
 }
 
-if (addAccountModal) {
-    addAccountModal.onclick = function(e) {
-        if (e.target === addAccountModal) {
-            addAccountModal.classList.remove("show");
-        }
-    };
-}
-
+closeModalOnBackdropClick(addAccountModal);
 // ==============================
 // Render
 // ==============================
@@ -302,14 +288,7 @@ if (deleteAccountBtn) {
 // إغلاق قائمة تعديل/حذف الحساب عند الضغط برّه
 // ==============================
 
-if (accountMenu) {
-    accountMenu.onclick = function(e) {
-        if (e.target === this) {
-            this.classList.remove("show");
-        }
-    };
-}
-
+closeModalOnBackdropClick(accountMenu);
 // فواصل الآلاف تلقائيًا في خانة "رصيد الحساب الجديد" (من formHelpers.js)
 attachThousandsFormatter(document.getElementById("newAccountBalance"));
 

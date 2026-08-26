@@ -334,11 +334,9 @@ function showNoAccountsModal(existingAccountsCount) {
 
     modal.classList.add("show");
 
-    modal.onclick = function (e) {
-        if (e.target === modal) modal.classList.remove("show");
-    };
+closeModalOnBackdropClick(modal);
 
-    document.getElementById("noAccountsCancelBtn").onclick = function () {
+document.getElementById("noAccountsCancelBtn").onclick = function() {
         modal.classList.remove("show");
     };
 
@@ -405,4 +403,16 @@ function renderTransactionForm(type) {
 
 </main>
     `;
+}
+
+// 8) إغلاق أي مودال لما يتم الضغط برّه (خارج المحتوى) - نمط متكرر في كل المودالز
+
+function closeModalOnBackdropClick(modal, onClose) {
+    if (!modal) return;
+    modal.onclick = function (e) {
+        if (e.target === modal) {
+            modal.classList.remove("show");
+            if (typeof onClose === "function") onClose();
+        }
+    };
 }

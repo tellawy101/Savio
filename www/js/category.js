@@ -251,14 +251,7 @@ if (categoryBox) {
     };
 }
 
-if (categoryModal) {
-    categoryModal.onclick = function (e) {
-        if (e.target === categoryModal) {
-            categoryModal.classList.remove("show");
-        }
-    };
-}
-
+closeModalOnBackdropClick(categoryModal);
 if (addCategoryBtn) {
     addCategoryBtn.onclick = function(e) {
         e.stopPropagation();
@@ -280,15 +273,9 @@ if (addCategoryBtn) {
     };
 }
 
-if (addCategoryModal) {
-    addCategoryModal.onclick = function(e) {
-        if (e.target === addCategoryModal) {
-            addCategoryModal.classList.remove("show");
-            // قفل المودال من غير حفظ = إلغاء أي تعديل كان شغال
-            editingCategory = null;
-        }
-    };
-}
+closeModalOnBackdropClick(addCategoryModal, function () {
+    editingCategory = null;
+});
 function renderCategories() {
     const categoriesList = document.getElementById("categoriesList");
     if (!categoriesList) return;
@@ -450,10 +437,4 @@ if (deleteCategoryBtn) {
     };
 }
 
-if (categoryMenu) {
-    categoryMenu.onclick = function (e) {
-        if (e.target === this) {
-            this.classList.remove("show");
-        }
-    };
-}
+closeModalOnBackdropClick(categoryMenu);
