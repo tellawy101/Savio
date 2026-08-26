@@ -10,96 +10,11 @@
     <link rel="stylesheet" href="../css/income.css">
 </head>
 <body class="has-scroll">
-    <!-- رأس الصفحة -->
- <header class="income-header">
-
-    <button id="backBtn" class="back-btn">←</button>
-
-    <h1 data-i18n="income_title">Income</h1>
-
-    <button id="saveIncomeBtn" class="save-btn"><i data-lucide="check"></i></button>
-
-</header>
-    
-    <!-- محتوى الصفحة -->
-    <main class="income-content">
-    
-<div class="amount-section">
-
-    <div class="amount-display">
-    <span class="currency">EGP</span>
-
-    <input
-        type="tel"
-        id="incomeAmount"
-        inputmode="numeric"
-        autofocus
-        value="0">
-</div>
-
-</div>
-
-<div class="form-group">
-
-    <label data-i18n="account_label">Account</label>
-
-    <div class="account-select-box">
-
-        <span class="account-icon">💳</span>
-
-      <div id="incomeAccount" class="account-select" data-i18n="select_account">
-    Select Account
-</div>
-        <span class="account-arrow">›</span>
-
-    </div>
-    
-
-</div>
-<div class="form-group">
-    <label data-i18n="category_label">Category</label>
-    <div class="category-select-box">
-        <span class="category-icon">🏷️</span>
-     <div id="incomeCategory" class="category-select" data-i18n="select_category">
-    Select Category
-</div>
-        <span class="category-arrow">›</span>
-    </div>
-</div>
-
-<div class="form-group">
-
-    <label data-i18n="description_label">Description</label>
-
-    
-    <div class="description-box">
-
-        <input
-            type="text"
-            id="incomeDescription"
-            class="description-input"
-            placeholder="Write a note" data-i18n-placeholder="note_placeholder">
-
-    </div>
-
-</div>
-
-<div class="form-group">
-    <label data-i18n="date_label">Date</label>
-   <div class="description-box">
-    <input
-        type="date"
-        id="incomeDate"
-        class="description-input"
-        placeholder="Write the date">
-</div>
-</div>
-
-    </main>
+<div id="form-placeholder"></div>
 <div id="modals-placeholder"></div>
-</div>
 <script src="../js/components.js"></script>
 <script>
+    document.getElementById("form-placeholder").innerHTML = renderTransactionForm("income");
     document.getElementById("modals-placeholder").innerHTML = renderSharedModals();
 </script>
 <script src="../js/storage.js"></script>

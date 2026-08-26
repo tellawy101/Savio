@@ -347,3 +347,62 @@ function showNoAccountsModal(existingAccountsCount) {
         window.location.href = insidePagesFolder ? "accounts.html" : "pages/accounts.html";
     };
 }
+// 6) دالة capitalize موحدة (تستخدمها transactionForm.js كمان)
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// 7) بناء فورم الـ Income / Expense (نفس الشكل، بيتفرق بس بالـ type)
+function renderTransactionForm(type) {
+    const titleKey = type + "_title";
+    return `
+<header class="${type}-header">
+    <button id="backBtn" class="back-btn">←</button>
+    <h1 data-i18n="${titleKey}">${capitalize(type)}</h1>
+    <button id="save${capitalize(type)}Btn" class="save-btn"><i data-lucide="check"></i></button>
+</header>
+
+<main class="${type}-content">
+
+<div class="amount-section">
+    <div class="amount-display">
+        <span class="currency">EGP</span>
+        <input type="tel" id="${type}Amount" inputmode="numeric" autofocus value="0">
+    </div>
+</div>
+
+<div class="form-group">
+    <label data-i18n="account_label">Account</label>
+    <div class="account-select-box">
+        <span class="account-icon">💳</span>
+        <div id="${type}Account" class="account-select" data-i18n="select_account">Select Account</div>
+        <span class="account-arrow">›</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label data-i18n="category_label">Category</label>
+    <div class="category-select-box">
+        <span class="category-icon">🏷️</span>
+        <div id="${type}Category" class="category-select" data-i18n="select_category">Select Category</div>
+        <span class="category-arrow">›</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label data-i18n="description_label">Description</label>
+    <div class="description-box">
+        <input type="text" id="${type}Description" class="description-input" placeholder="Write a note" data-i18n-placeholder="note_placeholder">
+    </div>
+</div>
+
+<div class="form-group">
+    <label data-i18n="date_label">Date</label>
+    <div class="description-box">
+        <input type="date" id="${type}Date" class="description-input" placeholder="Write the date">
+    </div>
+</div>
+
+</main>
+    `;
+}

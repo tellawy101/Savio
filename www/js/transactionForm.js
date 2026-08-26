@@ -3,10 +3,6 @@
 // منطق موحد لصفحتي Income و Expense (DRY)
 // type: "income" | "expense"
 // ==============================
-function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
 function initTransactionForm(type) {
     const backBtn = document.getElementById("backBtn");
     const amountEl = document.getElementById(type + "Amount");
