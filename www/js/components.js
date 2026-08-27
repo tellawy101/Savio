@@ -364,19 +364,9 @@ function renderFormHeader(type, titleText, saveBtnContent) {
 }
 
 // 7.1) بناء فورم الـ Income / Expense (نفس الشكل، بيتفرق بس بالـ type)
-function renderTransactionForm(type) {
+// حقول فورم الـ Income / Expense بس (من غير هيدر) - قابلة لإعادة الاستخدام
+function renderTransactionFields(type) {
     return `
-${renderFormHeader(type, capitalize(type), '<i data-lucide="check"></i>')}
-
-<main class="${type}-content">
-
-<div class="amount-section">
-    <div class="amount-display">
-        <span class="currency">EGP</span>
-        <input type="tel" id="${type}Amount" inputmode="numeric" autofocus value="0">
-    </div>
-</div>
-
 <div class="form-group">
     <label data-i18n="account_label">Account</label>
     <div class="account-select-box">
@@ -408,6 +398,24 @@ ${renderFormHeader(type, capitalize(type), '<i data-lucide="check"></i>')}
         <input type="date" id="${type}Date" class="description-input" placeholder="Write the date">
     </div>
 </div>
+    `;
+}
+
+// هيدر + الحقول مع بعض (زي الأول بالظبط) - بتستخدم الدالة اللي فوق جواها
+function renderTransactionForm(type) {
+    return `
+${renderFormHeader(type, capitalize(type), '<i data-lucide="check"></i>')}
+
+<main class="${type}-content">
+
+<div class="amount-section">
+    <div class="amount-display">
+        <span class="currency">EGP</span>
+        <input type="tel" id="${type}Amount" inputmode="numeric" autofocus value="0">
+    </div>
+</div>
+
+${renderTransactionFields(type)}
 
 </main>
     `;
@@ -465,6 +473,16 @@ ${renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>')}
 </div>
 
 </main>
+    `;
+}
+// 7.3) بناء صندوق إحصائية واحد (Income/Expense بالهوم، Receivable/Payable بالديون) - نفس الشكل بيتفرق بس بالمحتوى
+function renderStatBox({ statClass = "", icon, labelKey, labelText, valueId, currency = "EGP" }) {
+    return `
+<div class="stat ${statClass}">
+    <span>${icon}</span>
+    <h4 data-i18n="${labelKey}">${labelText}</h4>
+    <p id="${valueId}"><span class="stat-currency">${currency}</span> <span class="stat-value">0</span></p>
+</div>
     `;
 }
 // 8) إغلاق أي مودال لما يتم الضغط برّه (خارج المحتوى) - نمط متكرر في كل المودالز

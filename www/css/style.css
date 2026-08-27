@@ -294,7 +294,7 @@ body.amounts-hidden .stat p{
 }
 
 .balance-box h2 {
-    margin: 10px 0 0;
+    margin: 16px 0 0;
     font-size: 40px;
     font-weight: 800;
 }
@@ -304,18 +304,29 @@ body.amounts-hidden .stat p{
     gap:10px;
 }
 
-.stat{
-    flex:1;
-    background:rgba(255,255,255,.15);
-    border-radius:15px;
-    padding:10px;
-    text-align:center;
-    backdrop-filter:blur(10px);
-    min-width:0;
+.stat {
+    flex: 1;
+    background: transparent;
+    border-radius: 0;
+    padding: 10px;
+    text-align: center;
+    min-width: 0;
+    position: relative;
 }
 
-.stat span{
-    font-size:22px;
+.stat+.stat::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 85%;
+    background: rgba(255, 255, 255, .35);
+}
+
+.stat span {
+    font-size: 18px;
 }
 .stat h4 {
     margin: 6px 0 4px;
@@ -329,6 +340,16 @@ body.amounts-hidden .stat p{
     font-weight: 800;
 }
 
+.stat .stat-currency {
+    font-size: 9px;
+    font-weight: 600;
+    opacity: .85;
+}
+
+.stat .stat-value {
+    font-size: 18px;
+    font-weight: 800;
+}
 #expenseList{
     list-style:none;
     padding:0;
@@ -742,8 +763,8 @@ svg.lucide {
 
 .dashboard {
     position: relative !important;
+    padding-bottom: 10px;
 }
-
 .budget-btn {
     position: absolute !important;
     top: 18px !important;
@@ -883,9 +904,9 @@ body.dark {
     background: #101817;
     color: #F1F5F4;
 }
+
 body.dark .stat {
-    background: #285B57;
-    border: none;
+    background: transparent;
 }
 /* =========================================
    RTL (Arabic)

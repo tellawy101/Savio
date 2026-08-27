@@ -34,50 +34,7 @@
 <span id="balanceValue">0</span>
 </h2>
 </div>
-<!-- Balance Chart -->
-<div class="balance-chart">
-    <svg viewBox="0 0 700 120" preserveAspectRatio="none">
-<line x1="0" y1="20" x2="700" y2="20"></line>
-<line x1="0" y1="50" x2="700" y2="50"></line>
-<line x1="0" y1="80" x2="700" y2="80"></line>
-        <!-- الرسم -->
-       <path
-    id="chartArea"
-    class="chart-area">
-</path>
-
-<path
-    id="chartLine"
-    class="chart-line">
-</path>
-
-    </svg>
-
-    <div class="chart-days">
-    <span id="day0"></span>
-    <span id="day1"></span>
-    <span id="day2"></span>
-    <span id="day3"></span>
-    <span id="day4"></span>
-    <span id="day5"></span>
-    <span id="day6"></span>
-</div>
-</div>
-    <div class="stats">
-
-        <div class="stat">
-            <span><i data-lucide="trending-up"></i></span>
-            <h4 data-i18n="income">Income</h4>
-            <p id="totalIncome"><span class="stat-currency">EGP</span> <span class="stat-value">0</span></p>
-        </div>
-
-        <div class="stat">
-            <span><i data-lucide="trending-down"></i></span>
-            <h4 data-i18n="expenses">Expenses</h4>
-            <p id="totalExpense"><span class="stat-currency">EGP</span> <span class="stat-value">0</span></p>
-        </div>
-
-    </div>
+   <div class="stats" id="statsPlaceholder"></div>
 
 </header>
 <main>
@@ -217,6 +174,10 @@
 <script>
     document.getElementById("nav-placeholder").innerHTML = renderBottomNav('home');
     setupBottomNav('');
+
+    document.getElementById("statsPlaceholder").innerHTML =
+        renderStatBox({ icon: '<i data-lucide="trending-up"></i>', labelKey: "income", labelText: "Income", valueId: "totalIncome" }) +
+        renderStatBox({ icon: '<i data-lucide="trending-down"></i>', labelKey: "expenses", labelText: "Expenses", valueId: "totalExpense" });
 </script>
 <script src="js/storage.js"></script>
 <script src="js/i18n.js"></script>
