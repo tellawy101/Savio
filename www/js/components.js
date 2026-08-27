@@ -421,19 +421,9 @@ ${renderTransactionFields(type)}
     `;
 }
 
-function renderTransferForm() {
+// حقول فورم الـ Transfer بس (من غير هيدر) - قابلة لإعادة الاستخدام
+function renderTransferFields() {
     return `
-${renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>')}
-
-<main class="transfer-content">
-
-<div class="amount-section">
-    <div class="amount-display">
-        <span class="currency">EGP</span>
-        <input type="tel" id="transferAmount" inputmode="numeric" value="0">
-    </div>
-</div>
-
 <div class="form-group">
     <label>From Account</label>
     <div class="account-select-box">
@@ -471,6 +461,24 @@ ${renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>')}
         <input type="date" id="transferDate" class="description-input">
     </div>
 </div>
+    `;
+}
+
+// هيدر + الحقول مع بعض (زي الأول بالظبط) - بتستخدم الدالة اللي فوق جواها
+function renderTransferForm() {
+    return `
+${renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>')}
+
+<main class="transfer-content">
+
+<div class="amount-section">
+    <div class="amount-display">
+        <span class="currency">EGP</span>
+        <input type="tel" id="transferAmount" inputmode="numeric" value="0">
+    </div>
+</div>
+
+${renderTransferFields()}
 
 </main>
     `;
