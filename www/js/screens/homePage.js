@@ -5,9 +5,11 @@
 // ==============================================================
 
 function initHomePage() {
-document.getElementById("statsPlaceholder").innerHTML =
+
+    document.getElementById("statsPlaceholder").innerHTML =
         renderStatBox({ icon: '<i data-lucide="trending-up"></i>', labelKey: "income", labelText: "Income", valueId: "totalIncome" }) +
         renderStatBox({ icon: '<i data-lucide="trending-down"></i>', labelKey: "expenses", labelText: "Expenses", valueId: "totalExpense" });
+
     // ------------------------------
     // العناصر
     // ------------------------------
@@ -21,14 +23,15 @@ document.getElementById("statsPlaceholder").innerHTML =
     const balance = document.getElementById("balanceValue");
     const addMenuBtn = document.getElementById("addMenuBtn");
     const balanceCurrency = document.getElementById("balanceCurrency");
-const toggleBalanceBtn = document.getElementById("toggleBalanceBtn");
+    const toggleBalanceBtn = document.getElementById("toggleBalanceBtn");
 
-const prevMonthBtn = document.getElementById("prevMonthBtn");
+    const prevMonthBtn = document.getElementById("prevMonthBtn");
     const nextMonthBtn = document.getElementById("nextMonthBtn");
     const monthLabelBtn = document.getElementById("monthLabelBtn");
     const monthPicker = document.getElementById("monthPicker");
 
     window.selectedMonth = new Date().toISOString().slice(0, 7);
+
     // تحميل البيانات
     let expenses = loadTransactions();
     let income = 0;
@@ -326,71 +329,80 @@ const prevMonthBtn = document.getElementById("prevMonthBtn");
             lucide.createIcons();
         }
     }
-function setEyeIcon(iconName) {
-    if (!toggleBalanceBtn) return;
-    toggleBalanceBtn.innerHTML = `<i data-lucide="${iconName}"></i>`;
-    if (window.lucide) lucide.createIcons();
-}
 
-function applyBalanceVisibility(hidden) {
-    if (hidden) {
-        document.body.classList.add("amounts-hidden");
-        setEyeIcon("eye-off");
-    } else {
-        document.body.classList.remove("amounts-hidden");
-        setEyeIcon("eye");
+    // ------------------------------
+    // Balance Visibility
+    // ------------------------------
+    function setEyeIcon(iconName) {
+        if (!toggleBalanceBtn) return;
+        toggleBalanceBtn.innerHTML = `<i data-lucide="${iconName}"></i>`;
+        if (window.lucide) lucide.createIcons();
     }
-}
 
-function renderMonthLabel() {
-    if (!monthLabelBtn) return;
-    const [year, month] = window.selectedMonth.split("-");
-    const date = new Date(Number(year), Number(month) - 1);
-    const monthName = date.toLocaleDateString("en-US", { month: "long" });
-    monthLabelBtn.innerHTML = `
+    function applyBalanceVisibility(hidden) {
+        if (hidden) {
+            document.body.classList.add("amounts-hidden");
+            setEyeIcon("eye-off");
+        } else {
+            document.body.classList.remove("amounts-hidden");
+            setEyeIcon("eye");
+        }
+    }
+
+    // ------------------------------
+    // Month Filter
+    // ------------------------------
+    function renderMonthLabel() {
+        if (!monthLabelBtn) return;
+        const [year, month] = window.selectedMonth.split("-");
+        const date = new Date(Number(year), Number(month) - 1);
+        const monthName = date.toLocaleDateString("en-US", { month: "long" });
+        monthLabelBtn.innerHTML = `
             <span class="month-label-month">${monthName}</span>
             <span class="month-label-year">${year}</span>
         `;
-}
+    }
 
-function changeMonth(diff) {
-    const [year, month] = window.selectedMonth.split("-").map(Number);
-    const date = new Date(year, month - 1 + diff, 1);
-    window.selectedMonth = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0");
-    renderMonthLabel();
-    renderExpenses();
-}
-
-// تشغيل التطبيق
-applyBalanceVisibility(localStorage.getItem("balanceHidden") === "true");
-renderMonthLabel();
-renderExpenses();
-
-if (toggleBalanceBtn) {
-    toggleBalanceBtn.onclick = function() {
-        const newHidden = !document.body.classList.contains("amounts-hidden");
-        localStorage.setItem("balanceHidden", newHidden);
-        applyBalanceVisibility(newHidden);
-    };
-}
-
-if (prevMonthBtn) prevMonthBtn.onclick = () => changeMonth(-1);
-if (nextMonthBtn) nextMonthBtn.onclick = () => changeMonth(1);
-
-if (monthLabelBtn && monthPicker) {
-    monthLabelBtn.onclick = () => {
-        monthPicker.value = window.selectedMonth;
-        monthPicker.showPicker ? monthPicker.showPicker() : monthPicker.click();
-    };
-    monthPicker.onchange = () => {
-        if (!monthPicker.value) return;
-        window.selectedMonth = monthPicker.value;
+    function changeMonth(diff) {
+        const [year, month] = window.selectedMonth.split("-").map(Number);
+        const date = new Date(year, month - 1 + diff, 1);
+        window.selectedMonth = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0");
         renderMonthLabel();
         renderExpenses();
-    };
-}
+    }
 
-if (searchInput) searchInput.oninput = renderExpenses;
+    // ------------------------------
+    // تشغيل التطبيق
+    // ------------------------------
+    applyBalanceVisibility(localStorage.getItem("balanceHidden") === "true");
+    renderMonthLabel();
+    renderExpenses();
+
+    if (toggleBalanceBtn) {
+        toggleBalanceBtn.onclick = function () {
+            const newHidden = !document.body.classList.contains("amounts-hidden");
+            localStorage.setItem("balanceHidden", newHidden);
+            applyBalanceVisibility(newHidden);
+        };
+    }
+
+    if (prevMonthBtn) prevMonthBtn.onclick = () => changeMonth(-1);
+    if (nextMonthBtn) nextMonthBtn.onclick = () => changeMonth(1);
+
+    if (monthLabelBtn && monthPicker) {
+        monthLabelBtn.onclick = () => {
+            monthPicker.value = window.selectedMonth;
+            monthPicker.showPicker ? monthPicker.showPicker() : monthPicker.click();
+        };
+        monthPicker.onchange = () => {
+            if (!monthPicker.value) return;
+            window.selectedMonth = monthPicker.value;
+            renderMonthLabel();
+            renderExpenses();
+        };
+    }
+
+    if (searchInput) searchInput.oninput = renderExpenses;
 
     document.addEventListener("touchstart", (e) => {
 
@@ -412,7 +424,7 @@ if (searchInput) searchInput.oninput = renderExpenses;
     });
 
     if (addMenuBtn) {
-        addMenuBtn.onclick = function() {
+        addMenuBtn.onclick = function () {
             location.href = "pages/add-transaction.html?tab=expense";
         };
     }
@@ -421,7 +433,7 @@ if (searchInput) searchInput.oninput = renderExpenses;
     const expensesTitle = document.querySelector(".expenses-header h2");
 
     if (searchBtn) {
-        searchBtn.onclick = function() {
+        searchBtn.onclick = function () {
 
             expensesTitle.style.display = "none";
             searchBtn.style.display = "none";
@@ -442,7 +454,7 @@ if (searchInput) searchInput.oninput = renderExpenses;
         };
     }
 
-    document.addEventListener("click", function(e) {
+    document.addEventListener("click", function (e) {
 
         // لو الخانة مش ظاهرة، متعملش حاجة
         if (searchInput.style.display !== "block") return;
@@ -464,4 +476,197 @@ if (searchInput) searchInput.oninput = renderExpenses;
         }
 
     });
+
+    // ------------------------------
+    // Balance Chart (last 7 days, week starts Saturday)
+    // ------------------------------
+    function updateChartDays() {
+        const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+        for (let i = 0; i < 7; i++) {
+            const element = document.getElementById(`day${i}`);
+            if (element) element.textContent = days[i];
+        }
+    }
+    updateChartDays();
+
+    function getLocalDateKey(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    }
+
+    function updateBalanceChart() {
+        const chartLine = document.getElementById("chartLine");
+        const chartArea = document.getElementById("chartArea");
+        if (!chartLine || !chartArea) return;
+
+        const transactions = loadTransactions();
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const currentDay = today.getDay();
+        const daysFromSaturday = (currentDay + 1) % 7;
+        const weekStart = new Date(today);
+        weekStart.setDate(today.getDate() - daysFromSaturday);
+
+        const dates = [];
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(weekStart);
+            date.setDate(weekStart.getDate() + i);
+            dates.push(date);
+        }
+
+        let runningBalance = 0;
+        const firstDayKey = getLocalDateKey(weekStart);
+
+        transactions.forEach(transaction => {
+            if (!transaction.date) return;
+            if (transaction.date >= firstDayKey) return;
+            if (transaction.isTransfer) return;
+            const amt = Number(transaction.amount) || 0;
+            if (transaction.type === "income") runningBalance += amt;
+            if (transaction.type === "expense") runningBalance -= amt;
+        });
+
+        const balances = [];
+        dates.forEach(date => {
+            const dateKey = getLocalDateKey(date);
+            if (date > today) {
+                balances.push(runningBalance);
+                return;
+            }
+            transactions.forEach(transaction => {
+                if (transaction.date !== dateKey) return;
+                if (transaction.isTransfer) return;
+                const amt = Number(transaction.amount) || 0;
+                if (transaction.type === "income") runningBalance += amt;
+                if (transaction.type === "expense") runningBalance -= amt;
+            });
+            balances.push(runningBalance);
+        });
+
+        let minValue = Math.min(...balances);
+        let maxValue = Math.max(...balances);
+
+        if (minValue === maxValue) {
+            minValue -= 100;
+            maxValue += 100;
+        } else {
+            const padding = (maxValue - minValue) * 0.15;
+            minValue -= padding;
+            maxValue += padding;
+        }
+
+        const width = 700;
+        const height = 120;
+        const topPadding = 15;
+        const bottomPadding = 15;
+        const chartHeight = height - topPadding - bottomPadding;
+
+        const points = balances.map((value, index) => {
+            const x = (width / 6) * index;
+            const ratio = (value - minValue) / (maxValue - minValue);
+            const y = height - bottomPadding - (ratio * chartHeight);
+            return { x, y };
+        });
+
+        let linePath = "";
+        points.forEach((point, index) => {
+            if (index === 0) {
+                linePath = `M ${point.x} ${point.y}`;
+            } else {
+                const previous = points[index - 1];
+                const midX = (previous.x + point.x) / 2;
+                linePath += ` C ${midX} ${previous.y}, ${midX} ${point.y}, ${point.x} ${point.y} `;
+            }
+        });
+
+        const areaPath = linePath + ` L ${width} ${height} L 0 ${height} Z`;
+
+        chartLine.setAttribute("d", linePath);
+        chartArea.setAttribute("d", areaPath);
+    }
+    updateBalanceChart();
+
+    // ------------------------------
+    // Budget Modal
+    // ------------------------------
+    const budgetBtn = document.getElementById("budgetBtn");
+    const budgetModal = document.getElementById("budgetModal");
+    const closeBudgetBtn = document.getElementById("closeBudgetBtn");
+    const saveBudgetBtn = document.getElementById("saveBudgetBtn");
+    const budgetAmountInput = document.getElementById("budgetAmount");
+
+    if (budgetBtn && budgetModal) {
+        budgetBtn.onclick = function () {
+            budgetModal.classList.add("show");
+        };
+    }
+
+    if (closeBudgetBtn && budgetModal) {
+        closeBudgetBtn.onclick = function () {
+            budgetModal.classList.remove("show");
+        };
+    }
+
+    function updateBudgetButton() {
+        const budgetValue = document.getElementById("budgetValue");
+        if (!budgetValue) return;
+
+        const budget = Number(localStorage.getItem("savioBudget")) || 0;
+
+        if (budget <= 0) {
+            budgetValue.textContent = "Budget";
+            return;
+        }
+
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth();
+
+        const totalExpenses = loadTransactions()
+            .filter(transaction => {
+                if (transaction.type !== "expense") return false;
+                if (transaction.isTransfer) return false;
+                if (!transaction.date) return false;
+
+                const parts = transaction.date.split("-");
+                if (parts.length !== 3) return false;
+
+                const year = Number(parts[0]);
+                const month = Number(parts[1]) - 1;
+
+                return year === currentYear && month === currentMonth;
+            })
+            .reduce((sum, transaction) => sum + (Number(transaction.amount) || 0), 0);
+
+        const remaining = budget - totalExpenses;
+
+        if (remaining >= 0) {
+            budgetValue.textContent = formatCurrency(remaining);
+        } else {
+            budgetValue.textContent = `${formatCurrency(Math.abs(remaining))} over`;
+        }
+    }
+
+    if (saveBudgetBtn && budgetAmountInput) {
+        saveBudgetBtn.onclick = function () {
+            const amt = Number(budgetAmountInput.value.replace(/,/g, ""));
+
+            if (!amt || amt <= 0) {
+                alert("Please enter a valid budget.");
+                return;
+            }
+
+            localStorage.setItem("savioBudget", amt);
+            budgetAmountInput.value = "";
+
+            if (budgetModal) budgetModal.classList.remove("show");
+
+            updateBudgetButton();
+        };
+    }
+
+    updateBudgetButton();
 }
