@@ -20,8 +20,31 @@ const ROUTES = {
                 initAccountsPage();
             }
         }
+    },
+    debts: {
+        template: "templates/debts.html",
+        init: function () {
+            if (typeof initDebtsPage === "function") {
+                initDebtsPage();
+            }
+        }
+    },
+    statistics: {
+        template: "templates/statistics.html",
+        init: function () {
+            if (typeof initStatisticsPage === "function") {
+                initStatisticsPage();
+            }
+        }
+    }, 
+    home: {
+    template: "templates/home.html",
+    init: function() {
+        if (typeof initHomePage === "function") {
+            initHomePage();
+        }
     }
-    // هنضيف باقي الصفحات هنا واحدة واحدة بعدين (debts, statistics...)
+},
 };
 async function navigateTo(pageName) {
     const route = ROUTES[pageName];
@@ -52,7 +75,11 @@ if (pageName !== "accounts") {
 app.innerHTML = html;
         if (window.lucide) lucide.createIcons();
         if (typeof applyLanguage === "function") applyLanguage();
-
+const navPlaceholder = document.getElementById("nav-placeholder");
+        if (navPlaceholder && typeof renderBottomNav === "function") {
+            navPlaceholder.innerHTML = renderBottomNav(pageName);
+            if (typeof setupBottomNav === "function") setupBottomNav("");
+        }
         route.init();
 
         history.pushState({ page: pageName }, "", "#" + pageName);

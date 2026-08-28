@@ -1,0 +1,159 @@
+<div class="balance-card">
+
+   <h3 data-i18n="debts_net_balance">Net Balance</h3>
+
+    <h1 id="netBalance">
+    <span class="currency">EGP</span>
+    <span class="amount">0</span>
+</h1>
+
+    <div class="balance-grid">
+
+       <div class="stat receivable">
+
+    <span>↗</span>
+
+    <h4 data-i18n="debts_receivable">Receivable</h4>
+
+    <p id="totalReceivable">EGP 0</p>
+
+</div>
+
+       <div class="stat payable">
+
+            <span>↘</span>
+
+            <h4 data-i18n="debts_payable">Payable</h4>
+
+            <p id="totalPayable">EGP 0</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="debts-header">
+
+    <h3 data-i18n="debts_list_title">Debts List</h3>
+
+  <button id="addDebtBtn" class="add-debt-btn" data-i18n="debts_add_btn">
+    + Add Debt
+</button>
+
+</div>
+
+<div id="debtsList" class="debts-list">
+</div>
+<!-- Debt Modal -->
+<div id="debtModal" class="modal">
+
+    <div class="modal-content">
+
+       <h2 data-i18n="debts_add_title">Add New Debt</h2>
+
+       <div class="debt-type-buttons">
+
+  <button type="button" class="debt-type-btn active" data-type="receivable" data-i18n="debts_owed_to_me">
+    Owed to Me
+</button>
+
+<button type="button" class="debt-type-btn" data-type="payable" data-i18n="debts_i_owe">
+    I Owe
+</button>
+
+</div>
+
+<select id="debtType" style="display:none;">
+    <option value="receivable">Owed to Me</option>
+    <option value="payable">I Owe</option>
+</select>
+
+      <input type="text" id="debtPerson" placeholder="Person Name"
+    data-i18n-placeholder="debts_person_placeholder">
+
+<input type="tel" id="debtAmount" placeholder="Amount"
+    data-i18n-placeholder="debts_amount_placeholder">
+
+        <input
+            type="date"
+            id="debtDueDate">
+
+        <textarea id="debtNotes" placeholder="Notes (Optional)"
+    data-i18n-placeholder="debts_notes_placeholder"></textarea>
+
+        <div class="modal-actions">
+
+           <button id="cancelDebtBtn" data-i18n="cancel">Cancel</button>
+<button id="saveDebtBtn" data-i18n="save">Save</button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Pay Modal -->
+<div id="payDebtModal" class="modal">
+
+    <div class="modal-content">
+
+       <h2 data-i18n="debts_pay_title">Pay Debt</h2>
+
+       <select id="payAccount">
+    <option value="" data-i18n="select_account">Select Account</option>
+</select>
+
+    <input type="tel" id="payAmount" placeholder="Amount" data-i18n-placeholder="debts_amount_placeholder">
+
+        <div class="modal-actions">
+
+           <button id="cancelPayBtn" data-i18n="cancel">Cancel</button>
+<button id="confirmPayBtn" data-i18n="confirm_btn">Confirm</button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Edit Debt Modal -->
+<div id="editDebtModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2 data-i18n="debts_edit_title">Edit Debt</h2>
+
+        <div class="debt-type-buttons">
+
+       <button type="button" class="edit-debt-type-btn active" data-type="receivable" data-i18n="debts_owed_to_me">
+    Owed to Me
+</button>
+
+<button type="button" class="edit-debt-type-btn" data-type="payable" data-i18n="debts_i_owe">
+    I Owe
+</button>
+
+        </div>
+
+       <input type="text" id="editDebtPerson" placeholder="Person Name"
+    data-i18n-placeholder="debts_person_placeholder">
+
+<input type="tel" id="editDebtAmount" placeholder="Amount"
+    data-i18n-placeholder="debts_amount_placeholder">
+
+        <input
+            type="date"
+            id="editDebtDueDate">
+
+        <textarea id="editDebtNotes" placeholder="Notes (Optional)"
+    data-i18n-placeholder="debts_notes_placeholder"></textarea>
+
+        <div class="modal-actions">
+
+            <button id="cancelEditDebtBtn" data-i18n="cancel">Cancel</button>
+<button id="saveEditDebtBtn" data-i18n="save">Save</button>
+
+        </div>
+
+    </div>
+
+</div>

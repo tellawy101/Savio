@@ -1,0 +1,153 @@
+<header class="dashboard">
+ 
+  <button id="budgetBtn" class="budget-btn">
+    <i data-lucide="wallet"></i>
+    <span id="budgetValue">Budget</span>
+</button>
+   <div class="balance-box">
+    <div class="balance-header">
+        <h3 data-i18n="balance">Balance</h3>
+        <button id="toggleBalanceBtn" class="eye-btn" aria-label="Toggle balance visibility">
+            <i data-lucide="eye"></i>
+        </button>
+    </div>
+<h2 class="balance-amount">
+
+    <span id="balanceCurrency"></span>
+<span id="balanceValue">0</span>
+</h2>
+</div>
+   <div class="stats" id="statsPlaceholder"></div>
+
+</header>
+<main>
+    <!-- Budget Modal -->
+<div id="budgetModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2 data-i18n="budget">Budget</h2>
+
+<label for="budgetAmount" data-i18n="monthly_budget">
+    Monthly Budget
+</label>
+
+        <input
+            type="text"
+            id="budgetAmount"
+            inputmode="decimal"
+            placeholder="0">
+<div class="budget-actions">
+    
+    <button id="saveBudgetBtn" data-i18n="save">
+    Save
+</button>
+
+<button id="closeBudgetBtn" data-i18n="cancel">
+    Cancel
+</button>
+    
+</div>
+
+    </div>
+
+</div>
+ 
+  <!-- نافذة إضافة الدخل -->
+<div id="incomeModal" class="modal">
+    <div class="modal-content">
+        <h2 class="income-title" data-i18n="income_title">Income</h2>
+        <label data-i18n="account_label">Account</label>
+
+<select id="incomeAccount">
+</select>
+
+<label data-i18n="description_label">Description</label>
+
+<input
+    type="text"
+    id="incomeDescription"
+    placeholder="Description"
+    data-i18n-placeholder="description_placeholder">
+
+<label data-i18n="date_label">Date</label>
+
+<input
+    type="date"
+    id="incomeDate">
+
+<label data-i18n="amount_label">Amount</label>
+
+<input
+    type="text"
+    id="incomeAmount"
+    inputmode="numeric"
+    placeholder="0">
+        <select id="incomeCategory">
+        </select>
+
+        <button id="saveIncomeBtn" data-i18n="save">Save</button>
+        <button id="closeIncomeBtn" data-i18n="cancel">Cancel</button>
+
+    </div>
+</div>
+
+<!-- نافذة إضافة التصنيف -->
+<div id="categoryModal" class="modal">
+    <div class="modal-content">
+
+        <h2><i data-lucide="tag"></i> <span data-i18n="add_category">Add Category</span></h2>
+
+        <input
+            type="text"
+            id="newCategoryName"
+            placeholder="Category Name"
+            data-i18n-placeholder="category_name_placeholder">
+
+        <input
+            type="text"
+            id="newCategoryIcon"
+            placeholder="😀 Icon"
+            data-i18n-placeholder="category_icon_placeholder"
+            maxlength="2">
+
+        <button id="saveCategoryBtn" data-i18n="save">Save</button>
+        <button id="closeCategoryBtn" data-i18n="cancel">Cancel</button>
+
+    </div>
+    </div>
+     <div class="expenses-section">
+
+   <div class="expenses-header">
+   <h2 data-i18n="expenses_title">Expenses</h2>
+
+    <div class="month-nav">
+        <button id="prevMonthBtn" class="month-nav-btn" aria-label="Previous month">
+            <i data-lucide="chevron-left"></i>
+        </button>
+
+        <button id="monthLabelBtn" class="month-label-btn">August 2026</button>
+
+        <button id="nextMonthBtn" class="month-nav-btn" aria-label="Next month">
+            <i data-lucide="chevron-right"></i>
+        </button>
+
+        <input type="month" id="monthPicker" class="month-picker-input">
+    </div>
+
+    <button id="searchBtn" class="search-btn">
+        <i data-lucide="search"></i>
+    </button>
+   <input
+    type="text"
+    id="searchInput"
+    placeholder="Search by category, description, or account..."
+    data-i18n-placeholder="search_placeholder">
+
+</div>
+
+    <ul id="expenseList"></ul>
+
+</div>
+
+</main>
