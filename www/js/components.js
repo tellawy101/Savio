@@ -84,11 +84,22 @@ function setupBottomNav(basePath = '') {
 };
 
     document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const page = this.dataset.page;
-            navigateWithAnimation(this, routes[page]);
-        });
+    btn.addEventListener('click', function() {
+        const page = this.dataset.page;
+        
+       // أي صفحة اتسجلت في الراوتر (SPA) - تفتح من غير Reload
+if (typeof ROUTES !== 'undefined' && ROUTES[page] && typeof navigateTo === 'function' && document.getElementById('app')) {
+            const nav = this.closest('.bottom-nav');
+            const current = nav ? nav.querySelector('.nav-item.active') : null;
+            if (current && current !== this) current.classList.remove('active');
+            this.classList.add('active');
+            navigateTo(page);
+            return;
+        }
+        
+        navigateWithAnimation(this, routes[page]);
     });
+});
 }
 // 5) المودالز المشتركة بين صفحتي Expense و Income (Accounts + Categories)
 function renderSharedModals() {

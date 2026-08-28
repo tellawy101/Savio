@@ -1,7 +1,15 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+    (function() {
+        var lang = localStorage.getItem("language") || "en";
+        var dir = lang === "ar" ? "rtl" : "ltr";
+        document.documentElement.setAttribute("lang", lang);
+        document.documentElement.setAttribute("dir", dir);
+    })();
+</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Add Transaction</title>
     <link rel="stylesheet" href="../css/style.css">
@@ -18,9 +26,9 @@
 <div class="tx-header">
     <button class="tx-close" id="txCloseBtn">✕</button>
     <div class="tx-tabs">
-        <button class="tx-tab active" data-tab="income" data-i18n="income">دخل</button>
-        <button class="tx-tab" data-tab="expense" data-i18n="nav_expense">مصروف</button>
-        <button class="tx-tab" data-tab="transfer" data-i18n="nav_transfer">تحويل</button>
+        <button class="tx-tab active" data-tab="income" data-i18n="tab_income">دخل</button>
+<button class="tx-tab" data-tab="expense" data-i18n="tab_expense">مصروف</button>
+<button class="tx-tab" data-tab="transfer" data-i18n="tab_transfer">تحويل</button>
     </div>
     <button class="tx-confirm" id="txConfirmBtn">✓</button>
 </div>

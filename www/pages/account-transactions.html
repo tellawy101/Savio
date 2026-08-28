@@ -12,6 +12,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+    (function() {
+        var lang = localStorage.getItem("language") || "en";
+        var dir = lang === "ar" ? "rtl" : "ltr";
+        document.documentElement.setAttribute("lang", lang);
+        document.documentElement.setAttribute("dir", dir);
+    })();
+</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <title>Account Transactions</title>
