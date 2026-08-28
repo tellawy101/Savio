@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Add Transaction</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/form-page.css">
+    <link rel="stylesheet" href="../css/accounts.css">
+    <link rel="stylesheet" href="../css/transaction-pages.css">
+    <style>
+        body { visibility: hidden; }
+        body.tx-ready { visibility: visible; }
+    </style>
+</head>
+<body class="has-scroll add-transaction-page">
+
+<div class="tx-header">
+    <button class="tx-close" id="txCloseBtn">✕</button>
+    <div class="tx-tabs">
+        <button class="tx-tab active" data-tab="income" data-i18n="income">دخل</button>
+        <button class="tx-tab" data-tab="expense" data-i18n="nav_expense">مصروف</button>
+        <button class="tx-tab" data-tab="transfer" data-i18n="nav_transfer">تحويل</button>
+    </div>
+    <button class="tx-confirm" id="txConfirmBtn">✓</button>
+</div>
+<div id="incomeFormWrap" class="tx-panel active"></div>
+<div id="expenseFormWrap" class="tx-panel"></div>
+<div id="transferFormWrap" class="tx-panel"></div>
+
+<script>
+    (function () {
+        const requestedTab = new URLSearchParams(window.location.search).get("tab");
+
+        if (requestedTab && requestedTab !== "income") {
+            document.querySelectorAll(".tx-tab").forEach(function (t) {
+                t.classList.toggle("active", t.dataset.tab === requestedTab);
+            });
+            document.querySelectorAll(".tx-panel").forEach(function (p) {
+                p.classList.remove("active");
+            });
+            const targetPanel = document.getElementById(requestedTab + "FormWrap");
+            if (targetPanel) targetPanel.classList.add("active");
+        }
+
+        document.body.classList.add("tx-ready");
+    })();
+</script>
+
+<div id="modals-placeholder"></div>
+
+<script src="../js/components.js"></script>
+<script>
+    document.getElementById("incomeFormWrap").innerHTML = renderTransactionForm("income");
+    document.getElementById("expenseFormWrap").innerHTML = renderTransactionForm("expense");
+    document.getElementById("transferFormWrap").innerHTML = renderTransferForm();
+    document.getElementById("modals-placeholder").innerHTML = renderSharedModals();
+</script>
+<script src="../js/storage.js"></script>
+<script src="../js/i18n.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/formHelpers.js"></script>
+<script src="../js/vendor/lucide.js" defer></script>
+<script src="../js/accounts.js"></script>
+<script src="../js/category.js"></script>
+<script src="../js/transactionCommon.js"></script>
+<script src="../js/transactionForm.js"></script>
+<script src="../js/transfer.js"></script>
+<script src="../js/addTransactionTabs.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", initIcons);
+</script>
+</body>
+</html>

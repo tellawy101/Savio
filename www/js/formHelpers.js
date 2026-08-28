@@ -110,6 +110,10 @@ function getAccountFieldEl() {
 
 // بترجع خانة "التصنيف" الظاهرة في الصفحة الحالية (Income أو Expense)
 function getCategoryFieldEl() {
+    if (typeof activeCategoryBox !== "undefined" && activeCategoryBox) {
+        const field = activeCategoryBox.querySelector(".category-select");
+        if (field) return field;
+    }
     return document.getElementById("incomeCategory") || document.getElementById("expenseCategory");
 }
 

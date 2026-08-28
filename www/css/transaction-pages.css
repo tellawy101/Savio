@@ -352,3 +352,86 @@ body.dark .search-btn svg {
     border-color: #333;
     color: #22c55e;
 }
+/* ==============================================================
+   صفحة إضافة معاملة موحّدة (Tabs: Income / Expense / Transfer)
+================================================================== */
+
+.tx-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+}
+
+.tx-tabs {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+}
+
+.tx-close,
+.tx-confirm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: #374151;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+    line-height: 1;
+    padding: 0;
+}
+.tx-confirm {
+    color: #0F766E;
+}
+
+.tx-tab {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 12px;
+    background: #F4F5F7;
+    color: #555;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.tx-tab.active {
+    background: #0F766E;
+    color: #fff;
+}
+/* ترتيب التابس التلاتة جوه بعض حسب اللغة */
+html[dir="rtl"] .tx-tab[data-tab="expense"]  { order: 1; }
+html[dir="rtl"] .tx-tab[data-tab="income"]   { order: 2; }
+html[dir="rtl"] .tx-tab[data-tab="transfer"] { order: 3; }
+
+html[dir="ltr"] .tx-tab[data-tab="transfer"] { order: 1; }
+html[dir="ltr"] .tx-tab[data-tab="income"]   { order: 2; }
+html[dir="ltr"] .tx-tab[data-tab="expense"]  { order: 3; }
+
+/* ترتيب X والـ ✓ حوالين مجموعة التابس */
+html[dir="rtl"] .tx-close   { order: 3; }
+html[dir="rtl"] .tx-tabs    { order: 2; }
+html[dir="rtl"] .tx-confirm { order: 1; }
+
+html[dir="ltr"] .tx-close   { order: 1; }
+html[dir="ltr"] .tx-tabs    { order: 2; }
+html[dir="ltr"] .tx-confirm { order: 3; }
+
+.tx-panel {
+    display: none;
+}
+
+.tx-panel.active {
+    display: block;
+}
+.income-header,
+.expense-header,
+.transfer-header {
+    display: none;
+}

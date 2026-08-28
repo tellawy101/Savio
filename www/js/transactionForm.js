@@ -4,7 +4,7 @@
 // type: "income" | "expense"
 // ==============================
 function initTransactionForm(type) {
-    const backBtn = document.getElementById("backBtn");
+    const backBtn = document.getElementById(type + "BackBtn");
     const amountEl = document.getElementById(type + "Amount");
     const saveBtn = document.getElementById("save" + capitalize(type) + "Btn");
     const accountEl = document.getElementById(type + "Account");

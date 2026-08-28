@@ -383,4 +383,5 @@ function applyLanguage() {
 }
 
 
+applyLanguage();
 document.addEventListener("DOMContentLoaded", applyLanguage);

@@ -31,25 +31,11 @@ function renderBottomNav(activePage) {
     <i data-lucide="chart-no-axes-combined"></i>
     <span data-i18n="nav_stats">Statistics</span>
 </button>
-    ${isHome ? `
+    ${ isHome ? `
     <button id="addMenuBtn" class="fab-nav">
         <i data-lucide="plus"></i>
     </button>
-    <div id="fabMenu" class="fab-menu">
-        <button id="fabIncome">
-            <i data-lucide="trending-up"></i>
-            <span data-i18n="income">Income</span>
-        </button>
-        <button id="fabExpense">
-            <i data-lucide="trending-down"></i>
-            <span data-i18n="nav_expense">Expense</span>
-        </button>
-        <button id="fabTransfer">
-            <i data-lucide="repeat"></i>
-            <span data-i18n="nav_transfer">Transfer</span>
-        </button>
-    </div>
-    ` : ''}
+    ` : '' }
 
     <button class="nav-item ${activePage === 'accounts' ? 'active' : ''}" data-page="accounts">
         <i data-lucide="wallet"></i>
@@ -356,7 +342,7 @@ function renderFormHeader(type, titleText, saveBtnContent) {
     const titleKey = type + "_title";
     return `
 <header class="${type}-header">
-    <button id="backBtn" class="back-btn">←</button>
+    <button id="${type}BackBtn" class="back-btn">←</button>
     <h1 data-i18n="${titleKey}">${titleText}</h1>
     <button id="save${capitalize(type)}Btn" class="save-btn">${saveBtnContent}</button>
 </header>

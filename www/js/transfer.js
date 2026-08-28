@@ -2,8 +2,8 @@
 // transfer.js
 // تحويل مبلغ بين حسابين (خصم من حساب + إضافة لحساب التاني)
 // ==============================
-
-const backBtn = document.getElementById("backBtn");
+function initTransferForm() {
+const backBtn = document.getElementById("transferBackBtn");
 const transferAmount = document.getElementById("transferAmount");
 const saveTransferBtn = document.getElementById("saveTransferBtn");
 const transferFromAccount = document.getElementById("transferFromAccount");
@@ -191,3 +191,6 @@ saveTransferBtn.onclick = function () {
 renderAccounts();
 loadEditingTransfer();
 checkTransferForm();
+}
+
+initTransferForm();

@@ -3,7 +3,7 @@
 // إدارة التصنيفات داخل التطبيق (Reusable Component - DRY)
 // ======================================
 
-const categoryBox = document.querySelector(".category-select-box");
+const categoryBoxes = document.querySelectorAll(".category-select-box");
 const categoryModal = document.getElementById("categoryModal");
 const addCategoryBtn = document.getElementById("addCategoryBtn");
 const addCategoryModal = document.getElementById("addCategoryModal");
@@ -244,13 +244,15 @@ document.addEventListener("click", function (e) {
 
 });
 
-if (categoryBox) {
-    categoryBox.onclick = function () {
+let activeCategoryBox = null;
+
+categoryBoxes.forEach(function (box) {
+    box.onclick = function () {
+        activeCategoryBox = box;
         renderCategories();
         categoryModal.classList.add("show");
     };
-}
-
+});
 closeModalOnBackdropClick(categoryModal);
 if (addCategoryBtn) {
     addCategoryBtn.onclick = function(e) {

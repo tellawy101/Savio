@@ -19,11 +19,6 @@ const totalExpense = document.getElementById("totalExpense");
 const totalIncome = document.getElementById("totalIncome");
 const balance = document.getElementById("balanceValue");
 const addMenuBtn = document.getElementById("addMenuBtn");
-const fabMenu = document.getElementById("fabMenu");
-
-const fabExpense = document.getElementById("fabExpense");
-const fabIncome = document.getElementById("fabIncome");
-const fabTransfer = document.getElementById("fabTransfer");
 const balanceCurrency = document.getElementById("balanceCurrency");
 
 
@@ -350,39 +345,8 @@ document.addEventListener("touchstart", (e) => {
 });
 
 addMenuBtn.onclick = function() {
-
-    if (fabMenu.classList.contains("show")) {
-        fabMenu.classList.remove("show");
-        addMenuBtn.classList.remove("open");
-    } else {
-        fabMenu.classList.add("show");
-        addMenuBtn.classList.add("open");
-    }
-    
+    location.href = "pages/add-transaction.html?tab=expense";
 };
-const fabButtons = document.querySelectorAll(".fab-menu button");
-
-fabButtons.forEach(btn => {
-    btn.addEventListener("click", function () {
-
-        fabButtons.forEach(b => b.classList.remove("active"));
-
-
-    });
-});
-
-fabExpense.onclick = function () {
-    location.href = "pages/expense.html";
-};
-
-fabIncome.onclick = function () {
-    window.location.href = "pages/income.html";
-};
-
-fabTransfer.onclick = function() {
-    window.location.href = "pages/transfer.html";
-};
-
 const searchBtn = document.getElementById("searchBtn");
 const expensesTitle = document.querySelector(".expenses-header h2");
 
