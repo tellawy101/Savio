@@ -182,8 +182,8 @@ function initHomePage() {
             const isRTL = document.documentElement.dir === "rtl";
 
             // بنحدد مين اللي المفروض يتكشف مع كل اتجاه سحب، حسب مكانه الفعلي على الشاشة (RTL/LTR)
-            const revealOnSwipeRight = isRTL ? editBtn : deleteBtn;
-            const revealOnSwipeLeft = isRTL ? deleteBtn : editBtn;
+            const revealOnSwipeRight = deleteBtn;
+            const revealOnSwipeLeft = editBtn;
             deleteBtn.addEventListener("click", (e) => {
 
                 e.stopPropagation();
@@ -617,9 +617,9 @@ function initHomePage() {
         const budget = Number(localStorage.getItem("savioBudget")) || 0;
 
         if (budget <= 0) {
-            budgetValue.textContent = "Budget";
-            return;
-        }
+    budgetValue.textContent = typeof t === "function" ? t("budget") : "Budget";
+    return;
+}
 
         const now = new Date();
         const currentYear = now.getFullYear();

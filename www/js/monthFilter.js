@@ -23,7 +23,7 @@ function renderMonthLabel() {
     const [year, month] = window.selectedMonth.split("-");
     const date = new Date(Number(year), Number(month) - 1);
 
-    const monthName = date.toLocaleDateString("en-US", { month: "long" });
+    const monthName = date.toLocaleDateString(getLanguage() === "ar" ? "ar-EG" : "en-US", { month: "long" });
 
     monthLabelBtn.innerHTML = `
         <span class="month-label-month">${monthName}</span>
