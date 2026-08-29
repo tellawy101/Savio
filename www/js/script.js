@@ -224,25 +224,25 @@ editBtn.addEventListener("click", (e) => {
     e.stopPropagation();
 
     if (expense.isTransfer) {
+    
+    window.location.href = "pages/add-transaction.html?tab=transfer&edit=" + expense.transferId;
+    return;
+    
+}
 
-        window.location.href = "pages/transfer.html?edit=" + expense.transferId;
-        return;
+if (expense.type === "income") {
+    
+    window.location.href = "pages/add-transaction.html?tab=income&edit=" + expense.id;
+    return;
+    
+}
 
-    }
-
-    if (expense.type === "income") {
-
-        window.location.href = "pages/income.html?edit=" + expense.id;
-        return;
-
-    }
-
-    if (expense.type === "expense") {
-
-        window.location.href = "pages/expense.html?edit=" + expense.id;
-        return;
-
-    }
+if (expense.type === "expense") {
+    
+    window.location.href = "pages/add-transaction.html?tab=expense&edit=" + expense.id;
+    return;
+    
+}
 
 });
 

@@ -125,6 +125,7 @@ item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
             const field = getAccountFieldEl();
             if (field) {
                 field.innerHTML = `<i data-lucide="${account.icon}"></i> ${account.name}`;
+                field.removeAttribute("data-i18n");
                 if (window.lucide) lucide.createIcons();
             }
             
@@ -195,14 +196,15 @@ if (name === "") {
 
 localStorage.setItem("accounts", JSON.stringify(accounts));
         
-        const field = getAccountFieldEl();
-        if (field) {
-            field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
-            if (window.lucide) lucide.createIcons();
-        }
-        
-        renderAccounts();
-        
+      const field = getAccountFieldEl();
+if (field) {
+    field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
+    field.removeAttribute("data-i18n");
+    if (window.lucide) lucide.createIcons();
+}
+
+renderAccounts();
+
         showToast(t("account_added_toast"), "success");
         
         addAccountModal.classList.remove("show");

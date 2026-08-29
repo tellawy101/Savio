@@ -430,8 +430,8 @@ html[dir="ltr"] .tx-confirm { order: 3; }
 .tx-panel.active {
     display: block;
 }
-.income-header,
-.expense-header,
-.transfer-header {
+body.add-transaction-page .income-header,
+body.add-transaction-page .expense-header,
+body.add-transaction-page .transfer-header {
     display: none;
 }

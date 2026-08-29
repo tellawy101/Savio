@@ -317,7 +317,8 @@ function renderCategories() {
             const field = getCategoryFieldEl();
             if (field) {
                 field.innerHTML = `<i data-lucide="${category.icon}"></i> ${category.name}`;
-                field.dataset.icon = category.icon;
+field.dataset.icon = category.icon;
+field.removeAttribute("data-i18n");
                 if (window.lucide) lucide.createIcons();
             }
             categoryModal.classList.remove("show");
@@ -357,9 +358,10 @@ if (saveCategoryBtn) {
             const field = getCategoryFieldEl();
             if (field && field.textContent.includes(editingCategory.name)) {
                 field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
-                field.dataset.icon = icon;
-                if (window.lucide) lucide.createIcons();
-            }
+field.dataset.icon = icon;
+field.removeAttribute("data-i18n");
+if (window.lucide) lucide.createIcons();
+}
 
             editingCategory = null;
             selectedCategory = null;
@@ -367,13 +369,13 @@ if (saveCategoryBtn) {
             categories.push({ name, icon });
 
             const field = getCategoryFieldEl();
-            if (field) {
-                field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
-                field.dataset.icon = icon;
-                if (window.lucide) lucide.createIcons();
-            }
-        }
-
+if (field) {
+    field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
+    field.dataset.icon = icon;
+    field.removeAttribute("data-i18n");
+    if (window.lucide) lucide.createIcons();
+}
+}
         localStorage.setItem("categories", JSON.stringify(categories));
         renderCategories();
         addCategoryModal.classList.remove("show");
