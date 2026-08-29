@@ -14,14 +14,26 @@ const panels = {
     transfer: document.getElementById("transferFormWrap")
 };
 
+const indicator = document.getElementById("txIndicator");
+
+function moveIndicator(target) {
+    if (!indicator) return;
+    const targetTab = Array.from(tabs).find(t => t.dataset.tab === target);
+    if (!targetTab) return;
+    indicator.style.left = targetTab.offsetLeft + "px";
+    indicator.style.width = targetTab.offsetWidth + "px";
+}
+
 function activateTab(target) {
     if (!panels[target]) return;
-
+    
     tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === target));
-
+    
     Object.keys(panels).forEach(function(key) {
         panels[key].classList.toggle("active", key === target);
     });
+    
+    moveIndicator(target);
 }
 
 tabs.forEach(function(tab) {

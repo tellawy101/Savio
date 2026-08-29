@@ -367,8 +367,18 @@ body.dark .search-btn svg {
     display: flex;
     gap: 8px;
     flex: 1;
+    position: relative;
 }
 
+.tx-indicator {
+    position: absolute;
+    top: 18px;
+    bottom: 18px;
+    border-radius: 8px;
+    background: #0F766E;
+    transition: left 0.3s ease, width 0.3s ease;
+    z-index: 0;
+}
 .tx-close,
 .tx-confirm {
     display: flex;
@@ -395,14 +405,15 @@ body.dark .search-btn svg {
     padding: 10px 0;
     border: none;
     border-radius: 12px;
-    background: #F4F5F7;
+    background: transparent;
     color: #555;
     font-weight: 700;
     cursor: pointer;
+    position: relative;
+    z-index: 1;
+    transition: color 0.25s ease;
 }
-
 .tx-tab.active {
-    background: #0F766E;
     color: #fff;
 }
 /* ترتيب التابس التلاتة جوه بعض حسب اللغة */
@@ -434,4 +445,31 @@ body.add-transaction-page .income-header,
 body.add-transaction-page .expense-header,
 body.add-transaction-page .transfer-header {
     display: none;
+}
+/* ==============================
+   تنسيق هيدر التابس في الوضع الليلي
+============================== */
+.dark .tx-header {
+    background: #2a2a2a;
+    border-bottom: 1px solid #333;
+}
+
+.dark .tx-tab {
+    color: #ccc;
+}
+
+.dark .tx-tab.active {
+    color: #fff;
+}
+
+.dark .tx-indicator {
+    background: #0F766E;
+}
+
+.dark .tx-close {
+    color: #ccc;
+}
+
+.dark .tx-confirm {
+    color: #22c55e;
 }
