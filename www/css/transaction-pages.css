@@ -358,11 +358,25 @@ body.dark .search-btn svg {
 
 .tx-header {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column;
+    gap: 0;
     padding: 16px;
 }
+.tx-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
 
+.tx-title {
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: #111;
+}
 .tx-tabs {
     display: flex;
     gap: 8px;
@@ -426,12 +440,13 @@ html[dir="ltr"] .tx-tab[data-tab="income"]   { order: 2; }
 html[dir="ltr"] .tx-tab[data-tab="expense"]  { order: 3; }
 
 /* ترتيب X والـ ✓ حوالين مجموعة التابس */
+/* ترتيب X والعنوان والـ ✓ في الصف العلوي */
 html[dir="rtl"] .tx-close   { order: 3; }
-html[dir="rtl"] .tx-tabs    { order: 2; }
+html[dir="rtl"] .tx-title   { order: 2; }
 html[dir="rtl"] .tx-confirm { order: 1; }
 
 html[dir="ltr"] .tx-close   { order: 1; }
-html[dir="ltr"] .tx-tabs    { order: 2; }
+html[dir="ltr"] .tx-title   { order: 2; }
 html[dir="ltr"] .tx-confirm { order: 3; }
 
 .tx-panel {
@@ -449,10 +464,6 @@ body.add-transaction-page .transfer-header {
 /* ==============================
    تنسيق هيدر التابس في الوضع الليلي
 ============================== */
-.dark .tx-header {
-    background: #2a2a2a;
-    border-bottom: 1px solid #333;
-}
 
 .dark .tx-tab {
     color: #ccc;
@@ -464,6 +475,10 @@ body.add-transaction-page .transfer-header {
 
 .dark .tx-indicator {
     background: #0F766E;
+}
+
+.dark .tx-title {
+    color: #fff;
 }
 
 .dark .tx-close {

@@ -24,14 +24,17 @@
 <body class="has-scroll add-transaction-page">
 
 <div class="tx-header">
-    <button class="tx-close" id="txCloseBtn">✕</button>
+    <div class="tx-header-top">
+        <button class="tx-close" id="txCloseBtn">✕</button>
+        <h1 class="tx-title" data-i18n="add_transaction_title">إضافة معاملة</h1>
+        <button class="tx-confirm" id="txConfirmBtn">✓</button>
+    </div>
     <div class="tx-tabs">
         <div class="tx-indicator" id="txIndicator"></div>
         <button class="tx-tab active" data-tab="income" data-i18n="tab_income">دخل</button>
 <button class="tx-tab" data-tab="expense" data-i18n="tab_expense">مصروف</button>
 <button class="tx-tab" data-tab="transfer" data-i18n="tab_transfer">تحويل</button>
     </div>
-    <button class="tx-confirm" id="txConfirmBtn">✓</button>
 </div>
 <div id="incomeFormWrap" class="tx-panel active"></div>
 <div id="expenseFormWrap" class="tx-panel"></div>
