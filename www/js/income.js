@@ -1,1 +1,0 @@
-initTransactionForm("income");
