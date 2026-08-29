@@ -193,4 +193,3 @@ loadEditingTransfer();
 checkTransferForm();
 }
 
-initTransferForm();

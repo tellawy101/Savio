@@ -3,6 +3,8 @@
 // إدارة التصنيفات داخل التطبيق (Reusable Component - DRY)
 // ======================================
 
+
+function initCategoryPicker() {
 const categoryBoxes = document.querySelectorAll(".category-select-box");
 const categoryModal = document.getElementById("categoryModal");
 const addCategoryBtn = document.getElementById("addCategoryBtn");
@@ -278,7 +280,7 @@ if (addCategoryBtn) {
 closeModalOnBackdropClick(addCategoryModal, function () {
     editingCategory = null;
 });
-function renderCategories() {
+window.renderCategories = function() {
     const categoriesList = document.getElementById("categoriesList");
     if (!categoriesList) return;
 
@@ -331,7 +333,7 @@ field.removeAttribute("data-i18n");
     if (window.lucide) {
         lucide.createIcons();
     }
-}
+};
 
 if (saveCategoryBtn) {
     saveCategoryBtn.onclick = function () {
@@ -442,3 +444,6 @@ if (deleteCategoryBtn) {
 }
 
 closeModalOnBackdropClick(categoryMenu);
+}
+
+initCategoryPicker();

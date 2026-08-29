@@ -11,6 +11,8 @@
 // - عرض الحسابات داخل المودال
 // ======================================
 
+function initAccountPicker() {
+
 // Elements
 const accountBoxes = document.querySelectorAll(".account-select-box");
 let activeAccountBox = null; // الصندوق اللي المستخدم داس عليه آخر مرة
@@ -57,7 +59,7 @@ closeModalOnBackdropClick(addAccountModal);
 // Render
 // ==============================
 
-function renderAccounts() {
+window.renderAccounts = function() {
     
     const accountsList = document.getElementById("accountsList");
     
@@ -137,7 +139,7 @@ item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
     });
     
     if (window.lucide) lucide.createIcons();
-}
+};
 
 // ==============================
 // Add / Edit Account
@@ -349,3 +351,6 @@ if (cancelAddAccountBtn) {
         if (window.lucide) lucide.createIcons();
     };
 }
+}
+
+initAccountPicker();

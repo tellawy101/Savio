@@ -423,10 +423,11 @@ function initHomePage() {
     });
 
     if (addMenuBtn) {
-        addMenuBtn.onclick = function () {
-            location.href = "pages/add-transaction.html?tab=expense";
-        };
-    }
+    addMenuBtn.onclick = function() {
+        window.pendingAddTransactionTab = "expense";
+        navigateTo("add-transaction");
+    };
+}
 
     const searchBtn = document.getElementById("searchBtn");
     const expensesTitle = document.querySelector(".expenses-header h2");

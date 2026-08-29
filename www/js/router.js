@@ -45,6 +45,15 @@ const ROUTES = {
         }
     }
 },
+"add-transaction": {
+    template: "templates/add-transaction.html",
+    init: function() {
+        if (typeof initAddTransactionPage === "function") {
+            initAddTransactionPage(window.pendingAddTransactionTab || "income");
+            window.pendingAddTransactionTab = null;
+        }
+    }
+},
 };
 async function navigateTo(pageName) {
     const route = ROUTES[pageName];
@@ -62,14 +71,20 @@ async function navigateTo(pageName) {
         return;
     }
 
-    try {
-        const res = await fetch(route.template);
+  try {
+    app.style.visibility = "hidden";
+    
+    const res = await fetch(route.template);
 const html = await res.text();
 
 // نظّف أي عنصر خاص بصفحة سابقة اتحقن برّه #app (زي فاب "+ إضافة حساب")
 if (pageName !== "accounts") {
     const oldFab = document.getElementById("openAddAccountBtn");
     if (oldFab) oldFab.remove();
+}
+
+if (pageName !== "add-transaction") {
+    document.body.classList.remove("add-transaction-page");
 }
 
 app.innerHTML = html;
@@ -82,8 +97,11 @@ if (navPlaceholder && typeof renderBottomNav === "function") {
 route.init();
 if (typeof applyLanguage === "function") applyLanguage();
 
+        app.style.visibility = "visible";
+
         history.pushState({ page: pageName }, "", "#" + pageName);
     } catch (err) {
+        app.style.visibility = "visible";
         console.error("Router failed, falling back:", err);
         window.location.href = "pages/" + pageName + ".html";
     }

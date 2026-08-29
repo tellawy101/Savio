@@ -5,6 +5,7 @@
 
 initTransactionForm("income");
 initTransactionForm("expense");
+initTransferForm();
 // ملحوظة: transfer.js بينادي initTransferForm() لوحده جوّه نفسه
 
 const tabs = document.querySelectorAll(".tx-tab");
