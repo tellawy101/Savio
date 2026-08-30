@@ -5,7 +5,12 @@
 // ==============================================================
 
 function initHomePage() {
-
+    
+    const modalsPlaceholder = document.getElementById("modals-placeholder");
+    if (modalsPlaceholder) {
+        modalsPlaceholder.innerHTML = renderSharedModals();
+    }
+    
     document.getElementById("statsPlaceholder").innerHTML =
         renderStatBox({ icon: '<i data-lucide="trending-up"></i>', labelKey: "income", labelText: "Income", valueId: "totalIncome" }) +
         renderStatBox({ icon: '<i data-lucide="trending-down"></i>', labelKey: "expenses", labelText: "Expenses", valueId: "totalExpense" });
@@ -184,11 +189,16 @@ function initHomePage() {
             // بنحدد مين اللي المفروض يتكشف مع كل اتجاه سحب، حسب مكانه الفعلي على الشاشة (RTL/LTR)
             const revealOnSwipeRight = deleteBtn;
             const revealOnSwipeLeft = editBtn;
-            deleteBtn.addEventListener("click", (e) => {
+            deleteBtn.addEventListener("click", async (e) => {
 
                 e.stopPropagation();
 
-                if (!confirm(typeof t === "function" ? t("delete_confirm") : "Delete this item?")) {
+                const confirmed = await customConfirm(
+                    typeof t === "function" ? t("delete_confirm") : "Delete this item?",
+                    { danger: true }
+                );
+
+                if (!confirmed) {
                     return;
                 }
 
@@ -651,11 +661,11 @@ function initHomePage() {
     }
 
     if (saveBudgetBtn && budgetAmountInput) {
-        saveBudgetBtn.onclick = function () {
-            const amt = Number(budgetAmountInput.value.replace(/,/g, ""));
-
-            if (!amt || amt <= 0) {
-                alert("Please enter a valid budget.");
+    saveBudgetBtn.onclick = async function() {
+                const amt = Number(budgetAmountInput.value.replace(/,/g, ""));
+                
+                if (!amt || amt <= 0) {
+                    await customAlert("Please enter a valid budget.");
                 return;
             }
 

@@ -6,6 +6,11 @@
 
 function initDebtsPage() {
 
+    const modalsPlaceholder = document.getElementById("modals-placeholder");
+    if (modalsPlaceholder) {
+        modalsPlaceholder.innerHTML = renderSharedModals();
+    }
+
     // ------------------------------
     // العناصر (لازم نجيبها "طازة" كل مرة، لأن الصفحة بتتحقن من جديد)
     // ------------------------------
@@ -121,22 +126,22 @@ function initDebtsPage() {
     // Save Debt
     // ------------------------------
     if (saveDebtBtn) {
-        saveDebtBtn.onclick = function () {
-            const person = debtPerson.value.trim();
-            const amount = Number(debtAmount.value);
-            const dueDate = debtDueDate.value || new Date().toISOString().split("T")[0];
-
-            if (person === "") {
-                alert("Please enter person name");
-                debtPerson.focus();
-                return;
-            }
-
-            if (!amount || amount <= 0) {
-                alert("Please enter a valid amount");
-                debtAmount.focus();
-                return;
-            }
+    saveDebtBtn.onclick = async function() {
+                const person = debtPerson.value.trim();
+                const amount = Number(debtAmount.value);
+                const dueDate = debtDueDate.value || new Date().toISOString().split("T")[0];
+                
+                if (person === "") {
+                    await customAlert("Please enter person name");
+                    debtPerson.focus();
+                    return;
+                }
+                
+                if (!amount || amount <= 0) {
+                    await customAlert("Please enter a valid amount");
+                    debtAmount.focus();
+                    return;
+                }
 
             const debt = {
                 id: Date.now(),
@@ -165,25 +170,25 @@ function initDebtsPage() {
     // Confirm Pay
     // ------------------------------
     if (confirmPayBtn) {
-        confirmPayBtn.onclick = function () {
+        confirmPayBtn.onclick = async function() {
             if (!currentPayDebt) return;
-
+            
             const payment = Number(payAmount.value);
             const account = payAccount.value;
-
+            
             if (!account) {
-                alert("Please select an account");
+                await customAlert("Please select an account");
                 return;
             }
-
+            
             if (!payment || payment <= 0) {
-                alert("Please enter a valid amount");
+                await customAlert("Please enter a valid amount");
                 payAmount.focus();
                 return;
             }
-
+            
             if (payment > currentPayDebt.remaining) {
-                alert("Payment is greater than remaining amount");
+                await customAlert("Payment is greater than remaining amount");
                 return;
             }
 
@@ -222,8 +227,8 @@ function initDebtsPage() {
     // Save Edited Debt
     // ------------------------------
     if (saveEditDebtBtn) {
-        saveEditDebtBtn.onclick = function () {
-            if (!editingDebt) return;
+    saveEditDebtBtn.onclick = async function() {
+                if (!editingDebt) return;
 
             const person = editDebtPerson.value.trim();
             const amount = Number(editDebtAmount.value);
@@ -232,16 +237,16 @@ function initDebtsPage() {
             const type = activeTypeBtn ? activeTypeBtn.dataset.type : editingDebt.type;
 
             if (person === "") {
-                alert("Please enter person name");
-                editDebtPerson.focus();
-                return;
-            }
+    await customAlert("Please enter person name");
+    editDebtPerson.focus();
+    return;
+}
 
-            if (!amount || amount <= 0) {
-                alert("Please enter a valid amount");
-                editDebtAmount.focus();
-                return;
-            }
+if (!amount || amount <= 0) {
+    await customAlert("Please enter a valid amount");
+    editDebtAmount.focus();
+    return;
+}
 
             editingDebt.person = person;
             editingDebt.amount = amount;
@@ -387,17 +392,17 @@ function initDebtsPage() {
                 }
             });
 
-            card.addEventListener("touchend", function () {
+            card.addEventListener("touchend", async function () {
                 dragging = false;
                 card.style.transition = "transform 0.25s ease";
 
                 if (currentX > 80) {
-                    const confirmed = confirm(
-                        typeof t === "function" ? t("debts_delete_confirm") : "Are you sure you want to delete this debt?"
+                    const confirmed = await customConfirm(
+                        typeof t === "function" ? t("debts_delete_confirm") : "Are you sure you want to delete this debt?",
+                        { danger: true }
                     );
 
-                    if (confirmed) {
-                        const deletedPosition = debts.indexOf(debt);
+                    if (confirmed) { const deletedPosition = debts.indexOf(debt);
 
                         debts = debts.filter(d => d.id !== debt.id);
                         localStorage.setItem("debts", JSON.stringify(debts));

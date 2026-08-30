@@ -25,7 +25,7 @@ document.body.classList.add("has-scroll");
     initCategoryPicker();
     initTransactionForm("income");
     initTransactionForm("expense");
-    initTransferForm();
+    initTransferForm(tab);
 
     // ------------------------------
     // التابس (دخل / مصروف / تحويل)

@@ -59,7 +59,7 @@ const accountTransactions = transactions.filter(transaction => {
    PAGE INFORMATION
    ========================================= */
 
-accountNameEl.textContent = "Account";
+accountNameEl.textContent = t("account_label");
 
 if (accountName && accountIconEl) {
 
@@ -85,13 +85,13 @@ if (accountName && accountIconEl) {
 const isIncome = type === "income";
 
 transactionTypeEl.textContent =
-    isIncome ? "Income" : "Expense";
+    isIncome ? t("income_title") : t("expense_title");
 
 totalLabelEl.textContent =
-    isIncome ? "Total Income" : "Total Expense";
+    isIncome ? t("stats_total_income") : t("stats_total_expense");
 
 listTitleEl.textContent =
-    isIncome ? "Income" : "Expense";
+    isIncome ? t("income_title") : t("expense_title");
 
 
 /* =========================================

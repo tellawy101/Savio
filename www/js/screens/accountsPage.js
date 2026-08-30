@@ -111,18 +111,17 @@ function initAccountsPage() {
     }
 
     if (saveAccountBtn) {
-        saveAccountBtn.onclick = function () {
-            let name = document.getElementById("newAccountName").value.trim();
+    saveAccountBtn.onclick = async function() {
+                let name = document.getElementById("newAccountName").value.trim();
             let description = document.getElementById("newAccountDescription").value.trim();
             let icon = newAccountIconInput.value;
             let balance = document.getElementById("newAccountBalance").value.trim();
             if (balance === "") balance = "0";
 
             if (name === "") {
-                alert(t("enter_account_name_alert"));
-                return;
-            }
-
+    await customAlert(t("enter_account_name_alert"));
+    return;
+}
             let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
             let sameAccount = accounts.find(a => a.name.toLowerCase() === name.toLowerCase());
 
@@ -359,20 +358,23 @@ function initAccountsPage() {
                     };
                 }
 
-                let pressTimer;
-                item.addEventListener("touchstart", function () {
-                    pressTimer = setTimeout(function () {
+             const cardHeader = item.querySelector(".account-card-top");
+
+let pressTimer;
+cardHeader.addEventListener("touchstart", function() {
+            pressTimer = setTimeout(function() {
                         selectedAccount = account.name;
                         document.getElementById("accountMenu").classList.add("show");
                     }, 700);
                 });
-                item.addEventListener("touchend", function () {
-                    clearTimeout(pressTimer);
-                });
-                item.addEventListener("touchmove", function () {
-                    clearTimeout(pressTimer);
-                });
-                item.onclick = function () {
+                cardHeader.addEventListener("touchend", function() {
+    clearTimeout(pressTimer);
+});
+cardHeader.addEventListener("touchmove", function() {
+    clearTimeout(pressTimer);
+});
+                cardHeader.onclick = function (e) {
+                    e.stopPropagation();
                     selectedAccount = account.name;
                     document.getElementById("accountMenu").classList.add("show");
                 };

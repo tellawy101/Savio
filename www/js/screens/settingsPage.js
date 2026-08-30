@@ -5,13 +5,14 @@
 // ==============================================================
 
 function initSettingsPage() {
-
+    
+    const modalsPlaceholder = document.getElementById("modals-placeholder");
+    if (modalsPlaceholder) {
+        modalsPlaceholder.innerHTML = renderSharedModals();
+    }
+    
     // ------------------------------
     // الوضع الليلي (Dark Mode)
-    // ------------------------------
-    // ملحوظة: مش بنستخدم مرجع darkModeToggle بتاع theme.js
-    // لأنه بيتحدد مرة واحدة بس وقت أول تحميل للتطبيق،
-    // وهنا العنصر بيتحقن من جديد كل مرة الصفحة تتفتح، فلازم نجيبه "طازة"
     const darkModeToggle = document.getElementById("darkModeToggle");
 
     if (darkModeToggle) {
@@ -86,9 +87,9 @@ function initSettingsPage() {
     const clearDataBtn = document.getElementById("clearData");
 
     if (clearDataBtn) {
-        clearDataBtn.addEventListener("click", function () {
-            const confirmClear = confirm(t("settings_clear_confirm"));
-            if (!confirmClear) return;
+    clearDataBtn.addEventListener("click", async function() {
+                    const confirmClear = await customConfirm(t("settings_clear_confirm"), { danger: true });
+                    if (!confirmClear) return;
 
             localStorage.removeItem("transactions");
             localStorage.removeItem("accounts");
@@ -97,11 +98,11 @@ function initSettingsPage() {
             localStorage.removeItem("debts");
             localStorage.removeItem("savioBudget");
 
-            alert(t("settings_clear_done"));
+            await customAlert(t("settings_clear_done"));
 
-            window.location.href = "index.html";
-        });
-    }
+window.location.href = "index.html";
+});
+}
 
     // ------------------------------
     // Export Data
@@ -252,7 +253,7 @@ function initSettingsPage() {
         });
 
         if (restoreImportManualBtn) {
-            restoreImportManualBtn.addEventListener("click", function () {
+            restoreImportManualBtn.addEventListener("click", async function() {
                 const rawText = importManualText.value.trim();
                 if (!rawText) { showToast(t("settings_import_invalid"), "error"); return; }
 
@@ -260,7 +261,8 @@ function initSettingsPage() {
                     const payload = JSON.parse(rawText);
                     if (!payload || payload.app !== "Savio" || !payload.data) throw new Error("invalid");
 
-                    if (!confirm(t("settings_import_confirm"))) return;
+                    const confirmedImport = await customConfirm(t("settings_import_confirm"), { danger: true });
+if (!confirmedImport) return;
 
                     BACKUP_KEYS.forEach(function (key) {
                         if (Object.prototype.hasOwnProperty.call(payload.data, key)) {

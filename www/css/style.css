@@ -189,6 +189,66 @@ button:hover {
     color: #ffffff;
 }
 
+#customConfirmModal {
+    align-items: center;
+    padding-top: 0;
+}
+
+.custom-confirm-content {
+    max-width: 320px;
+    text-align: center;
+    padding: 24px 20px 20px;
+}
+
+.custom-confirm-message {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.5;
+    margin: 0 0 20px;
+}
+
+.custom-confirm-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.custom-confirm-cancel-btn,
+.custom-confirm-ok-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 0;
+    width: auto;
+}
+
+.custom-confirm-cancel-btn {
+    background: #F0F0F0;
+    color: #333;
+}
+
+.custom-confirm-ok-btn {
+    background: #0F766E;
+    color: #fff;
+}
+
+.custom-confirm-ok-btn.danger {
+    background: #DC2626;
+}
+
+.dark .custom-confirm-message {
+    color: #fff;
+}
+
+.dark .custom-confirm-cancel-btn {
+    background: #2c2c2c;
+    color: #fff;
+}
+
 .dark input,
 .dark select {
     background: #2c2c2c;

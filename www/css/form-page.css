@@ -438,10 +438,74 @@ body.has-scroll {
 /* ==============================
    قائمة تعديل/حذف الحساب أو التصنيف (accountMenu / categoryMenu)
 ============================== */
+#accountMenu,
+#categoryMenu {
+    align-items: flex-end;
+    padding-top: 0;
+}
+
 #accountMenu .modal-content,
 #categoryMenu .modal-content {
-    width: auto;
-    min-width: 220px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: 20px 20px 0 0;
+    padding: 10px 8px calc(env(safe-area-inset-bottom, 0px) + 16px);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    animation: slideUpSheet .25s ease;
+}
+
+#accountMenu .modal-content::before,
+#categoryMenu .modal-content::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: #D1D5DB;
+    border-radius: 999px;
+    margin: 0 auto 10px;
+}
+
+@keyframes slideUpSheet {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+#accountMenu .modal-content button,
+#categoryMenu .modal-content button {
+    width: 100%;
+    margin: 0;
+    padding: 14px 16px;
+    background: transparent;
+    color: #111827;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: start;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#accountMenu .modal-content button:hover,
+#categoryMenu .modal-content button:hover {
+    background: #F3F4F6;
+    opacity: 1;
+}
+
+#editAccountBtn,
+#editCategoryBtn {
+    border-bottom: 1px solid #E5E7EB;
+    border-radius: 10px 10px 0 0;
+}
+
+#deleteAccountBtn,
+#deleteCategoryBtn {
+    color: #DC2626;
+    border-radius: 0 0 10px 10px;
 }
 
 /* ==============================
@@ -476,6 +540,31 @@ body.has-scroll {
 /* ==============================
    الوضع الليلي (Dark Mode)
 ============================== */
+.dark #accountMenu .modal-content::before,
+.dark #categoryMenu .modal-content::before {
+    background: #4B5563;
+}
+
+.dark #accountMenu .modal-content button,
+.dark #categoryMenu .modal-content button {
+    color: #F3F4F6;
+}
+
+.dark #accountMenu .modal-content button:hover,
+.dark #categoryMenu .modal-content button:hover {
+    background: #2A2A2A;
+}
+
+.dark #editAccountBtn,
+.dark #editCategoryBtn {
+    border-bottom: 1px solid #333;
+}
+
+.dark #deleteAccountBtn,
+.dark #deleteCategoryBtn {
+    color: #F87171;
+}
+
 .dark .income-header,
 .dark .expense-header,
 .dark .transfer-header,
@@ -484,7 +573,6 @@ body.has-scroll {
     color: #ffffff;
     border-color: #444;
 }
-
 .dark .income-header h1,
 .dark .expense-header h1,
 .dark .transfer-header h1 {

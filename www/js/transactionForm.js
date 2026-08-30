@@ -12,12 +12,7 @@ function initTransactionForm(type) {
     const categoryEl = document.getElementById(type + "Category");
     const dateEl = document.getElementById(type + "Date");
 
-    window.addEventListener("DOMContentLoaded", function () {
-        setTimeout(() => amountEl.focus(), 300);
-    });
-
     initBackButton(backBtn);
-
 setupCommonFormPage();
     const currencyEl = document.querySelector(".amount-display .currency");
     if (currencyEl) currencyEl.textContent = getCurrency();
@@ -28,6 +23,9 @@ setupCommonFormPage();
     const urlParams = new URLSearchParams(window.location.search);
     const editId = urlParams.get("edit") || null;
 
+    if (!editId) {
+        setTimeout(() => amountEl.focus(), 300);
+    }
     function getMissingField() {
         const amount = Number(amountEl.value.replace(/,/g, ""));
         const account = accountEl.textContent.trim();
@@ -107,9 +105,8 @@ if (entry.category) categoryEl.removeAttribute("data-i18n");
         }
 
         saveTransactions(transactions);
-        window.location.href = "../index.html";
-    };
-
+navigateTo("home");
+};
     renderAccounts();
     renderCategories();
     loadEditingEntry();

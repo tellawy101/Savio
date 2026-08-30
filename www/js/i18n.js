@@ -173,6 +173,7 @@ stats_financial_activity: "Financial activity across accounts",
 stats_no_account_data: "No account data yet",
 stats_income: "Income",
 stats_expense: "Expense",
+no_transactions_yet: "No transactions yet",
     },
     ar: {
         // Bottom nav
@@ -340,6 +341,7 @@ stats_week: "أسبوع",
     stats_no_account_data: "لا توجد بيانات حسابات حتى الآن",
     stats_income: "الدخل",
     stats_expense: "المصروفات",
+    no_transactions_yet: "لا توجد معاملات حتى الآن",
     }
 };
 

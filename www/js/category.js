@@ -246,11 +246,11 @@ document.addEventListener("click", function (e) {
 
 });
 
-let activeCategoryBox = null;
+window.activeCategoryBox = null;
 
 categoryBoxes.forEach(function (box) {
     box.onclick = function () {
-        activeCategoryBox = box;
+        window.activeCategoryBox = box;
         renderCategories();
         categoryModal.classList.add("show");
     };

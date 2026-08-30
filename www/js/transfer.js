@@ -2,7 +2,7 @@
 // transfer.js
 // تحويل مبلغ بين حسابين (خصم من حساب + إضافة لحساب التاني)
 // ==============================
-function initTransferForm() {
+function initTransferForm(initialTab) {
 const backBtn = document.getElementById("transferBackBtn");
 const transferAmount = document.getElementById("transferAmount");
 const saveTransferBtn = document.getElementById("saveTransferBtn");
@@ -17,11 +17,11 @@ initBackButton(backBtn);
 setupCommonFormPage();
 const existingAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
 
-if (existingAccounts.length < 2) {
+if (existingAccounts.length < 2 && initialTab === "transfer") {
     showNoAccountsModal(existingAccounts.length);
     
     document.getElementById("noAccountsCancelBtn").onclick = function() {
-        window.location.href = "../index.html";
+        navigateTo("home");
     };
 }
 const today = getTodayDateString();
@@ -185,11 +185,10 @@ saveTransferBtn.onclick = function () {
     transactions.push(fromEntry, toEntry);
 
     saveTransactions(transactions);
-    window.location.href = "../index.html";
+navigateTo("home");
 };
 
 renderAccounts();
 loadEditingTransfer();
 checkTransferForm();
 }
-

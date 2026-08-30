@@ -278,8 +278,8 @@ function renderSharedModals() {
 
     <div id="accountMenu" class="modal">
         <div class="modal-content">
-            <button id="editAccountBtn">✏️ Edit</button>
-            <button id="deleteAccountBtn">🗑 Delete</button>
+            <button id="editAccountBtn"><i data-lucide="pencil"></i> Edit</button>
+<button id="deleteAccountBtn"><i data-lucide="trash-2"></i> Delete</button>
         </div>
     </div>
 
@@ -289,8 +289,8 @@ function renderSharedModals() {
 
    <div id="categoryMenu" class="modal">
         <div class="modal-content">
-            <button id="editCategoryBtn">✏️ Edit</button>
-            <button id="deleteCategoryBtn">🗑 Delete</button>
+            <button id="editCategoryBtn"><i data-lucide="pencil"></i> Edit</button>
+<button id="deleteCategoryBtn"><i data-lucide="trash-2"></i> Delete</button>
         </div>
     </div>
 
@@ -307,12 +307,81 @@ function renderSharedModals() {
                 <button id="noAccountsCancelBtn" class="account-cancel-btn">Cancel</button>
                 <button id="noAccountsAddBtn" class="account-save-btn">+ Add Account</button>
             </div>
+      </div>
+    </div>
+
+    <div id="customConfirmModal" class="modal">
+        <div class="modal-content custom-confirm-content">
+            <p id="customConfirmMessage" class="custom-confirm-message"></p>
+            <div class="custom-confirm-actions">
+                <button id="customConfirmCancelBtn" class="custom-confirm-cancel-btn">Cancel</button>
+                <button id="customConfirmOkBtn" class="custom-confirm-ok-btn">OK</button>
+            </div>
         </div>
     </div>
     `;
 }
 
+function customConfirm(message, options) {
+    options = options || {};
+    return new Promise(function (resolve) {
+        const modal = document.getElementById("customConfirmModal");
+        const msgEl = document.getElementById("customConfirmMessage");
+        const okBtn = document.getElementById("customConfirmOkBtn");
+        const cancelBtn = document.getElementById("customConfirmCancelBtn");
+
+        if (!modal || !msgEl || !okBtn || !cancelBtn) {
+            resolve(window.confirm(message));
+            return;
+        }
+
+        msgEl.textContent = message;
+        okBtn.className = "custom-confirm-ok-btn" + (options.danger ? " danger" : "");
+        modal.classList.add("show");
+
+        function cleanup(result) {
+            modal.classList.remove("show");
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            resolve(result);
+        }
+
+        okBtn.onclick = function() { cleanup(true); };
+cancelBtn.onclick = function() { cleanup(false); };
+});
+}
+
+function customAlert(message) {
+    return new Promise(function(resolve) {
+        const modal = document.getElementById("customConfirmModal");
+        const msgEl = document.getElementById("customConfirmMessage");
+        const okBtn = document.getElementById("customConfirmOkBtn");
+        const cancelBtn = document.getElementById("customConfirmCancelBtn");
+        
+        if (!modal || !msgEl || !okBtn || !cancelBtn) {
+            window.alert(message);
+            resolve();
+            return;
+        }
+        
+        msgEl.textContent = message;
+        okBtn.className = "custom-confirm-ok-btn";
+        cancelBtn.style.display = "none";
+        modal.classList.add("show");
+        
+        function cleanup() {
+            modal.classList.remove("show");
+            cancelBtn.style.display = "";
+            okBtn.onclick = null;
+            resolve();
+        }
+        
+        okBtn.onclick = cleanup;
+    });
+}
+
 // بيفتح مودال "محتاج تعمل حسابين" برسالة تختلف حسب عدد الحسابات الموجود
+
 // existingAccountsCount = عدد الحسابات الحالي (0 أو 1)
 function showNoAccountsModal(existingAccountsCount) {
     const modal = document.getElementById("noAccountsModal");
@@ -408,7 +477,7 @@ ${renderFormHeader(type, capitalize(type), '<i data-lucide="check"></i>')}
 <div class="amount-section">
     <div class="amount-display">
         <span class="currency">EGP</span>
-        <input type="tel" id="${type}Amount" inputmode="numeric" autofocus value="0">
+        <input type="tel" id="${type}Amount" inputmode="numeric" value="0">
     </div>
 </div>
 
