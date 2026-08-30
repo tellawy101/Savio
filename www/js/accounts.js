@@ -15,7 +15,7 @@ function initAccountPicker() {
 
 // Elements
 const accountBoxes = document.querySelectorAll(".account-select-box");
-let activeAccountBox = null; // الصندوق اللي المستخدم داس عليه آخر مرة
+window.activeAccountBox = null; // الصندوق اللي المستخدم داس عليه آخر مرة
 const accountModal = document.getElementById("accountModal");
 const addAccountBtn = document.getElementById("addAccountBtn");
 const addAccountModal = document.getElementById("addAccountModal");
@@ -35,7 +35,7 @@ let editingAccount = null;
 
 accountBoxes.forEach(function (box) {
     box.onclick = function() {
-        activeAccountBox = box;
+        window.activeAccountBox = box;
         renderAccounts(); // نبني القائمة تاني عشان تاخد آخر حالة (الحساب المعطل يتحدث)
         accountModal.classList.add("show");
     };

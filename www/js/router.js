@@ -85,14 +85,19 @@ if (pageName !== "accounts") {
 
 if (pageName !== "add-transaction") {
     document.body.classList.remove("add-transaction-page");
+    document.body.classList.remove("has-scroll");
 }
 
 app.innerHTML = html;
         if (window.lucide) lucide.createIcons();
         const navPlaceholder = document.getElementById("nav-placeholder");
 if (navPlaceholder && typeof renderBottomNav === "function") {
-    navPlaceholder.innerHTML = renderBottomNav(pageName);
-    if (typeof setupBottomNav === "function") setupBottomNav("");
+    if (pageName === "add-transaction") {
+        navPlaceholder.innerHTML = "";
+    } else {
+        navPlaceholder.innerHTML = renderBottomNav(pageName);
+        if (typeof setupBottomNav === "function") setupBottomNav("");
+    }
 }
 route.init();
 if (typeof applyLanguage === "function") applyLanguage();

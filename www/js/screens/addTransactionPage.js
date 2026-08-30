@@ -5,6 +5,7 @@
 
 function initAddTransactionPage(tab) {
 document.body.classList.add("add-transaction-page");
+document.body.classList.add("has-scroll");
     applyStoredTheme();
 
     // تعبئة الفورمات الثلاثة + المودالز المشتركة
