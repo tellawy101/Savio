@@ -406,10 +406,10 @@ document.getElementById("noAccountsCancelBtn").onclick = function() {
         modal.classList.remove("show");
     };
 
-    document.getElementById("noAccountsAddBtn").onclick = function () {
-        const insidePagesFolder = window.location.pathname.includes("/pages/");
-        window.location.href = insidePagesFolder ? "accounts.html" : "pages/accounts.html";
-    };
+    document.getElementById("noAccountsAddBtn").onclick = function() {
+    modal.classList.remove("show");
+    navigateTo("accounts");
+};
 }
 // 6) دالة capitalize موحدة (تستخدمها transactionForm.js كمان)
 function capitalize(str) {

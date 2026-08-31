@@ -7,7 +7,7 @@
 const ROUTES = {
     settings: {
         template: "templates/settings.html",
-        init: function () {
+        init: function() {
             if (typeof initSettingsPage === "function") {
                 initSettingsPage();
             }
@@ -15,7 +15,7 @@ const ROUTES = {
     },
     accounts: {
         template: "templates/accounts.html",
-        init: function () {
+        init: function() {
             if (typeof initAccountsPage === "function") {
                 initAccountsPage();
             }
@@ -23,7 +23,7 @@ const ROUTES = {
     },
     debts: {
         template: "templates/debts.html",
-        init: function () {
+        init: function() {
             if (typeof initDebtsPage === "function") {
                 initDebtsPage();
             }
@@ -31,47 +31,54 @@ const ROUTES = {
     },
     statistics: {
         template: "templates/statistics.html",
-        init: function () {
+        init: function() {
             if (typeof initStatisticsPage === "function") {
                 initStatisticsPage();
             }
         }
-    }, 
+    },
     home: {
-    template: "templates/home.html",
-    init: function() {
-        if (typeof initHomePage === "function") {
-            initHomePage();
+        template: "templates/home.html",
+        init: function() {
+            if (typeof initHomePage === "function") {
+                initHomePage();
+            }
         }
-    }
-},
-"add-transaction": {
-    template: "templates/add-transaction.html",
-    init: function() {
-        if (typeof initAddTransactionPage === "function") {
-            initAddTransactionPage(window.pendingAddTransactionTab || "income", window.pendingEditTransactionId || null);
-            window.pendingAddTransactionTab = null;
-            window.pendingEditTransactionId = null;
+    },
+    "add-transaction": {
+        template: "templates/add-transaction.html",
+        init: function() {
+            if (typeof initAddTransactionPage === "function") {
+                initAddTransactionPage(window.pendingAddTransactionTab || "income", window.pendingEditTransactionId || null);
+                window.pendingAddTransactionTab = null;
+                window.pendingEditTransactionId = null;
+            }
         }
-    }
-},
+    },
+    "account-transactions": {
+        template: "templates/account-transactions.html",
+        init: function() {
+            if (typeof initAccountTransactionsPage === "function") {
+                initAccountTransactionsPage();
+            }
+        }
+    },
 };
 async function navigateTo(pageName) {
-    const route = ROUTES[pageName];
-
-    // لو الصفحة دي لسه مش متحولة، سيبها تفتح بالطريقة القديمة
-    if (!route) {
-        window.location.href = "pages/" + pageName + ".html";
-        return;
-    }
-
+        const route = ROUTES[pageName];
+        
+        // كل الصفحات بقت مسجّلة في الراوتر - لو اسم مش موجود، ارجع للهوم
+        if (!route) {
+            console.error("Unknown route:", pageName);
+            window.location.href = "index.html";
+            return;
+        }
     const app = document.getElementById("app");
-    if (!app) {
-        // لو مفيش div#app أصلاً (يعني index.html لسه معملهاش)، ارجع للطريقة القديمة
-        window.location.href = "pages/" + pageName + ".html";
-        return;
-    }
-
+if (!app) {
+    // لو مفيش div#app أصلاً (يعني index.html لسه معملهاش)
+    window.location.href = "index.html";
+    return;
+}
   try {
     app.style.visibility = "hidden";
     
@@ -106,10 +113,9 @@ if (typeof applyLanguage === "function") applyLanguage();
         app.style.visibility = "visible";
 
         history.pushState({ page: pageName }, "", "#" + pageName);
-    } catch (err) {
+  } catch (err) {
         app.style.visibility = "visible";
-        console.error("Router failed, falling back:", err);
-        window.location.href = "pages/" + pageName + ".html";
+        console.error("Router failed to load page:", pageName, err);
     }
 }
 

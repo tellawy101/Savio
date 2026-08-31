@@ -343,21 +343,22 @@ function initAccountsPage() {
                 const expenseStat = item.querySelector(".stat-item:nth-child(2)");
 
                 if (incomeStat) {
-                    incomeStat.onclick = function (e) {
-                        e.stopPropagation();
-                        window.location.href =
-                            `${transactionsBase}account-transactions.html?account=${encodeURIComponent(account.name)}&type=income`;
-                    };
-                }
+    incomeStat.onclick = function(e) {
+        e.stopPropagation();
+        window.pendingAccountTransactionsAccount = account.name;
+        window.pendingAccountTransactionsType = "income";
+        navigateTo("account-transactions");
+    };
+}
 
-                if (expenseStat) {
-                    expenseStat.onclick = function (e) {
-                        e.stopPropagation();
-                        window.location.href =
-                            `${transactionsBase}account-transactions.html?account=${encodeURIComponent(account.name)}&type=expense`;
-                    };
-                }
-
+if (expenseStat) {
+    expenseStat.onclick = function(e) {
+        e.stopPropagation();
+        window.pendingAccountTransactionsAccount = account.name;
+        window.pendingAccountTransactionsType = "expense";
+        navigateTo("account-transactions");
+    };
+}
              const cardHeader = item.querySelector(".account-card-top");
 
 let pressTimer;
