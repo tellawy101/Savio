@@ -142,15 +142,15 @@ const expenseElement = document.getElementById("totalExpense");
 const balanceElement = document.getElementById("statsNetBalance");
 
 if (incomeElement) {
-    incomeElement.innerHTML = formatCurrencyHTML(income);
+    incomeElement.innerHTML = formatCurrencyHTMLStats(income);
 }
 
 if (expenseElement) {
-    expenseElement.innerHTML = formatCurrencyHTML(expense);
+    expenseElement.innerHTML = formatCurrencyHTMLStats(expense);
 }
 
 if (balanceElement) {
-    balanceElement.innerHTML = formatCurrencyHTML(balance);
+    balanceElement.innerHTML = formatCurrencyHTMLStats(balance);
 }
     }
 

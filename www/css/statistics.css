@@ -571,12 +571,12 @@ body.dark .category-progress {
     display: inline;
 }
 
-.stat-currency {
-    font-size: 13px;
+.stat-content strong .stats-stat-currency {
+    font-size: 12px;
     font-weight: 500;
 }
 
-.stat-value {
-    font-size: px;
+.stat-content strong .stats-stat-value {
+    font-size: 28px;
     font-weight: 800;
 }
