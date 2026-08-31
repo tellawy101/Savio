@@ -354,6 +354,11 @@ body.amounts-hidden .stat p{
 }
 
 .balance-box h2 {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    align-items: baseline;
+    gap: 8px;
+    
     margin: 16px 0 0;
     font-size: 40px;
     font-weight: 800;
@@ -396,6 +401,7 @@ body.amounts-hidden .stat p{
 
 .stat p {
     display: inline-flex;
+    flex-direction: row-reverse;
     align-items: baseline;
     gap: 4px;
     margin: 6px 0;
@@ -476,11 +482,23 @@ body.amounts-hidden .stat p{
     flex-shrink:0;
 }
 
-.expense-amount{
-    font-weight:bold;
-    color:#0F766E;
-    font-size:16px;
-    white-space:nowrap;
+.expense-amount {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    align-items: baseline;
+    gap: 4px;
+    
+    color: #0F766E;
+    white-space: nowrap;
+}
+.expense-amount-currency {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.expense-amount-value {
+    font-size: 18px;
+    font-weight: 800;
 }
 
 .expense-meta{
@@ -851,7 +869,7 @@ svg.lucide {
     color: #ffffff !important;
 
     font-size: 11px !important;
-    font-weight: 700 !important;
+    font-weight: 900 !important;
 
     cursor: pointer;
     z-index: 20 !important;
@@ -868,6 +886,7 @@ svg.lucide {
 
 #budgetValue {
     white-space: nowrap !important;
+    font-weight: 700 !important;
 }
 /* =========================
    BALANCE CHART

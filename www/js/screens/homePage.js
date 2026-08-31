@@ -156,8 +156,8 @@ function initHomePage() {
 
             <div class="expense-right">
 
-                <div class="expense-amount">
-    ${formatCurrency(expense.amount)}
+               <div class="expense-amount">
+    <span class="expense-amount-currency">${getCurrency()}</span> <span class="expense-amount-value">${Math.round(Number(expense.amount) || 0).toLocaleString("en-US")}</span>
 </div>
 
                 <div class="expense-meta">
