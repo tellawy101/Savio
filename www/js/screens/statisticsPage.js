@@ -138,20 +138,20 @@ function initStatisticsPage() {
         const balance = income - expense;
 
         const incomeElement = document.getElementById("totalIncome");
-        const expenseElement = document.getElementById("totalExpense");
-        const balanceElement = document.getElementById("netBalance");
+const expenseElement = document.getElementById("totalExpense");
+const balanceElement = document.getElementById("statsNetBalance");
 
-        if (incomeElement) {
-            incomeElement.textContent = formatMoney(income);
-        }
+if (incomeElement) {
+    incomeElement.innerHTML = formatCurrencyHTML(income);
+}
 
-        if (expenseElement) {
-            expenseElement.textContent = formatMoney(expense);
-        }
+if (expenseElement) {
+    expenseElement.innerHTML = formatCurrencyHTML(expense);
+}
 
-        if (balanceElement) {
-            balanceElement.textContent = formatMoney(balance);
-        }
+if (balanceElement) {
+    balanceElement.innerHTML = formatCurrencyHTML(balance);
+}
     }
 
     // ------------------------------

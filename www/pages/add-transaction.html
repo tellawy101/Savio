@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script>
+  <script>
     (function() {
         var lang = localStorage.getItem("language") || "en";
         var dir = lang === "ar" ? "rtl" : "ltr";
@@ -10,7 +10,7 @@
         document.documentElement.setAttribute("dir", dir);
     })();
 </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Add Transaction</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/form-page.css">
@@ -22,6 +22,11 @@
     </style>
 </head>
 <body class="has-scroll add-transaction-page">
+    <script>
+    if ((localStorage.getItem("theme") || "light") === "dark") {
+        document.body.classList.add("dark");
+    }
+</script>
 
 <div class="tx-header">
     <div class="tx-header-top">
@@ -55,7 +60,7 @@
             if (targetPanel) targetPanel.classList.add("active");
         }
 
-        document.body.classList.add("tx-ready");
+        
     })();
 </script>
 

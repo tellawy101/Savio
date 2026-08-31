@@ -567,3 +567,16 @@ body.dark .category-progress {
     height: 21px;
     stroke-width: 2.2;
 }
+.stat-content strong span {
+    display: inline;
+}
+
+.stat-currency {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: px;
+    font-weight: 800;
+}

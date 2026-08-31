@@ -102,6 +102,6 @@ function formatCurrency(amount) {
 function formatCurrencyHTML(amount) {
     const currency = getCurrency();
     const value = Math.round(Number(amount) || 0).toLocaleString("en-US");
-
-    return `<span class="stat-currency">${currency}</span> <span class="stat-value">${value}</span>`;
+    
+    return `<span class="stats-stat-currency">${currency}</span> <span class="stats-stat-value">${value}</span>`;
 }

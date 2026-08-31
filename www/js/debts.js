@@ -539,8 +539,8 @@ function renderDebts() {
 
     });
 
-    totalReceivable.innerText = "EGP " + Math.round(receivable).toLocaleString("en-US");
-    totalPayable.innerText = "EGP " + Math.round(payable).toLocaleString("en-US");
+    totalReceivable.innerHTML = "<span class='stat-currency'>EGP</span> " + Math.round(receivable).toLocaleString("en-US");
+totalPayable.innerHTML = "<span class='stat-currency'>EGP</span> " + Math.round(payable).toLocaleString("en-US");
 
     const net = receivable - payable;
 
