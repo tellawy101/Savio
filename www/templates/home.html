@@ -21,33 +21,37 @@
 
 </header>
 <main>
-    <!-- Budget Modal -->
+<!-- Budget Modal -->
 <div id="budgetModal" class="modal">
 
-    <div class="modal-content">
+    <div class="modal-content budget-modal-content">
 
-        <h2 data-i18n="budget">Budget</h2>
+        <div class="budget-modal-header">
+            <div class="budget-modal-icon">
+                <i data-lucide="wallet"></i>
+            </div>
+            <h2 data-i18n="budget">Budget</h2>
+            <button id="closeBudgetBtn" class="budget-modal-close" aria-label="Close">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
 
-<label for="budgetAmount" data-i18n="monthly_budget">
-    Monthly Budget
-</label>
+        <label for="budgetAmount" data-i18n="monthly_budget">
+            Monthly Budget
+        </label>
 
-        <input
-            type="text"
-            id="budgetAmount"
-            inputmode="decimal"
-            placeholder="0">
-<div class="budget-actions">
-    
-    <button id="saveBudgetBtn" data-i18n="save">
-    Save
-</button>
+        <div class="budget-input-wrap">
+            <span class="budget-input-currency">EGP</span>
+            <input
+                type="text"
+                id="budgetAmount"
+                inputmode="decimal"
+                placeholder="0">
+        </div>
 
-<button id="closeBudgetBtn" data-i18n="cancel">
-    Cancel
-</button>
-    
-</div>
+        <button id="saveBudgetBtn" class="budget-save-btn" data-i18n="save">
+            Save
+        </button>
 
     </div>
 

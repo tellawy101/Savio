@@ -608,7 +608,14 @@ function initHomePage() {
     const saveBudgetBtn = document.getElementById("saveBudgetBtn");
     const budgetAmountInput = document.getElementById("budgetAmount");
 
-    if (budgetBtn && budgetModal) {
+if (budgetAmountInput) {
+    budgetAmountInput.addEventListener("input", function() {
+        const digits = budgetAmountInput.value.replace(/\D/g, "");
+        budgetAmountInput.value = digits ? Number(digits).toLocaleString("en-US") : "";
+    });
+}
+
+if (budgetBtn && budgetModal) {
         budgetBtn.onclick = function () {
             budgetModal.classList.add("show");
         };
