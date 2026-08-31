@@ -80,11 +80,10 @@ if (!app) {
     return;
 }
   try {
-    app.style.visibility = "hidden";
-    
     const res = await fetch(route.template);
-const html = await res.text();
+    const html = await res.text();
 
+    app.style.visibility = "hidden";
 // نظّف أي عنصر خاص بصفحة سابقة اتحقن برّه #app (زي فاب "+ إضافة حساب")
 if (pageName !== "accounts") {
     const oldFab = document.getElementById("openAddAccountBtn");
