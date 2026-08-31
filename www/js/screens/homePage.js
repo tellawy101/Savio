@@ -239,30 +239,36 @@ function initHomePage() {
 
             });
             editBtn.addEventListener("click", (e) => {
-            
-            e.stopPropagation();
-            
-            if (expense.isTransfer) {
-                
-                window.location.href = "pages/add-transaction.html?tab=transfer&edit=" + expense.transferId;
-                return;
-                
-            }
-            
-            if (expense.type === "income") {
-                
-                window.location.href = "pages/add-transaction.html?tab=income&edit=" + expense.id;
-                return;
-                
-            }
-            
-            if (expense.type === "expense") {
-                
-                window.location.href = "pages/add-transaction.html?tab=expense&edit=" + expense.id;
-                return;
-                
-            }
-            });
+    
+    e.stopPropagation();
+    
+    if (expense.isTransfer) {
+        
+        window.pendingAddTransactionTab = "transfer";
+        window.pendingEditTransactionId = expense.transferId;
+        navigateTo("add-transaction");
+        return;
+        
+    }
+    
+    if (expense.type === "income") {
+        
+        window.pendingAddTransactionTab = "income";
+        window.pendingEditTransactionId = expense.id;
+        navigateTo("add-transaction");
+        return;
+        
+    }
+    
+    if (expense.type === "expense") {
+        
+        window.pendingAddTransactionTab = "expense";
+        window.pendingEditTransactionId = expense.id;
+        navigateTo("add-transaction");
+        return;
+        
+    }
+});
 
             card.addEventListener("touchstart", (e) => {
                 startX = e.touches[0].clientX;

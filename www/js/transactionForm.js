@@ -3,7 +3,7 @@
 // منطق موحد لصفحتي Income و Expense (DRY)
 // type: "income" | "expense"
 // ==============================
-function initTransactionForm(type) {
+function initTransactionForm(type, editId) {
     const backBtn = document.getElementById(type + "BackBtn");
     const amountEl = document.getElementById(type + "Amount");
     const saveBtn = document.getElementById("save" + capitalize(type) + "Btn");
@@ -20,8 +20,7 @@ setupCommonFormPage();
     const today = getTodayDateString();
     dateEl.value = today;
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const editId = urlParams.get("edit") || null;
+    editId = editId || new URLSearchParams(window.location.search).get("edit") || null;
 
     if (!editId) {
         setTimeout(() => amountEl.focus(), 300);

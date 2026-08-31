@@ -2,7 +2,7 @@
 // transfer.js
 // تحويل مبلغ بين حسابين (خصم من حساب + إضافة لحساب التاني)
 // ==============================
-function initTransferForm(initialTab) {
+function initTransferForm(initialTab, editTransferId) {
 const backBtn = document.getElementById("transferBackBtn");
 const transferAmount = document.getElementById("transferAmount");
 const saveTransferBtn = document.getElementById("saveTransferBtn");
@@ -27,8 +27,7 @@ if (existingAccounts.length < 2 && initialTab === "transfer") {
 const today = getTodayDateString();
 transferDate.value = today;
 
-const urlParams = new URLSearchParams(window.location.search);
-const editTransferId = urlParams.get("edit"); // transferId مش index
+editTransferId = editTransferId || new URLSearchParams(window.location.search).get("edit") || null; // transferId مش index
 
 // ==============================
 // منع اختيار نفس الحساب في From وTo

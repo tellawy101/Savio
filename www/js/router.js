@@ -49,8 +49,9 @@ const ROUTES = {
     template: "templates/add-transaction.html",
     init: function() {
         if (typeof initAddTransactionPage === "function") {
-            initAddTransactionPage(window.pendingAddTransactionTab || "income");
+            initAddTransactionPage(window.pendingAddTransactionTab || "income", window.pendingEditTransactionId || null);
             window.pendingAddTransactionTab = null;
+            window.pendingEditTransactionId = null;
         }
     }
 },

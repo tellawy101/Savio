@@ -3,7 +3,7 @@
 // صفحة إضافة معاملة (دخل / مصروف / تحويل) كصفحة SPA
 // ==============================================================
 
-function initAddTransactionPage(tab) {
+function initAddTransactionPage(tab, editId) {
 document.body.classList.add("add-transaction-page");
 document.body.classList.add("has-scroll");
     applyStoredTheme();
@@ -23,10 +23,9 @@ document.body.classList.add("has-scroll");
     // تشغيل منطق الحسابات/التصنيفات/الفورمات على العناصر الجديدة
     initAccountPicker();
     initCategoryPicker();
-    initTransactionForm("income");
-    initTransactionForm("expense");
-    initTransferForm(tab);
-
+    initTransactionForm("income", editId);
+initTransactionForm("expense", editId);
+initTransferForm(tab, editId);
     // ------------------------------
     // التابس (دخل / مصروف / تحويل)
     // ------------------------------
