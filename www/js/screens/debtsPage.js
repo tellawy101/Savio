@@ -280,6 +280,19 @@ saveDebts(debts);
     // ------------------------------
     // Render Debts
     // ------------------------------
+    document.addEventListener("touchstart", function (e) {
+        document.querySelectorAll(".debt-card").forEach(function (otherCard) {
+            if (!otherCard.contains(e.target)) {
+                otherCard.style.transform = "translateX(0px)";
+                const otherWrapper = otherCard.closest(".debt-card-wrapper");
+                if (otherWrapper) {
+                    otherWrapper.querySelector(".bg-delete").style.opacity = 0;
+                    otherWrapper.querySelector(".bg-edit").style.opacity = 0;
+                }
+            }
+        });
+    });
+
     function renderDebts() {
         debtsList.innerHTML = "";
 
@@ -416,81 +429,77 @@ saveDebts(debts);
             });
 
 let startX = 0;
+            let startY = 0;
             let currentX = 0;
-            let dragging = false;
-            let isOpen = false;
+            let offsetX = 0;
 
             card.addEventListener("touchstart", function (e) {
                 startX = e.touches[0].clientX;
-                dragging = true;
+                startY = e.touches[0].clientY;
                 card.style.transition = "none";
             });
 
             card.addEventListener("touchmove", function (e) {
-                if (!dragging) return;
-                currentX = e.touches[0].clientX - startX;
+                const deltaX = e.touches[0].clientX - startX;
+                const deltaY = e.touches[0].clientY - startY;
 
-                if (currentX > 60) currentX = 60;
-if (currentX < -60) currentX = -60;
+                if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+                e.preventDefault();
 
-                card.style.transform = `translateX(${currentX}px)`;
+                // بعد
+currentX = offsetX + deltaX;
 
-                if (currentX > 0) {
-    bgDelete.style.opacity = currentX / 60;
+if (currentX > 70) currentX = 70;
+if (currentX < -70) currentX = -70;
+
+card.style.transform = `translateX(${currentX}px)`;
+
+if (currentX > 0) {
+    bgDelete.style.opacity = Math.min(currentX / 60, 1);
     bgDelete.style.pointerEvents = "auto";
     bgEdit.style.opacity = 0;
     bgEdit.style.pointerEvents = "none";
 } else {
-    bgEdit.style.opacity = Math.abs(currentX) / 60;
+    bgEdit.style.opacity = Math.min(Math.abs(currentX) / 60, 1);
     bgEdit.style.pointerEvents = "auto";
     bgDelete.style.opacity = 0;
     bgDelete.style.pointerEvents = "none";
 }
-            });
+            }, { passive: false });
 
             card.addEventListener("touchend", function () {
-                dragging = false;
-                card.style.transition = "transform 0.25s ease";
 
                 if (currentX > 40) {
-    card.style.transform = "translateX(60px)";
+    offsetX = 60;
+    card.style.transition = "transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)";
+} else if (currentX < -40) {
+    offsetX = -60;
+    card.style.transition = "transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)";
+} else {
+    offsetX = 0;
+    card.style.transition = "transform 0.25s ease";
+}
+
+                card.style.transform = `translateX(${offsetX}px)`;
+
+                if (offsetX === 60) {
     bgDelete.style.opacity = 1;
     bgDelete.style.pointerEvents = "auto";
     bgEdit.style.opacity = 0;
     bgEdit.style.pointerEvents = "none";
-    isOpen = true;
-} else if (currentX < -40) {
-    card.style.transform = "translateX(-60px)";
+} else if (offsetX === -60) {
     bgEdit.style.opacity = 1;
     bgEdit.style.pointerEvents = "auto";
     bgDelete.style.opacity = 0;
     bgDelete.style.pointerEvents = "none";
-    isOpen = true;
-}
-else {
-    card.style.transform = "translateX(0)";
+} else {
     bgDelete.style.opacity = 0;
     bgDelete.style.pointerEvents = "none";
     bgEdit.style.opacity = 0;
     bgEdit.style.pointerEvents = "none";
-    isOpen = false;
 }
 
                 currentX = 0;
-            });
-
-            card.addEventListener("click", function (e) {
-                if (isOpen) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    card.style.transition = "transform 0.25s ease";
-                    card.style.transform = "translateX(0)";
-                    bgDelete.style.opacity = 0;
-                    bgDelete.style.pointerEvents = "none";
-                    bgEdit.style.opacity = 0;
-                    bgEdit.style.pointerEvents = "none";
-                    isOpen = false;
-                }
             });
 
             debtsList.appendChild(wrapper);
