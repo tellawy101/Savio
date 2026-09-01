@@ -37,8 +37,7 @@ function initAccountTransactionsPage() {
     const transactionsListEl = document.getElementById("transactionsList");
     const emptyStateEl = document.getElementById("emptyState");
 
-    const transactions =
-        JSON.parse(localStorage.getItem("transactions")) || [];
+    const transactions = loadTransactions();
 
     const accountTransactions = transactions.filter(transaction => {
         const sameAccount = transaction.account === accountName;
@@ -50,8 +49,7 @@ function initAccountTransactionsPage() {
 
     if (accountName && accountIconEl) {
 
-        const accounts =
-            JSON.parse(localStorage.getItem("accounts")) || [];
+        const accounts = getAccounts();
 
         const account = accounts.find(a => a.name === accountName);
 

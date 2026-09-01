@@ -91,7 +91,7 @@ const CATEGORY_ICON_LIBRARY = [
 ];
 
 function loadCustomCategoryIcons() {
-    return JSON.parse(localStorage.getItem("customCategoryIcons")) || [];
+    return getCustomCategoryIcons();
 }
 
 function saveCustomCategoryIcon(icon, label) {
@@ -100,7 +100,7 @@ function saveCustomCategoryIcon(icon, label) {
         CATEGORY_ICON_LIBRARY.some(item => item.icon === icon);
     if (!exists) {
         custom.push({ icon, label });
-        localStorage.setItem("customCategoryIcons", JSON.stringify(custom));
+        saveCustomCategoryIcons(custom);
     }
 }
 
@@ -286,18 +286,12 @@ window.renderCategories = function() {
 
     categoriesList.innerHTML = "";
 
-    let categories = JSON.parse(localStorage.getItem("categories")) || [];
+    let categories = getCategories();
 
     categories.forEach(category => {
         const item = document.createElement("div");
         item.className = "account-item";
-        item.innerHTML = `
-    <div class="account-item-icon"><i data-lucide="${category.icon}"></i></div>
-    <div class="account-info">
-        <div class="account-name">${category.name}</div>
-    </div>
-    <div class="account-arrow">›</div>
-`;
+        item.innerHTML = renderListItemHTML(category.icon, category.name);
         let pressTimer;
 
         item.addEventListener("touchstart", function () {
@@ -348,9 +342,8 @@ if (saveCategoryBtn) {
             return;
         }
 
-        let categories = JSON.parse(localStorage.getItem("categories")) || [];
-        const isEditing = editingCategory !== null;
-
+        let categories = getCategories();
+const isEditing = editingCategory !== null;
         if (editingCategory) {
             const index = categories.findIndex(c => c.name === editingCategory.name);
             if (index !== -1) {
@@ -378,10 +371,9 @@ if (field) {
     if (window.lucide) lucide.createIcons();
 }
 }
-        localStorage.setItem("categories", JSON.stringify(categories));
-        renderCategories();
-        addCategoryModal.classList.remove("show");
-
+        saveCategories(categories);
+renderCategories();
+addCategoryModal.classList.remove("show");
         nameInput.value = "";
         iconInput.value = "";
 
@@ -426,10 +418,10 @@ if (deleteCategoryBtn) {
     deleteCategoryBtn.onclick = function () {
         if (!selectedCategory) return;
 
-        let categories = JSON.parse(localStorage.getItem("categories")) || [];
+        let categories = getCategories();
         categories = categories.filter(category => category.name !== selectedCategory.name);
 
-        localStorage.setItem("categories", JSON.stringify(categories));
+        saveCategories(categories);
         renderCategories();
 
         const field = getCategoryFieldEl();

@@ -559,13 +559,15 @@ body {
     align-items: center;
     gap: 8px;
     padding: 0 24px;
+    justify-content: center;
     color: #fff;
     font-weight: 700;
     font-size: 0.9rem;
     opacity: 0;
+    pointer-events: none;
     transition: opacity 0.15s ease;
+    direction: ltr;
 }
-
 .debt-card-bg.show {
     opacity: 1;
 }

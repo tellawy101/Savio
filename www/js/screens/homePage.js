@@ -389,14 +389,14 @@ function initHomePage() {
     // ------------------------------
     // تشغيل التطبيق
     // ------------------------------
-    applyBalanceVisibility(localStorage.getItem("balanceHidden") === "true");
+    applyBalanceVisibility(getBalanceHidden());
     renderMonthLabel();
     renderExpenses();
 
     if (toggleBalanceBtn) {
         toggleBalanceBtn.onclick = function () {
             const newHidden = !document.body.classList.contains("amounts-hidden");
-            localStorage.setItem("balanceHidden", newHidden);
+            saveBalanceHidden(newHidden);
             applyBalanceVisibility(newHidden);
         };
     }
@@ -637,7 +637,7 @@ if (budgetBtn && budgetModal) {
         const budgetValue = document.getElementById("budgetValue");
         if (!budgetValue) return;
 
-        const budget = Number(localStorage.getItem("savioBudget")) || 0;
+        const budget = getBudget();
 
         if (budget <= 0) {
     budgetValue.textContent = typeof t === "function" ? t("budget") : "Budget";
@@ -682,7 +682,7 @@ if (budgetBtn && budgetModal) {
                 return;
             }
 
-            localStorage.setItem("savioBudget", amt);
+            saveBudget(amt);
             budgetAmountInput.value = "";
 
             if (budgetModal) budgetModal.classList.remove("show");

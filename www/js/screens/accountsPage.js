@@ -122,7 +122,7 @@ function initAccountsPage() {
     await customAlert(t("enter_account_name_alert"));
     return;
 }
-            let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+            let accounts = getAccounts();
             let sameAccount = accounts.find(a => a.name.toLowerCase() === name.toLowerCase());
 
             if (sameAccount && (!editingAccount || sameAccount.name !== editingAccount.name)) {
@@ -138,7 +138,7 @@ function initAccountsPage() {
                 accounts.push({ name, description, icon, balance: Number(balance.replace(/,/g, "")) });
             }
 
-            localStorage.setItem("accounts", JSON.stringify(accounts));
+            saveAccounts(accounts);
 
             renderAccountsPage();
             showToast(t("account_added_toast"), "success");
@@ -157,7 +157,7 @@ function initAccountsPage() {
 
     if (editAccountBtn) {
         editAccountBtn.onclick = function () {
-            let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+            let accounts = getAccounts();
             editingAccount = accounts.find(a => a.name === selectedAccount);
             if (!editingAccount) return;
 
@@ -180,13 +180,12 @@ function initAccountsPage() {
 
     if (deleteAccountBtn) {
         deleteAccountBtn.onclick = function () {
-            let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
-            const deletedAccount = accounts.find(a => a.name === selectedAccount);
-            const deletedPosition = accounts.indexOf(deletedAccount);
+            let accounts = getAccounts();
+const deletedAccount = accounts.find(a => a.name === selectedAccount);
+const deletedPosition = accounts.indexOf(deletedAccount);
 
-            accounts = accounts.filter(a => a.name !== selectedAccount);
-            localStorage.setItem("accounts", JSON.stringify(accounts));
-
+accounts = accounts.filter(a => a.name !== selectedAccount);
+saveAccounts(accounts);
             renderAccountsPage();
             accountMenu.classList.remove("show");
 
@@ -224,7 +223,7 @@ function initAccountsPage() {
         const container = document.getElementById("accountsContainer");
         if (!container) return;
 
-        const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+        const accounts = getAccounts();
         const transactions = loadTransactions();
 
         const accountsWithBalance = accounts.map(function (account) {

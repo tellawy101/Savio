@@ -570,3 +570,19 @@ function closeModalOnBackdropClick(modal, onClose) {
         }
     };
 }
+// ==============================
+// Shared List Item (Icon + Title + Arrow)
+// دالة مشتركة لبناء شكل الكارت في ليستة الحسابات/التصنيفات
+// extraHTML اختياري: أي سطر إضافي زي الرصيد تحت الاسم
+// ==============================
+
+function renderListItemHTML(icon, name, extraHTML) {
+    return `
+    <div class="account-item-icon"><i data-lucide="${icon}"></i></div>
+    <div class="account-info">
+        <div class="account-name">${name}</div>
+        ${extraHTML || ""}
+    </div>
+    <div class="account-arrow">›</div>
+`;
+}

@@ -61,7 +61,7 @@ function applyTheme(theme) {
 // Load Saved Theme
 // ==============================
 
-const savedTheme = localStorage.getItem("theme") || "light";
+const savedTheme = getTheme();
 
 applyTheme(savedTheme);
 
@@ -72,9 +72,7 @@ applyTheme(savedTheme);
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const currentTheme =
-        localStorage.getItem("theme") || "light";
-
+    const currentTheme = getTheme();
     applyTheme(currentTheme);
 
 
@@ -89,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const newTheme =
                 this.checked ? "dark" : "light";
 
-            localStorage.setItem("theme", newTheme);
+            saveTheme(newTheme);
 
             applyTheme(newTheme);
 

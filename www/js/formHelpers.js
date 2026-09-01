@@ -94,7 +94,7 @@ function fixScrollOnFocusOut() {
 
 // بتفعّل الوضع الليلي المحفوظ فور تحميل الصفحة (لأي صفحة معندهاش زرار تبديل ثيم بنفسها)
 function applyStoredTheme() {
-    if (localStorage.getItem("theme") === "dark") {
+    if (getTheme() === "dark") {
         document.body.classList.add("dark");
     }
 }

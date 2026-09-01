@@ -112,3 +112,96 @@ function formatCurrencyHTMLStats(amount) {
     
     return `<span class="stats-stat-currency">${currency}</span> <span class="stats-stat-value">${value}</span>`;
 }
+// ==============================
+// Accounts
+// ==============================
+
+const ACCOUNTS_KEY = "accounts";
+
+// بترجع كل الحسابات المخزّنة
+function getAccounts() {
+    return JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || [];
+}
+
+// بتحفظ كل الحسابات
+function saveAccounts(accounts) {
+    localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+}
+const THEME_KEY = "theme";
+
+function getTheme() {
+    return localStorage.getItem(THEME_KEY) || "light";
+}
+
+function saveTheme(theme) {
+    localStorage.setItem(THEME_KEY, theme);
+}
+// ==============================
+// Categories
+// ==============================
+
+const CATEGORIES_KEY = "categories";
+const CUSTOM_CATEGORY_ICONS_KEY = "customCategoryIcons";
+
+function getCategories() {
+    return JSON.parse(localStorage.getItem(CATEGORIES_KEY)) || [];
+}
+
+function saveCategories(categories) {
+    localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
+}
+
+function getCustomCategoryIcons() {
+    return JSON.parse(localStorage.getItem(CUSTOM_CATEGORY_ICONS_KEY)) || [];
+}
+
+function saveCustomCategoryIcons(icons) {
+    localStorage.setItem(CUSTOM_CATEGORY_ICONS_KEY, JSON.stringify(icons));
+}
+// ==============================
+// Balance Visibility
+// ==============================
+
+const BALANCE_HIDDEN_KEY = "balanceHidden";
+
+function getBalanceHidden() {
+    return localStorage.getItem(BALANCE_HIDDEN_KEY) === "true";
+}
+
+function saveBalanceHidden(hidden) {
+    localStorage.setItem(BALANCE_HIDDEN_KEY, hidden);
+}
+// ==============================
+// Budget
+// ==============================
+
+const BUDGET_KEY = "savioBudget";
+
+function getBudget() {
+    return Number(localStorage.getItem(BUDGET_KEY)) || 0;
+}
+
+function saveBudget(amount) {
+    localStorage.setItem(BUDGET_KEY, amount);
+}
+// ==============================
+// Debts
+// ==============================
+
+const DEBTS_KEY = "debts";
+
+function getDebts() {
+    return JSON.parse(localStorage.getItem(DEBTS_KEY)) || [];
+}
+
+function saveDebts(debts) {
+    localStorage.setItem(DEBTS_KEY, JSON.stringify(debts));
+}
+// ==============================
+// Backup (Export / Import)
+// ==============================
+
+const BACKUP_KEYS = [
+    STORAGE_KEY, ACCOUNTS_KEY, CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY,
+    DEBTS_KEY, BUDGET_KEY, THEME_KEY, LANGUAGE_KEY, CURRENCY_KEY, BALANCE_HIDDEN_KEY
+];

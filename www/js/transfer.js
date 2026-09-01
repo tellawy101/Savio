@@ -15,7 +15,7 @@ const swapAccountsBtn = document.getElementById("swapAccountsBtn");
 initBackButton(backBtn);
 
 setupCommonFormPage();
-const existingAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
+const existingAccounts = getAccounts();
 
 if (existingAccounts.length < 2 && initialTab === "transfer") {
     showNoAccountsModal(existingAccounts.length);

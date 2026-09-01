@@ -47,7 +47,7 @@ function applyBalanceVisibility(hidden) {
 // Load Saved State
 // ==============================
 
-const savedBalanceHidden = localStorage.getItem("balanceHidden") === "true";
+const savedBalanceHidden = getBalanceHidden();
 
 applyBalanceVisibility(savedBalanceHidden);
 
@@ -58,8 +58,7 @@ applyBalanceVisibility(savedBalanceHidden);
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const currentHidden =
-        localStorage.getItem("balanceHidden") === "true";
+    const currentHidden = getBalanceHidden();
 
     applyBalanceVisibility(currentHidden);
 
@@ -75,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const isHidden = document.body.classList.contains("amounts-hidden");
             const newHidden = !isHidden;
 
-            localStorage.setItem("balanceHidden", newHidden);
+            saveBalanceHidden(newHidden);
 
             applyBalanceVisibility(newHidden);
 

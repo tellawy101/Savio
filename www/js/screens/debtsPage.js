@@ -66,7 +66,7 @@ function initDebtsPage() {
     // ------------------------------
     // Storage
     // ------------------------------
-    let debts = JSON.parse(localStorage.getItem("debts")) || [];
+    let debts = getDebts();
 
     // ------------------------------
     // Modals
@@ -157,8 +157,7 @@ function initDebtsPage() {
             };
 
             debts.push(debt);
-            localStorage.setItem("debts", JSON.stringify(debts));
-
+saveDebts(debts);
             renderDebts();
             clearForm();
             debtModal.classList.remove("show");
@@ -196,8 +195,7 @@ function initDebtsPage() {
             currentPayDebt.remaining -= payment;
             currentPayDebt.status = currentPayDebt.remaining === 0 ? "paid" : "open";
 
-            localStorage.setItem("debts", JSON.stringify(debts));
-
+saveDebts(debts);
             const transactions = loadTransactions();
 
             transactions.push({
@@ -257,8 +255,7 @@ if (!amount || amount <= 0) {
             editingDebt.remaining = Math.max(0, editingDebt.amount - editingDebt.paid);
             editingDebt.status = editingDebt.remaining === 0 ? "paid" : "open";
 
-            localStorage.setItem("debts", JSON.stringify(debts));
-
+saveDebts(debts);
             renderDebts();
             editDebtModal.classList.remove("show");
             editingDebt = null;
@@ -305,49 +302,46 @@ if (!amount || amount <= 0) {
             wrapper.className = "debt-card-wrapper";
 
             wrapper.innerHTML = `
-                <div class="debt-card-bg bg-delete">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-2 14H7L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
-                    Delete
-                </div>
-                <div class="debt-card-bg bg-edit">
-                    Edit
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                </div>
+    <div class="debt-card-bg bg-delete">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-2 14H7L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+    </div>
+    <div class="debt-card-bg bg-edit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+    </div>
 
-                <div class="debt-card">
+    <div class="debt-card">
 
-                    <div class="debt-card-header">
-                        <h3 class="debt-person-name">${debt.person}</h3>
-                        <span class="debt-badge ${isSettled ? "settled" : debt.type}">
-                            ${isSettled ? "Settled" : (debt.type === "receivable" ? "Owed to You" : "You Owe")}
-                        </span>
-                    </div>
+        <div class="debt-card-header">
+            <h3 class="debt-person-name">${debt.person}</h3>
+            <span class="debt-badge ${isSettled ? "settled" : debt.type}">
+                ${isSettled ? "Settled" : (debt.type === "receivable" ? "Owed to You" : "You Owe")}
+            </span>
+        </div>
 
-                    <div class="debt-card-main-row">
-                        <div class="debt-card-details">
-                            ${debt.dueDate || "No due date"}
-                        </div>
+        <div class="debt-card-main-row">
+            <div class="debt-card-details">
+                ${debt.dueDate || "No due date"}
+            </div>
 
-                        <div class="debt-card-amount">
-                            ${debt.type === "receivable" ? "+" : "-"} EGP ${Number(debt.remaining).toLocaleString("en-US")}
-                        </div>
-                    </div>
+            <div class="debt-card-amount">
+                ${debt.type === "receivable" ? "+" : "-"} EGP ${Number(debt.remaining).toLocaleString("en-US")}
+            </div>
+        </div>
 
-                    <div class="debt-card-main-row">
-                        ${
-                            debt.paid > 0
-                            ? `<span class="debt-paid-note">Paid EGP ${Number(debt.paid).toLocaleString("en-US")}</span>`
-                            : `<span></span>`
-                        }
-                        ${
-                            !isSettled
-                            ? `<button class="debt-card-pay-btn">Pay</button>`
-                            : ``
-                        }
-                    </div>
-                </div>
-            `;
-
+        <div class="debt-card-main-row">
+            ${
+                debt.paid > 0
+                ? `<span class="debt-paid-note">Paid EGP ${Number(debt.paid).toLocaleString("en-US")}</span>`
+                : `<span></span>`
+            }
+            ${
+                !isSettled
+                ? `<button class="debt-card-pay-btn">Pay</button>`
+                : ``
+            }
+        </div>
+    </div>
+`;
             const card = wrapper.querySelector(".debt-card");
             const bgDelete = wrapper.querySelector(".bg-delete");
             const bgEdit = wrapper.querySelector(".bg-edit");
@@ -359,7 +353,7 @@ if (!amount || amount <= 0) {
                     currentPayDebt = debt;
                     payAmount.value = "";
 
-                    const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+                    const accounts = getAccounts();
 
                     payAccount.innerHTML = `<option value="">${t("select_account")}</option>` +
                         accounts.map(acc => `<option value="${acc.name}">${acc.name}</option>`).join("");
@@ -368,9 +362,63 @@ if (!amount || amount <= 0) {
                 };
             }
 
-            let startX = 0;
+            async function deleteThisDebt() {
+                const confirmed = await customConfirm(
+                    typeof t === "function" ? t("debts_delete_confirm") : "Are you sure you want to delete this debt?",
+                    { danger: true }
+                );
+
+                if (!confirmed) return;
+
+                const deletedPosition = debts.indexOf(debt);
+
+                debts = debts.filter(d => d.id !== debt.id);
+                saveDebts(debts);
+                renderDebts();
+
+                showUndoToast(
+                    typeof t === "function" ? t("debts_deleted_toast") : "Debt Deleted",
+                    function () {
+                        const insertAt = Math.min(deletedPosition, debts.length);
+                        debts.splice(insertAt, 0, debt);
+                        saveDebts(debts);
+                        renderDebts();
+                    }
+                );
+            }
+
+            function editThisDebt() {
+                editingDebt = debt;
+
+                editDebtPerson.value = debt.person;
+                editDebtAmount.value = debt.amount;
+                editDebtDueDate.value = debt.dueDate || "";
+                editDebtNotes.value = debt.notes || "";
+
+                editDebtTypeButtons.forEach(btn => {
+                    btn.classList.remove("active");
+                    if (btn.dataset.type === debt.type) {
+                        btn.classList.add("active");
+                    }
+                });
+
+                editDebtModal.classList.add("show");
+            }
+
+            bgDelete.addEventListener("click", function (e) {
+                e.stopPropagation();
+                deleteThisDebt();
+            });
+
+            bgEdit.addEventListener("click", function (e) {
+                e.stopPropagation();
+                editThisDebt();
+            });
+
+let startX = 0;
             let currentX = 0;
             let dragging = false;
+            let isOpen = false;
 
             card.addEventListener("touchstart", function (e) {
                 startX = e.touches[0].clientX;
@@ -381,68 +429,68 @@ if (!amount || amount <= 0) {
             card.addEventListener("touchmove", function (e) {
                 if (!dragging) return;
                 currentX = e.touches[0].clientX - startX;
+
+                if (currentX > 60) currentX = 60;
+if (currentX < -60) currentX = -60;
+
                 card.style.transform = `translateX(${currentX}px)`;
 
                 if (currentX > 0) {
-                    bgDelete.classList.add("show");
-                    bgEdit.classList.remove("show");
-                } else if (currentX < 0) {
-                    bgEdit.classList.add("show");
-                    bgDelete.classList.remove("show");
-                }
+    bgDelete.style.opacity = currentX / 60;
+    bgDelete.style.pointerEvents = "auto";
+    bgEdit.style.opacity = 0;
+    bgEdit.style.pointerEvents = "none";
+} else {
+    bgEdit.style.opacity = Math.abs(currentX) / 60;
+    bgEdit.style.pointerEvents = "auto";
+    bgDelete.style.opacity = 0;
+    bgDelete.style.pointerEvents = "none";
+}
             });
 
-            card.addEventListener("touchend", async function () {
+            card.addEventListener("touchend", function () {
                 dragging = false;
                 card.style.transition = "transform 0.25s ease";
 
-                if (currentX > 80) {
-                    const confirmed = await customConfirm(
-                        typeof t === "function" ? t("debts_delete_confirm") : "Are you sure you want to delete this debt?",
-                        { danger: true }
-                    );
+                if (currentX > 40) {
+    card.style.transform = "translateX(60px)";
+    bgDelete.style.opacity = 1;
+    bgDelete.style.pointerEvents = "auto";
+    bgEdit.style.opacity = 0;
+    bgEdit.style.pointerEvents = "none";
+    isOpen = true;
+} else if (currentX < -40) {
+    card.style.transform = "translateX(-60px)";
+    bgEdit.style.opacity = 1;
+    bgEdit.style.pointerEvents = "auto";
+    bgDelete.style.opacity = 0;
+    bgDelete.style.pointerEvents = "none";
+    isOpen = true;
+}
+else {
+    card.style.transform = "translateX(0)";
+    bgDelete.style.opacity = 0;
+    bgDelete.style.pointerEvents = "none";
+    bgEdit.style.opacity = 0;
+    bgEdit.style.pointerEvents = "none";
+    isOpen = false;
+}
 
-                    if (confirmed) { const deletedPosition = debts.indexOf(debt);
-
-                        debts = debts.filter(d => d.id !== debt.id);
-                        localStorage.setItem("debts", JSON.stringify(debts));
-                        renderDebts();
-
-                        showUndoToast(
-                            typeof t === "function" ? t("debts_deleted_toast") : "Debt Deleted",
-                            function () {
-                                const insertAt = Math.min(deletedPosition, debts.length);
-                                debts.splice(insertAt, 0, debt);
-                                localStorage.setItem("debts", JSON.stringify(debts));
-                                renderDebts();
-                            }
-                        );
-
-                        return;
-                    }
-
-                } else if (currentX < -80) {
-                    editingDebt = debt;
-
-                    editDebtPerson.value = debt.person;
-                    editDebtAmount.value = debt.amount;
-                    editDebtDueDate.value = debt.dueDate || "";
-                    editDebtNotes.value = debt.notes || "";
-
-                    editDebtTypeButtons.forEach(btn => {
-                        btn.classList.remove("active");
-                        if (btn.dataset.type === debt.type) {
-                            btn.classList.add("active");
-                        }
-                    });
-
-                    editDebtModal.classList.add("show");
-                }
-
-                card.style.transform = "translateX(0)";
                 currentX = 0;
-                bgDelete.classList.remove("show");
-                bgEdit.classList.remove("show");
+            });
+
+            card.addEventListener("click", function (e) {
+                if (isOpen) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    card.style.transition = "transform 0.25s ease";
+                    card.style.transform = "translateX(0)";
+                    bgDelete.style.opacity = 0;
+                    bgDelete.style.pointerEvents = "none";
+                    bgEdit.style.opacity = 0;
+                    bgEdit.style.pointerEvents = "none";
+                    isOpen = false;
+                }
             });
 
             debtsList.appendChild(wrapper);

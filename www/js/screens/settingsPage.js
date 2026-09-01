@@ -16,12 +16,12 @@ function initSettingsPage() {
     const darkModeToggle = document.getElementById("darkModeToggle");
 
     if (darkModeToggle) {
-        const currentTheme = localStorage.getItem("theme") || "light";
-        darkModeToggle.checked = currentTheme === "dark";
-
-        darkModeToggle.addEventListener("change", function () {
-            const newTheme = this.checked ? "dark" : "light";
-            localStorage.setItem("theme", newTheme);
+    const currentTheme = getTheme();
+    darkModeToggle.checked = currentTheme === "dark";
+    
+    darkModeToggle.addEventListener("change", function() {
+                const newTheme = this.checked ? "dark" : "light";
+                saveTheme(newTheme);
             if (typeof applyTheme === "function") {
                 applyTheme(newTheme);
             }
@@ -91,12 +91,7 @@ function initSettingsPage() {
                     const confirmClear = await customConfirm(t("settings_clear_confirm"), { danger: true });
                     if (!confirmClear) return;
 
-            localStorage.removeItem("transactions");
-            localStorage.removeItem("accounts");
-            localStorage.removeItem("categories");
-            localStorage.removeItem("customCategoryIcons");
-            localStorage.removeItem("debts");
-            localStorage.removeItem("savioBudget");
+            BACKUP_KEYS.forEach(key => localStorage.removeItem(key));
 
             await customAlert(t("settings_clear_done"));
 
@@ -140,12 +135,6 @@ window.location.href = "index.html";
         }
 
         exportBtn.addEventListener("click", async function () {
-
-            const BACKUP_KEYS = [
-                "transactions", "accounts", "categories", "customCategoryIcons",
-                "debts", "savioBudget", "theme", "language", "currency", "balanceHidden"
-            ];
-
             const backup = {};
             BACKUP_KEYS.forEach(function (key) {
                 const value = localStorage.getItem(key);
@@ -232,11 +221,7 @@ window.location.href = "index.html";
             });
         }
 
-        const BACKUP_KEYS = [
-            "transactions", "accounts", "categories", "customCategoryIcons",
-            "debts", "savioBudget", "theme", "language", "currency", "balanceHidden"
-        ];
-
+        
         importBtn.addEventListener("click", function () {
             importManualText.value = "";
             importManualModal.classList.add("show");

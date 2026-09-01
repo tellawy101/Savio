@@ -67,7 +67,7 @@ window.renderAccounts = function() {
     
     accountsList.innerHTML = "";
     
-let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+let accounts = getAccounts();
     let transactions = typeof loadTransactions === "function" ? loadTransactions() : [];
 
     // لو الصفحة الحالية (زي Transfer) محددة دالة getDisabledAccountName
@@ -97,17 +97,11 @@ let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
 
 item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
         
-        item.innerHTML = `
-    <div class="account-item-icon"><i data-lucide="${account.icon}"></i></div>
-
-    <div class="account-info">
-        <div class="account-name">${account.name}</div>
-        <div class="account-balance">
-            ${currentBalance.toLocaleString()} EGP
-        </div>
-    </div>
-    <div class="account-arrow">›</div>
-`;
+        item.innerHTML = renderListItemHTML(
+    account.icon,
+    account.name,
+    `<div class="account-balance">${currentBalance.toLocaleString()} EGP</div>`
+);
         let pressTimer;
         
         item.addEventListener("touchstart", function() {
@@ -162,7 +156,7 @@ if (name === "") {
     return;
 }
         
-        let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+        let accounts = getAccounts();
         
         let sameAccount = accounts.find(account =>
             account.name.toLowerCase() === name.toLowerCase()
@@ -196,7 +190,7 @@ if (name === "") {
 });
 }
 
-localStorage.setItem("accounts", JSON.stringify(accounts));
+saveAccounts(accounts);
         
       const field = getAccountFieldEl();
 if (field) {
@@ -227,7 +221,7 @@ if (window.lucide) lucide.createIcons();
 if (editAccountBtn) {
     editAccountBtn.onclick = function() {
         
-        let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+        let accounts = getAccounts();
         
         editingAccount = accounts.find(a => a.name === selectedAccount);
         
@@ -257,14 +251,14 @@ if (window.lucide) lucide.createIcons();
 if (deleteAccountBtn) {
     deleteAccountBtn.onclick = function() {
         
-        let accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+        let accounts = getAccounts();
         
         const deletedAccount = accounts.find(account => account.name === selectedAccount);
         const deletedPosition = accounts.indexOf(deletedAccount);
         
         accounts = accounts.filter(account => account.name !== selectedAccount);
         
-        localStorage.setItem("accounts", JSON.stringify(accounts));
+        saveAccounts(accounts);
         
         renderAccounts();
         
@@ -275,10 +269,10 @@ if (deleteAccountBtn) {
             showUndoToast(
                 typeof t === "function" ? t("account_deleted_toast") : "Account Deleted",
                 function() {
-                    let currentAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
+                    let currentAccounts = getAccounts();
                     const insertAt = Math.min(deletedPosition, currentAccounts.length);
                     currentAccounts.splice(insertAt, 0, deletedAccount);
-                    localStorage.setItem("accounts", JSON.stringify(currentAccounts));
+                    saveAccounts(currentAccounts);
                     renderAccounts();
                     notifyFormFieldChanged();
                 }
