@@ -58,8 +58,14 @@ setupCommonFormPage();
         amountEl.value = formatted;
         resizeAmountInput(amountEl, formatted);
 
-        accountEl.textContent = entry.account || t("select_account");
-if (entry.account) accountEl.removeAttribute("data-i18n");
+        if (entry.account) {
+    const matchedAccount = getAccounts().find(acc => acc.name === entry.account);
+    const accIcon = matchedAccount ? matchedAccount.icon : "credit-card";
+    accountEl.innerHTML = `<i data-lucide="${accIcon}"></i> ${entry.account}`;
+    accountEl.removeAttribute("data-i18n");
+} else {
+    accountEl.textContent = t("select_account");
+}
 
 categoryEl.innerHTML = entry.categoryIcon ?
     `<i data-lucide="${entry.categoryIcon}"></i> ${entry.category}` :

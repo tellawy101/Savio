@@ -242,16 +242,23 @@ body.has-scroll {
     appearance: none;
     -webkit-appearance: none;
 
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
     border: none;
     outline: none;
     background: transparent;
 
     color: #111827;
     font-size: 16px;
-
-    padding-right: 24px;
 }
 
+.category-select svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
 .category-select option {
     background: #1e1e1e;
     color: #fff;
@@ -320,10 +327,18 @@ body.has-scroll {
 
 .account-select {
     flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     color: #111827;
     font-size: 16px;
 }
 
+.account-select svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
 .account-arrow {
     font-size: 20px;
     color: #999;
