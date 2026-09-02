@@ -270,17 +270,30 @@ transform: translateY(-10px);
     color: #9ca3af;
 }
 
-.balance-grid .stat{
-    background: rgba(255,255,255,.15);
-    border-radius: 15px;
+.balance-grid .stat {
+    background: transparent;
+    border-radius: 0;
     padding: 10px;
     text-align: center;
-    backdrop-filter: blur(10px);
     flex: 1;
+    position: relative;
+    min-width: 0;
 }
 
-.balance-grid .stat span{
-    font-size: 22px;
+.balance-grid .stat+.stat::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 85%;
+    background: rgba(255, 255, 255, .35);
+}
+
+.balance-grid .stat svg {
+    width: 18px;
+    height: 18px;
 }
 
 .balance-grid .stat h4{

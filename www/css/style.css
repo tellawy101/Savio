@@ -731,34 +731,31 @@ svg.lucide {
 
 .swipe-action {
     position: absolute;
-    top: 0;
-    bottom: 0;
-
-    width: 70px;
-
+    inset: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
+    padding: 0 24px;
 
     color: #fff;
     font-size: 24px;
     font-weight: bold;
     opacity: 0;
     transition: opacity .2s ease;
-    pointer-events: auto;
+    pointer-events: none;
     z-index: 5;
+    border-radius: 18px;
+    direction: ltr;
 }
 
 .swipe-delete {
-    left: 0;
+    justify-content: flex-start;
     background: #E53935;
-    border-radius: 18px 0 0 18px;
 }
 
 .swipe-edit {
-    right: 0;
+    justify-content: flex-end;
     background: #1976D2;
-    border-radius: 0 18px 18px 0;
 }
 .dark .expense-desc {
     color: #fff;

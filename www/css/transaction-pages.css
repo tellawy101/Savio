@@ -191,6 +191,8 @@ body.dark.expense-page {
 }
 
 .expense-main {
+    position: relative;
+    z-index: 10;
     display: flex;
     align-items: center;
     width: 100%;

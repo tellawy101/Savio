@@ -420,24 +420,28 @@ function initHomePage() {
     if (searchInput) searchInput.oninput = renderExpenses;
 
     document.addEventListener("touchstart", (e) => {
-
-        document.querySelectorAll(".expense-main").forEach(card => {
-
-            if (!card.contains(e.target)) {
-
-                card.style.transform = "translateX(0px)";
-
-                const swipe = card.parentElement;
-
-                swipe.querySelector(".swipe-delete").style.opacity = 0;
-                swipe.querySelector(".swipe-edit").style.opacity = 0;
-
-            }
-
-        });
-
+    
+    document.querySelectorAll(".expense-main").forEach(card => {
+        
+        const swipe = card.parentElement;
+        
+        if (!swipe.contains(e.target)) {
+            
+            card.style.transform = "translateX(0px)";
+            
+            const deleteBtn = swipe.querySelector(".swipe-delete");
+            const editBtn = swipe.querySelector(".swipe-edit");
+            
+            deleteBtn.style.opacity = 0;
+            deleteBtn.style.pointerEvents = "none";
+            editBtn.style.opacity = 0;
+            editBtn.style.pointerEvents = "none";
+            
+        }
+        
     });
-
+    
+});
     if (addMenuBtn) {
     addMenuBtn.onclick = function() {
         window.pendingAddTransactionTab = "expense";
