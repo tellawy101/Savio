@@ -317,16 +317,22 @@ function initHomePage() {
 
                 card.style.transition = "transform .25s ease";
                 card.style.transform = `translateX(${offsetX}px)`;
-
+                
                 if (offsetX === 70) {
                     revealOnSwipeRight.style.opacity = 1;
+                    revealOnSwipeRight.style.pointerEvents = "auto";
                     revealOnSwipeLeft.style.opacity = 0;
+                    revealOnSwipeLeft.style.pointerEvents = "none";
                 } else if (offsetX === -70) {
                     revealOnSwipeLeft.style.opacity = 1;
+                    revealOnSwipeLeft.style.pointerEvents = "auto";
                     revealOnSwipeRight.style.opacity = 0;
+                    revealOnSwipeRight.style.pointerEvents = "none";
                 } else {
                     revealOnSwipeRight.style.opacity = 0;
+                    revealOnSwipeRight.style.pointerEvents = "none";
                     revealOnSwipeLeft.style.opacity = 0;
+                    revealOnSwipeLeft.style.pointerEvents = "none";
                 }
                 currentX = 0;
 

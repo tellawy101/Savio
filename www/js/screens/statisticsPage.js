@@ -93,22 +93,10 @@ function initStatisticsPage() {
     // ------------------------------
     // IGNORE TRANSFERS
     // ------------------------------
-    function isTransfer(transaction) {
-
-        const text = [
-            transaction.type,
-            transaction.category,
-            transaction.description
-        ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase();
-
-        return (
-            text.includes("transfer") ||
-            text.includes("تحويل")
-        );
-    }
+    // بعد
+function isTransfer(transaction) {
+    return transaction.isTransfer === true;
+}
 
 // ------------------------------
     // SUMMARY
@@ -587,30 +575,43 @@ if (balanceElement) {
         }
     }
 
-    // ------------------------------
-    // PERIOD BUTTONS
-    // ------------------------------
-    document.querySelectorAll(".period-btn")
-        .forEach(button => {
+  // بعد
+// ------------------------------
+// PERIOD BUTTONS
+// ------------------------------
+const periodIndicator = document.getElementById("periodIndicator");
 
-            button.onclick = function () {
+function movePeriodIndicator(button) {
+    if (!periodIndicator || !button) return;
+    periodIndicator.style.left = button.offsetLeft + "px";
+    periodIndicator.style.width = button.offsetWidth + "px";
+}
 
-                document
-                    .querySelectorAll(".period-btn")
-                    .forEach(btn =>
-                        btn.classList.remove("active")
-                    );
+document.querySelectorAll(".period-btn")
+    .forEach(button => {
+        
+        button.onclick = function() {
+            
+            document
+                .querySelectorAll(".period-btn")
+                .forEach(btn =>
+                    btn.classList.remove("active")
+                );
+            
+            button.classList.add("active");
+            
+            movePeriodIndicator(button);
+            
+            currentPeriod =
+                button.dataset.period;
+            
+            updateStatistics();
+            
+        };
+        
+    });
 
-                button.classList.add("active");
-
-                currentPeriod =
-                    button.dataset.period;
-
-                updateStatistics();
-
-            };
-
-        });
+movePeriodIndicator(document.querySelector(".period-btn.active"));
 
     // ------------------------------
     // Initialize
