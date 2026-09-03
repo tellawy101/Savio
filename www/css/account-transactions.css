@@ -161,9 +161,8 @@ position: relative;
 }
 
 
-.account-icon {
+.acc-header-icon {
     font-size: 48px;
-
     line-height: 1;
 }
 
@@ -570,7 +569,7 @@ max-width: 140px;
     background: rgba(255, 255, 255, 0.35);
 }
 
-.account-icon {
+.acc-header-icon {
     order: -1;
 
     font-size: 16px;
@@ -587,7 +586,7 @@ max-width: 140px;
     color: #ffffff;
 }
 
-.account-icon svg {
+.acc-header-icon svg {
     width: 18px;
     height: 18px;
 

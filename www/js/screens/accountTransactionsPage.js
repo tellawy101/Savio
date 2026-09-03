@@ -25,7 +25,7 @@ function initAccountTransactionsPage() {
     }
 
     const accountNameEl = document.getElementById("accountName");
-    const accountIconEl = document.querySelector(".account-icon");
+    const accountIconEl = document.querySelector(".acc-header-icon");
     const transactionTypeEl = document.getElementById("transactionType");
 
     const totalLabelEl = document.getElementById("totalLabel");
