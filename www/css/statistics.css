@@ -31,14 +31,12 @@
    PERIOD SELECTOR
 ========================================= */
 
-
-/* بعد */
 .period-selector {
     display: flex;
     gap: 8px;
 
     width: 100%;
-    padding: 4px;
+    padding: 8px;
 
     margin-bottom: 20px;
 
@@ -51,38 +49,43 @@
 }
 .period-indicator {
     position: absolute;
-    top: 4px;
-    bottom: 4px;
+    top: 8px;
+    bottom: 8px;
     border-radius: 8px;
     background: #0F766E;
     transition: left 0.3s ease, width 0.3s ease;
     z-index: 0;
 }
 
+/* form-page... يعني css/statistics.css سطر 62 */
 .period-btn {
     flex: 1;
     width: auto;
-    
+
     height: 34px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+
     border: 0;
     border-radius: 10px;
-    
+
     background: transparent;
     color: #6B7280;
-    
+
     font-size: 14px;
     font-weight: 600;
-    line-height: 34px;
-    
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
     position: relative;
     z-index: 1;
     transition: color 0.25s ease;
 }
+
 .period-btn.active {
     color: #FFFFFF;
 }
