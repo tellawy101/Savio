@@ -780,10 +780,6 @@ svg.lucide {
    Animated Bottom Navbar
 ========================= */
 
-/* ===== Bottom Navbar Animation ===== */
-
-/* ===== Bottom Navbar Animation ===== */
-
 .bottom-nav .nav-item {
     position: relative;
     display: flex;
@@ -831,16 +827,6 @@ svg.lucide {
         transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
         visibility 0s;
 }
-
-    transition:
-        opacity 0.25s ease,
-        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-        visibility 0s;
-}
-/* =========================
-   BUDGET BUTTON
-========================= */
-
 /* =========================
    BUDGET BUTTON
 ========================= */

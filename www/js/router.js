@@ -96,7 +96,7 @@ if (pageName !== "add-transaction") {
 }
 
 app.innerHTML = html;
-        if (window.lucide) lucide.createIcons();
+        if (window.lucide) lucide.createIcons({ root: app });
         const navPlaceholder = document.getElementById("nav-placeholder");
 if (navPlaceholder && typeof renderBottomNav === "function") {
     if (pageName === "add-transaction") {
@@ -124,7 +124,7 @@ if (navPlaceholder && typeof renderBottomNav === "function") {
                 } else {
                     existingNav.appendChild(fabBtn);
                 }
-                if (window.lucide) lucide.createIcons();
+                if (window.lucide) lucide.createIcons({ root: fabBtn });
             } else if (!isHome && fabBtn) {
                 fabBtn.remove();
             }
