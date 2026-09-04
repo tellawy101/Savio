@@ -102,8 +102,37 @@ if (navPlaceholder && typeof renderBottomNav === "function") {
     if (pageName === "add-transaction") {
         navPlaceholder.innerHTML = "";
     } else {
-        navPlaceholder.innerHTML = renderBottomNav(pageName);
-        if (typeof setupBottomNav === "function") setupBottomNav("");
+        const existingNav = navPlaceholder.querySelector(".bottom-nav");
+        if (existingNav) {
+            // الـ nav موجود بالفعل - بدّل كلاس active بس عشان الـ transition يشتغل
+            existingNav.querySelectorAll(".nav-item[data-page]").forEach(function(btn) {
+                btn.classList.toggle("active", btn.dataset.page === pageName);
+            });
+            
+            // إظهار/إخفاء زرار الـ FAB حسب لو دخلنا/خرجنا من الرئيسية
+            const isHome = pageName === "home";
+            existingNav.classList.toggle("no-fab", !isHome);
+            let fabBtn = existingNav.querySelector("#addMenuBtn");
+            if (isHome && !fabBtn) {
+                fabBtn = document.createElement("button");
+                fabBtn.id = "addMenuBtn";
+                fabBtn.className = "fab-nav";
+                fabBtn.innerHTML = '<i data-lucide="plus"></i>';
+                const accountsBtn = existingNav.querySelector('.nav-item[data-page="accounts"]');
+                if (accountsBtn) {
+                    existingNav.insertBefore(fabBtn, accountsBtn);
+                } else {
+                    existingNav.appendChild(fabBtn);
+                }
+                if (window.lucide) lucide.createIcons();
+            } else if (!isHome && fabBtn) {
+                fabBtn.remove();
+            }
+        } else {
+            // أول تحميل للـ nav - ابنيه زي ما هو
+            navPlaceholder.innerHTML = renderBottomNav(pageName);
+            if (typeof setupBottomNav === "function") setupBottomNav("");
+        }
     }
 }
 route.init();
