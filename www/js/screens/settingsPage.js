@@ -157,22 +157,7 @@ window.location.href = "index.html";
             localStorage.setItem("savio_last_backup_time", new Date().toISOString());
             if (typeof updateLastBackupBadge === "function") updateLastBackupBadge();
 
-// حفظ نسخة مباشرة في مجلد Documents (تظهر في تطبيق Files العادي)
-            try {
-                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem) {
-                    const { Filesystem, Directory } = window.Capacitor.Plugins;
-                    await Filesystem.writeFile({
-                        path: fileName,
-                        data: jsonText,
-                        directory: Directory.Documents,
-                        encoding: 'utf8'
-                    });
-                    showToast("تم حفظ نسخة في مجلد Documents", "success");
-                }
-            } catch (localSaveErr) {
-                console.warn("Local save error:", localSaveErr);
-            }
-
+            
             // 1. الوضع الأصلي داخل تطبيق APK (Capacitor Native)
             try {
                 if (window.Capacitor && window.Capacitor.Plugins) {
