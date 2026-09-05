@@ -311,17 +311,12 @@ body.dark .settings-select option {
 
 .import-close-btn {
     width: 100%;
-    background: transparent;
-    color: #0F766E;
-    border: 1.5px solid #0F766E;
+    background: #0F766E;
+    color: #fff;
+    border: none;
     font-weight: 600;
     padding: 12px;
     border-radius: 10px;
-}
-
-.import-close-btn:hover {
-    background: rgba(15, 118, 110, 0.08);
-    opacity: 1;
 }
 
 /* Dark mode */
@@ -331,8 +326,7 @@ body.dark .import-modal-icon {
 
 body.dark .import-modal-icon i,
 body.dark .import-file-drop i,
-body.dark .import-file-drop span,
-body.dark .import-close-btn {
+body.dark .import-file-drop span {
     color: #4fd1c5;
 }
 
@@ -344,7 +338,206 @@ body.dark .import-file-drop {
     border-color: #4fd1c5;
     background: rgba(79, 209, 197, 0.06);
 }
+/* ==============================
+   Select Trigger Button (Language / Currency)
+============================== */
+.settings-select-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(15, 118, 110, 0.10);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0F766E;
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+    flex-shrink: 0;
+}
 
-body.dark .import-close-btn {
+.settings-select-trigger i {
+    width: 16px;
+    height: 16px;
+    color: #0F766E;
+}
+
+body.dark .settings-select-trigger {
+    background: rgba(79, 209, 197, 0.12);
+    color: #4fd1c5;
+}
+
+body.dark .settings-select-trigger i {
+    color: #4fd1c5;
+}
+
+/* ==============================
+   Picker Modal (Language / Currency)
+============================== */
+.picker-modal-content {
+    text-align: center;
+    padding: 28px 22px 22px;
+}
+
+.picker-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.picker-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid rgba(15, 118, 110, 0.15);
+    border-radius: 12px;
+    background: rgba(15, 118, 110, 0.04);
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    cursor: pointer;
+    text-align: start;
+}
+
+.picker-option .picker-check {
+    width: 18px;
+    height: 18px;
+    color: #0F766E;
+    opacity: 0;
+    transition: opacity .15s ease;
+}
+
+.picker-option.selected {
+    border-color: #0F766E;
+    background: rgba(15, 118, 110, 0.1);
+}
+
+.picker-option.selected .picker-check {
+    opacity: 1;
+}
+
+body.dark .picker-option {
+    background: #1f2937;
+    border-color: rgba(79, 209, 197, 0.15);
+    color: #fff;
+}
+
+body.dark .picker-option.selected {
     border-color: #4fd1c5;
+    background: rgba(79, 209, 197, 0.12);
+}
+
+body.dark .picker-option .picker-check {
+    color: #4fd1c5;
+}
+/* ==============================
+   Bottom Sheet Style (Language / Currency / About)
+============================== */
+#languagePickerModal,
+#currencyPickerModal,
+#aboutModal,
+#privacyModal {
+    align-items: flex-end;
+    padding-top: 0;
+}
+
+#languagePickerModal .modal-content,
+#currencyPickerModal .modal-content,
+#aboutModal .modal-content,
+#privacyModal .modal-content {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+    transform: translateY(100%);
+    transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+}
+
+#languagePickerModal.show .modal-content,
+#currencyPickerModal.show .modal-content,
+#aboutModal.show .modal-content,
+#privacyModal.show .modal-content {
+    transform: translateY(0);
+}
+/* ==============================
+   About Savio Modal
+============================== */
+.about-info-list {
+    background: rgba(15, 118, 110, 0.04);
+    border: 1.5px solid rgba(15, 118, 110, 0.15);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-top: 6px;
+    text-align: start;
+}
+
+.about-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.about-info-label {
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0.6;
+}
+
+.about-info-value {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.about-info-link .about-info-value {
+    color: #0F766E;
+}
+
+.about-info-divider {
+    height: 1px;
+    background: rgba(15, 118, 110, 0.12);
+    margin: 0 16px;
+}
+
+.about-version {
+    margin: 16px 0 0;
+    opacity: .5;
+    font-size: 12.5px;
+}
+
+body.dark .about-info-list {
+    background: rgba(79, 209, 197, 0.06);
+    border-color: rgba(79, 209, 197, 0.15);
+}
+
+body.dark .about-info-value {
+    color: #fff;
+}
+
+body.dark .about-info-link .about-info-value {
+    color: #4fd1c5;
+}
+
+body.dark .about-info-divider {
+    background: rgba(79, 209, 197, 0.12);
+}
+.about-whatsapp-value {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.about-whatsapp-icon {
+    width: 25px;
+    height: 25px;
+    color: #128C7E;
+    flex-shrink: 0;
 }

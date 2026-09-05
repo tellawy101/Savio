@@ -1203,4 +1203,7 @@ body.dark .stat {
 #toast .toast-undo-btn:hover {
     opacity: .8;
 }
-/* خط العدّاد التنازلي تحت التوست */
+/* منع سكرول الصفحة اللي ورا لما أي بوب أب يكون مفتوح */
+body:has(.modal.show) {
+    overflow: hidden;
+}

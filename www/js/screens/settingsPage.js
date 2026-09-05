@@ -31,32 +31,95 @@ const darkModeToggle = document.getElementById("darkModeToggle");
         });
     }
 
-    // ------------------------------
-    // العملة (Currency)
-    // ------------------------------
-    const currencySelect = document.getElementById("currencySelect");
+// ------------------------------
+// العملة (Currency)
+// ------------------------------
+const currencySelectBtn = document.getElementById("currencySelectBtn");
+const currencySelectedLabel = document.getElementById("currencySelectedLabel");
+const currencyPickerModal = document.getElementById("currencyPickerModal");
+const closeCurrencyPickerBtn = document.getElementById("closeCurrencyPickerBtn");
 
-    if (currencySelect) {
-        currencySelect.value = getCurrency();
-
-        currencySelect.addEventListener("change", function () {
-            setCurrency(this.value);
+function refreshCurrencyPicker() {
+    const current = getCurrency();
+    if (currencySelectedLabel) currencySelectedLabel.textContent = current;
+    if (currencyPickerModal) {
+        currencyPickerModal.querySelectorAll(".picker-option").forEach(function(opt) {
+            opt.classList.toggle("selected", opt.dataset.value === current);
         });
     }
+}
+refreshCurrencyPicker();
 
-    // ------------------------------
-    // اللغة (Language)
-    // ------------------------------
-    const languageSelect = document.getElementById("languageSelect");
-
-    if (languageSelect) {
-        languageSelect.value = getLanguage();
-
-        languageSelect.addEventListener("change", function () {
-            setLanguage(this.value);
+if (currencySelectBtn && currencyPickerModal) {
+    currencySelectBtn.addEventListener("click", function() {
+        refreshCurrencyPicker();
+        currencyPickerModal.classList.add("show");
+    });
+    
+    currencyPickerModal.querySelectorAll(".picker-option").forEach(function(opt) {
+        opt.addEventListener("click", function() {
+            setCurrency(opt.dataset.value);
+            refreshCurrencyPicker();
+            currencyPickerModal.classList.remove("show");
+        });
+    });
+    
+    if (closeCurrencyPickerBtn) {
+        closeCurrencyPickerBtn.addEventListener("click", function() {
+            currencyPickerModal.classList.remove("show");
         });
     }
+    
+    currencyPickerModal.addEventListener("click", function(e) {
+        if (e.target === currencyPickerModal) currencyPickerModal.classList.remove("show");
+    });
+}
 
+// ------------------------------
+// اللغة (Language)
+// ------------------------------
+const languageSelectBtn = document.getElementById("languageSelectBtn");
+const languageSelectedLabel = document.getElementById("languageSelectedLabel");
+const languagePickerModal = document.getElementById("languagePickerModal");
+const closeLanguagePickerBtn = document.getElementById("closeLanguagePickerBtn");
+
+function refreshLanguagePicker() {
+    const current = getLanguage();
+    if (languageSelectedLabel) {
+        languageSelectedLabel.textContent = current === "ar" ? "العربية" : "English";
+    }
+    if (languagePickerModal) {
+        languagePickerModal.querySelectorAll(".picker-option").forEach(function(opt) {
+            opt.classList.toggle("selected", opt.dataset.value === current);
+        });
+    }
+}
+refreshLanguagePicker();
+
+if (languageSelectBtn && languagePickerModal) {
+    languageSelectBtn.addEventListener("click", function() {
+        refreshLanguagePicker();
+        languagePickerModal.classList.add("show");
+    });
+    
+    languagePickerModal.querySelectorAll(".picker-option").forEach(function(opt) {
+        opt.addEventListener("click", function() {
+            setLanguage(opt.dataset.value);
+            refreshLanguagePicker();
+            languagePickerModal.classList.remove("show");
+        });
+    });
+    
+    if (closeLanguagePickerBtn) {
+        closeLanguagePickerBtn.addEventListener("click", function() {
+            languagePickerModal.classList.remove("show");
+        });
+    }
+    
+    languagePickerModal.addEventListener("click", function(e) {
+        if (e.target === languagePickerModal) languagePickerModal.classList.remove("show");
+    });
+}
     // ------------------------------
     // About Savio Modal
     // ------------------------------
@@ -83,6 +146,33 @@ const darkModeToggle = document.getElementById("darkModeToggle");
             }
         });
     }
+// ------------------------------
+    // Privacy Modal
+    // ------------------------------
+    const privacyBtn = document.getElementById("privacyBtn");
+    const privacyModal = document.getElementById("privacyModal");
+    const closePrivacyBtn = document.getElementById("closePrivacyBtn");
+
+    if (privacyBtn && privacyModal) {
+        privacyBtn.addEventListener("click", function () {
+            privacyModal.classList.add("show");
+        });
+    }
+
+    if (closePrivacyBtn && privacyModal) {
+        closePrivacyBtn.addEventListener("click", function () {
+            privacyModal.classList.remove("show");
+        });
+    }
+
+    if (privacyModal) {
+        privacyModal.addEventListener("click", function (e) {
+            if (e.target === privacyModal) {
+                privacyModal.classList.remove("show");
+            }
+        });
+    }
+
 
     // ------------------------------
     // Clear All Data
@@ -307,11 +397,12 @@ const importFileInput = document.getElementById("importFileInput");    const res
     }
 
     if (importBtn && importManualModal) {
-        importBtn.addEventListener("click", function () {
-            if (importFileInput) importFileInput.value = "";
-            importManualModal.classList.add("show");
-        });
-
+        importBtn.addEventListener("click", function() {
+    if (importFileInput) importFileInput.value = "";
+    const label = document.getElementById("importFileLabel");
+    if (label) label.textContent = t ? t("settings_import_choose_file") : "Tap to choose your backup file";
+    importManualModal.classList.add("show");
+});
         if (closeImportManualBtn) {
             closeImportManualBtn.onclick = function () { importManualModal.classList.remove("show"); };
         }
@@ -321,14 +412,16 @@ const importFileInput = document.getElementById("importFileInput");    const res
         });
 
         if (importFileInput) {
-            importFileInput.addEventListener("change", function () {
-                const file = importFileInput.files && importFileInput.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function () { processBackupJson(reader.result); };
-                reader.readAsText(file);
-            });
-        }
+    importFileInput.addEventListener("change", function() {
+        const file = importFileInput.files && importFileInput.files[0];
+        if (!file) return;
+        const label = document.getElementById("importFileLabel");
+        if (label) label.textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = function() { processBackupJson(reader.result); };
+        reader.readAsText(file);
+    });
+}
 
         if (cancelRestorePreviewBtn) {
             cancelRestorePreviewBtn.onclick = function() {

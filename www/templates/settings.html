@@ -63,10 +63,10 @@
           <small data-i18n="settings_language_desc">Change the app language</small>
         </div>
         
-        <select id="languageSelect" class="settings-select">
-          <option value="en">English</option>
-          <option value="ar">العربية</option>
-        </select>
+        <button type="button" id="languageSelectBtn" class="settings-select-trigger">
+  <span id="languageSelectedLabel">English</span>
+  <i data-lucide="chevron-down"></i>
+</button>
         
       </div>
       
@@ -92,15 +92,10 @@
           <small data-i18n="settings_currency_desc">Choose your default currency</small>
         </div>
         
-        <select id="currencySelect" class="settings-select">
-        
-          <option value="EGP">EGP</option>
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="SAR">SAR</option>
-          <option value="AED">AED</option>
-          
-        </select>
+        <button type="button" id="currencySelectBtn" class="settings-select-trigger">
+  <span id="currencySelectedLabel">EGP</span>
+  <i data-lucide="chevron-down"></i>
+</button>
         
       </div>
       
@@ -205,7 +200,7 @@
       <div class="settings-divider"></div>
       
       
-      <div class="settings-item">
+      <div class="settings-item" id="privacyBtn">
         
         <div class="settings-icon">
           <i data-lucide="shield-check"></i>
@@ -266,30 +261,132 @@
     </div>
   </div>
   
-  <!-- About Savio Modal -->
-  <div id="aboutModal" class="modal">
-    <div class="modal-content">
-      
-      <h2 data-i18n="settings_about_savio">About Savio</h2>
-      
-      <p style="margin: 10px 0; line-height: 1.6;">
-        Savio هو تطبيق لإدارة مصاريفك ودخلك اليومي بسهولة، ومتابعة ميزانيتك أول بأول.
-      </p>
-      
-      <p style="margin: 15px 0 5px; font-weight: 600;" data-i18n="settings_developer">Developer</p>
-      <p style="margin: 0 0 15px;">Mahmoud Tellawy</p>
-      
-      <p style="margin: 15px 0 5px; font-weight: 600;" data-i18n="settings_contact">Contact</p>
-      <p style="margin: 0 0 15px;">
-        <a href="https://wa.me/201208526652" target="_blank" style="color:#0F766E; text-decoration:none; font-weight:600;">
-          WhatsApp: 01208526652
-        </a>
-      </p>
-      
-      <p style="margin: 15px 0 0; opacity:.6; font-size:13px;">Version 1.0.0</p>
-      
-      <button id="closeAboutBtn" data-i18n="settings_close">Close</button>
-      
+<!-- About Savio Modal -->
+<div id="aboutModal" class="modal">
+  <div class="modal-content import-modal-content">
+    
+    <div class="import-modal-icon">
+      <i data-lucide="info"></i>
+    </div>
+    
+    <h2 data-i18n="settings_about_savio">About Savio</h2>
+     
+<p class="import-modal-desc" data-i18n="settings_about_savio_text">
+       هو تطبيق لإدارة مصاريفك ودخلك اليومي بسهولة، ومتابعة ميزانيتك أول بأول
+    </p>
+    
+    <div class="about-info-list">
+      <div class="about-info-row">
+        <span class="about-info-label" data-i18n="settings_developer">Developer</span>
+        <span class="about-info-value">Mahmoud Tellawy</span>
+      </div>
+      <div class="about-info-divider"></div>
+      <a href="https://wa.me/201208526652" target="_blank" class="about-info-row about-info-link">
+  <span class="about-info-label" data-i18n="settings_contact">Contact</span>
+  <span class="about-info-value about-whatsapp-value">
+    <svg class="about-whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.83.49 3.6 1.42 5.15L2 22l5.13-1.53a9.86 9.86 0 004.9 1.3h.01c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.06h-.01a8.14 8.14 0 01-4.15-1.14l-.3-.18-3.05.91.91-2.97-.19-.31a8.15 8.15 0 01-1.26-4.36c0-4.51 3.67-8.18 8.19-8.18 2.18 0 4.24.85 5.79 2.4a8.13 8.13 0 012.4 5.78c0 4.52-3.67 8.19-8.19 8.19z" />
+    </svg>
+    01208526652
+  </span>
+</a>
+    </div>
+    
+    <p class="about-version">Version 1.0.0</p>
+    
+    <div class="modal-actions import-modal-actions">
+      <button id="closeAboutBtn" class="import-close-btn" data-i18n="settings_close">Close</button>
+    </div>
+    
+  </div>
+</div>
+
+<!-- Privacy Modal -->
+<div id="privacyModal" class="modal">
+  <div class="modal-content import-modal-content">
+
+    <div class="import-modal-icon">
+      <i data-lucide="shield-check"></i>
+    </div>
+
+    <h2 data-i18n="settings_privacy">Privacy</h2>
+
+    <p class="import-modal-desc" data-i18n="settings_privacy_text">Your data is stored only on your device and never sent to any server.</p>
+
+    <div class="about-info-list">
+      <div class="about-info-row">
+        <span class="about-info-label" data-i18n="settings_privacy_point1_label">Storage</span>
+        <span class="about-info-value" data-i18n="settings_privacy_point1_value">On your device only</span>
+      </div>
+      <div class="about-info-divider"></div>
+      <div class="about-info-row">
+        <span class="about-info-label" data-i18n="settings_privacy_point2_label">Internet</span>
+        <span class="about-info-value" data-i18n="settings_privacy_point2_value">Not required</span>
+      </div>
+      <div class="about-info-divider"></div>
+      <div class="about-info-row">
+        <span class="about-info-label" data-i18n="settings_privacy_point3_label">Sharing</span>
+        <span class="about-info-value" data-i18n="settings_privacy_point3_value">Nothing is shared</span>
+      </div>
+    </div>
+
+    <div class="modal-actions import-modal-actions">
+      <button id="closePrivacyBtn" class="import-close-btn" data-i18n="settings_close">Close</button>
+    </div>
+
+  </div>
+</div>
+
+  <!-- Language Picker Modal -->
+  <div id="languagePickerModal" class="modal">
+    <div class="modal-content picker-modal-content">
+
+      <div class="import-modal-icon">
+        <i data-lucide="languages"></i>
+      </div>
+
+      <h2 data-i18n="settings_language">Language</h2>
+
+      <div class="picker-list">
+        <button type="button" class="picker-option" data-value="en">
+          <span>English</span>
+          <i data-lucide="check" class="picker-check"></i>
+        </button>
+        <button type="button" class="picker-option" data-value="ar">
+          <span>العربية</span>
+          <i data-lucide="check" class="picker-check"></i>
+        </button>
+      </div>
+
+      <div class="modal-actions import-modal-actions">
+        <button id="closeLanguagePickerBtn" class="import-close-btn" data-i18n="settings_close">Close</button>
+      </div>
+
+    </div>
+  </div>
+  <!-- Currency Picker Modal -->
+  <div id="currencyPickerModal" class="modal">
+    <div class="modal-content picker-modal-content">
+
+      <div class="import-modal-icon">
+        <i data-lucide="wallet"></i>
+      </div>
+
+      <h2 data-i18n="settings_currency">Currency</h2>
+
+      <div class="picker-list">
+        <button type="button" class="picker-option" data-value="EGP"><span>EGP</span><i data-lucide="check" class="picker-check"></i></button>
+        <button type="button" class="picker-option" data-value="USD"><span>USD</span><i data-lucide="check" class="picker-check"></i></button>
+        <button type="button" class="picker-option" data-value="EUR"><span>EUR</span><i data-lucide="check" class="picker-check"></i></button>
+        <button type="button" class="picker-option" data-value="SAR"><span>SAR</span><i data-lucide="check" class="picker-check"></i></button>
+        <button type="button" class="picker-option" data-value="AED"><span>AED</span><i data-lucide="check" class="picker-check"></i></button>
+      </div>
+
+      <div class="modal-actions import-modal-actions">
+        <button id="closeCurrencyPickerBtn" class="import-close-btn" data-i18n="settings_close">Close</button>
+      </div>
+
     </div>
   </div>
 <!-- Version -->
