@@ -1,3 +1,6 @@
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
+
 // ==============================================================
 // screens/settingsPage.js
 // كل منطق صفحة الإعدادات مجمّع في دالة واحدة initSettingsPage()
@@ -135,65 +138,99 @@ window.location.href = "index.html";
             });
         }
 
-        exportBtn.addEventListener("click", async function() {
-    const backup = {};
-    BACKUP_KEYS.forEach(function(key) {
-        const value = localStorage.getItem(key);
-        if (value !== null) backup[key] = value;
-    });
-    
-    const payload = {
-        app: "Savio",
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        data: backup
-    };
-    
-    const jsonText = JSON.stringify(payload, null, 2);
-    const fileName = "savio-backup-" + Date.now() + ".json";
-    
-    // حفظ تاريخ التصدير وتحديث الشارة
-    localStorage.setItem("savio_last_backup_time", new Date().toISOString());
-    if (typeof updateLastBackupBadge === "function") updateLastBackupBadge();
-    
-    // 1. تحويل البيانات لملف حقيقي
-    const file = new File([jsonText], fileName, { type: "application/json" });
-    
-    // 2. التحقق من دعم مشاركة الملفات وفتح نافذة المشاركة فوراً (واتساب / درايف / حفظ في الملفات)
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-            await navigator.share({
-                title: "نسخة احتياطية - Savio",
-                text: "ملف النسخة الاحتياطية لتطبيق Savio",
-                files: [file]
+        exportBtn.addEventListener("click", async function () {
+            const backup = {};
+            BACKUP_KEYS.forEach(function (key) {
+                const value = localStorage.getItem(key);
+                if (value !== null) backup[key] = value;
             });
-            showToast("تمت المشاركة بنجاح!", "success");
-            return;
-        } catch (err) {
-            if (err.name !== "AbortError") {
-                console.warn("Share failed:", err);
-            } else {
-                return; // المستخدم هو اللي قفل نافذة المشاركة بنفسه
+
+            const payload = {
+                app: "Savio",
+                version: 1,
+                exportedAt: new Date().toISOString(),
+                data: backup
+            };
+
+            const jsonText = JSON.stringify(payload, null, 2);
+            const fileName = "savio-backup-" + Date.now() + ".json";
+
+            // حفظ تاريخ التصدير وتحديث الشارة
+            localStorage.setItem("savio_last_backup_time", new Date().toISOString());
+            if (typeof updateLastBackupBadge === "function") updateLastBackupBadge();
+
+            // 1. الوضع الأصلي داخل تطبيق APK (Capacitor Native)
+            try {
+                if (window.Capacitor && window.Capacitor.Plugins) {
+                    const { Filesystem, Directory, Share } = window.Capacitor.Plugins;
+
+                    // كتابة الملف في مساحة الكاش الآمنة
+                    if (Filesystem) {
+                        const writtenFile = await Filesystem.writeFile({
+                            path: fileName,
+                            data: jsonText,
+                            directory: Directory ? Directory.Cache : 'CACHE'
+                        });
+
+                        // فتح قائمة مشاركة أندرويد الرسمية بالملف
+                        if (Share) {
+                            await Share.share({
+                                title: "نسخة احتياطية - Savio",
+                                text: "ملف النسخة الاحتياطية لتطبيق Savio",
+                                url: writtenFile.uri,
+                                dialogTitle: "حفظ أو مشاركة النسخة الاحتياطية"
+                            });
+                            showToast("تم فتح قائمة المشاركة بنجاح", "success");
+                            return;
+                        }
+                    }
+                }
+            } catch (nativeErr) {
+                console.warn("Capacitor Native Share Error:", nativeErr);
             }
-        }
-    }
-    
-    // 3. لو كان نظام أندرويد لا يدعم مشاركة الملفات مباشرة، نشارك النص أو نفتحه
-    if (navigator.share) {
-        try {
-            await navigator.share({
-                title: "نسخة احتياطية - Savio",
-                text: jsonText
-            });
-            return;
-        } catch (err) {
-            console.warn("Text share failed:", err);
-        }
-    }
-    
-    // 4. خيار أخير في حال عدم توفر المشاركة نهائياً
-    showToast("جهازك لا يدعم قائمة المشاركة", "error");
-});
+
+            // 2. المحاولة عبر Web Share في المتصفح العادي
+            try {
+                const file = new File([jsonText], fileName, { type: "application/json" });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        title: "نسخة احتياطية - Savio",
+                        text: "ملف النسخة الاحتياطية",
+                        files: [file]
+                    });
+                    return;
+                }
+            } catch (e) {
+                // تجاهل
+            }
+
+            // 3. مشاركة نصية كحل بديل
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: "نسخة احتياطية - Savio",
+                        text: jsonText
+                    });
+                    return;
+                } catch (e) {}
+            }
+
+            // 4. في أسوأ الظروف لو أندرويد قديم جداً: تنزيل مباشر
+            try {
+                const blob = new Blob([jsonText], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast("تم بدء التنزيل", "success");
+            } catch (err) {
+                showToast("حدث خطأ أثناء التصدير", "error");
+            }
+        });
     }
 
 // ------------------------------
