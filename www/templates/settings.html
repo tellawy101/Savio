@@ -241,20 +241,28 @@
     </div>
   </div>
   
-  <!-- Import Manual Modal -->
+<!-- Import Manual Modal -->
   <div id="importManualModal" class="modal">
-    <div class="modal-content">
-      
+    <div class="modal-content import-modal-content">
+
+      <div class="import-modal-icon">
+        <i data-lucide="upload-cloud"></i>
+      </div>
+
       <h2 data-i18n="settings_import">Import Data</h2>
-      
-<p style="margin: 10px 0 15px; line-height: 1.6;" data-i18n="settings_import_manual_desc">Choose the backup file you saved earlier.</p>
 
-<input type="file" id="importFileInput" accept="application/json,.json" style="margin-bottom:10px; width:100%;">
+      <p class="import-modal-desc" data-i18n="settings_import_manual_desc">Choose the backup file you saved earlier.</p>
 
-<div class="modal-actions" style="margin-top:15px; display:flex; gap:10px;">
-  <button id="closeImportManualBtn" data-i18n="settings_close">Close</button>
-</div>
-      
+      <label class="import-file-drop" for="importFileInput">
+        <i data-lucide="file-json-2"></i>
+        <span id="importFileLabel" data-i18n="settings_import_choose_file">Tap to choose your backup file</span>
+      </label>
+      <input type="file" id="importFileInput" accept="application/json,.json" hidden>
+
+      <div class="modal-actions import-modal-actions">
+        <button id="closeImportManualBtn" class="import-close-btn" data-i18n="settings_close">Close</button>
+      </div>
+
     </div>
   </div>
   

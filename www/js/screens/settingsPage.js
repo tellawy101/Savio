@@ -8,9 +8,10 @@
 function initSettingsPage() {
     
     const modalsPlaceholder = document.getElementById("modals-placeholder");
-    if (modalsPlaceholder) {
-        modalsPlaceholder.innerHTML = renderSharedModals();
-    }
+if (modalsPlaceholder) {
+    modalsPlaceholder.innerHTML = renderSharedModals();
+    if (window.lucide) lucide.createIcons({ root: modalsPlaceholder });
+}
     
   // ------------------------------
 // الوضع الليلي (Dark Mode)

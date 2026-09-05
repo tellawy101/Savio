@@ -239,3 +239,112 @@ body.dark .settings-select option {
     }
 
 }
+/* ==============================
+   Import Modal - Professional Look
+============================== */
+.import-modal-content {
+    text-align: center;
+    padding: 28px 22px 22px;
+}
+
+.import-modal-icon {
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: rgba(15, 118, 110, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.import-modal-icon i {
+    width: 28px;
+    height: 28px;
+    color: #0F766E;
+}
+
+.import-modal-content h2 {
+    margin-bottom: 6px;
+    font-size: 19px;
+}
+
+.import-modal-desc {
+    color: #6b7280;
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 0 0 20px;
+}
+
+.import-file-drop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 22px 16px;
+    border: 1.5px dashed #0F766E;
+    border-radius: 14px;
+    background: rgba(15, 118, 110, 0.04);
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.import-file-drop:active {
+    background: rgba(15, 118, 110, 0.1);
+}
+
+.import-file-drop i {
+    width: 26px;
+    height: 26px;
+    color: #0F766E;
+}
+
+.import-file-drop span {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0F766E;
+}
+
+.import-modal-actions {
+    margin-top: 20px !important;
+}
+
+.import-close-btn {
+    width: 100%;
+    background: transparent;
+    color: #0F766E;
+    border: 1.5px solid #0F766E;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.import-close-btn:hover {
+    background: rgba(15, 118, 110, 0.08);
+    opacity: 1;
+}
+
+/* Dark mode */
+body.dark .import-modal-icon {
+    background: rgba(79, 209, 197, 0.12);
+}
+
+body.dark .import-modal-icon i,
+body.dark .import-file-drop i,
+body.dark .import-file-drop span,
+body.dark .import-close-btn {
+    color: #4fd1c5;
+}
+
+body.dark .import-modal-desc {
+    color: #9ca3af;
+}
+
+body.dark .import-file-drop {
+    border-color: #4fd1c5;
+    background: rgba(79, 209, 197, 0.06);
+}
+
+body.dark .import-close-btn {
+    border-color: #4fd1c5;
+}
