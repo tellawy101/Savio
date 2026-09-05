@@ -11,9 +11,10 @@ function initSettingsPage() {
         modalsPlaceholder.innerHTML = renderSharedModals();
     }
     
-    // ------------------------------
-    // الوضع الليلي (Dark Mode)
-    const darkModeToggle = document.getElementById("darkModeToggle");
+  // ------------------------------
+// الوضع الليلي (Dark Mode)
+// ------------------------------
+const darkModeToggle = document.getElementById("darkModeToggle");
 
     if (darkModeToggle) {
     const currentTheme = getTheme();
@@ -134,137 +135,212 @@ window.location.href = "index.html";
             });
         }
 
-        exportBtn.addEventListener("click", async function () {
-            const backup = {};
-            BACKUP_KEYS.forEach(function (key) {
-                const value = localStorage.getItem(key);
-                if (value !== null) backup[key] = value;
+        exportBtn.addEventListener("click", async function() {
+    const backup = {};
+    BACKUP_KEYS.forEach(function(key) {
+        const value = localStorage.getItem(key);
+        if (value !== null) backup[key] = value;
+    });
+    
+    const payload = {
+        app: "Savio",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        data: backup
+    };
+    
+    const jsonText = JSON.stringify(payload, null, 2);
+    const fileName = "savio-backup-" + Date.now() + ".json";
+    
+    // حفظ تاريخ التصدير وتحديث الشارة
+    localStorage.setItem("savio_last_backup_time", new Date().toISOString());
+    if (typeof updateLastBackupBadge === "function") updateLastBackupBadge();
+    
+    // 1. تحويل البيانات لملف حقيقي
+    const file = new File([jsonText], fileName, { type: "application/json" });
+    
+    // 2. التحقق من دعم مشاركة الملفات وفتح نافذة المشاركة فوراً (واتساب / درايف / حفظ في الملفات)
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+            await navigator.share({
+                title: "نسخة احتياطية - Savio",
+                text: "ملف النسخة الاحتياطية لتطبيق Savio",
+                files: [file]
             });
-
-            const payload = {
-                app: "Savio",
-                version: 1,
-                exportedAt: new Date().toISOString(),
-                data: backup
-            };
-
-            const jsonText = JSON.stringify(payload, null, 2);
-            const fileName = "savio-backup-" + Date.now() + ".json";
-
-            try {
-                if (
-                    window.Capacitor &&
-                    window.Capacitor.isNativePlatform &&
-                    window.Capacitor.isNativePlatform() &&
-                    window.Capacitor.Plugins &&
-                    window.Capacitor.Plugins.Filesystem
-                ) {
-                    const { Filesystem, Directory, Encoding } = window.Capacitor.Plugins;
-                    await Filesystem.writeFile({
-                        path: fileName,
-                        data: jsonText,
-                        directory: Directory.Documents,
-                        encoding: Encoding.UTF8
-                    });
-                    showToast(t("settings_export_done"), "success");
-                    return;
-                }
-            } catch (err) {
-                console.error("Filesystem export failed:", err);
+            showToast("تمت المشاركة بنجاح!", "success");
+            return;
+        } catch (err) {
+            if (err.name !== "AbortError") {
+                console.warn("Share failed:", err);
+            } else {
+                return; // المستخدم هو اللي قفل نافذة المشاركة بنفسه
             }
-
-            try {
-                const blob = new Blob([jsonText], { type: "application/json" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = fileName;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                showToast(t("settings_export_done"), "success");
-                return;
-            } catch (err) {
-                console.error("Blob download export failed:", err);
-            }
-
-            fallbackText.value = jsonText;
-            fallbackModal.classList.add("show");
-        });
+        }
+    }
+    
+    // 3. لو كان نظام أندرويد لا يدعم مشاركة الملفات مباشرة، نشارك النص أو نفتحه
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: "نسخة احتياطية - Savio",
+                text: jsonText
+            });
+            return;
+        } catch (err) {
+            console.warn("Text share failed:", err);
+        }
+    }
+    
+    // 4. خيار أخير في حال عدم توفر المشاركة نهائياً
+    showToast("جهازك لا يدعم قائمة المشاركة", "error");
+});
     }
 
+// ------------------------------
+    // Import Data الذكي مع المعاينة (مثل التطبيقات الكبيرة)
     // ------------------------------
-    // Import Data
-    // ------------------------------
+    
     const importBtn = document.getElementById("importData");
     const importManualModal = document.getElementById("importManualModal");
     const importManualText = document.getElementById("importManualText");
     const closeImportManualBtn = document.getElementById("closeImportManualBtn");
     const restoreImportManualBtn = document.getElementById("restoreImportManualBtn");
     const importFileInput = document.getElementById("importFileInput");
+    const restorePreviewModal = document.getElementById("restorePreviewModal");
+    const cancelRestorePreviewBtn = document.getElementById("cancelRestorePreviewBtn");
+    const confirmRestoreBtn = document.getElementById("confirmRestoreBtn");
+    let pendingBackupPayload = null;
+
+    // دالة تحديث شارة تاريخ آخر نسخة فوق كلمة Data
+    function updateLastBackupBadge() {
+        const badge = document.getElementById("lastBackupBadge");
+        if (!badge) return;
+        const lastTime = localStorage.getItem("savio_last_backup_time");
+        if (!lastTime) {
+            badge.textContent = "لم يتم إنشاء نسخة بعد";
+        } else {
+            const d = new Date(lastTime);
+            badge.textContent = "آخر نسخة: " + d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+    }
+    updateLastBackupBadge();
+
+    // دالة فحص وتجهيز شاشة المعاينة
+    function processBackupJson(rawText) {
+        try {
+            const payload = JSON.parse(rawText);
+            if (!payload || payload.app !== "Savio" || !payload.data) {
+                showToast(t("settings_import_invalid"), "error");
+                return;
+            }
+
+            pendingBackupPayload = payload;
+
+            const txs = payload.data.transactions ? JSON.parse(payload.data.transactions) : [];
+            const debts = payload.data.debts ? JSON.parse(payload.data.debts) : [];
+            const accounts = payload.data.accounts ? JSON.parse(payload.data.accounts) : [];
+
+            document.getElementById("previewTxCount").textContent = txs.length;
+            document.getElementById("previewDebtsCount").textContent = debts.length;
+            document.getElementById("previewAccountsCount").textContent = accounts.length;
+            document.getElementById("previewBackupDate").textContent = payload.exportedAt ? new Date(payload.exportedAt).toLocaleDateString() : "-";
+
+            if (importManualModal) importManualModal.classList.remove("show");
+            if (restorePreviewModal) restorePreviewModal.classList.add("show");
+        } catch (e) {
+            showToast(t("settings_import_invalid"), "error");
+        }
+    }
 
     if (importBtn && importManualModal) {
-
-        if (importFileInput) {
-            importFileInput.addEventListener("change", function () {
-                const file = importFileInput.files && importFileInput.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function () {
-                    importManualText.value = reader.result;
-                };
-                reader.onerror = function () {
-                    showToast(t("settings_import_invalid"), "error");
-                };
-                reader.readAsText(file);
-            });
-        }
-
-        
         importBtn.addEventListener("click", function () {
             importManualText.value = "";
             importManualModal.classList.add("show");
         });
 
         if (closeImportManualBtn) {
-            closeImportManualBtn.addEventListener("click", function () {
-                importManualModal.classList.remove("show");
-            });
+            closeImportManualBtn.onclick = function () { importManualModal.classList.remove("show"); };
         }
 
         importManualModal.addEventListener("click", function (e) {
             if (e.target === importManualModal) importManualModal.classList.remove("show");
         });
 
+        if (importFileInput) {
+            importFileInput.addEventListener("change", function () {
+                const file = importFileInput.files && importFileInput.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function () { processBackupJson(reader.result); };
+                reader.readAsText(file);
+            });
+        }
+
         if (restoreImportManualBtn) {
-            restoreImportManualBtn.addEventListener("click", async function() {
+            restoreImportManualBtn.onclick = function() {
                 const rawText = importManualText.value.trim();
                 if (!rawText) { showToast(t("settings_import_invalid"), "error"); return; }
+                processBackupJson(rawText);
+            };
+        }
 
-                try {
-                    const payload = JSON.parse(rawText);
-                    if (!payload || payload.app !== "Savio" || !payload.data) throw new Error("invalid");
+        if (cancelRestorePreviewBtn) {
+            cancelRestorePreviewBtn.onclick = function() {
+                restorePreviewModal.classList.remove("show");
+                pendingBackupPayload = null;
+            };
+        }
 
-                    const confirmedImport = await customConfirm(t("settings_import_confirm"), { danger: true });
-if (!confirmedImport) return;
+        // زر تأكيد الاستعادة النهائي (استبدال كامل أو دمج ذكي)
+        if (confirmRestoreBtn) {
+            confirmRestoreBtn.onclick = function() {
+                if (!pendingBackupPayload || !pendingBackupPayload.data) return;
 
+                const modeRadio = document.querySelector('input[name="restoreMode"]:checked');
+                const mode = modeRadio ? modeRadio.value : "replace";
+
+                if (mode === "replace") {
+                    // استبدال كامل
                     BACKUP_KEYS.forEach(function (key) {
-                        if (Object.prototype.hasOwnProperty.call(payload.data, key)) {
-                            localStorage.setItem(key, payload.data[key]);
+                        if (Object.prototype.hasOwnProperty.call(pendingBackupPayload.data, key)) {
+                            localStorage.setItem(key, pendingBackupPayload.data[key]);
                         } else {
                             localStorage.removeItem(key);
                         }
                     });
-
-                    importManualModal.classList.remove("show");
-                    showToast(t("settings_import_done"), "success");
-                    setTimeout(function () { window.location.href = "index.html"; }, 800);
-
-                } catch (error) {
-                    showToast(t("settings_import_invalid"), "error");
+                } else {
+                    // دمج ذكي (Smart Merge)
+                    try {
+                        if (pendingBackupPayload.data.transactions) {
+                            const newTxs = JSON.parse(pendingBackupPayload.data.transactions);
+                            const currentTxs = JSON.parse(localStorage.getItem("transactions")) || [];
+                            const currentIds = new Set(currentTxs.map(t => t.id));
+                            newTxs.forEach(t => { if (!currentIds.has(t.id)) currentTxs.push(t); });
+                            localStorage.setItem("transactions", JSON.stringify(currentTxs));
+                        }
+                        if (pendingBackupPayload.data.debts) {
+                            const newDebts = JSON.parse(pendingBackupPayload.data.debts);
+                            const currentDebts = JSON.parse(localStorage.getItem("debts")) || [];
+                            const currentDebtIds = new Set(currentDebts.map(d => d.id));
+                            newDebts.forEach(d => { if (!currentDebtIds.has(d.id)) currentDebts.push(d); });
+                            localStorage.setItem("debts", JSON.stringify(currentDebts));
+                        }
+                        if (pendingBackupPayload.data.accounts) {
+                            const newAccs = JSON.parse(pendingBackupPayload.data.accounts);
+                            const currentAccs = JSON.parse(localStorage.getItem("accounts")) || [];
+                            const currentNames = new Set(currentAccs.map(a => a.name));
+                            newAccs.forEach(a => { if (!currentNames.has(a.name)) currentAccs.push(a); });
+                            localStorage.setItem("accounts", JSON.stringify(currentAccs));
+                        }
+                    } catch (e) {
+                        console.error(e);
+                    }
                 }
-            });
+
+                restorePreviewModal.classList.remove("show");
+                showToast(t("settings_import_done"), "success");
+                setTimeout(function () { window.location.href = "index.html"; }, 800);
+            };
         }
     }
 }

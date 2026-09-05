@@ -112,7 +112,12 @@
   <!-- Data -->
   <section class="settings-section">
     
-    <h3 data-i18n="settings_data">Data</h3>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+  <h3 data-i18n="settings_data" style="margin: 0;">Data</h3>
+  <span id="lastBackupBadge" style="font-size: 11px; color: #0F766E; font-weight: 700; background: rgba(15,118,110,0.1); padding: 3px 8px; border-radius: 8px;">
+    لم يتم إنشاء نسخة بعد
+  </span>
+</div>
     
     <div class="settings-card">
       
@@ -287,7 +292,38 @@
     <span>Savio</span>
     <small>Version 1.0.0</small>
   </div>
-  
+  <!-- نافذة المعاينة الذكية قبل الاستعادة -->
+  <div id="restorePreviewModal" class="modal">
+    <div class="modal-content" style="max-width: 350px;">
+      <h2 style="margin-top:0; color:#0F766E; font-size: 18px;">معاينة النسخة الاحتياطية</h2>
+      <p style="font-size: 12px; color: #666; margin: 4px 0 12px;">محتويات الملف الذي اخترته:</p>
+      
+      <div style="background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 12px; padding: 12px; margin-bottom: 15px; font-size: 13px; line-height: 1.8;">
+        <div>📅 <strong>التاريخ:</strong> <span id="previewBackupDate">-</span></div>
+        <div>💳 <strong>المعاملات:</strong> <span id="previewTxCount" style="color:#0F766E; font-weight:bold;">0</span></div>
+        <div>🤝 <strong>الديون:</strong> <span id="previewDebtsCount" style="color:#DC2626; font-weight:bold;">0</span></div>
+        <div>🏦 <strong>الحسابات:</strong> <span id="previewAccountsCount" style="color:#2563EB; font-weight:bold;">0</span></div>
+      </div>
+
+      <label style="font-size: 12px; font-weight: bold; color: #444; margin-bottom: 6px; display: block;">طريقة الاستعادة:</label>
+      
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+        <label style="display: flex; align-items: center; gap: 8px; border: 1px solid #0F766E; background: #F0FDFA; padding: 8px 10px; border-radius: 8px; cursor: pointer;">
+          <input type="radio" name="restoreMode" value="replace" checked>
+          <span style="font-size: 12px; font-weight: bold;">استبدال كامل للبيانات</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; border: 1px solid #E5E7EB; background: #fff; padding: 8px 10px; border-radius: 8px; cursor: pointer;">
+          <input type="radio" name="restoreMode" value="merge">
+          <span style="font-size: 12px; font-weight: bold;">دمج ذكي (إضافة الجديد فقط)</span>
+        </label>
+      </div>
+
+      <div class="modal-actions" style="display: flex; gap: 8px;">
+        <button id="confirmRestoreBtn" class="account-save-btn" style="flex:1; margin:0; padding:10px; font-weight:bold;">استعادة</button>
+        <button id="cancelRestorePreviewBtn" class="account-cancel-btn" style="flex:1; margin:0; padding:10px;">إلغاء</button>
+      </div>
+    </div>
+  </div>
 </main>
 
 <div id="modals-placeholder"></div>
