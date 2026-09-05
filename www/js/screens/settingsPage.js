@@ -1,5 +1,3 @@
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import { Share } from '@capacitor/share';
 
 // ==============================================================
 // screens/settingsPage.js
