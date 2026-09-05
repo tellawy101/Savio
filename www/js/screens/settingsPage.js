@@ -156,7 +156,19 @@ window.location.href = "index.html";
             // حفظ تاريخ التصدير وتحديث الشارة
             localStorage.setItem("savio_last_backup_time", new Date().toISOString());
             if (typeof updateLastBackupBadge === "function") updateLastBackupBadge();
-
+// حفظ تلقائي في Downloads (بدون فتح قائمة مشاركة)
+try {
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.SaveToDownloads) {
+        await window.Capacitor.Plugins.SaveToDownloads.save({
+            fileName: fileName,
+            content: jsonText
+        });
+        showToast("تم حفظ النسخة في Downloads", "success");
+        return;
+    }
+} catch (downloadsErr) {
+    console.warn("Save to Downloads error:", downloadsErr);
+}
             
             // 1. الوضع الأصلي داخل تطبيق APK (Capacitor Native)
             try {
