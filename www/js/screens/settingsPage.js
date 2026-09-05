@@ -156,26 +156,26 @@ window.location.href = "index.html";
             // حفظ تاريخ التصدير وتحديث الشارة
             localStorage.setItem("savio_last_backup_time", new Date().toISOString());
             if (typeof updateLastBackupBadge === "function") updateLastBackupBadge();
-// حفظ تلقائي في Downloads (بدون فتح قائمة مشاركة)
 // حفظ تلقائي في Downloads + بعدها فتح قائمة المشاركة
-try {
-    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.SaveToDownloads) {
-        await window.Capacitor.Plugins.SaveToDownloads.save({
-            fileName: fileName,
-            content: jsonText
-        });
-        showToast("تم حفظ النسخة في Downloads", "success");
-    }
-} catch (downloadsErr) {
-    console.warn("Save to Downloads error:", downloadsErr);
-}
-            
-            // 1. الوضع الأصلي داخل تطبيق APK (Capacitor Native)
+            let downloadsSaved = false;
+            try {
+                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.SaveToDownloads) {
+                    await window.Capacitor.Plugins.SaveToDownloads.save({
+                        fileName: fileName,
+                        content: jsonText
+                    });
+                    showToast("تم حفظ النسخة في Downloads", "success");
+                    downloadsSaved = true;
+                }
+            } catch (downloadsErr) {
+                console.warn("Save to Downloads error:", downloadsErr);
+            }
+
+            // 1. فتح قائمة المشاركة (Capacitor Native) - بدون أي رسائل لو اتلغت
             try {
                 if (window.Capacitor && window.Capacitor.Plugins) {
                     const { Filesystem, Directory, Share } = window.Capacitor.Plugins;
 
-                    // كتابة الملف في مساحة الكاش الآمنة
                     if (Filesystem) {
                         const writtenFile = await Filesystem.writeFile({
                             path: fileName,
@@ -183,15 +183,18 @@ try {
                             directory: Directory ? Directory.Cache : 'CACHE'
                         });
 
-                        // فتح قائمة مشاركة أندرويد الرسمية بالملف
                         if (Share) {
-                            await Share.share({
-                                title: "نسخة احتياطية - Savio",
-                                text: "ملف النسخة الاحتياطية لتطبيق Savio",
-                                url: writtenFile.uri,
-                                dialogTitle: "حفظ أو مشاركة النسخة الاحتياطية"
-                            });
-                            showToast("تم فتح قائمة المشاركة بنجاح", "success");
+                            try {
+                                await Share.share({
+                                    title: "نسخة احتياطية - Savio",
+                                    text: "ملف النسخة الاحتياطية لتطبيق Savio",
+                                    url: writtenFile.uri,
+                                    dialogTitle: "حفظ أو مشاركة النسخة الاحتياطية"
+                                });
+                            } catch (shareErr) {
+                                // المستخدم لغى قائمة المشاركة - تجاهل بهدوء، الملف أصلاً محفوظ
+                                console.warn("Share dismissed or failed:", shareErr);
+                            }
                             return;
                         }
                     }
@@ -199,6 +202,9 @@ try {
             } catch (nativeErr) {
                 console.warn("Capacitor Native Share Error:", nativeErr);
             }
+
+            // لو مفيش Capacitor أصلاً (تشغيل من متصفح عادي)، ولم يتم الحفظ في Downloads
+            if (downloadsSaved) return;
 
             // 2. المحاولة عبر Web Share في المتصفح العادي
             try {
@@ -242,6 +248,8 @@ try {
                 showToast("حدث خطأ أثناء التصدير", "error");
             }
         });
+
+
     }
 
 // ------------------------------
