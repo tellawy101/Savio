@@ -257,12 +257,9 @@ window.location.href = "index.html";
     // ------------------------------
     
     const importBtn = document.getElementById("importData");
-    const importManualModal = document.getElementById("importManualModal");
-    const importManualText = document.getElementById("importManualText");
-    const closeImportManualBtn = document.getElementById("closeImportManualBtn");
-    const restoreImportManualBtn = document.getElementById("restoreImportManualBtn");
-    const importFileInput = document.getElementById("importFileInput");
-    const restorePreviewModal = document.getElementById("restorePreviewModal");
+const importManualModal = document.getElementById("importManualModal");
+const closeImportManualBtn = document.getElementById("closeImportManualBtn");
+const importFileInput = document.getElementById("importFileInput");    const restorePreviewModal = document.getElementById("restorePreviewModal");
     const cancelRestorePreviewBtn = document.getElementById("cancelRestorePreviewBtn");
     const confirmRestoreBtn = document.getElementById("confirmRestoreBtn");
     let pendingBackupPayload = null;
@@ -310,7 +307,7 @@ window.location.href = "index.html";
 
     if (importBtn && importManualModal) {
         importBtn.addEventListener("click", function () {
-            importManualText.value = "";
+            if (importFileInput) importFileInput.value = "";
             importManualModal.classList.add("show");
         });
 
@@ -330,14 +327,6 @@ window.location.href = "index.html";
                 reader.onload = function () { processBackupJson(reader.result); };
                 reader.readAsText(file);
             });
-        }
-
-        if (restoreImportManualBtn) {
-            restoreImportManualBtn.onclick = function() {
-                const rawText = importManualText.value.trim();
-                if (!rawText) { showToast(t("settings_import_invalid"), "error"); return; }
-                processBackupJson(rawText);
-            };
         }
 
         if (cancelRestorePreviewBtn) {
