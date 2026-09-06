@@ -161,27 +161,16 @@ window.addEventListener("popstate", function (e) {
 // التحكم في زرار الرجوع الفيزيائي في أندرويد (بدون أي مكتبة خارجية)
 let exitConfirmActive = false;
 
+// التحكم في زرار الرجوع الفيزيائي في أندرويد
 window.handleHardwareBack = function () {
     if (currentPageName !== "home") {
         navigateTo("home");
         return;
     }
 
-    if (exitConfirmActive) {
-        if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AppExit) {
-            window.Capacitor.Plugins.AppExit.exitApp();
-        }
-        return;
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AppExit) {
+        window.Capacitor.Plugins.AppExit.exitApp();
     }
-
-    exitConfirmActive = true;
-    if (typeof showToast === "function") {
-        showToast("اضغط رجوع مرة كمان عشان تخرج", "info");
-    }
-
-    setTimeout(function () {
-        exitConfirmActive = false;
-    }, 2000);
 };
 // تحميل باقي الصفحات في الخلفية بعد أول تحميل، عشان تبقى جاهزة فورًا
 function preloadAllPages() {
