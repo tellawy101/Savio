@@ -10,4 +10,14 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(AppExitPlugin.class);
         super.onCreate(savedInstanceState);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (this.bridge != null && this.bridge.getWebView() != null) {
+            this.bridge.getWebView().evaluateJavascript(
+                "if (window.handleHardwareBack) { window.handleHardwareBack(); }",
+                null
+            );
+        }
+    }
 }

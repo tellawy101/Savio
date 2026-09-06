@@ -157,34 +157,32 @@ window.addEventListener("popstate", function (e) {
     const page = (e.state && e.state.page) || "home";
     navigateTo(page);
 });
-// التحكم في زرار الرجوع الفيزيائي في أندرويد
+
 // التحكم في زرار الرجوع الفيزيائي في أندرويد (بدون أي مكتبة خارجية)
 let exitConfirmActive = false;
 
-document.addEventListener("backbutton", function(e) {
-    if (e.preventDefault) e.preventDefault();
-    
+window.handleHardwareBack = function () {
     if (currentPageName !== "home") {
         navigateTo("home");
         return;
     }
-    
+
     if (exitConfirmActive) {
         if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AppExit) {
             window.Capacitor.Plugins.AppExit.exitApp();
         }
         return;
     }
-    
+
     exitConfirmActive = true;
     if (typeof showToast === "function") {
         showToast("اضغط رجوع مرة كمان عشان تخرج", "info");
     }
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         exitConfirmActive = false;
     }, 2000);
-}, false);
+};
 // تحميل باقي الصفحات في الخلفية بعد أول تحميل، عشان تبقى جاهزة فورًا
 function preloadAllPages() {
     const pageNames = Object.keys(ROUTES);
