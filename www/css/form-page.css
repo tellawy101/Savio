@@ -374,6 +374,21 @@ body.has-scroll {
     display: flex;
 }
 
+#categoryModal,
+#accountModal {
+    align-items: flex-end;
+    padding-top: 0;
+}
+
+#categoryModal .modal-content,
+#accountModal .modal-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: 20px 20px 0 0;
+    margin: 0;
+    animation: slideUpSheet .25s ease;
+}
 .form-input {
     width: 100%;
     padding: 12px;
