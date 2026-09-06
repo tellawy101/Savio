@@ -3,7 +3,8 @@
 // نظام تنقل SPA (تجريبي) - هيبدأ بصفحة الإعدادات بس
 // أي صفحة لسه مش متسجلة هنا هتفتح بالطريقة القديمة العادية
 // ==========================
-
+const templateCache = {};
+let currentPageName = "home";
 const ROUTES = {
     settings: {
         template: "templates/settings.html",
@@ -65,6 +66,7 @@ const ROUTES = {
     },
 };
 async function navigateTo(pageName) {
+        currentPageName = pageName;
         const route = ROUTES[pageName];
         
         // كل الصفحات بقت مسجّلة في الراوتر - لو اسم مش موجود، ارجع للهوم
@@ -80,8 +82,12 @@ if (!app) {
     return;
 }
   try {
-    const res = await fetch(route.template);
-    const html = await res.text();
+    let html = templateCache[pageName];
+    if (!html) {
+        const res = await fetch(route.template);
+        html = await res.text();
+        templateCache[pageName] = html;
+    }
 
     app.style.visibility = "hidden";
 // نظّف أي عنصر خاص بصفحة سابقة اتحقن برّه #app (زي فاب "+ إضافة حساب")
@@ -151,3 +157,61 @@ window.addEventListener("popstate", function (e) {
     const page = (e.state && e.state.page) || "home";
     navigateTo(page);
 });
+// التحكم في زرار الرجوع الفيزيائي في أندرويد
+// التحكم في زرار الرجوع الفيزيائي في أندرويد (بدون أي مكتبة خارجية)
+let exitConfirmActive = false;
+
+document.addEventListener("backbutton", function(e) {
+    if (e.preventDefault) e.preventDefault();
+    
+    if (currentPageName !== "home") {
+        navigateTo("home");
+        return;
+    }
+    
+    if (exitConfirmActive) {
+        if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AppExit) {
+            window.Capacitor.Plugins.AppExit.exitApp();
+        }
+        return;
+    }
+    
+    exitConfirmActive = true;
+    if (typeof showToast === "function") {
+        showToast("اضغط رجوع مرة كمان عشان تخرج", "info");
+    }
+    
+    setTimeout(function() {
+        exitConfirmActive = false;
+    }, 2000);
+}, false);
+// تحميل باقي الصفحات في الخلفية بعد أول تحميل، عشان تبقى جاهزة فورًا
+function preloadAllPages() {
+    const pageNames = Object.keys(ROUTES);
+    let index = 0;
+
+    function loadNext() {
+        if (index >= pageNames.length) return;
+        const pageName = pageNames[index];
+        index++;
+
+        if (!templateCache[pageName]) {
+            fetch(ROUTES[pageName].template)
+                .then(function (res) { return res.text(); })
+                .then(function (html) {
+                    templateCache[pageName] = html;
+                })
+                .catch(function () {})
+                .finally(function () {
+                    setTimeout(loadNext, 50);
+                });
+        } else {
+            setTimeout(loadNext, 0);
+        }
+    }
+
+    loadNext();
+}
+
+// نبدأ التحميل في الخلفية شوية بعد ما الصفحة الأولى تفتح، عشان منزحمش التحميل الأساسي
+setTimeout(preloadAllPages, 800);
