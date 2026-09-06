@@ -2,7 +2,7 @@
 // storage.js
 // إدارة تخزين المعاملات (مصاريف + دخل) في localStorage
 // ==============================
-
+const APP_VERSION = "2.4";
 const STORAGE_KEY = "transactions";
 const CURRENCY_KEY = "currency";
 

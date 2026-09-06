@@ -430,20 +430,38 @@ body.has-scroll {
 }
 
 .account-info {
-    flex: 1;
-    min-width: 0;
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
 }
 
 .account-name {
     font-weight: 700;
     font-size: 15px;
+    text-align: left !important;
+    width: 100%;
 }
 
 .account-balance {
     font-size: 13px;
     color: #777;
+    text-align: left !important;
+    width: 100%;
 }
 
+/* في وضع العربي (RTL) نقلبها لليمين بشكل صريح */
+[dir="rtl"] .account-info {
+    align-items: flex-end !important;
+    text-align: right !important;
+}
+
+[dir="rtl"] .account-name,
+[dir="rtl"] .account-balance {
+    text-align: right !important;
+}
 .account-item-disabled {
     opacity: 0.35;
     pointer-events: none;

@@ -7,6 +7,13 @@
 
 function initSettingsPage() {
     
+    // تحديث رقم الإصدار في كل الأماكن من مصدر واحد (APP_VERSION)
+    const aboutVersionText = document.getElementById("aboutVersionText");
+    if (aboutVersionText) aboutVersionText.textContent = "Version " + APP_VERSION;
+    
+    const appVersionText = document.getElementById("appVersionText");
+    if (appVersionText) appVersionText.textContent = "Version " + APP_VERSION;
+    
     const modalsPlaceholder = document.getElementById("modals-placeholder");
 if (modalsPlaceholder) {
     modalsPlaceholder.innerHTML = renderSharedModals();
