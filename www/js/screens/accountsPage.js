@@ -75,13 +75,40 @@ function initAccountsPage() {
 
     attachThousandsFormatter(document.getElementById("newAccountBalance"));
 
-    if (iconDropdownTrigger) {
-        iconDropdownTrigger.onclick = function (e) {
-            e.stopPropagation();
-            iconDropdownList.classList.toggle("show");
-        };
-    }
+    const iconSearchInput = document.getElementById("iconSearchInput");
 
+function filterAccountIcons(term) {
+    term = (term || "").trim().toLowerCase();
+    document.querySelectorAll("#iconDropdownList .icon-option").forEach(function(opt) {
+        const label = (opt.dataset.label || "").toLowerCase();
+        const icon = (opt.dataset.icon || "").toLowerCase();
+        const match = label.includes(term) || icon.includes(term);
+        opt.style.display = match ? "flex" : "none";
+    });
+}
+
+if (iconDropdownTrigger) {
+    iconDropdownTrigger.onclick = function(e) {
+        e.stopPropagation();
+        iconDropdownList.classList.toggle("show");
+        if (iconDropdownList.classList.contains("show")) {
+            if (iconSearchInput) {
+                iconSearchInput.value = "";
+                iconSearchInput.focus();
+            }
+            filterAccountIcons("");
+        }
+    };
+}
+
+if (iconSearchInput) {
+    iconSearchInput.addEventListener("input", function() {
+        filterAccountIcons(this.value);
+    });
+    iconSearchInput.addEventListener("click", function(e) {
+        e.stopPropagation();
+    });
+}
     document.querySelectorAll(".icon-option").forEach(function (option) {
         option.onclick = function () {
             const icon = this.dataset.icon;
