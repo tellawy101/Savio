@@ -355,7 +355,8 @@ body.amounts-hidden .stat p{
 
 .balance-box h2 {
     display: inline-flex;
-    flex-direction: row-reverse;
+    direction: ltr;
+    flex-direction: row;
     align-items: baseline;
     gap: 8px;
     
@@ -401,7 +402,8 @@ body.amounts-hidden .stat p{
 
 .stat p {
     display: inline-flex;
-    flex-direction: row-reverse;
+    direction: ltr;
+    flex-direction: row;
     align-items: baseline;
     gap: 4px;
     margin: 6px 0;
@@ -484,7 +486,8 @@ body.amounts-hidden .stat p{
 
 .expense-amount {
     display: inline-flex;
-    flex-direction: row-reverse;
+    direction: ltr;
+    flex-direction: row;
     align-items: baseline;
     gap: 4px;
     
