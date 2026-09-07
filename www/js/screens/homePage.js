@@ -42,7 +42,11 @@ function initHomePage() {
     let income = 0;
     let total = 0;
     let editIndex = -1;
-
+function cleanLabel(text) {
+        return String(text || "")
+            .replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\s]+/u, "")
+            .trim();
+    }
     // عرض البيانات
     function renderExpenses() {
 
@@ -89,14 +93,8 @@ function initHomePage() {
             const li = document.createElement("li");
 
             // إزالة الإيموجي من النص وإبقاء الاسم فقط
-            function cleanLabel(text) {
-                return String(text || "")
-                    .replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\s]+/u, "")
-                    .trim();
-            }
-
             const cleanCategory = cleanLabel(expense.category);
-            const cleanAccount = cleanLabel(expense.account);
+const cleanAccount = cleanLabel(expense.account);
 
             li.innerHTML = `
     <div class="expense-swipe">
