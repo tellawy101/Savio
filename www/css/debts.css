@@ -452,6 +452,23 @@ transform: translateY(-10px);
     transform: translateY(0) scale(1);
     opacity: 1;
 }
+#debtModal {
+    align-items: flex-end;
+    padding-top: 0;
+}
+
+#debtModal .modal-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: 20px 20px 0 0;
+    margin: 0;
+    transform: translateY(100%);
+}
+
+#debtModal.show .modal-content {
+    transform: translateY(0);
+}
 
 /* ==============================
    Notes

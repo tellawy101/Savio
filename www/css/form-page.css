@@ -375,13 +375,15 @@ body.has-scroll {
 }
 
 #categoryModal,
+#addAccountModal,
 #accountModal {
     align-items: flex-end;
     padding-top: 0;
 }
 
 #categoryModal .modal-content,
-#accountModal .modal-content {
+#accountModal .modal-content,
+#addAccountModal .modal-content {
     width: 100%;
     max-width: 100%;
     min-width: 0;
