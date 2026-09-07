@@ -102,28 +102,8 @@ function isTransfer(transaction) {
     // SUMMARY
     // ------------------------------
     function updateSummary(transactions) {
-
-        let income = 0;
-        let expense = 0;
-
-        transactions.forEach(transaction => {
-
-            if (isTransfer(transaction)) {
-                return;
-            }
-
-            const amount = Number(transaction.amount) || 0;
-
-            if (transaction.type === "income") {
-                income += amount;
-            }
-
-            if (transaction.type === "expense") {
-                expense += amount;
-            }
-        });
-
-        const balance = income - expense;
+    
+    const { income, expense, balance } = calculateSummary(transactions);
 
         const incomeElement = document.getElementById("totalIncome");
 const expenseElement = document.getElementById("totalExpense");
@@ -153,64 +133,24 @@ if (balanceElement) {
             return;
         }
 
-        const categories = {};
+        const breakdown = calculateCategoryBreakdown(transactions);
 
-        transactions.forEach(transaction => {
-
-            if (
-                transaction.type !== "expense" ||
-                isTransfer(transaction)
-            ) {
-                return;
-            }
-
-            const category =
-                transaction.category ||
-                "Other";
-
-            const amount =
-                Number(transaction.amount) || 0;
-
-            categories[category] =
-                (categories[category] || 0) + amount;
-        });
-
-        const entries = Object.entries(categories)
-            .sort((a, b) => b[1] - a[1]);
-
-        if (!entries.length) {
-
-            container.innerHTML = `
+if (!breakdown.length) {
+    
+    container.innerHTML = `
     <div class="empty-stat">
         <i data-lucide="pie-chart"></i>
         <span>${t("stats_no_expense_data")}</span>
     </div>
 `;
+    
+    if (window.lucide) lucide.createIcons();
+    
+    return;
+}
 
-            if (window.lucide) lucide.createIcons();
-
-            return;
-        }
-
-        const maxAmount = entries[0][1];
-
-        const totalAmount = entries.reduce(
-            (sum, entry) => sum + entry[1],
-            0
-        );
-
-        container.innerHTML = entries.map(([category, amount]) => {
-
-            const percentage =
-                maxAmount > 0
-                    ? (amount / maxAmount) * 100
-                    : 0;
-
-            const share =
-                totalAmount > 0 ?
-                Math.round((amount / totalAmount) * 100) :
-                0;
-
+container.innerHTML = breakdown.map(({ category, amount, percentage }) => {
+            
             return `
             <div class="category-row">
 
@@ -252,59 +192,7 @@ if (balanceElement) {
             return;
         }
 
-        const accounts = {};
-
-        transactions.forEach(transaction => {
-
-            // تجاهل التحويلات لأنها لا تعتبر دخل أو مصروف
-            if (isTransfer(transaction)) {
-                return;
-            }
-
-            const account =
-                transaction.account ||
-                "Unknown";
-
-            const amount =
-                Number(transaction.amount) || 0;
-
-            // إنشاء الحساب أول مرة
-            if (!accounts[account]) {
-                accounts[account] = {
-                    income: 0,
-                    expense: 0
-                };
-            }
-
-            // حساب الدخل والمصروف لكل Account
-            if (transaction.type === "income") {
-                accounts[account].income += amount;
-            }
-
-            if (transaction.type === "expense") {
-                accounts[account].expense += amount;
-            }
-        });
-
-        // تحويل البيانات إلى Array وترتيب الحسابات
-        const entries = Object.entries(accounts)
-            .map(([account, data]) => {
-
-                const net =
-                    data.income -
-                    data.expense;
-
-                return {
-                    account,
-                    income: data.income,
-                    expense: data.expense,
-                    net
-                };
-            })
-            .sort((a, b) =>
-                Math.abs(b.net) -
-                Math.abs(a.net)
-            );
+        const entries = calculateAccountBreakdown(transactions);
 
         // لو مفيش بيانات
         if (!entries.length) {
@@ -376,81 +264,10 @@ if (balanceElement) {
             return;
         }
 
-        const grouped = {};
+const locale = getLanguage() === "ar" ? "ar-EG" : "en-US";
 
-        transactions.forEach(transaction => {
-
-            if (
-                isTransfer(transaction) ||
-                !transaction.date
-            ) {
-                return;
-            }
-
-            const date =
-                getTransactionDate(transaction);
-
-            if (!date) {
-                return;
-            }
-
-            let key;
-
-            const locale =
-        getLanguage() === "ar" ? "ar-EG" : "en-US";
-
-    if (currentPeriod === "year") {
-
-        key = date.toLocaleString(locale, {
-            month: "short"
-        });
-
-    } else {
-
-        key =
-            date.toLocaleDateString(locale, {
-                month: "short",
-                day: "numeric"
-            });
-    }
-
-            if (!grouped[key]) {
-
-                grouped[key] = {
-                    income: 0,
-                    expense: 0,
-                    date: date
-                };
-            }
-
-            const amount =
-                Number(transaction.amount) || 0;
-
-            if (transaction.type === "income") {
-                grouped[key].income += amount;
-            }
-
-            if (transaction.type === "expense") {
-                grouped[key].expense += amount;
-            }
-
-        });
-
-        const entries =
-            Object.entries(grouped)
-                .sort((a, b) =>
-                    a[1].date - b[1].date
-                );
-
-        const labels =
-            entries.map(entry => entry[0]);
-
-        const incomeData =
-            entries.map(entry => entry[1].income);
-
-        const expenseData =
-            entries.map(entry => entry[1].expense);
-
+const { labels, incomeData, expenseData } =
+groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, locale);
         if (cashFlowChart) {
             cashFlowChart.destroy();
         }

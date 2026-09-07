@@ -198,6 +198,51 @@ function saveDebts(debts) {
     localStorage.setItem(DEBTS_KEY, JSON.stringify(debts));
 }
 // ==============================
+// حساب إجمالي الديون (منطق بيزنس منفصل عن العرض)
+// ==============================
+function calculateDebtTotals(debts) {
+    let receivable = 0;
+    let payable = 0;
+
+    debts.forEach(debt => {
+        const remaining = Number(debt.remaining) || 0;
+        if (debt.type === "receivable") {
+            receivable += remaining;
+        } else {
+            payable += remaining;
+        }
+    });
+
+    return { receivable, payable, net: receivable - payable };
+}
+// ==============================
+// حساب إجمالي الدخل/المصروف لشهر معيّن (منطق بيزنس منفصل عن العرض)
+// ==============================
+function calculateMonthlyTotals(transactions, selectedMonth) {
+    let income = 0;
+    let total = 0;
+
+    transactions.forEach(expense => {
+        if (
+            selectedMonth &&
+            expense.date &&
+            !expense.date.startsWith(selectedMonth)
+        ) {
+            return;
+        }
+
+        if (!expense.isTransfer) {
+            if (expense.type === "expense") {
+                total += expense.amount;
+            } else if (expense.type === "income") {
+                income += expense.amount;
+            }
+        }
+    });
+
+    return { income, total };
+}
+// ==============================
 // Backup (Export / Import)
 // ==============================
 
@@ -205,3 +250,11 @@ const BACKUP_KEYS = [
     STORAGE_KEY, ACCOUNTS_KEY, CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY,
     DEBTS_KEY, BUDGET_KEY, THEME_KEY, LANGUAGE_KEY, CURRENCY_KEY, BALANCE_HIDDEN_KEY
 ];
+// ==============================
+// حساب إجمالي معاملات حساب معيّن (منطق بيزنس منفصل عن العرض)
+// ==============================
+function calculateTransactionsTotal(transactions) {
+    return transactions.reduce((sum, transaction) => {
+        return sum + Number(transaction.amount || 0);
+    }, 0);
+}

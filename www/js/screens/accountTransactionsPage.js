@@ -73,9 +73,7 @@ function initAccountTransactionsPage() {
     listTitleEl.textContent =
         isIncome ? t("income_title") : t("expense_title");
 
-    const total = accountTransactions.reduce((sum, transaction) => {
-        return sum + Number(transaction.amount || 0);
-    }, 0);
+    const total = calculateTransactionsTotal(accountTransactions);
 
     totalAmountEl.textContent = total.toLocaleString("en-US");
 

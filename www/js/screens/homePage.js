@@ -47,8 +47,6 @@ function initHomePage() {
     function renderExpenses() {
 
         expenseList.innerHTML = "";
-        total = 0;
-        income = 0;
 
         // بنرتب المعاملات حسب التاريخ (الأحدث فوق)، ولو نفس التاريخ الأحدث إضافة الأول
         // من غير ما نغيّر ترتيبها الأصلي جوه الـ localStorage (عشان index يفضل صحيح للتعديل/الحذف)
@@ -61,28 +59,7 @@ function initHomePage() {
                 return b.index - a.index;
             });
 
-        // إجمالي الدخل/المصروف/الرصيد بيتحسب من كل المعاملات (بعد فلتر الشهر بس)،
-        // من غير ما يتأثر بالبحث - عشان الأرقام تفضل ثابتة وهو بيدور
-        sortedEntries.forEach(({ expense }) => {
-
-            if (
-                window.selectedMonth &&
-                expense.date &&
-                !expense.date.startsWith(window.selectedMonth)
-            ) {
-                return;
-            }
-
-            if (!expense.isTransfer) {
-                if (expense.type === "expense") {
-                    total += expense.amount;
-                } else if (expense.type === "income") {
-                    income += expense.amount;
-                }
-            }
-
-        });
-
+({ income, total } = calculateMonthlyTotals(sortedEntries.map(e => e.expense), window.selectedMonth));
         // نص البحث بعد تنضيفه من المسافات الزيادة وتحويله لحروف صغيرة
         const searchTerm = searchInput.value.trim().toLowerCase();
 

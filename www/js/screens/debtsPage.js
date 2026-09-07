@@ -294,19 +294,9 @@ saveDebts(debts);
     });
 
     function renderDebts() {
-        debtsList.innerHTML = "";
-
-        let receivable = 0;
-        let payable = 0;
-
-        debts.forEach(debt => {
-            const remaining = Number(debt.remaining) || 0;
-            if (debt.type === "receivable") {
-                receivable += remaining;
-            } else {
-                payable += remaining;
-            }
-        });
+    debtsList.innerHTML = "";
+    
+    const { receivable, payable, net } = calculateDebtTotals(debts);
 
         [...debts].reverse().forEach(debt => {
             const isSettled = debt.remaining === 0;
@@ -507,9 +497,6 @@ if (currentX > 0) {
 
         totalReceivable.innerText = "EGP " + Math.round(receivable).toLocaleString("en-US");
         totalPayable.innerText = "EGP " + Math.round(payable).toLocaleString("en-US");
-
-        const net = receivable - payable;
-
         netBalance.querySelector(".currency").innerText = "EGP";
         netBalance.querySelector(".amount").innerText = Math.round(net).toLocaleString("en-US");
 
