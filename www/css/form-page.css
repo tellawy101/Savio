@@ -381,15 +381,36 @@ body.has-scroll {
     padding-top: 0;
 }
 
-#categoryModal .modal-content,
-#accountModal .modal-content,
-#addAccountModal .modal-content {
+#categoryModal .modal-content, #accountModal .modal-content, #addAccountModal .modal-content {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    border-radius: 20px 20px 0 0;
+    border-radius: 24px 24px 0 0;
     margin: 0;
+    box-sizing: border-box;
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom, 16px));
     animation: slideUpSheet .25s ease;
+}
+/* تنسيق أزرار الحفظ والإلغاء في شيت إضافة الحساب */
+.modal-actions .account-cancel-btn {
+    background: #E5E7EB;
+    color: #374151;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+body.dark .modal-actions .account-cancel-btn {
+    background: #2C2C2C !important;
+    color: #F1F5F4 !important;
+    border: 1px solid #3E3E3E !important;
+}
+
+body.dark .modal-actions .account-save-btn {
+    background: #0F766E !important;
+    color: #ffffff !important;
 }
 .form-input {
     width: 100%;

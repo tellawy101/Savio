@@ -289,7 +289,7 @@ saveAccounts(accounts);
         if (accountsWithBalance.length === 0) {
             list.innerHTML = `
                 <p class="accounts-empty">
-                    لسه معندكش حسابات. دوس على + فوق عشان تضيف أول حساب.
+                    لسه معندكش حسابات. دوس على + بالأسفل عشان تضيف أول حساب.
                 </p>
             `;
         } else {
