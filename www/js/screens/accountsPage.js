@@ -115,6 +115,12 @@ if (iconSearchInput) {
         e.stopPropagation();
     });
 }
+document.addEventListener("click", function(e) {
+    if (iconDropdownList.classList.contains("show") && !iconDropdownList.contains(e.target) && e.target !== iconDropdownTrigger) {
+        iconDropdownList.classList.remove("show");
+        if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
+    }
+});
     document.querySelectorAll(".icon-option").forEach(function (option) {
         option.onclick = function () {
             const icon = this.dataset.icon;

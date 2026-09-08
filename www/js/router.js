@@ -162,12 +162,18 @@ window.addEventListener("popstate", function (e) {
 let exitConfirmActive = false;
 
 // التحكم في زرار الرجوع الفيزيائي في أندرويد
-window.handleHardwareBack = function () {
+window.handleHardwareBack = function() {
+    const openIconList = document.querySelector(".icon-dropdown-list.show");
+    if (openIconList) {
+        openIconList.classList.remove("show");
+        return;
+    }
+    
     if (currentPageName !== "home") {
         navigateTo("home");
         return;
     }
-
+    
     if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AppExit) {
         window.Capacitor.Plugins.AppExit.exitApp();
     }
