@@ -87,16 +87,22 @@ function filterAccountIcons(term) {
     });
 }
 
+const iconDropdownHome = iconDropdownTrigger ? iconDropdownTrigger.parentElement : null;
+
 if (iconDropdownTrigger) {
     iconDropdownTrigger.onclick = function(e) {
         e.stopPropagation();
-        iconDropdownList.classList.toggle("show");
-        if (iconDropdownList.classList.contains("show")) {
-            if (iconSearchInput) {
-                iconSearchInput.value = "";
-                iconSearchInput.focus();
-            }
+        const isOpen = iconDropdownList.classList.contains("show");
+        if (!isOpen) {
+            document.body.appendChild(iconDropdownList);
+            iconDropdownList.classList.add("show");
+            iconDropdownList.style.top = Math.round(window.innerHeight * 0.08) + "px";
+            iconDropdownList.style.maxHeight = Math.round(window.innerHeight * 0.84) + "px";
+            if (iconSearchInput) iconSearchInput.value = "";
             filterAccountIcons("");
+        } else {
+            iconDropdownList.classList.remove("show");
+            if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
         }
     };
 }
@@ -117,8 +123,9 @@ if (iconSearchInput) {
             document.getElementById("selectedIconPreviewWrap").innerHTML =
                 `<i data-lucide="${icon}" id="selectedIconPreview"></i>`;
             selectedIconLabel.textContent = label;
-            iconDropdownList.classList.remove("show");
-            if (window.lucide) lucide.createIcons();
+iconDropdownList.classList.remove("show");
+if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
+if (window.lucide) lucide.createIcons();
         };
     });
 

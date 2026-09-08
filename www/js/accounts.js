@@ -311,19 +311,20 @@ function filterAccountIcons(term) {
         opt.style.display = match ? "flex" : "none";
     });
 }
-
+const addAccountModalContent = document.querySelector("#addAccountModal .modal-content");
 if (iconDropdownTrigger) {
     iconDropdownTrigger.onclick = function(e) {
         e.stopPropagation();
         iconDropdownList.classList.toggle("show");
-        if (iconDropdownList.classList.contains("show")) {
-            if (iconSearchInput) {
-                iconSearchInput.value = "";
-                iconSearchInput.focus();
-            }
-            filterAccountIcons("");
+        const isOpen = iconDropdownList.classList.contains("show");
+        if (addAccountModalContent) {
+            addAccountModalContent.style.overflow = isOpen ? "hidden" : "";
         }
-    };
+        if (isOpen) {
+    if (iconSearchInput) iconSearchInput.value = "";
+    filterAccountIcons("");
+}
+};
 }
 
 if (iconSearchInput) {
@@ -346,6 +347,7 @@ document.getElementById("selectedIconPreviewWrap").innerHTML =
 selectedIconLabel.textContent = label;
 
         iconDropdownList.classList.remove("show");
+if (addAccountModalContent) addAccountModalContent.style.overflow = "";
 
         if (window.lucide) lucide.createIcons();
     };
@@ -354,6 +356,7 @@ selectedIconLabel.textContent = label;
 document.addEventListener("click", function(e) {
     if (iconDropdownList && !iconDropdownList.contains(e.target) && e.target !== iconDropdownTrigger) {
         iconDropdownList.classList.remove("show");
+if (addAccountModalContent) addAccountModalContent.style.overflow = "";
     }
 });
 const cancelAddAccountBtn = document.getElementById("cancelAddAccountBtn");

@@ -376,11 +376,10 @@ body {
     top: 8vh;
     
     width: 90%;
-    max-height: 84vh;
+    height: 84vh;
     
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    
+    overscroll-behavior: contain;
     z-index: 3000;
     
     box-sizing: border-box;
