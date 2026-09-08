@@ -97,7 +97,7 @@ if (iconDropdownTrigger) {
             document.body.appendChild(iconDropdownList);
             iconDropdownList.classList.add("show");
             iconDropdownList.style.top = Math.round(window.innerHeight * 0.08) + "px";
-            iconDropdownList.style.maxHeight = Math.round(window.innerHeight * 0.84) + "px";
+            iconDropdownList.style.height = Math.round(window.innerHeight * 0.84) + "px";
             if (iconSearchInput) iconSearchInput.value = "";
             filterAccountIcons("");
         } else {
