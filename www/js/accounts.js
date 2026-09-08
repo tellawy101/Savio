@@ -311,20 +311,23 @@ function filterAccountIcons(term) {
         opt.style.display = match ? "flex" : "none";
     });
 }
-const addAccountModalContent = document.querySelector("#addAccountModal .modal-content");
+const iconDropdownHome = iconDropdownTrigger ? iconDropdownTrigger.parentElement : null;
 if (iconDropdownTrigger) {
     iconDropdownTrigger.onclick = function(e) {
         e.stopPropagation();
-        iconDropdownList.classList.toggle("show");
         const isOpen = iconDropdownList.classList.contains("show");
-        if (addAccountModalContent) {
-            addAccountModalContent.style.overflow = isOpen ? "hidden" : "";
+        if (!isOpen) {
+            document.body.appendChild(iconDropdownList);
+            iconDropdownList.classList.add("show");
+            iconDropdownList.style.top = Math.round(window.innerHeight * 0.08) + "px";
+            iconDropdownList.style.height = Math.round(window.innerHeight * 0.84) + "px";
+            if (iconSearchInput) iconSearchInput.value = "";
+            filterAccountIcons("");
+        } else {
+            iconDropdownList.classList.remove("show");
+            if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
         }
-        if (isOpen) {
-    if (iconSearchInput) iconSearchInput.value = "";
-    filterAccountIcons("");
-}
-};
+    };
 }
 
 if (iconSearchInput) {
@@ -347,8 +350,7 @@ document.getElementById("selectedIconPreviewWrap").innerHTML =
 selectedIconLabel.textContent = label;
 
         iconDropdownList.classList.remove("show");
-if (addAccountModalContent) addAccountModalContent.style.overflow = "";
-
+if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
         if (window.lucide) lucide.createIcons();
     };
 });
@@ -356,7 +358,7 @@ if (addAccountModalContent) addAccountModalContent.style.overflow = "";
 document.addEventListener("click", function(e) {
     if (iconDropdownList && !iconDropdownList.contains(e.target) && e.target !== iconDropdownTrigger) {
         iconDropdownList.classList.remove("show");
-if (addAccountModalContent) addAccountModalContent.style.overflow = "";
+if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
     }
 });
 const cancelAddAccountBtn = document.getElementById("cancelAddAccountBtn");
