@@ -1000,26 +1000,24 @@ svg.lucide {
 }
 
 .budget-modal-close {
-    width: 36px;
-    height: 36px;
-    flex: 0 0 36px;
-    
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    
     border: 0;
     border-radius: 50%;
-    
     background: #F3F4F6;
-    color: #6B7280;
-    
+    color: #4B5563;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .budget-modal-close svg {
-    width: 18px;
-    height: 18px;
+    width: 24px !important;
+    height: 24px !important;
+    stroke-width: 2.5 !important;
 }
 
 .budget-modal-content label {
@@ -1029,38 +1027,44 @@ svg.lucide {
     font-weight: 600;
     color: #6B7280;
 }
-
-.budget-input-wrap {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    
-    padding: 4px 14px;
-    margin-bottom: 20px;
-    
-    border: 1.5px solid #E5E7EB;
-    border-radius: 14px;
-    
-    background: #F9FAFB;
-}
-
 .budget-input-currency {
     font-size: 14px;
     font-weight: 700;
     color: #0F766E;
 }
+.budget-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 16px;
+    margin-bottom: 22px;
+    border: 2px solid #0F766E !important; /* لون هوية البرنامج الأساسي */
+    border-radius: 14px;
+    background: #F9FAFB;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.budget-input-wrap:focus-within {
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.25); /* توهج خفيف ناعم بنفس هوية البرنامج */
+}
 
 .budget-input-wrap input {
-    border: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important; /* إلغاء أي بوردر داخلي نهائياً */
+    -webkit-appearance: none;
     background: transparent !important;
-    padding: 12px 0 !important;
+    padding: 14px 0 !important;
     margin: 0 !important;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
+    width: 100%;
 }
 
 .budget-input-wrap input:focus {
-    outline: none;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .budget-save-btn {
@@ -1231,4 +1235,102 @@ textarea {
     -webkit-user-select: text;
     -moz-user-select: text;
     user-select: text;
+}
+/* =========================================
+   تنسيقات نافذة الميزانية في الوضع الليلي (Dark Mode)
+========================================= */
+body.dark #budgetModal .budget-modal-content {
+    background: #1F2937 !important;
+    border: 1px solid #374151;
+    color: #F9FAFB !important;
+}
+
+/* عنوان الميزانية */
+body.dark .budget-modal-header h2 {
+    color: #F9FAFB !important;
+}
+
+/* أيقونة المحفظة */
+body.dark .budget-modal-icon {
+    background: rgba(15, 118, 110, 0.25) !important;
+    color: #2DD4BF !important;
+}
+
+/* زرار الإغلاق X */
+body.dark .budget-modal-close {
+    background: rgba(255, 255, 255, 0.06) !important; /* خلفية ناعمة جداً وخفيفة */
+    color: #9CA3AF !important; /* لون الـ X مريح للعين */
+    border: 1px solid rgba(255, 255, 255, 0.08) !important; /* تحديد خفيف جداً */
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+body.dark .budget-modal-close:active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #FFFFFF !important;
+}
+
+/* عنوان الحقل "الميزانية الشهرية" */
+body.dark .budget-modal-content label {
+    color: #9CA3AF !important;
+}
+
+/* صندوق كتابة المبلغ */
+body.dark .budget-input-wrap {
+    background: #111827 !important;
+    border: 2px solid #0F766E !important; /* لون هوية البرنامج في الدارك مود */
+}
+
+/* النص والعملة EGP داخل الصندوق */
+body.dark .budget-input-currency {
+    color: #2DD4BF !important;
+}
+
+body.dark .budget-input-wrap input {
+    color: #FFFFFF !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+body.dark .budget-input-wrap input::placeholder {
+    color: #6B7280 !important;
+}
+
+/* زر الحفظ */
+body.dark .budget-save-btn {
+    background: #0F766E !important;
+    color: #ffffff !important;
+}
+body.dark .budget-input-wrap:focus-within {
+border-color: #2DD4BF !important;
+box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2) !important;
+}
+/* =========================================
+   تنسيق العملة والمبلغ في زر الميزانية
+========================================= */
+#budgetValue {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    gap: 4px !important;
+    direction: ltr !important;
+    white-space: nowrap !important;
+}
+
+/* العملة (EGP) بحجم أصغر وهادئ */
+.budget-currency {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    opacity: 0.85 !important;
+}
+
+/* الرقم (900) عريض (Bold) وواضح */
+.budget-number {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+}
+
+.budget-over {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    opacity: 0.85 !important;
 }

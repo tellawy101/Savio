@@ -619,44 +619,39 @@ if (budgetBtn && budgetModal) {
     }
 
     function updateBudgetButton() {
-        const budgetValue = document.getElementById("budgetValue");
-        if (!budgetValue) return;
-
-        const budget = getBudget();
-
-        if (budget <= 0) {
-    budgetValue.textContent = typeof t === "function" ? t("budget") : "Budget";
-    return;
-}
-
-        const now = new Date();
-        const currentYear = now.getFullYear();
-        const currentMonth = now.getMonth();
-
-        const totalExpenses = loadTransactions()
-            .filter(transaction => {
-                if (transaction.type !== "expense") return false;
-                if (transaction.isTransfer) return false;
-                if (!transaction.date) return false;
-
-                const parts = transaction.date.split("-");
-                if (parts.length !== 3) return false;
-
-                const year = Number(parts[0]);
-                const month = Number(parts[1]) - 1;
-
-                return year === currentYear && month === currentMonth;
-            })
-            .reduce((sum, transaction) => sum + (Number(transaction.amount) || 0), 0);
-
-        const remaining = budget - totalExpenses;
-
-        if (remaining >= 0) {
-            budgetValue.textContent = formatCurrency(remaining);
-        } else {
-            budgetValue.textContent = `${formatCurrency(Math.abs(remaining))} over`;
-        }
+    const budgetValue = document.getElementById("budgetValue");
+    if (!budgetValue) return;
+    const budget = getBudget();
+    if (budget <= 0) {
+        budgetValue.textContent = typeof t === "function" ? t("budget") : "Budget";
+        return;
     }
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    const totalExpenses = loadTransactions()
+        .filter(transaction => {
+            if (transaction.type !== "expense") return false;
+            if (transaction.isTransfer) return false;
+            if (!transaction.date) return false;
+            const parts = transaction.date.split("-");
+            if (parts.length !== 3) return false;
+            const year = Number(parts[0]);
+            const month = Number(parts[1]) - 1;
+            return year === currentYear && month === currentMonth;
+        })
+        .reduce((sum, transaction) => sum + (Number(transaction.amount) || 0), 0);
+    const remaining = budget - totalExpenses;
+    const curr = getCurrency();
+    
+    if (remaining >= 0) {
+        const val = Math.round(remaining).toLocaleString("en-US");
+        budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span>`;
+    } else {
+        const val = Math.round(Math.abs(remaining)).toLocaleString("en-US");
+        budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span> <span class="budget-over">over</span>`;
+    }
+}
 
     if (saveBudgetBtn && budgetAmountInput) {
     saveBudgetBtn.onclick = async function() {
