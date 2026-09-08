@@ -200,24 +200,9 @@ function renderSharedModals() {
     </div>
 </div>
 <input type="hidden" id="newAccountIcon" value="wallet">
-            <input
+           <input
                 type="tel"
-                id="newAwindow.handleHardwareBack = function() {
-    const openIconList = document.querySelector(".icon-dropdown-list.show");
-    if (openIconList) {
-        openIconList.classList.remove("show");
-        return;
-    }
-    
-    if (currentPageName !== "home") {
-        navigateTo("home");
-        return;
-    }
-    
-    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AppExit) {
-        window.Capacitor.Plugins.AppExit.exitApp();
-    }
-};ccountBalance"
+                id="newAccountBalance"
                 class="form-input"
                 placeholder="Initial Balance" data-i18n-placeholder="initial_balance_placeholder">
             <div class="modal-actions">

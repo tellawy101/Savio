@@ -169,6 +169,12 @@ window.handleHardwareBack = function() {
         return;
     }
     
+    const openModal = document.querySelector(".modal.show");
+    if (openModal) {
+        openModal.classList.remove("show");
+        return;
+    }
+    
     if (currentPageName !== "home") {
         navigateTo("home");
         return;
