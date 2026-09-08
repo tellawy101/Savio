@@ -1,7 +1,6 @@
 // ==========================
 // router.js
-// نظام تنقل SPA (تجريبي) - هيبدأ بصفحة الإعدادات بس
-// أي صفحة لسه مش متسجلة هنا هتفتح بالطريقة القديمة العادية
+// نظام تنقل SPA
 // ==========================
 const templateCache = {};
 let currentPageName = "home";
@@ -65,152 +64,191 @@ const ROUTES = {
         }
     },
 };
+
 async function navigateTo(pageName) {
-        currentPageName = pageName;
-        const route = ROUTES[pageName];
-        
-        // كل الصفحات بقت مسجّلة في الراوتر - لو اسم مش موجود، ارجع للهوم
-        if (!route) {
-            console.error("Unknown route:", pageName);
-            window.location.href = "index.html";
-            return;
-        }
-    const app = document.getElementById("app");
-if (!app) {
-    // لو مفيش div#app أصلاً (يعني index.html لسه معملهاش)
-    window.location.href = "index.html";
-    return;
-}
-  try {
-    let html = templateCache[pageName];
-    if (!html) {
-        const res = await fetch(route.template);
-        html = await res.text();
-        templateCache[pageName] = html;
+    currentPageName = pageName;
+    const route = ROUTES[pageName];
+    
+    if (!route) {
+        console.error("Unknown route:", pageName);
+        window.location.href = "index.html";
+        return;
     }
-
-    app.style.visibility = "hidden";
-// نظّف أي عنصر خاص بصفحة سابقة اتحقن برّه #app (زي فاب "+ إضافة حساب")
-if (pageName !== "accounts") {
-    const oldFab = document.getElementById("openAddAccountBtn");
-    if (oldFab) oldFab.remove();
-}
-
-if (pageName !== "add-transaction") {
-    document.body.classList.remove("add-transaction-page");
-    document.body.classList.remove("has-scroll");
-}
-
-app.innerHTML = html;
+    const app = document.getElementById("app");
+    if (!app) {
+        window.location.href = "index.html";
+        return;
+    }
+    try {
+        let html = templateCache[pageName];
+        if (!html) {
+            const res = await fetch(route.template);
+            html = await res.text();
+            templateCache[pageName] = html;
+        }
+        
+        app.style.visibility = "hidden";
+        if (pageName !== "accounts") {
+            const oldFab = document.getElementById("openAddAccountBtn");
+            if (oldFab) oldFab.remove();
+        }
+        
+        if (pageName !== "add-transaction") {
+            document.body.classList.remove("add-transaction-page");
+            document.body.classList.remove("has-scroll");
+        }
+        
+        app.innerHTML = html;
         if (window.lucide) lucide.createIcons({ root: app });
         const navPlaceholder = document.getElementById("nav-placeholder");
-if (navPlaceholder && typeof renderBottomNav === "function") {
-    if (pageName === "add-transaction") {
-        navPlaceholder.innerHTML = "";
-    } else {
-        const existingNav = navPlaceholder.querySelector(".bottom-nav");
-        if (existingNav) {
-            // الـ nav موجود بالفعل - بدّل كلاس active بس عشان الـ transition يشتغل
-            existingNav.querySelectorAll(".nav-item[data-page]").forEach(function(btn) {
-                btn.classList.toggle("active", btn.dataset.page === pageName);
-            });
-            
-            // إظهار/إخفاء زرار الـ FAB حسب لو دخلنا/خرجنا من الرئيسية
-            const isHome = pageName === "home";
-            existingNav.classList.toggle("no-fab", !isHome);
-            let fabBtn = existingNav.querySelector("#addMenuBtn");
-            if (isHome && !fabBtn) {
-                fabBtn = document.createElement("button");
-                fabBtn.id = "addMenuBtn";
-                fabBtn.className = "fab-nav";
-                fabBtn.innerHTML = '<i data-lucide="plus"></i>';
-                const accountsBtn = existingNav.querySelector('.nav-item[data-page="accounts"]');
-                if (accountsBtn) {
-                    existingNav.insertBefore(fabBtn, accountsBtn);
+        if (navPlaceholder && typeof renderBottomNav === "function") {
+            if (pageName === "add-transaction") {
+                navPlaceholder.innerHTML = "";
+            } else {
+                const existingNav = navPlaceholder.querySelector(".bottom-nav");
+                if (existingNav) {
+                    existingNav.querySelectorAll(".nav-item[data-page]").forEach(function(btn) {
+                        btn.classList.toggle("active", btn.dataset.page === pageName);
+                    });
+                    
+                    const isHome = pageName === "home";
+                    existingNav.classList.toggle("no-fab", !isHome);
+                    let fabBtn = existingNav.querySelector("#addMenuBtn");
+                    if (isHome && !fabBtn) {
+                        fabBtn = document.createElement("button");
+                        fabBtn.id = "addMenuBtn";
+                        fabBtn.className = "fab-nav";
+                        fabBtn.innerHTML = '<i data-lucide="plus"></i>';
+                        const accountsBtn = existingNav.querySelector('.nav-item[data-page="accounts"]');
+                        if (accountsBtn) {
+                            existingNav.insertBefore(fabBtn, accountsBtn);
+                        } else {
+                            existingNav.appendChild(fabBtn);
+                        }
+                        if (window.lucide) lucide.createIcons({ root: fabBtn });
+                    } else if (!isHome && fabBtn) {
+                        fabBtn.remove();
+                    }
                 } else {
-                    existingNav.appendChild(fabBtn);
+                    navPlaceholder.innerHTML = renderBottomNav(pageName);
+                    if (typeof setupBottomNav === "function") setupBottomNav("");
                 }
-                if (window.lucide) lucide.createIcons({ root: fabBtn });
-            } else if (!isHome && fabBtn) {
-                fabBtn.remove();
             }
-        } else {
-            // أول تحميل للـ nav - ابنيه زي ما هو
-            navPlaceholder.innerHTML = renderBottomNav(pageName);
-            if (typeof setupBottomNav === "function") setupBottomNav("");
         }
-    }
-}
-route.init();
-if (typeof applyLanguage === "function") applyLanguage();
-
+        route.init();
+        if (typeof applyLanguage === "function") applyLanguage();
+        
         app.style.visibility = "visible";
-
         history.pushState({ page: pageName }, "", "#" + pageName);
-  } catch (err) {
+    } catch (err) {
         app.style.visibility = "visible";
         console.error("Router failed to load page:", pageName, err);
     }
 }
 
-window.addEventListener("popstate", function (e) {
-    const page = (e.state && e.state.page) || "home";
-    navigateTo(page);
-});
-
-// التحكم في زرار الرجوع الفيزيائي في أندرويد (بدون أي مكتبة خارجية)
-let exitConfirmActive = false;
-
-// التحكم في زرار الرجوع الفيزيائي في أندرويد
+// ==========================================
+// معالجة زر الرجوع الفيزيائي في الهاتف (Hardware Back)
+// ==========================================
 window.handleHardwareBack = function() {
+    // 1. إذا كانت قائمة اختيار الأيقونات مفتوحة، نغلقها أولاً
     const openIconList = document.querySelector(".icon-dropdown-list.show");
     if (openIconList) {
         openIconList.classList.remove("show");
-        return;
+        const trigger = document.getElementById("iconDropdownTrigger") || document.getElementById("categoryIconDropdownTrigger");
+        if (trigger && trigger.parentElement && openIconList.parentElement === document.body) {
+            trigger.parentElement.appendChild(openIconList);
+        }
+        return true;
     }
     
-    const openModal = document.querySelector(".modal.show");
-    if (openModal) {
-        openModal.classList.remove("show");
-        return;
+    // 2. فحص النوافذ المنبثقة المفتوحة (Modals)
+    const openModals = Array.from(document.querySelectorAll(".modal.show"));
+    if (openModals.length > 0) {
+        const topmostModal = openModals[openModals.length - 1];
+        topmostModal.classList.remove("show");
+        
+        if (topmostModal.id === "addAccountModal" && window.activeAccountBox) {
+            const accountModal = document.getElementById("accountModal");
+            if (accountModal) accountModal.classList.add("show");
+        }
+        
+        if (topmostModal.id === "addCategoryModal" && window.activeCategoryBox) {
+            const categoryModal = document.getElementById("categoryModal");
+            if (categoryModal) categoryModal.classList.add("show");
+        }
+        
+        return true;
     }
     
+    // 3. إذا لم يكن هناك أي نافذة مفتوحة وكنا خارج الصفحة الرئيسية، نرجع للرئيسية
     if (currentPageName !== "home") {
         navigateTo("home");
+        return true;
+    }
+    
+    // 4. إذا كنا بالفعل في الصفحة الرئيسية، نطلب إغلاق التطبيق
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AppExit) {
+        window.Capacitor.Plugins.AppExit.exitApp();
+        return true;
+    }
+    
+    return false;
+};
+
+// مراقب يمنع متصفح Acode من الخروج عند الرجوع: يضيف نقطة تراجع وهمية فور فتح أي مودال أو أيقونات
+const overlayObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.type === "attributes" && mutation.attributeName === "class") {
+            const target = mutation.target;
+            if (target.classList.contains("show") &&
+                (target.classList.contains("modal") || target.classList.contains("icon-dropdown-list"))) {
+                history.pushState({ overlay: true }, "");
+            }
+        }
+    });
+});
+overlayObserver.observe(document.body, { attributes: true, subtree: true, attributeFilter: ["class"] });
+
+// حماية حدث popstate لمنع الخروج إلى محرر Acode أو الرجوع للصفحة السابقة
+window.addEventListener("popstate", function(e) {
+    const hasOpenOverlay = document.querySelector(".icon-dropdown-list.show") || document.querySelector(".modal.show");
+    if (hasOpenOverlay) {
+        window.handleHardwareBack();
         return;
     }
     
-    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.AppExit) {
-        window.Capacitor.Plugins.AppExit.exitApp();
+    const page = (e.state && e.state.page) || "home";
+    if (page !== currentPageName) {
+        navigateTo(page);
     }
-};
-// تحميل باقي الصفحات في الخلفية بعد أول تحميل، عشان تبقى جاهزة فورًا
+});
+
+// تحميل باقي الصفحات في الخلفية بعد أول تحميل
 function preloadAllPages() {
     const pageNames = Object.keys(ROUTES);
     let index = 0;
-
+    
     function loadNext() {
         if (index >= pageNames.length) return;
         const pageName = pageNames[index];
         index++;
-
+        
         if (!templateCache[pageName]) {
             fetch(ROUTES[pageName].template)
-                .then(function (res) { return res.text(); })
-                .then(function (html) {
+                .then(function(res) { return res.text(); })
+                .then(function(html) {
                     templateCache[pageName] = html;
                 })
-                .catch(function () {})
-                .finally(function () {
+                .catch(function() {})
+                .finally(function() {
                     setTimeout(loadNext, 50);
                 });
         } else {
             setTimeout(loadNext, 0);
         }
     }
-
+    
     loadNext();
 }
 
-// نبدأ التحميل في الخلفية شوية بعد ما الصفحة الأولى تفتح، عشان منزحمش التحميل الأساسي
 setTimeout(preloadAllPages, 800);

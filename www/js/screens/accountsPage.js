@@ -136,19 +136,11 @@ if (window.lucide) lucide.createIcons();
     });
 
     if (cancelAddAccountBtn) {
-        cancelAddAccountBtn.onclick = function () {
-            addAccountModal.classList.remove("show");
-            editingAccount = null;
-            document.getElementById("newAccountName").value = "";
-            document.getElementById("newAccountDescription").value = "";
-            document.getElementById("newAccountBalance").value = "";
-            document.getElementById("selectedIconPreviewWrap").innerHTML =
-                `<i data-lucide="wallet" id="selectedIconPreview"></i>`;
-            selectedIconLabel.textContent = t("choose_icon_label");
-            newAccountIconInput.value = "wallet";
-            if (window.lucide) lucide.createIcons();
-        };
-    }
+    cancelAddAccountBtn.onclick = function () {
+        // نطلب الرجوع خطوة للخلف كأنك ضغطت زر الرجوع في الهاتف بالضبط
+        history.back();
+    };
+}
 
     if (saveAccountBtn) {
     saveAccountBtn.onclick = async function() {

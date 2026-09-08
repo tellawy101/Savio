@@ -362,12 +362,11 @@ if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
     }
 });
 const cancelAddAccountBtn = document.getElementById("cancelAddAccountBtn");
-
 if (cancelAddAccountBtn) {
     cancelAddAccountBtn.onclick = function() {
+        // 1. إغلاق نافذة إضافة الحساب وتفريغ الحقول
         addAccountModal.classList.remove("show");
         editingAccount = null;
-
         document.getElementById("newAccountName").value = "";
         document.getElementById("newAccountDescription").value = "";
         document.getElementById("newAccountBalance").value = "";
@@ -376,6 +375,15 @@ if (cancelAddAccountBtn) {
         selectedIconLabel.textContent = t("choose_icon_label");
         newAccountIconInput.value = "wallet";
         if (window.lucide) lucide.createIcons();
+        
+        // 2. إذا كان المستخدم قادماً من شاشة اختيار حساب في معاملة:
+        // نعيد إظهار نافذة الحسابات فوراً بدلاً من البقاء تائهاً
+        if (window.activeAccountBox) {
+            const accountModal = document.getElementById("accountModal");
+            if (accountModal) {
+                accountModal.classList.add("show");
+            }
+        }
     };
 }
 }
