@@ -449,7 +449,7 @@ function renderTransactionFields(type) {
 <div class="form-group">
     <label data-i18n="account_label">Account</label>
     <div class="account-select-box">
-        <span class="account-icon">💳</span>
+        <span class="account-icon" id="${type}AccountIcon"><i data-lucide="credit-card"></i></span>
         <div id="${type}Account" class="account-select" data-i18n="select_account">Select Account</div>
         <span class="account-arrow">›</span>
     </div>
@@ -458,7 +458,7 @@ function renderTransactionFields(type) {
 <div class="form-group">
     <label data-i18n="category_label">Category</label>
     <div class="category-select-box">
-        <span class="category-icon">🏷️</span>
+        <span class="category-icon" id="${type}CategoryIcon"><i data-lucide="tag"></i></span>
         <div id="${type}Category" class="category-select" data-i18n="select_category">Select Category</div>
         <span class="category-arrow">›</span>
     </div>

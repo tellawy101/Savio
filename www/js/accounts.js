@@ -116,18 +116,22 @@ item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
         });
         
         item.onclick = function() {
-            if (isDisabled) return;
-
-            const field = getAccountFieldEl();
-            if (field) {
-                field.innerHTML = `<i data-lucide="${account.icon}"></i> ${account.name}`;
-                field.removeAttribute("data-i18n");
-                if (window.lucide) lucide.createIcons();
-            }
-            
-            accountModal.classList.remove("show");
-            notifyFormFieldChanged();
-        };
+    if (isDisabled) return;
+    
+    const field = getAccountFieldEl();
+    if (field) {
+        field.textContent = account.name;
+        field.removeAttribute("data-i18n");
+    }
+    
+    const iconEl = window.activeAccountBox ? window.activeAccountBox.querySelector(".account-icon") : null;
+    if (iconEl) iconEl.innerHTML = `<i data-lucide="${account.icon}"></i>`;
+    
+    if (window.lucide) lucide.createIcons();
+    
+    accountModal.classList.remove("show");
+    notifyFormFieldChanged();
+};
         
         accountsList.appendChild(item);
     });
@@ -194,11 +198,14 @@ saveAccounts(accounts);
         
       const field = getAccountFieldEl();
 if (field) {
-    field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
+    field.textContent = name;
     field.removeAttribute("data-i18n");
-    if (window.lucide) lucide.createIcons();
 }
 
+const iconEl = window.activeAccountBox ? window.activeAccountBox.querySelector(".account-icon") : null;
+if (iconEl) iconEl.innerHTML = `<i data-lucide="${icon}"></i>`;
+
+if (window.lucide) lucide.createIcons();
 renderAccounts();
 
         showToast(t("account_added_toast"), "success");
