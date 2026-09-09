@@ -59,14 +59,17 @@ function showUndoToast(message, onUndo, duration = 5000) {
         const elapsed = now - startTime;
         const remaining = Math.max(0, 1 - elapsed / duration);
         const percent = remaining * 100;
-        
-        // بنرسم حلقة (conic-gradient) حوالين التوست بتتقلّص مع الوقت
-        toast.style.background =
-            `conic-gradient(#4fd1c5 ${percent}%, rgba(255,255,255,.25) 0)`;
-        
-        if (elapsed < duration) {
-            undoToastFrame = requestAnimationFrame(tick);
-        }
+// تلوين إطار التوقيت الدائري بحسب الوضع (نهاري / ليلي)
+const isDark = document.body.classList.contains("dark");
+const activeColor = isDark ? "#4fd1c5" : "#0F766E";
+const trackColor = isDark ? "rgba(255,255,255,.25)" : "rgba(0,0,0,.10)";
+
+toast.style.background =
+    `conic-gradient(${activeColor} ${percent}%, ${trackColor} 0)`;
+
+if (elapsed < duration) {
+    undoToastFrame = requestAnimationFrame(tick);
+}
         
     }
     

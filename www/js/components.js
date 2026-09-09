@@ -501,6 +501,7 @@ ${renderTransactionFields(type)}
 }
 
 // حقول فورم الـ Transfer بس (من غير هيدر) - قابلة لإعادة الاستخدام
+// حقول فورم الـ Transfer بس
 function renderTransferFields() {
     return `
 <div class="form-group">
@@ -542,26 +543,23 @@ function renderTransferFields() {
 </div>
     `;
 }
-
-// هيدر + الحقول مع بعض (زي الأول بالظبط) - بتستخدم الدالة اللي فوق جواها
+// هيدر + الحقول مع بعض (زي الأول بالظبط)
 function renderTransferForm() {
     return `
 ${renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>')}
 
 <main class="transfer-content">
-
 <div class="amount-section">
     <div class="amount-display">
         <span class="currency">EGP</span>
         <input type="tel" id="transferAmount" inputmode="numeric" value="0">
     </div>
 </div>
-
 ${renderTransferFields()}
-
 </main>
     `;
 }
+
 // 7.3) بناء صندوق إحصائية واحد (Income/Expense بالهوم، Receivable/Payable بالديون) - نفس الشكل بيتفرق بس بالمحتوى
 function renderStatBox({ statClass = "", icon, labelKey, labelText, valueId, currency = "EGP" }) {
     return `
@@ -572,8 +570,8 @@ function renderStatBox({ statClass = "", icon, labelKey, labelText, valueId, cur
 </div>
     `;
 }
-// 8) إغلاق أي مودال لما يتم الضغط برّه (خارج المحتوى) - نمط متكرر في كل المودالز
 
+// 8) إغلاق أي مودال لما يتم الضغط برّه (خارج المحتوى) - نمط متكرر في كل المودالز
 function closeModalOnBackdropClick(modal, onClose) {
     if (!modal) return;
     modal.onclick = function (e) {
@@ -588,12 +586,11 @@ function closeModalOnBackdropClick(modal, onClose) {
         }
     };
 }
+
 // ==============================
 // Shared List Item (Icon + Title + Arrow)
 // دالة مشتركة لبناء شكل الكارت في ليستة الحسابات/التصنيفات
-// extraHTML اختياري: أي سطر إضافي زي الرصيد تحت الاسم
 // ==============================
-
 function renderListItemHTML(icon, name, extraHTML) {
     return `
     <div class="account-item-icon"><i data-lucide="${icon}"></i></div>
@@ -604,6 +601,7 @@ function renderListItemHTML(icon, name, extraHTML) {
     <div class="account-arrow">›</div>
 `;
 }
+
 // ==========================================
 // Reusable Component: Swipe Actions (DRY)
 // تفعيل السحب لليمين واليسار (حذف / تعديل) على أي كارت
@@ -631,7 +629,6 @@ function attachSwipeActions(cardElement, options) {
         const deltaX = e.touches[0].clientX - startX;
         const deltaY = e.touches[0].clientY - startY;
 
-        // تجاهل السحب لو كان التمرير عمودياً (Scroll)
         if (Math.abs(deltaY) > Math.abs(deltaX)) return;
         if (e.cancelable) e.preventDefault();
 
@@ -641,7 +638,6 @@ function attachSwipeActions(cardElement, options) {
 
         cardElement.style.transform = `translateX(${currentX}px)`;
 
-        // إظهار خلفية الزر بحسب اتجاه السحب
         if (currentX > 0) {
             if (deleteBtn) {
                 deleteBtn.style.opacity = currentX / maxOffset;
@@ -689,9 +685,7 @@ function attachSwipeActions(cardElement, options) {
         currentX = 0;
     });
 
-  // إغلاق الكارت فور الضغط في أي مكان خارجي (مع استثناء زري الحذف والتعديل)
     document.addEventListener("touchstart", function(e) {
-        // لو المستخدم ضغط على زر الحذف أو التعديل نفسه، لا تغلق الكارت
         if (deleteBtn && deleteBtn.contains(e.target)) return;
         if (editBtn && editBtn.contains(e.target)) return;
 
@@ -705,4 +699,296 @@ function attachSwipeActions(cardElement, options) {
             }, 250);
         }
     });
+}
+
+// ==========================================
+// Reusable Component: Transaction Item (DRY)
+// قالب كارت المعاملة المشترك (مصروف / دخل / تحويل)
+// ==========================================
+function createTransactionElement(expense, options = {}) {
+    const curr = options.currency || (typeof getCurrency === "function" ? getCurrency() : "EGP");
+    const isIncome = expense.type === "income";
+    const isTransfer = !!expense.isTransfer;
+
+    const li = document.createElement("li");
+    li.className = "expense-item";
+
+    // تحديد الأيقونة ولون الكارت
+    let iconHTML = `<span class="material-icons-round">receipt_long</span>`;
+    if (expense.icon) {
+        iconHTML = `<span class="material-icons-round">${expense.icon}</span>`;
+    } else if (isTransfer) {
+        iconHTML = `<span class="material-icons-round">swap_horiz</span>`;
+    }
+
+    // تحديد الإشارة والمبلغ
+    let sign = "-";
+    let amountClass = "expense-amount-negative";
+    if (isIncome) {
+        sign = "+";
+        amountClass = "expense-amount-positive";
+    } else if (isTransfer) {
+        sign = "";
+        amountClass = "expense-amount-transfer";
+    }
+
+    const formattedAmount = Math.round(Number(expense.amount) || 0).toLocaleString("en-US");
+
+    // العنوان والوصف
+    let title = expense.category || expense.title || (typeof t === "function" ? t("unspecified") : "Unspecified");
+    let subtitle = expense.account || "";
+    if (isTransfer) {
+        title = typeof t === "function" ? t("transfer") : "Transfer";
+        subtitle = `${expense.fromAccount || ""} ➔ ${expense.toAccount || ""}`;
+    } else if (expense.note) {
+        subtitle = subtitle ? `${subtitle} • ${expense.note}` : expense.note;
+    }
+
+    li.innerHTML = `
+        <div class="swipe-action swipe-delete" title="Delete">
+            <span class="material-icons-round">delete</span>
+        </div>
+        <div class="swipe-action swipe-edit" title="Edit">
+            <span class="material-icons-round">edit</span>
+        </div>
+        <div class="expense-main">
+            <div class="expense-icon ${isIncome ? 'income' : (isTransfer ? 'transfer' : 'expense')}">
+                ${iconHTML}
+            </div>
+            <div class="expense-info">
+                <span class="expense-title">${title}</span>
+                <span class="expense-category">${subtitle}</span>
+            </div>
+            <div class="expense-right">
+                <span class="expense-amount ${amountClass}">${sign}${formattedAmount} <small class="expense-currency">${curr}</small></span>
+                <span class="expense-date">${expense.date || ""}</span>
+            </div>
+        </div>
+    `;
+
+    return li;
+}// هيدر + الحقول مع بعض (زي الأول بالظبط)
+function renderTransferForm() {
+    return `
+${renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>')}
+
+<main class="transfer-content">
+<div class="amount-section">
+    <div class="amount-display">
+        <span class="currency">EGP</span>
+        <input type="tel" id="transferAmount" inputmode="numeric" value="0">
+    </div>
+</div>
+${renderTransferFields()}
+</main>
+    `;
+}
+
+// 7.3) بناء صندوق إحصائية واحد (Income/Expense بالهوم، Receivable/Payable بالديون) - نفس الشكل بيتفرق بس بالمحتوى
+function renderStatBox({ statClass = "", icon, labelKey, labelText, valueId, currency = "EGP" }) {
+    return `
+<div class="stat ${statClass}">
+    <span>${icon}</span>
+    <h4 data-i18n="${labelKey}">${labelText}</h4>
+    <p id="${valueId}"><span class="stat-currency">${currency}</span> <span class="stat-value">0</span></p>
+</div>
+    `;
+}
+
+// 8) إغلاق أي مودال لما يتم الضغط برّه (خارج المحتوى) - نمط متكرر في كل المودالز
+function closeModalOnBackdropClick(modal, onClose) {
+    if (!modal) return;
+    modal.onclick = function (e) {
+        if (e.target === modal) {
+            const openIconList = document.querySelector(".icon-dropdown-list.show");
+            if (openIconList) {
+                openIconList.classList.remove("show");
+                return;
+            }
+            modal.classList.remove("show");
+            if (typeof onClose === "function") onClose();
+        }
+    };
+}
+
+// ==============================
+// Shared List Item (Icon + Title + Arrow)
+// دالة مشتركة لبناء شكل الكارت في ليستة الحسابات/التصنيفات
+// ==============================
+function renderListItemHTML(icon, name, extraHTML) {
+    return `
+    <div class="account-item-icon"><i data-lucide="${icon}"></i></div>
+    <div class="account-info">
+        <div class="account-name">${name}</div>
+        ${extraHTML || ""}
+    </div>
+    <div class="account-arrow">›</div>
+`;
+}
+
+// ==========================================
+// Reusable Component: Swipe Actions (DRY)
+// تفعيل السحب لليمين واليسار (حذف / تعديل) على أي كارت
+// ==========================================
+function attachSwipeActions(cardElement, options) {
+    if (!cardElement) return;
+
+    const deleteBtn = options.deleteEl;
+    const editBtn = options.editEl;
+    const maxOffset = options.maxOffset || 70;
+    const threshold = options.threshold || 45;
+
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let offsetX = 0;
+
+    cardElement.addEventListener("touchstart", function(e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        cardElement.style.transition = "none";
+    });
+
+    cardElement.addEventListener("touchmove", function(e) {
+        const deltaX = e.touches[0].clientX - startX;
+        const deltaY = e.touches[0].clientY - startY;
+
+        if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+        if (e.cancelable) e.preventDefault();
+
+        currentX = offsetX + deltaX;
+        if (currentX > maxOffset) currentX = maxOffset;
+        if (currentX < -maxOffset) currentX = -maxOffset;
+
+        cardElement.style.transform = `translateX(${currentX}px)`;
+
+        if (currentX > 0) {
+            if (deleteBtn) {
+                deleteBtn.style.opacity = currentX / maxOffset;
+                deleteBtn.style.pointerEvents = "auto";
+            }
+            if (editBtn) {
+                editBtn.style.opacity = 0;
+                editBtn.style.pointerEvents = "none";
+            }
+        } else {
+            if (editBtn) {
+                editBtn.style.opacity = Math.abs(currentX) / maxOffset;
+                editBtn.style.pointerEvents = "auto";
+            }
+            if (deleteBtn) {
+                deleteBtn.style.opacity = 0;
+                deleteBtn.style.pointerEvents = "none";
+            }
+        }
+    }, { passive: false });
+
+    cardElement.addEventListener("touchend", function() {
+        if (currentX > threshold) {
+            offsetX = maxOffset;
+        } else if (currentX < -threshold) {
+            offsetX = -maxOffset;
+        } else {
+            offsetX = 0;
+        }
+
+        cardElement.style.transition = "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)";
+        cardElement.style.transform = `translateX(${offsetX}px)`;
+
+        if (offsetX === maxOffset) {
+            if (deleteBtn) { deleteBtn.style.opacity = 1; deleteBtn.style.pointerEvents = "auto"; }
+            if (editBtn) { editBtn.style.opacity = 0; editBtn.style.pointerEvents = "none"; }
+        } else if (offsetX === -maxOffset) {
+            if (editBtn) { editBtn.style.opacity = 1; editBtn.style.pointerEvents = "auto"; }
+            if (deleteBtn) { deleteBtn.style.opacity = 0; deleteBtn.style.pointerEvents = "none"; }
+        } else {
+            if (deleteBtn) { deleteBtn.style.opacity = 0; deleteBtn.style.pointerEvents = "none"; }
+            if (editBtn) { editBtn.style.opacity = 0; editBtn.style.pointerEvents = "none"; }
+        }
+
+        currentX = 0;
+    });
+
+    document.addEventListener("touchstart", function(e) {
+        if (deleteBtn && deleteBtn.contains(e.target)) return;
+        if (editBtn && editBtn.contains(e.target)) return;
+
+        if (!cardElement.contains(e.target) && offsetX !== 0) {
+            offsetX = 0;
+            cardElement.style.transition = "transform 0.25s ease";
+            cardElement.style.transform = "translateX(0px)";
+            setTimeout(() => {
+                if (deleteBtn) { deleteBtn.style.opacity = 0; deleteBtn.style.pointerEvents = "none"; }
+                if (editBtn) { editBtn.style.opacity = 0; editBtn.style.pointerEvents = "none"; }
+            }, 250);
+        }
+    });
+}
+
+// ==========================================
+// Reusable Component: Transaction Item (DRY)
+// قالب كارت المعاملة المشترك (مصروف / دخل / تحويل)
+// ==========================================
+function createTransactionElement(expense, options = {}) {
+    const curr = options.currency || (typeof getCurrency === "function" ? getCurrency() : "EGP");
+    const isIncome = expense.type === "income";
+    const isTransfer = !!expense.isTransfer;
+
+    const li = document.createElement("li");
+    li.className = "expense-item";
+
+    // تحديد الأيقونة ولون الكارت
+    let iconHTML = `<span class="material-icons-round">receipt_long</span>`;
+    if (expense.icon) {
+        iconHTML = `<span class="material-icons-round">${expense.icon}</span>`;
+    } else if (isTransfer) {
+        iconHTML = `<span class="material-icons-round">swap_horiz</span>`;
+    }
+
+    // تحديد الإشارة والمبلغ
+    let sign = "-";
+    let amountClass = "expense-amount-negative";
+    if (isIncome) {
+        sign = "+";
+        amountClass = "expense-amount-positive";
+    } else if (isTransfer) {
+        sign = "";
+        amountClass = "expense-amount-transfer";
+    }
+
+    const formattedAmount = Math.round(Number(expense.amount) || 0).toLocaleString("en-US");
+
+    // العنوان والوصف
+    let title = expense.category || expense.title || (typeof t === "function" ? t("unspecified") : "Unspecified");
+    let subtitle = expense.account || "";
+    if (isTransfer) {
+        title = typeof t === "function" ? t("transfer") : "Transfer";
+        subtitle = `${expense.fromAccount || ""} ➔ ${expense.toAccount || ""}`;
+    } else if (expense.note) {
+        subtitle = subtitle ? `${subtitle} • ${expense.note}` : expense.note;
+    }
+
+    li.innerHTML = `
+        <div class="swipe-action swipe-delete" title="Delete">
+            <span class="material-icons-round">delete</span>
+        </div>
+        <div class="swipe-action swipe-edit" title="Edit">
+            <span class="material-icons-round">edit</span>
+        </div>
+        <div class="expense-main">
+            <div class="expense-icon ${isIncome ? 'income' : (isTransfer ? 'transfer' : 'expense')}">
+                ${iconHTML}
+            </div>
+            <div class="expense-info">
+                <span class="expense-title">${title}</span>
+                <span class="expense-category">${subtitle}</span>
+            </div>
+            <div class="expense-right">
+                <span class="expense-amount ${amountClass}">${sign}${formattedAmount} <small class="expense-currency">${curr}</small></span>
+                <span class="expense-date">${expense.date || ""}</span>
+            </div>
+        </div>
+    `;
+
+    return li;
 }

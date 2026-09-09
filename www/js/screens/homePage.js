@@ -89,62 +89,8 @@ function cleanLabel(text) {
             ) {
                 return;
             }
-
-            const li = document.createElement("li");
-
-            // إزالة الإيموجي من النص وإبقاء الاسم فقط
-            const cleanCategory = cleanLabel(expense.category);
-const cleanAccount = cleanLabel(expense.account);
-
-            li.innerHTML = `
-    <div class="expense-swipe">
-
-        <div class="swipe-action swipe-delete">
-            <i data-lucide="trash-2"></i>
-        </div>
-
-        <div class="swipe-action swipe-edit">
-            <i data-lucide="pencil"></i>
-        </div>
-
-        <div class="expense-main">
-
-<div class="expense-icon-box">
-    <i data-lucide="${expense.categoryIcon || "tag"}"></i>
-</div>
-
-            <div class="expense-info">
-
-                <div class="expense-desc">
-                    ${expense.description || ""}
-                </div>
-
-                <div class="expense-category">
-                    ${cleanCategory}
-                </div>
-
-                <div class="expense-account">
-                    ${cleanAccount}
-                </div>
-
-            </div>
-
-            <div class="expense-right">
-
-               <div class="expense-amount">
-    <span class="expense-amount-currency">${getCurrency()}</span> <span class="expense-amount-value">${Math.round(Number(expense.amount) || 0).toLocaleString("en-US")}</span>
-</div>
-
-                <div class="expense-meta">
-                    ${expense.date}
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-`;
+            // استخدام مكوّن الكارت المشترك
+            const li = createTransactionElement(expense);
             expenseList.appendChild(li);
 
             if (window.lucide) {

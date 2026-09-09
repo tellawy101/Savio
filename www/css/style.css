@@ -1160,60 +1160,63 @@ body.dark .stat {
     transform: translateX(-20px);
 }
 /* ==============================
-   Toast مع زرار تراجع (Undo)
+    Toast (Undo) - يدعم الوضع النهاري والليلي
 ============================== */
-
 #toast.show.toast-with-undo {
     display: block !important;
-
     position: fixed;
-
     padding: 3px !important;
     border-radius: 16px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
 }
 
+/* الوضع النهاري: خلفية بيضاء وخط داكن */
 .toast-inner {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 14px;
-
-    background: #17202B;
+    background: #FFFFFF;
+    color: #111827;
     border-radius: 13px;
-
     padding: 12px 20px;
-
     white-space: nowrap;
 }
 
 .toast-message {
     white-space: nowrap;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 #toast .toast-undo-btn {
     flex-shrink: 0;
-
     background: none !important;
     border: none;
-
-    color: #4fd1c5;
-
+    color: #0F766E;
     font-family: "Supreme", sans-serif;
     font-size: 14px;
     font-weight: 700;
-
     text-decoration: underline;
     text-underline-offset: 2px;
-
     padding: 2px 0 !important;
     margin: 0 !important;
     width: auto !important;
-
     cursor: pointer;
 }
 
 #toast .toast-undo-btn:hover {
     opacity: .8;
+}
+
+/* الوضع الليلي: خلفية داكنة */
+body.dark .toast-inner {
+    background: #17202B;
+    color: #FFFFFF;
+}
+
+body.dark #toast .toast-undo-btn {
+    color: #4fd1c5;
 }
 /* منع سكرول الصفحة اللي ورا لما أي بوب أب يكون مفتوح */
 body:has(.modal.show) {
@@ -1332,4 +1335,83 @@ box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2) !important;
     font-size: 10px !important;
     font-weight: 600 !important;
     opacity: 0.85 !important;
+}
+/* =========================================
+   duDatepicker THEME (Light & Dark Mode)
+   ========================================= */
+
+/* شكل النافذة والحواف الدائرية */
+.dudp__wrapper .dudp__dialog {
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* 1) الوضع النهاري (خلفية بيضاء وهيدر فيروزي) */
+.dudp__wrapper .dudp__dialog,
+.dudp__wrapper[data-theme] .dudp__dialog {
+    background-color: #FFFFFF !important;
+    color: #1F2937 !important;
+}
+
+.dudp__wrapper .dudp__dialog-header,
+.dudp__wrapper[data-theme] .dudp__dialog-header {
+    background-color: #0F766E !important;
+    color: #FFFFFF !important;
+}
+
+.dudp__wrapper .dudp__year,
+.dudp__wrapper .dudp__date {
+    color: #FFFFFF !important;
+}
+
+/* اليوم المختار في التقويم */
+.dudp__wrapper .dudp__calendar .dudp__date.selected,
+.dudp__wrapper[data-theme] .dudp__calendar .dudp__date.selected {
+    background-color: #0F766E !important;
+    color: #FFFFFF !important;
+}
+
+/* اليوم الحالي */
+.dudp__wrapper .dudp__calendar .dudp__date.current,
+.dudp__wrapper .dudp__calendar .dudp__date.now {
+    color: #0F766E !important;
+    font-weight: 700 !important;
+}
+
+/* أزرار Set و Cancel و Clear في الأسفل */
+.dudp__wrapper .dudp__btn,
+.dudp__wrapper[data-theme] .dudp__btn {
+    color: #0F766E !important;
+    font-weight: 700 !important;
+}
+
+/* 2) الوضع الليلي (Dark Mode) */
+body.dark .dudp__wrapper .dudp__dialog,
+body.dark .dudp__wrapper[data-theme] .dudp__dialog {
+    background-color: #17202B !important;
+    color: #F1F5F9 !important;
+}
+
+body.dark .dudp__wrapper .dudp__dialog-header,
+body.dark .dudp__wrapper[data-theme] .dudp__dialog-header {
+    background-color: #0d5c56 !important;
+    color: #FFFFFF !important;
+}
+
+body.dark .dudp__wrapper .dudp__cal-week span {
+    color: #94A3B8 !important;
+}
+
+body.dark .dudp__wrapper .dudp__date {
+    color: #E2E8F0 !important;
+}
+
+body.dark .dudp__wrapper .dudp__calendar .dudp__date.selected {
+    background-color: #14B8A6 !important;
+    color: #0F172A !important;
+}
+
+body.dark .dudp__wrapper .dudp__btn {
+    color: #2DD4BF !important;
 }
