@@ -17,155 +17,105 @@
 .total-card {
     width: 100%;    
     min-height: 360px;
-
     padding: 36px 28px 30px;
     box-sizing: border-box;
-
     margin: 0;
-
     background: #0F8F92;
-
     color: #ffffff;
-
     border-radius: 0 0 30px 30px;
-
     overflow: hidden;
 }
-
-
 /* =========================================
    HEADER TOP
 ========================================= */
-
 .account-header {
     display: flex;
     align-items: center;
-position: relative;
+    justify-content: flex-start;
+    position: relative;
     width: 100%;
     min-height: 100px;
 }
-
-
 /* =========================================
    BACK BUTTON
 ========================================= */
-
 .total-card .back-btn {
     position: static;
-
     width: 88px;
     height: 88px;
-
     flex: 0 0 88px;
-
     padding: 0;
-
     border: none;
     border-radius: 24px;
-
     background: rgba(255, 255, 255, 0.12);
-
     color: #ffffff;
-
     font-size: 48px;
     line-height: 1;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     cursor: pointer;
-
     -webkit-tap-highlight-color: transparent;
 }
-
-
 /* =========================================
    INCOME TITLE
 ========================================= */
-
 .transaction-title {
     display: flex;
     align-items: center;
-
     gap: 30px;
-
     margin-left: 38px;
 }
-
-
 .transaction-title h1 {
     margin: 0;
-
     font-size: 34px;
     font-weight: 800;
-
     line-height: 1;
-
     color: #ffffff;
 }
-
-
 /* =========================================
    INCOME ICON
 ========================================= */
-
 .transaction-type-icon {
     width: 60px;
     height: 60px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: rgba(255, 255, 255, 0.12);
-
     font-size: 44px;
     font-weight: 700;
 }
-
-
 /* =========================================
    ACCOUNT INFO
 ========================================= */
-
 .account-info {
-    margin-left: auto;
-
-    display: flex;
-    align-items: center;
-
-    gap: 22px;
-
-    direction: rtl;
-
+    margin-left: auto !important;
+    margin-inline-start: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px;
     white-space: nowrap;
 }
-
-
 #accountName {
     font-size: 34px;
     font-weight: 800;
-
     color: #ffffff;
 }
-
-
 .account-divider {
     width: 2px;
     height: 62px;
-
     background: rgba(255, 255, 255, 0.35);
 }
-
-
 .acc-header-icon {
     font-size: 48px;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
 
 /* =========================================
    HEADER DIVIDER
@@ -484,118 +434,86 @@ body.dark #transactionsList li {
 ========================================= */
 
 @media (max-width: 700px) {
-
     .total-card {
-           min-height: 0;
-   padding: 16px 20px 20px;
+        min-height: 0;
+        padding: 16px 20px 20px;
     }
-
-   .account-header {
-    align-items: center;
-    min-width: 0;
-    min-height: 0;
-}
-
- .total-card .back-btn {
-    align-self: flex-start;
-
-    width: 34px;
-    height: 34px;
-
-    flex: 0 0 34px;
-
-    border-radius: 12px;
-
-    font-size: 18px;
-}
-
-   .transaction-title {
-    align-items: flex-start;
-
-    min-width: 0;
-
-    gap: 8px;
-
-    margin-left: 18px;
-}
-   .transaction-title h1 {
-    font-size: 20px;
-
-    white-space: nowrap;
-}
-
+    .account-header {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+        min-width: 0;
+        min-height: 0;
+    }
+    .total-card .back-btn {
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        border-radius: 12px;
+        font-size: 18px;
+    }
+    .transaction-title {
+        display: flex !important;
+        align-items: center !important;
+        min-width: 0;
+        gap: 8px;
+        margin-left: 12px !important;
+    }
+    .transaction-title h1 {
+        font-size: 20px;
+        white-space: nowrap;
+        margin: 0;
+    }
     .transaction-type-icon {
-    width: 34px;
-    height: 34px;
-
-    flex: 0 0 34px;
-
-    font-size: 20px;
-}
-
-.account-info {
-    margin-left: auto;
-    min-width: 0;
-
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    direction: rtl;
-
-    white-space: nowrap;
-
-}
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        font-size: 20px;
+    }
+    .account-info {
+        margin-left: auto !important;
+        margin-right: 0 !important;
+        min-width: 0;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 6px !important;
+        white-space: nowrap;
+    }
 #accountName {
-    display: block;
-
-    width: auto;
-    min-width: 0;
-max-width: 140px;
-    font-size: 17px;
-    font-weight: 700;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.account-divider {
-    width: 1px;
-    height: 36px;
-    
-    flex-shrink: 0;
-    
-    background: rgba(255, 255, 255, 0.35);
-}
-
-.acc-header-icon {
-    order: -1;
-
-    font-size: 16px;
-
-    width: 20px;
-    min-width: 20px;
-
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #ffffff;
-}
-
-.acc-header-icon svg {
-    width: 18px;
-    height: 18px;
-
-    stroke: currentColor;
-}
+        display: inline !important;
+        width: auto;
+        min-width: 0;
+        max-width: 140px;
+        font-size: 17px;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .account-info .account-divider {
+        display: none !important;
+    }
+    .acc-header-icon {
+        font-size: 16px;
+        width: 20px;
+        min-width: 20px;
+        flex-shrink: 0;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #ffffff;
+    }
+    .acc-header-icon svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+    }
     .header-divider {
         margin-top: 16px;
     }
-
     .total-row {
         min-width: 0;
 

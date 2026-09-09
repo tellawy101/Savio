@@ -81,11 +81,11 @@ async function navigateTo(pageName) {
     }
     try {
         let html = templateCache[pageName];
-        if (!html) {
-            const res = await fetch(route.template);
-            html = await res.text();
-            templateCache[pageName] = html;
-        }
+if (!html) {
+    const res = await fetch(route.template + "?v=" + Date.now());
+    html = await res.text();
+    templateCache[pageName] = html;
+}
         
         app.style.visibility = "hidden";
         if (pageName !== "accounts") {

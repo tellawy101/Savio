@@ -61,8 +61,12 @@ setupCommonFormPage();
         if (entry.account) {
     const matchedAccount = getAccounts().find(acc => acc.name === entry.account);
     const accIcon = matchedAccount ? matchedAccount.icon : "credit-card";
-    accountEl.innerHTML = `<i data-lucide="${accIcon}"></i> ${entry.account}`;
+    accountEl.textContent = entry.account;
     accountEl.removeAttribute("data-i18n");
+    const accountIconEl = document.getElementById(type + "AccountIcon");
+    if (accountIconEl) {
+        accountIconEl.innerHTML = `<i data-lucide="${accIcon}"></i>`;
+    }
 } else {
     accountEl.textContent = t("select_account");
 }

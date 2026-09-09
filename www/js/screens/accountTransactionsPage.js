@@ -18,16 +18,33 @@ function initAccountTransactionsPage() {
     applyStoredTheme();
 
     const backBtn = document.getElementById("backBtn");
-    if (backBtn) {
-        backBtn.onclick = function () {
-            navigateTo("accounts");
-        };
-    }
+if (backBtn) {
+    backBtn.onclick = function() {
+        navigateTo("accounts");
+    };
+}
 
-    const accountNameEl = document.getElementById("accountName");
-    const accountIconEl = document.querySelector(".acc-header-icon");
-    const transactionTypeEl = document.getElementById("transactionType");
+// ضبط الهيدر ومحاذاة الحساب في اليمين فوراً عبر الجافاسكريبت
+const accountHeaderEl = document.querySelector(".account-header");
+const accountInfoEl = document.querySelector(".account-info");
+if (accountHeaderEl) {
+    accountHeaderEl.style.display = "flex";
+    accountHeaderEl.style.alignItems = "center";
+    accountHeaderEl.style.justifyContent = "space-between";
+    accountHeaderEl.style.width = "100%";
+}
+if (accountInfoEl) {
+    accountInfoEl.style.display = "flex";
+    accountInfoEl.style.flexDirection = "row";
+    accountInfoEl.style.alignItems = "center";
+    accountInfoEl.style.gap = "6px";
+    accountInfoEl.style.marginLeft = "auto";
+    accountInfoEl.style.marginRight = "0";
+}
 
+const accountNameEl = document.getElementById("accountName");
+const accountIconEl = document.querySelector(".acc-header-icon");
+const transactionTypeEl = document.getElementById("transactionType");
     const totalLabelEl = document.getElementById("totalLabel");
     const totalAmountEl = document.getElementById("totalAmount");
 
