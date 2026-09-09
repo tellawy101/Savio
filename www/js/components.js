@@ -139,7 +139,7 @@ function renderSharedModals() {
     <button type="button" class="icon-dropdown-trigger" id="iconDropdownTrigger">
         <span id="selectedIconPreviewWrap"><i data-lucide="wallet" id="selectedIconPreview"></i></span>
         <span id="selectedIconLabel" data-i18n="choose_icon_label">اختر أيقونة</span>
-        <i data-lucide="chevron-left"></i>
+        <i data-lucide="chevron-right"></i>
     </button>
     <div class="icon-dropdown-list" id="iconDropdownList">
         <div class="icon-search-wrap">
