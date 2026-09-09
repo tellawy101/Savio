@@ -780,12 +780,6 @@ body.dark .modal-actions .account-save-btn {
 }
 
 #categoryIconDropdownList {
-    width: 100%;
-
-    max-height: 280px;
-
-    overflow-y: auto;
-
     box-sizing: border-box;
 }
 

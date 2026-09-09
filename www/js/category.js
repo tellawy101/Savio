@@ -122,24 +122,20 @@ const categoryIconSearchInput =
 
 const selectedCategoryIconLabel =
     document.getElementById("selectedCategoryIconLabel");
-
 const newCategoryIconInput =
     document.getElementById("newCategoryIcon");
+const categoryIconDropdownHome = categoryIconDropdownTrigger ? categoryIconDropdownTrigger.parentElement : null;
 
 function selectCategoryIcon(icon, label) {
-
     newCategoryIconInput.value = icon;
-
     document.getElementById(
-        "selectedCategoryIconPreviewWrap"
-    ).innerHTML =
+            "selectedCategoryIconPreviewWrap"
+        ).innerHTML =
         `<i data-lucide="${icon}"
             id="selectedCategoryIconPreview"></i>`;
-
     selectedCategoryIconLabel.textContent = label;
-
     categoryIconDropdownList.classList.remove("show");
-
+    if (categoryIconDropdownHome) categoryIconDropdownHome.appendChild(categoryIconDropdownList);
     if (window.lucide) {
         lucide.createIcons();
     }
@@ -203,47 +199,44 @@ function renderCategoryIconResults(filter) {
 }
 
 if (categoryIconDropdownTrigger) {
-
     categoryIconDropdownTrigger.onclick = function (e) {
-
         e.stopPropagation();
-
-        categoryIconDropdownList.classList.toggle("show");
-
-        if (categoryIconDropdownList.classList.contains("show")) {
+        const isOpen = categoryIconDropdownList.classList.contains("show");
+        if (!isOpen) {
+            document.body.appendChild(categoryIconDropdownList);
+            categoryIconDropdownList.classList.add("show");
+            categoryIconDropdownList.style.top = Math.round(window.innerHeight * 0.08) + "px";
+            categoryIconDropdownList.style.height = Math.round(window.innerHeight * 0.84) + "px";
             if (categoryIconSearchInput) {
                 categoryIconSearchInput.value = "";
                 categoryIconSearchInput.focus();
             }
             renderCategoryIconResults("");
+        } else {
+            categoryIconDropdownList.classList.remove("show");
+            if (categoryIconDropdownHome) categoryIconDropdownHome.appendChild(categoryIconDropdownList);
         }
-
     };
 }
 
 if (categoryIconSearchInput) {
-
     categoryIconSearchInput.addEventListener("input", function () {
         renderCategoryIconResults(this.value);
     });
-
     categoryIconSearchInput.addEventListener("click", function (e) {
         e.stopPropagation();
     });
 }
 
 document.addEventListener("click", function (e) {
-
     if (
         categoryIconDropdownList &&
         !categoryIconDropdownList.contains(e.target) &&
         e.target !== categoryIconDropdownTrigger
     ) {
-
         categoryIconDropdownList.classList.remove("show");
-
+        if (categoryIconDropdownHome) categoryIconDropdownHome.appendChild(categoryIconDropdownList);
     }
-
 });
 
 window.activeCategoryBox = null;
@@ -374,7 +367,11 @@ if (field) {
         saveCategories(categories);
 renderCategories();
 addCategoryModal.classList.remove("show");
-        nameInput.value = "";
+if (categoryIconDropdownList && categoryIconDropdownList.classList.contains("show")) {
+    categoryIconDropdownList.classList.remove("show");
+    if (categoryIconDropdownHome) categoryIconDropdownHome.appendChild(categoryIconDropdownList);
+}
+nameInput.value = "";
         iconInput.value = "";
 
         showToast(isEditing ? t("category_updated_toast") : t("category_added_toast"), "success");
