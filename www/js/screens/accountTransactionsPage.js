@@ -24,87 +24,58 @@ if (backBtn) {
     };
 }
 
-// ضبط الهيدر ومحاذاة الحساب في اليمين فوراً عبر الجافاسكريبت
-const accountHeaderEl = document.querySelector(".account-header");
-const accountInfoEl = document.querySelector(".account-info");
-if (accountHeaderEl) {
-    accountHeaderEl.style.display = "flex";
-    accountHeaderEl.style.alignItems = "center";
-    accountHeaderEl.style.justifyContent = "space-between";
-    accountHeaderEl.style.width = "100%";
-}
-if (accountInfoEl) {
-    accountInfoEl.style.display = "flex";
-    accountInfoEl.style.flexDirection = "row";
-    accountInfoEl.style.alignItems = "center";
-    accountInfoEl.style.gap = "6px";
-    accountInfoEl.style.marginLeft = "auto";
-    accountInfoEl.style.marginRight = "0";
-}
-
 const accountNameEl = document.getElementById("accountName");
 const accountIconEl = document.querySelector(".acc-header-icon");
 const transactionTypeEl = document.getElementById("transactionType");
-    const totalLabelEl = document.getElementById("totalLabel");
-    const totalAmountEl = document.getElementById("totalAmount");
+const totalLabelEl = document.getElementById("totalLabel");
+const totalAmountEl = document.getElementById("totalAmount");
+const listTitleEl = document.getElementById("listTitle");
+const transactionCountEl = document.getElementById("transactionCount");
+const transactionsListEl = document.getElementById("transactionsList");
+const emptyStateEl = document.getElementById("emptyState");
+const transactions = loadTransactions();
+const accountTransactions = transactions.filter(transaction => {
+    const sameAccount = transaction.account === accountName;
+    const sameType = transaction.type === type;
+    return sameAccount && sameType;
+});
 
-    const listTitleEl = document.getElementById("listTitle");
-    const transactionCountEl = document.getElementById("transactionCount");
-
-    const transactionsListEl = document.getElementById("transactionsList");
-    const emptyStateEl = document.getElementById("emptyState");
-
-    const transactions = loadTransactions();
-
-    const accountTransactions = transactions.filter(transaction => {
-        const sameAccount = transaction.account === accountName;
-        const sameType = transaction.type === type;
-        return sameAccount && sameType;
-    });
-
+if (accountNameEl) {
     accountNameEl.textContent = t("account_label");
-
-    if (accountName && accountIconEl) {
-
-        const accounts = getAccounts();
-
-        const account = accounts.find(a => a.name === accountName);
-
-        if (account) {
-            accountNameEl.textContent = account.name;
-            accountIconEl.innerHTML = `<i data-lucide="${account.icon}"></i>`;
-            if (window.lucide) {
-                lucide.createIcons();
-            }
+}
+if (accountName && accountIconEl) {
+    const accounts = getAccounts();
+    const account = accounts.find(a => a.name === accountName);
+    if (account) {
+        accountNameEl.textContent = account.name;
+        accountIconEl.innerHTML = `<i data-lucide="${account.icon}"></i>`;
+        if (window.lucide) {
+            lucide.createIcons();
         }
     }
-
-    const isIncome = type === "income";
-
-    transactionTypeEl.textContent =
-        isIncome ? t("income_title") : t("expense_title");
-
-    totalLabelEl.textContent =
-        isIncome ? t("stats_total_income") : t("stats_total_expense");
-
-    listTitleEl.textContent =
-        isIncome ? t("income_title") : t("expense_title");
-
-    const total = calculateTransactionsTotal(accountTransactions);
-
+}
+const isIncome = type === "income";
+if (transactionTypeEl) {
+    transactionTypeEl.textContent = isIncome ? t("income_title") : t("expense_title");
+}
+if (totalLabelEl) {
+    totalLabelEl.textContent = isIncome ? t("stats_total_income") : t("stats_total_expense");
+}
+if (listTitleEl) {
+    listTitleEl.textContent = isIncome ? t("income_title") : t("expense_title");
+}
+const total = calculateTransactionsTotal(accountTransactions);
+if (totalAmountEl) {
     totalAmountEl.textContent = total.toLocaleString("en-US");
-
     const totalLen = String(Math.round(total)).length;
-
-    if (totalLen <= 3) {
-        totalAmountEl.style.fontSize = "48px";
-    } else if (totalLen <= 6) {
-        totalAmountEl.style.fontSize = "38px";
-    } else if (totalLen <= 8) {
-        totalAmountEl.style.fontSize = "30px";
+    if (totalLen <= 4) {
+        totalAmountEl.style.fontSize = "26px";
+    } else if (totalLen <= 7) {
+        totalAmountEl.style.fontSize = "22px";
     } else {
-        totalAmountEl.style.fontSize = "24px";
+        totalAmountEl.style.fontSize = "18px";
     }
+}
 
     transactionCountEl.textContent = accountTransactions.length;
 

@@ -656,9 +656,10 @@ if (budgetModal) {
         const val = Math.round(remaining).toLocaleString("en-US");
         budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span>`;
     } else {
-        const val = Math.round(Math.abs(remaining)).toLocaleString("en-US");
-        budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span> <span class="budget-over">over</span>`;
-    }
+    const val = Math.round(Math.abs(remaining)).toLocaleString("en-US");
+    const overText = typeof t === "function" ? t("budget_over") : "over";
+    budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span> <span class="budget-over">${overText}</span>`;
+}
 }
 
     if (saveBudgetBtn && budgetAmountInput) {
