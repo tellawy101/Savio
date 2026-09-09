@@ -302,17 +302,19 @@ window.renderCategories = function() {
             clearTimeout(pressTimer);
         });
 
-        item.onclick = function () {
-            const field = getCategoryFieldEl();
-            if (field) {
-                field.innerHTML = `<i data-lucide="${category.icon}"></i> ${category.name}`;
-field.dataset.icon = category.icon;
-field.removeAttribute("data-i18n");
-                if (window.lucide) lucide.createIcons();
-            }
-            categoryModal.classList.remove("show");
-            notifyFormFieldChanged();
-        };
+        item.onclick = function() {
+    const field = getCategoryFieldEl();
+    if (field) {
+        field.textContent = category.name;
+        field.dataset.icon = category.icon;
+        field.removeAttribute("data-i18n");
+    }
+    const iconEl = window.activeCategoryBox ? window.activeCategoryBox.querySelector(".category-icon") : null;
+    if (iconEl) iconEl.innerHTML = `<i data-lucide="${category.icon}"></i>`;
+    if (window.lucide) lucide.createIcons();
+    categoryModal.classList.remove("show");
+    notifyFormFieldChanged();
+};
 
         categoriesList.appendChild(item);
     });
@@ -354,15 +356,16 @@ if (window.lucide) lucide.createIcons();
             editingCategory = null;
             selectedCategory = null;
         } else {
-            categories.push({ name, icon });
-
-            const field = getCategoryFieldEl();
-if (field) {
-    field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
-    field.dataset.icon = icon;
-    field.removeAttribute("data-i18n");
+    categories.push({ name, icon });
+    const field = getCategoryFieldEl();
+    if (field) {
+        field.textContent = name;
+        field.dataset.icon = icon;
+        field.removeAttribute("data-i18n");
+    }
+    const iconEl = window.activeCategoryBox ? window.activeCategoryBox.querySelector(".category-icon") : null;
+    if (iconEl) iconEl.innerHTML = `<i data-lucide="${icon}"></i>`;
     if (window.lucide) lucide.createIcons();
-}
 }
         saveCategories(categories);
 renderCategories();

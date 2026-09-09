@@ -67,12 +67,16 @@ setupCommonFormPage();
     accountEl.textContent = t("select_account");
 }
 
-categoryEl.innerHTML = entry.categoryIcon ?
-    `<i data-lucide="${entry.categoryIcon}"></i> ${entry.category}` :
-    (entry.category || t("select_category"));
+categoryEl.textContent = entry.category || t("select_category");
 categoryEl.dataset.icon = entry.categoryIcon || "tag";
-if (entry.category) categoryEl.removeAttribute("data-i18n");
-        if (window.lucide) lucide.createIcons();
+if (entry.category) {
+    categoryEl.removeAttribute("data-i18n");
+    const categoryIconEl = document.getElementById(type + "CategoryIcon");
+    if (categoryIconEl && entry.categoryIcon) {
+        categoryIconEl.innerHTML = `<i data-lucide="${entry.categoryIcon}"></i>`;
+    }
+}
+if (window.lucide) lucide.createIcons();
         descriptionEl.value = entry.description || "";
         dateEl.value = entry.date || today;
     }

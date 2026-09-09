@@ -448,6 +448,9 @@ body {
 .dark .icon-option span {
     color: #f9fafb;
 }
+.dark #selectedIconPreviewWrap {
+    background: #3a3a3a;
+}
 .modal-actions {
     display: flex;
     gap: 10px;
