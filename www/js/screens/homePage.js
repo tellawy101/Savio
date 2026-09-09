@@ -150,168 +150,60 @@ const cleanAccount = cleanLabel(expense.account);
             if (window.lucide) {
                 lucide.createIcons();
             }
-            let startX = 0;
-            let currentX = 0;
-            let offsetX = 0;
-            let startY = 0;
-
-            const card = li.querySelector(".expense-main");
+const card = li.querySelector(".expense-main");
             const deleteBtn = li.querySelector(".swipe-delete");
             const editBtn = li.querySelector(".swipe-edit");
 
-            const isRTL = document.documentElement.dir === "rtl";
-
-            // بنحدد مين اللي المفروض يتكشف مع كل اتجاه سحب، حسب مكانه الفعلي على الشاشة (RTL/LTR)
-            const revealOnSwipeRight = deleteBtn;
-            const revealOnSwipeLeft = editBtn;
             deleteBtn.addEventListener("click", async (e) => {
-
                 e.stopPropagation();
-
                 const confirmed = await customConfirm(
                     typeof t === "function" ? t("delete_confirm") : "Delete this item?",
                     { danger: true }
                 );
+                if (!confirmed) return;
 
-                if (!confirmed) {
-                    return;
-                }
-
-                // بنحفظ العناصر اللي هتتحذف مع مكانها الأصلي، عشان نقدر نرجّعها لو المستخدم دوس "تراجع"
-                // (في حالة التحويل بيتحذف قيدين مع بعض: من الحساب وللحساب)
                 const itemsToDelete = expense.isTransfer
                     ? expenses.filter(item => item.transferId === expense.transferId)
                     : expenses.filter(item => item.id === expense.id);
-
                 const deletedWithPositions = itemsToDelete.map(item => ({
                     item,
                     position: expenses.indexOf(item)
                 }));
-
                 expenses = expense.isTransfer
                     ? expenses.filter(item => item.transferId !== expense.transferId)
                     : expenses.filter(item => item.id !== expense.id);
-
                 saveTransactions(expenses);
                 renderExpenses();
-
                 showUndoToast(
                     typeof t === "function" ? t("item_deleted_toast") : "Item Deleted",
                     function () {
-
                         deletedWithPositions
                             .sort((a, b) => a.position - b.position)
                             .forEach(({ item, position }) => {
                                 const insertAt = Math.min(position, expenses.length);
                                 expenses.splice(insertAt, 0, item);
                             });
-
                         saveTransactions(expenses);
                         renderExpenses();
-
                     }
                 );
-
             });
+
             editBtn.addEventListener("click", (e) => {
-    
-    e.stopPropagation();
-    
-    if (expense.isTransfer) {
-        
-        window.pendingAddTransactionTab = "transfer";
-        window.pendingEditTransactionId = expense.transferId;
-        navigateTo("add-transaction");
-        return;
-        
-    }
-    
-    if (expense.type === "income") {
-        
-        window.pendingAddTransactionTab = "income";
-        window.pendingEditTransactionId = expense.id;
-        navigateTo("add-transaction");
-        return;
-        
-    }
-    
-    if (expense.type === "expense") {
-        
-        window.pendingAddTransactionTab = "expense";
-        window.pendingEditTransactionId = expense.id;
-        navigateTo("add-transaction");
-        return;
-        
-    }
-});
-
-            card.addEventListener("touchstart", (e) => {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
+                e.stopPropagation();
+                if (expense.isTransfer) {
+                    window.pendingAddTransactionTab = "transfer";
+                    window.pendingEditTransactionId = expense.transferId;
+                    navigateTo("add-transaction");
+                    return;
+                }
+                window.pendingAddTransactionTab = expense.type;
+                window.pendingEditTransactionId = expense.id;
+                navigateTo("add-transaction");
             });
 
-            card.addEventListener("touchmove", (e) => {
-
-                const deltaX = e.touches[0].clientX - startX;
-                const deltaY = e.touches[0].clientY - startY;
-
-                if (Math.abs(deltaY) > Math.abs(deltaX)) return;
-                e.preventDefault();
-                currentX = offsetX + deltaX;
-
-                if (currentX > 80) currentX = 80;
-                if (currentX < -80) currentX = -80;
-
-                card.style.transform = `translateX(${currentX}px)`;
-                if (currentX > 0) {
-                    revealOnSwipeRight.style.opacity = currentX / 80;
-                    revealOnSwipeLeft.style.opacity = 0;
-                } else {
-                    revealOnSwipeLeft.style.opacity = Math.abs(currentX) / 80;
-                    revealOnSwipeRight.style.opacity = 0;
-                }
-
-                card.style.transition = "none";
-
-            }, { passive: false });
-            card.addEventListener("touchend", () => {
-
-                if (currentX > 50) {
-
-                    offsetX = 70;
-
-                } else if (currentX < -50) {
-
-                    offsetX = -70;
-
-                } else {
-
-                    offsetX = 0;
-
-                }
-
-                card.style.transition = "transform .25s ease";
-                card.style.transform = `translateX(${offsetX}px)`;
-                
-                if (offsetX === 70) {
-                    revealOnSwipeRight.style.opacity = 1;
-                    revealOnSwipeRight.style.pointerEvents = "auto";
-                    revealOnSwipeLeft.style.opacity = 0;
-                    revealOnSwipeLeft.style.pointerEvents = "none";
-                } else if (offsetX === -70) {
-                    revealOnSwipeLeft.style.opacity = 1;
-                    revealOnSwipeLeft.style.pointerEvents = "auto";
-                    revealOnSwipeRight.style.opacity = 0;
-                    revealOnSwipeRight.style.pointerEvents = "none";
-                } else {
-                    revealOnSwipeRight.style.opacity = 0;
-                    revealOnSwipeRight.style.pointerEvents = "none";
-                    revealOnSwipeLeft.style.opacity = 0;
-                    revealOnSwipeLeft.style.pointerEvents = "none";
-                }
-                currentX = 0;
-
-            });
+            // استدعاء مكوّن السحب المشترك بسطر واحد!
+            attachSwipeActions(card, { deleteEl: deleteBtn, editEl: editBtn });
 
         });
 

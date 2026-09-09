@@ -418,79 +418,8 @@ saveDebts(debts);
                 editThisDebt();
             });
 
-let startX = 0;
-            let startY = 0;
-            let currentX = 0;
-            let offsetX = 0;
-
-            card.addEventListener("touchstart", function (e) {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-                card.style.transition = "none";
-            });
-
-            card.addEventListener("touchmove", function (e) {
-                const deltaX = e.touches[0].clientX - startX;
-                const deltaY = e.touches[0].clientY - startY;
-
-                if (Math.abs(deltaY) > Math.abs(deltaX)) return;
-                e.preventDefault();
-
-                // بعد
-currentX = offsetX + deltaX;
-
-if (currentX > 70) currentX = 70;
-if (currentX < -70) currentX = -70;
-
-card.style.transform = `translateX(${currentX}px)`;
-
-if (currentX > 0) {
-    bgDelete.style.opacity = Math.min(currentX / 60, 1);
-    bgDelete.style.pointerEvents = "auto";
-    bgEdit.style.opacity = 0;
-    bgEdit.style.pointerEvents = "none";
-} else {
-    bgEdit.style.opacity = Math.min(Math.abs(currentX) / 60, 1);
-    bgEdit.style.pointerEvents = "auto";
-    bgDelete.style.opacity = 0;
-    bgDelete.style.pointerEvents = "none";
-}
-            }, { passive: false });
-
-            card.addEventListener("touchend", function () {
-
-                if (currentX > 40) {
-    offsetX = 60;
-    card.style.transition = "transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)";
-} else if (currentX < -40) {
-    offsetX = -60;
-    card.style.transition = "transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)";
-} else {
-    offsetX = 0;
-    card.style.transition = "transform 0.25s ease";
-}
-
-                card.style.transform = `translateX(${offsetX}px)`;
-
-                if (offsetX === 60) {
-    bgDelete.style.opacity = 1;
-    bgDelete.style.pointerEvents = "auto";
-    bgEdit.style.opacity = 0;
-    bgEdit.style.pointerEvents = "none";
-} else if (offsetX === -60) {
-    bgEdit.style.opacity = 1;
-    bgEdit.style.pointerEvents = "auto";
-    bgDelete.style.opacity = 0;
-    bgDelete.style.pointerEvents = "none";
-} else {
-    bgDelete.style.opacity = 0;
-    bgDelete.style.pointerEvents = "none";
-    bgEdit.style.opacity = 0;
-    bgEdit.style.pointerEvents = "none";
-}
-
-                currentX = 0;
-            });
+// استدعاء مكوّن السحب المشترك نفسه!
+attachSwipeActions(card, { deleteEl: bgDelete, editEl: bgEdit, maxOffset: 60, threshold: 35 });
 
             debtsList.appendChild(wrapper);
         });
