@@ -339,7 +339,7 @@ saveDebts(debts);
             }
             ${
                 !isSettled
-                ? `<button class="debt-card-pay-btn">Pay</button>`
+                ? `<button class="debt-card-pay-btn">${typeof t === "function" ? t("debts_pay_btn") : "Pay"}</button>`
                 : ``
             }
         </div>
