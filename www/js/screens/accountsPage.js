@@ -316,14 +316,12 @@ saveAccounts(accounts);
                               <div class="account-sub-name">${account.description || ""}</div>
                             `}
                         </div>
-                        <div class="account-card-balance">
-                            <div class="account-card-balance-amount">${Math.round(account.currentBalance).toLocaleString("en-US")}</div>
-                            <div class="account-card-balance-currency">EGP</div>
+<div class="account-card-balance">
+                            <span class="account-card-balance-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
+                            <span class="account-card-balance-amount">${Math.round(account.currentBalance).toLocaleString("en-US")}</span>
                         </div>
                     </div>
-
                     <div class="account-divider"></div>
-
                     <div class="account-stats-row">
                         <div class="stat-item">
                             <div class="stat-icon stat-icon-income">
@@ -331,36 +329,40 @@ saveAccounts(accounts);
                             </div>
                             <div class="stat-texts">
                                 <div class="stat-label">Income</div>
-                                <div class="stat-value stat-value-income">${Math.round(account.income).toLocaleString("en-US")}</div>
-                                <div class="stat-currency">EGP</div>
+                                <div class="stat-amount-row">
+                                    <span class="stat-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
+                                    <span class="stat-value stat-value-income">${Math.round(account.income).toLocaleString("en-US")}</span>
+                                </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
                                 <polyline points="0,20 15,16 30,14 45,8 60,4" fill="none" stroke="#16a34a" stroke-width="2"/>
                             </svg>
                         </div>
-
                         <div class="stat-item">
                             <div class="stat-icon stat-icon-expense">
                                 <i data-lucide="arrow-down-right"></i>
                             </div>
                             <div class="stat-texts">
                                 <div class="stat-label">Expense</div>
-                                <div class="stat-value stat-value-expense">${Math.round(account.expense).toLocaleString("en-US")}</div>
-                                <div class="stat-currency">EGP</div>
+                                <div class="stat-amount-row">
+                                    <span class="stat-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
+                                    <span class="stat-value stat-value-expense">${Math.round(account.expense).toLocaleString("en-US")}</span>
+                                </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
                                 <polyline points="0,4 15,8 30,10 45,16 60,20" fill="none" stroke="#dc2626" stroke-width="2"/>
                             </svg>
                         </div>
-
                         <div class="stat-item stat-item-last">
                             <div class="stat-icon stat-icon-balance">
                                 <i data-lucide="wallet"></i>
                             </div>
                             <div class="stat-texts">
                                 <div class="stat-label">Net Balance</div>
-                                <div class="stat-value stat-value-balance">${Math.round(netBalance).toLocaleString("en-US")}</div>
-                                <div class="stat-currency">EGP</div>
+                                <div class="stat-amount-row">
+                                    <span class="stat-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
+                                    <span class="stat-value stat-value-balance">${Math.round(netBalance).toLocaleString("en-US")}</span>
+                                </div>
                             </div>
                         </div>
 

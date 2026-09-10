@@ -45,29 +45,33 @@ body {
 .balance-card {
     background: linear-gradient(180deg, #0f766e, #115e59);
     color: #fff;
-
     border-radius: 18px;
     margin: 20px 20px 0;
-
     padding: 16px 20px;
-
     box-sizing: border-box;
     text-align: center;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 .balance-card h3 {
     margin: 0;
     font-size: 18px;
     font-weight: normal;
     opacity: .8;
+    text-align: center;
 }
-
 .balance-card h1 {
     margin: 5px 0 0;
-    display: inline-flex;
-    direction: ltr;
+    display: flex;
+    justify-content: center;
     align-items: baseline;
+    direction: ltr;
     gap: 6px;
+    width: 100%;
 }
+
 .balance-card .currency {
     font-size: 20px;
     font-weight: 500;
@@ -164,7 +168,10 @@ body {
 }
 
 .account-card-balance {
-    text-align: right;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    direction: ltr;
     flex-shrink: 0;
 }
 
@@ -180,12 +187,13 @@ body {
     color: #6b7280;
 }
 
-.account-divider {
+.account-card .account-divider {
+    display: block !important;
+    width: 100%;
     height: 1px;
-    background: #F1F1F1;
-    margin: var(--section-gap)
+    background: #2a2e33;
+    margin: 18px 0 16px !important;
 }
-
 .account-stats-row {
     position: relative;
     display: flex;
@@ -207,6 +215,13 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
+}
+
+.stat-amount-row {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3px;
+    direction: ltr;
 }
 
 .stat-item-last {
