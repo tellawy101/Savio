@@ -326,15 +326,15 @@ saveDebts(debts);
                 ${debt.dueDate || "No due date"}
             </div>
 
-            <div class="debt-card-amount">
-                ${debt.type === "receivable" ? "+" : "-"} EGP ${Number(debt.remaining).toLocaleString("en-US")}
+          <div class="debt-card-amount">
+                ${debt.type === "receivable" ? "+" : "-"} <span class="debt-currency">EGP</span> <span class="debt-amount-value">${Number(debt.remaining).toLocaleString("en-US")}</span>
             </div>
         </div>
 
         <div class="debt-card-main-row">
             ${
                 debt.paid > 0
-                ? `<span class="debt-paid-note">Paid EGP ${Number(debt.paid).toLocaleString("en-US")}</span>`
+                ? `<span class="debt-paid-note"><span class="debt-currency">EGP</span> <span class="debt-amount-value">${Number(debt.paid).toLocaleString("en-US")}</span> ${typeof t === "function" ? t("debts_paid_note") : "Paid"}</span>`
                 : `<span></span>`
             }
             ${
@@ -424,8 +424,8 @@ attachSwipeActions(card, { deleteEl: bgDelete, editEl: bgEdit, maxOffset: 60, th
             debtsList.appendChild(wrapper);
         });
 
-        totalReceivable.innerText = "EGP " + Math.round(receivable).toLocaleString("en-US");
-        totalPayable.innerText = "EGP " + Math.round(payable).toLocaleString("en-US");
+        totalReceivable.querySelector(".stat-value").innerText = Math.round(receivable).toLocaleString("en-US");
+totalPayable.querySelector(".stat-value").innerText = Math.round(payable).toLocaleString("en-US");
         netBalance.querySelector(".currency").innerText = "EGP";
         netBalance.querySelector(".amount").innerText = Math.round(net).toLocaleString("en-US");
 

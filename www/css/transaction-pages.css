@@ -132,6 +132,7 @@ body.dark.expense-page {
 .expense-category {
     font-size: 15px !important;
     font-weight: 600;
+    color: #9CA3AF;
     line-height: 1.2;
     margin: 0 0 3px 0;
     max-width: 100%;
@@ -156,7 +157,7 @@ body.dark.expense-page {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin-left: 8px;
+    margin-left: 0;
     padding: 0;
     box-sizing: border-box;
 }
@@ -167,6 +168,20 @@ body.dark.expense-page {
     color: #0F766E;
     white-space: nowrap;
     line-height: 1.2;
+}
+
+.expense-date {
+    font-size: 10px;
+    color: #999;
+    white-space: nowrap;
+}
+
+.expense-note {
+    font-size: 10px;
+    color: #999;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .expense-meta {
@@ -204,6 +219,7 @@ body.dark.expense-page {
     border-radius: 16px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     padding: 10px 16px;
+    gap: 6px;
 }
 
 /* ==============================

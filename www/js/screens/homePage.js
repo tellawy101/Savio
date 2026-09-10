@@ -51,7 +51,15 @@ function cleanLabel(text) {
     function renderExpenses() {
 
         expenseList.innerHTML = "";
-
+if (expenses.length === 0) {
+        expenseList.innerHTML = renderEmptyState(
+            "receipt-text", 
+            typeof t === "function" ? t("no_transactions") : "لا توجد معاملات", 
+            typeof t === "function" ? t("add_first_transaction") : "اضغط على + لإضافة معاملة جديدة"
+        );
+        if (window.lucide) lucide.createIcons();
+        return;
+    }
         // بنرتب المعاملات حسب التاريخ (الأحدث فوق)، ولو نفس التاريخ الأحدث إضافة الأول
         // من غير ما نغيّر ترتيبها الأصلي جوه الـ localStorage (عشان index يفضل صحيح للتعديل/الحذف)
         const sortedEntries = expenses

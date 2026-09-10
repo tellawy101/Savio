@@ -173,14 +173,22 @@ transform: translateY(-10px);
 ============================== */
 
 .debt-card-amount {
+    order: 2;
     margin: 0 0 12px;
-
     color: #111827;
-
     font-size: 1.4rem;
     font-weight: 800;
-
     text-align: right;
+}
+.debt-currency {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.debt-amount-value {
+    font-size: 1.4rem;
+    font-weight: 800;
 }
 
 /* ==============================
@@ -308,9 +316,15 @@ transform: translateY(-10px);
     font-weight: 700;
     color: #fff;
 }
+
+.balance-grid .stat .stat-value {
+    font-size: 18px;
+}
+
 .balance-grid .stat .stat-currency {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 500;
+    opacity: 0.8;
 }
 .debt-actions{
     display:flex;
@@ -452,12 +466,16 @@ transform: translateY(-10px);
     transform: translateY(0) scale(1);
     opacity: 1;
 }
-#debtModal {
+#debtModal,
+#payDebtModal,
+#editDebtModal {
     align-items: flex-end;
     padding-top: 0;
 }
 
-#debtModal .modal-content {
+#debtModal .modal-content,
+#payDebtModal .modal-content,
+#editDebtModal .modal-content {
     width: 100%;
     max-width: 100%;
     min-width: 0;
@@ -466,10 +484,11 @@ transform: translateY(-10px);
     transform: translateY(100%);
 }
 
-#debtModal.show .modal-content {
+#debtModal.show .modal-content,
+#payDebtModal.show .modal-content,
+#editDebtModal.show .modal-content {
     transform: translateY(0);
 }
-
 /* ==============================
    Notes
 ============================== */
@@ -500,6 +519,12 @@ transform: translateY(-10px);
     font-size: 16px;
     font-weight: 500;
 }
+#debtNotes:focus,
+#editDebtNotes:focus {
+    outline: none;
+    border: 1px solid #0F766E;
+    box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.25);
+}
 .debt-card-main-row {
     display: flex;
     align-items: center;
@@ -514,11 +539,6 @@ transform: translateY(-10px);
     white-space: nowrap;
 }
 
-.debt-card-amount {
-    order: 2;
-    margin: 0;
-    text-align: right;
-}
 body {
     background-color: #F4F5F7;
 }
@@ -630,7 +650,7 @@ body {
 
 .debt-card-pay-btn {
     width: auto;
-    margin: 0 0 0 auto;
+    margin: 0;
     background: #17202B;
     color: #fff;
     border: none;
@@ -643,6 +663,7 @@ body {
 
 .debt-paid-note {
     display: inline-block;
+    direction: ltr;
     background: #dcfce7;
     color: #16a34a;
     border-radius: 999px;

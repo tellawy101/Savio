@@ -213,7 +213,7 @@ body.has-scroll {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 18px;
 
     background: #F9FAFB;
     border: 1px solid #E5E7EB;
@@ -291,7 +291,7 @@ body.has-scroll {
 .account-select-box {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 18px;
 
     background: #F9FAFB;
     border: 1px solid #E5E7EB;
