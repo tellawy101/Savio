@@ -129,7 +129,7 @@ transform: translateY(-10px);
 
     gap: 12px;
 
-    margin-bottom: 12px;
+    margin-bottom: 0px;
 }
 
 .debt-person-name {
@@ -175,7 +175,7 @@ transform: translateY(-10px);
 .debt-card-amount {
     order: 2;
     margin: 0 0 12px;
-    color: #111827;
+    color: #6b7280;
     font-size: 1.4rem;
     font-weight: 800;
     text-align: right;
@@ -651,7 +651,7 @@ body {
 .debt-card-pay-btn {
     width: auto;
     margin: 0;
-    background: #17202B;
+    background: #0F766E;
     color: #fff;
     border: none;
     border-radius: 999px;
@@ -661,13 +661,23 @@ body {
     cursor: pointer;
 }
 
+.dark .debt-card-pay-btn {
+    background: #374151;
+}
+
 .debt-paid-note {
     display: inline-block;
     direction: ltr;
     background: #dcfce7;
     color: #16a34a;
-    border-radius: 999px;
+    border-radius: 8px;
     padding: 6px 14px;
     font-size: 0.75rem;
     font-weight: 700;
+}
+.debt-paid-note .debt-amount-value {
+    font-size: 16px;
+}
+.debt-paid-note .debt-currency {
+    font-size: 10px;
 }
