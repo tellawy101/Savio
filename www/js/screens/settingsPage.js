@@ -6,6 +6,49 @@
 // ==============================================================
 
 function initSettingsPage() {
+    // ------------------------------
+    // تسجيل الدخول بجوجل (Google Sign-In)
+    // ------------------------------
+    const googleSignInBtn = document.getElementById("googleSignInBtn");
+    const accountStatusTitle = document.getElementById("accountStatusTitle");
+    const accountStatusDesc = document.getElementById("accountStatusDesc");
+
+    function updateAccountUI(user) {
+        if (!accountStatusTitle || !accountStatusDesc) return;
+        if (user) {
+            accountStatusTitle.textContent = user.displayName || user.email;
+            accountStatusDesc.textContent = "تسجيل الخروج";
+        } else {
+            accountStatusTitle.textContent = "Sign in with Google";
+            accountStatusDesc.textContent = "Sync your data across devices";
+        }
+    }
+
+    if (window.Savio && window.Savio.auth) {
+        // متابعة حالة تسجيل الدخول أول ما الصفحة تتفتح
+        window.Savio.onAuthStateChanged(window.Savio.auth, function (user) {
+            updateAccountUI(user);
+        });
+
+        if (googleSignInBtn) {
+            googleSignInBtn.addEventListener("click", async function () {
+                const currentUser = window.Savio.auth.currentUser;
+                try {
+                    if (currentUser) {
+                        // لو مسجل دخول بالفعل، الضغطة دي تسجل خروج
+                        await window.Savio.signOut(window.Savio.auth);
+                        showToast("تم تسجيل الخروج", "success");
+                    } else {
+    // لو مش مسجل، روح لصفحة تسجيل الدخول بجوجل
+    window.Savio.signInWithRedirect(window.Savio.auth, window.Savio.googleProvider);
+}
+                } catch (err) {
+                    console.error("Google Sign-In Error:", err);
+                    showToast("حدث خطأ أثناء تسجيل الدخول", "error");
+                }
+            });
+        }
+    }
     
     // تحديث رقم الإصدار في كل الأماكن من مصدر واحد (APP_VERSION)
     const aboutVersionText = document.getElementById("aboutVersionText");
