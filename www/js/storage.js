@@ -59,11 +59,20 @@ function loadTransactions() {
 }
 
 // بتحفظ كل المعاملات
+function triggerCloudSync() {
+    if (window.Savio && window.Savio.auth && window.Savio.auth.currentUser && typeof window.Savio.syncToCloud === "function") {
+        window.Savio.syncToCloud(window.Savio.auth.currentUser.uid).catch(err => {
+            console.warn("Cloud sync error:", err);
+        });
+    }
+}
+
 function saveTransactions(transactions) {
     localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(transactions)
     );
+    triggerCloudSync();
 }
 
 
@@ -126,6 +135,7 @@ function getAccounts() {
 // بتحفظ كل الحسابات
 function saveAccounts(accounts) {
     localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+    triggerCloudSync();
 }
 const THEME_KEY = "theme";
 
@@ -183,6 +193,7 @@ function getBudget() {
 
 function saveBudget(amount) {
     localStorage.setItem(BUDGET_KEY, amount);
+    triggerCloudSync();
 }
 // ==============================
 // Debts
@@ -196,6 +207,7 @@ function getDebts() {
 
 function saveDebts(debts) {
     localStorage.setItem(DEBTS_KEY, JSON.stringify(debts));
+    triggerCloudSync();
 }
 // ==============================
 // حساب إجمالي الديون (منطق بيزنس منفصل عن العرض)

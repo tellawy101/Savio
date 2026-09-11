@@ -6,8 +6,8 @@
 // ==============================================================
 
 function initSettingsPage() {
-    // ------------------------------
-    // تسجيل الدخول بجوجل (Google Sign-In)
+  // ------------------------------
+    // حساب جوجل (Google Sign-In)
     // ------------------------------
     const googleSignInBtn = document.getElementById("googleSignInBtn");
     const accountStatusTitle = document.getElementById("accountStatusTitle");
@@ -17,39 +17,49 @@ function initSettingsPage() {
         if (!accountStatusTitle || !accountStatusDesc) return;
         if (user) {
             accountStatusTitle.textContent = user.displayName || user.email;
-            accountStatusDesc.textContent = "تسجيل الخروج";
+            accountStatusDesc.textContent = "حساب متصل - اضغط لتسجيل الخروج";
         } else {
             accountStatusTitle.textContent = "Sign in with Google";
             accountStatusDesc.textContent = "Sync your data across devices";
         }
     }
 
-    if (window.Savio && window.Savio.auth) {
-        // متابعة حالة تسجيل الدخول أول ما الصفحة تتفتح
-        window.Savio.onAuthStateChanged(window.Savio.auth, function (user) {
-            updateAccountUI(user);
-        });
-
-        if (googleSignInBtn) {
-            googleSignInBtn.addEventListener("click", async function () {
-                const currentUser = window.Savio.auth.currentUser;
-                try {
-                    if (currentUser) {
-                        // لو مسجل دخول بالفعل، الضغطة دي تسجل خروج
-                        await window.Savio.signOut(window.Savio.auth);
-                        showToast("تم تسجيل الخروج", "success");
-                    } else {
-    // لو مش مسجل، افتح نافذة تسجيل الدخول بجوجل
-    const result = await window.Savio.signInWithPopup(window.Savio.auth, window.Savio.googleProvider);
-    showToast("تم تسجيل الدخول باسم " + result.user.displayName, "success");
-}
-                } catch (err) {
-                    console.error("Google Sign-In Error:", err);
-                    showToast("حدث خطأ أثناء تسجيل الدخول", "error");
-                }
+    function setupGoogleAuth() {
+        if (window.Savio && window.Savio.ready && window.Savio.auth) {
+            window.Savio.onAuthStateChanged(window.Savio.auth, function (user) {
+                updateAccountUI(user);
             });
+
+            if (googleSignInBtn) {
+                googleSignInBtn.onclick = async function () {
+                    const currentUser = window.Savio.auth.currentUser;
+                    try {
+                        if (currentUser) {
+                            const confirmSignout = typeof customConfirm === "function" 
+                                ? await customConfirm("هل ترغب في تسجيل الخروج من حساب جوجل؟", { danger: false })
+                                : true;
+                            if (!confirmSignout) return;
+                            await window.Savio.signOut(window.Savio.auth);
+                            showToast("تم تسجيل الخروج بنجاح", "success");
+                        } else {
+                            const result = await window.Savio.signInWithPopup(window.Savio.auth, window.Savio.googleProvider);
+                            if (result && result.user) {
+                                showToast("مرحباً بك " + (result.user.displayName || ""), "success");
+                                await window.Savio.syncFromCloud(result.user.uid);
+                                await window.Savio.syncToCloud(result.user.uid);
+                            }
+                        }
+                    } catch (err) {
+                        console.error("Google Sign-In Error:", err);
+                        showToast("فشل تسجيل الدخول", "error");
+                    }
+                };
+            }
+        } else {
+            setTimeout(setupGoogleAuth, 50);
         }
     }
+    setupGoogleAuth();
     
     // تحديث رقم الإصدار في كل الأماكن من مصدر واحد (APP_VERSION)
     const aboutVersionText = document.getElementById("aboutVersionText");

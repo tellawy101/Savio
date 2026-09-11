@@ -33,18 +33,19 @@
 <div id="nav-placeholder"></div>
 <!-- نافذة تسجيل الدخول بجوجل (اختيارية) -->
 <div id="loginPromptModal" class="modal">
-  <div class="modal-content import-modal-content">
-    <div class="import-modal-icon">
-      <i data-lucide="log-in"></i>
+    <div class="modal-content import-modal-content">
+        <div class="import-modal-icon">
+            <i data-lucide="log-in"></i>
+        </div>
+        <h2 data-i18n="login_prompt_title">Sign in with Google</h2>
+        <p class="import-modal-desc" data-i18n="login_prompt_desc">Keep your data backed up and synced safely on the cloud.</p>
+        <div class="modal-actions import-modal-actions" style="flex-direction:column; gap:8px;">
+            <button id="loginPromptGoogleBtn" class="account-save-btn" style="width:100%;" data-i18n="login_prompt_google">Sign in with Google</button>
+            <button id="loginPromptSkipBtn" class="import-close-btn" style="width:100%;" data-i18n="login_prompt_skip">Skip for now</button>
+        </div>
     </div>
-    <h2>سجل دخولك بجوجل</h2>
-    <p class="import-modal-desc">سجل دخولك عشان بياناتك تتزامن بين أجهزتك</p>
-    <div class="modal-actions import-modal-actions" style="flex-direction:column; gap:8px;">
-      <button id="loginPromptGoogleBtn" class="account-save-btn" style="width:100%;">تسجيل الدخول بجوجل</button>
-      <button id="loginPromptSkipBtn" class="import-close-btn" style="width:100%;">تخطي الآن</button>
-    </div>
-  </div>
 </div>
+
 <script type="module" src="js/firebase-init.js"></script>
 <script src="js/components.js"></script>
 <script>
