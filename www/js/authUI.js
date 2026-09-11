@@ -19,12 +19,15 @@ function initLoginPrompt() {
         }
     }
 
-    waitForSavio(function() {
-            // نتأكد من نتيجة تسجيل الدخول لو الصفحة رجعت من جوجل
-            window.Savio.getRedirectResult(window.Savio.auth).catch(function(err) {
-                console.error("Redirect Sign-In Error:", err);
-            });
-            
+    function waitForSavio(callback) {
+    if (window.Savio && window.Savio.ready) {
+        callback();
+    } else {
+        setTimeout(function() { waitForSavio(callback); }, 20);
+    }
+}
+
+waitForSavio(function() {
             window.Savio.onAuthStateChanged(window.Savio.auth, function(user) {
             if (!user) {
                 modal.classList.add("show");
@@ -35,12 +38,18 @@ function initLoginPrompt() {
     });
 
     if (googleBtn) {
-        googleBtn.addEventListener("click", function () {
-            window.Savio.signInWithRedirect(window.Savio.auth, window.Savio.googleProvider);
-            // الصفحة هتنتقل لجوجل، وترجع تاني للتطبيق بعد التسجيل
-        });
-    }
-    if (skipBtn) {
+    googleBtn.addEventListener("click", async function() {
+        try {
+            await window.Savio.signInWithPopup(window.Savio.auth, window.Savio.googleProvider);
+            modal.classList.remove("show");
+            if (typeof showToast === "function") showToast("تم تسجيل الدخول بنجاح", "success");
+        } catch (err) {
+            console.error("Google Sign-In Error:", err);
+            if (typeof showToast === "function") showToast("حدث خطأ أثناء تسجيل الدخول", "error");
+        }
+    });
+}
+if (skipBtn) {
         skipBtn.addEventListener("click", function () {
             sessionStorage.setItem("savio_login_skipped", "true");
             modal.classList.remove("show");

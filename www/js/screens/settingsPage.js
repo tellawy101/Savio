@@ -39,8 +39,9 @@ function initSettingsPage() {
                         await window.Savio.signOut(window.Savio.auth);
                         showToast("تم تسجيل الخروج", "success");
                     } else {
-    // لو مش مسجل، روح لصفحة تسجيل الدخول بجوجل
-    window.Savio.signInWithRedirect(window.Savio.auth, window.Savio.googleProvider);
+    // لو مش مسجل، افتح نافذة تسجيل الدخول بجوجل
+    const result = await window.Savio.signInWithPopup(window.Savio.auth, window.Savio.googleProvider);
+    showToast("تم تسجيل الدخول باسم " + result.user.displayName, "success");
 }
                 } catch (err) {
                     console.error("Google Sign-In Error:", err);

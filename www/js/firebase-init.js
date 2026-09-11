@@ -3,8 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/fireba
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
@@ -31,7 +30,7 @@ window.Savio = window.Savio || {};
 window.Savio.auth = auth;
 window.Savio.db = db;
 window.Savio.googleProvider = googleProvider;
-window.Savio.signInWithRedirect = signInWithRedirect;
-window.Savio.getRedirectResult = getRedirectResult;
+window.Savio.signInWithPopup = signInWithPopup;
+window.Savio.ready = true;
 window.Savio.onAuthStateChanged = onAuthStateChanged;
 window.Savio.signOut = signOut;
