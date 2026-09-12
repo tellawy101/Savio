@@ -37,7 +37,7 @@ async function signInWithGoogleNative() {
   if (!FirebaseAuthentication) {
     throw new Error("FirebaseAuthentication plugin غير متاح");
   }
-  return await FirebaseAuthentication.signInWithGoogle();
+  return await FirebaseAuthentication.signInWithGoogle({ useCredentialManager: false });
 }
 
 // دالة رفع البيانات إلى سحابة Firestore
