@@ -42,7 +42,7 @@ function initSettingsPage() {
                             await window.Savio.signOut(window.Savio.auth);
                             showToast("تم تسجيل الخروج بنجاح", "success");
                         } else {
-                            const result = await window.Savio.signInWithPopup(window.Savio.auth, window.Savio.googleProvider);
+                            const result = await window.Savio.signInWithGoogleNative();
                             if (result && result.user) {
                                 showToast("مرحباً بك " + (result.user.displayName || ""), "success");
                                 await window.Savio.syncFromCloud(result.user.uid);

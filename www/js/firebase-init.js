@@ -2,9 +2,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
 import {
   getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-getRedirectResult,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
@@ -28,11 +25,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
-googleProvider.setCustomParameters({
-  prompt: 'select_account'
-});
-googleProvider.setCustomParameters({ prompt: "select_account" });
+
+// بلجن Google Sign-In الأصلي (Native) - بيفتح شاشة اختيار الحساب الحقيقية بتاعة الأندرويد
+// بدل ما يفتح نافذة popup جوه الـ WebView (وده كان سبب الشاشة البيضا)
+const FirebaseAuthentication = window.Capacitor && window.Capacitor.Plugins ?
+  window.Capacitor.Plugins.FirebaseAuthentication :
+  null;
+
+// دالة تسجيل الدخول بجوجل - البلجن ده بيزامن تلقائي مع الـ auth بتاع الـ JS SDK فوق
+async function signInWithGoogleNative() {
+  if (!FirebaseAuthentication) {
+    throw new Error("FirebaseAuthentication plugin غير متاح");
+  }
+  return await FirebaseAuthentication.signInWithGoogle();
+}
 
 // دالة رفع البيانات إلى سحابة Firestore
 async function syncToCloud(uid) {
@@ -77,10 +83,7 @@ async function syncFromCloud(uid) {
 window.Savio = window.Savio || {};
 window.Savio.auth = auth;
 window.Savio.db = db;
-window.Savio.googleProvider = googleProvider;
-window.Savio.signInWithPopup = signInWithPopup;
-window.Savio.getRedirectResult = getRedirectResult;
-window.Savio.signInWithRedirect = typeof signInWithRedirect !== "undefined" ? signInWithRedirect : null;
+window.Savio.signInWithGoogleNative = signInWithGoogleNative;
 window.Savio.onAuthStateChanged = onAuthStateChanged;
 window.Savio.signOut = signOut;
 window.Savio.syncToCloud = syncToCloud;
