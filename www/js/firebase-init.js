@@ -4,6 +4,7 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
+getRedirectResult,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
@@ -28,6 +29,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
 // دالة رفع البيانات إلى سحابة Firestore
@@ -75,6 +79,8 @@ window.Savio.auth = auth;
 window.Savio.db = db;
 window.Savio.googleProvider = googleProvider;
 window.Savio.signInWithPopup = signInWithPopup;
+window.Savio.getRedirectResult = getRedirectResult;
+window.Savio.signInWithRedirect = typeof signInWithRedirect !== "undefined" ? signInWithRedirect : null;
 window.Savio.onAuthStateChanged = onAuthStateChanged;
 window.Savio.signOut = signOut;
 window.Savio.syncToCloud = syncToCloud;
