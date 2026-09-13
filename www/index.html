@@ -37,10 +37,13 @@
         <div class="import-modal-icon">
             <i data-lucide="log-in"></i>
         </div>
-        <h2 data-i18n="login_prompt_title">Sign in with Google</h2>
+        <h2 data-i18n="login_prompt_title">Sign in</h2>
         <p class="import-modal-desc" data-i18n="login_prompt_desc">Keep your data backed up and synced safely on the cloud.</p>
+        <input type="email" id="loginEmailInput" class="form-input" placeholder="Email" style="width:100%; margin-bottom:8px;">
+        <input type="password" id="loginPasswordInput" class="form-input" placeholder="Password" style="width:100%; margin-bottom:8px;">
         <div class="modal-actions import-modal-actions" style="flex-direction:column; gap:8px;">
-            <button id="loginPromptGoogleBtn" class="account-save-btn" style="width:100%;" data-i18n="login_prompt_google">Sign in with Google</button>
+            <button id="loginPromptSignInBtn" class="account-save-btn" style="width:100%;" data-i18n="login_prompt_signin">Sign in</button>
+            <button id="loginPromptSignUpBtn" class="import-close-btn" style="width:100%;" data-i18n="login_prompt_signup">Create account</button>
             <button id="loginPromptSkipBtn" class="import-close-btn" style="width:100%;" data-i18n="login_prompt_skip">Skip for now</button>
         </div>
     </div>

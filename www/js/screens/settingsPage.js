@@ -50,9 +50,10 @@ function initSettingsPage() {
                             }
                         }
                     } catch (err) {
-                        console.error("Google Sign-In Error:", err);
-                        showToast("فشل تسجيل الدخول", "error");
-                    }
+    console.error("Google Sign-In Error:", err);
+    const msg = err && (err.message || err.code) ? (err.code ? err.code + ": " : "") + err.message : "حدث خطأ غير معروف";
+    showToast("فشل: " + msg, "error");
+}
                 };
             }
         } else {

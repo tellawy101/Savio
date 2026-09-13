@@ -3,7 +3,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/fireba
 import {
   getAuth,
   onAuthStateChanged,
-  signOut
+  signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 import {
   getFirestore,
@@ -34,12 +36,21 @@ const FirebaseAuthentication = window.Capacitor && window.Capacitor.Plugins ?
 
 // دالة تسجيل الدخول بجوجل - البلجن ده بيزامن تلقائي مع الـ auth بتاع الـ JS SDK فوق
 async function signInWithGoogleNative() {
-  if (!FirebaseAuthentication) {
-    throw new Error("FirebaseAuthentication plugin غير متاح");
+  if (!FirebaseAuthentication || typeof FirebaseAuthentication.signInWithGoogle !== "function") {
+    throw new Error("إضافة تسجيل الدخول غير مثبتة في النظام");
   }
-  return await FirebaseAuthentication.signInWithGoogle({ useCredentialManager: false });
+  // استدعاء تسجيل الدخول الأصلي
+  return await FirebaseAuthentication.signInWithGoogle();
+}
+// دالة إنشاء حساب جديد بالإيميل والباسورد
+async function signUpWithEmail(email, password) {
+  return await createUserWithEmailAndPassword(auth, email, password);
 }
 
+// دالة تسجيل الدخول بإيميل وباسورد موجودين بالفعل
+async function signInWithEmail(email, password) {
+  return await signInWithEmailAndPassword(auth, email, password);
+}
 // دالة رفع البيانات إلى سحابة Firestore
 async function syncToCloud(uid) {
   if (!uid) return;
@@ -84,6 +95,8 @@ window.Savio = window.Savio || {};
 window.Savio.auth = auth;
 window.Savio.db = db;
 window.Savio.signInWithGoogleNative = signInWithGoogleNative;
+window.Savio.signUpWithEmail = signUpWithEmail;
+window.Savio.signInWithEmail = signInWithEmail;
 window.Savio.onAuthStateChanged = onAuthStateChanged;
 window.Savio.signOut = signOut;
 window.Savio.syncToCloud = syncToCloud;

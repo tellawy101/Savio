@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "809917177178",
+    "project_id": "savio-app-savio",
+    "storage_bucket": "savio-app-savio.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809917177178:android:9c46458b003b4731abe763",
+        "android_client_info": {
+          "package_name": "com.savio.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809917177178-j6u1rt4fu3ui16f5bclci7q9bpsk0plp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.savio.app",
+            "certificate_hash": "017632089659f5907b8d62104c54fd28fb1149a9"
+          }
+        },
+        {
+          "client_id": "809917177178-t9qp5scnludi9u7hu3bp3iv9ecmkhgan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuececgqQO0I6RQjNbblqD6ZH8sMMF4Is"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809917177178-t9qp5scnludi9u7hu3bp3iv9ecmkhgan.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
