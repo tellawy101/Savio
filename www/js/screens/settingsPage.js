@@ -44,6 +44,7 @@ function initSettingsPage() {
                         } else {
                             const result = await window.Savio.signInWithGoogleNative();
                             if (result && result.user) {
+                                updateAccountUI(result.user);
                                 showToast("مرحباً بك " + (result.user.displayName || ""), "success");
                                 await window.Savio.syncFromCloud(result.user.uid);
                                 await window.Savio.syncToCloud(result.user.uid);
