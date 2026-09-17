@@ -16,6 +16,7 @@ function initLoginPrompt() {
 
 if (sessionStorage.getItem("savio_login_skipped") === "true") {
     screen.classList.remove("show");
+    screen.classList.remove("loading");
     return;
 }
 
@@ -29,6 +30,7 @@ function waitForSavio(callback) {
 
     waitForSavio(function() {
         window.Savio.onAuthStateChanged(window.Savio.auth, function(user) {
+            screen.classList.remove("loading");
             if (!user) {
                 screen.classList.add("show");
             } else {

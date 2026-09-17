@@ -34,8 +34,11 @@
 <div id="nav-placeholder"></div>
 
 <!-- شاشة تسجيل الدخول (صفحة كاملة) -->
-<div id="loginPromptScreen" class="login-screen show">
-      <button type="button" id="loginLangToggleBtn" class="login-lang-toggle" aria-label="Language">
+<div id="loginPromptScreen" class="login-screen show loading">
+    <div class="login-screen-loader" id="loginScreenLoader">
+        <div class="login-spinner"></div>
+    </div>
+    <button type="button" id="loginLangToggleBtn" class="login-lang-toggle" aria-label="Language">
         <i data-lucide="languages"></i>
     </button>
     <div class="login-screen-inner">
