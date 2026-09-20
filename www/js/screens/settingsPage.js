@@ -19,7 +19,7 @@ function initSettingsPage() {
             accountStatusTitle.textContent = user.displayName || user.email;
             accountStatusDesc.textContent = "حساب متصل - اضغط لتسجيل الخروج";
         } else {
-            accountStatusTitle.textContent = "Sign in with Google";
+            accountStatusTitle.textContent = "Sign in";
             accountStatusDesc.textContent = "Sync your data across devices";
         }
     }
@@ -36,20 +36,14 @@ function initSettingsPage() {
                     try {
                         if (currentUser) {
                             const confirmSignout = typeof customConfirm === "function" 
-                                ? await customConfirm("هل ترغب في تسجيل الخروج من حساب جوجل؟", { danger: false })
+                                ? await customConfirm("هل ترغب في تسجيل الخروج؟", { danger: false })
                                 : true;
                             if (!confirmSignout) return;
                             await window.Savio.signOut(window.Savio.auth);
                             showToast("تم تسجيل الخروج بنجاح", "success");
                         } else {
-                            const result = await window.Savio.signInWithGoogleNative();
-                            if (result && result.user) {
-                                updateAccountUI(result.user);
-                                showToast("مرحباً بك " + (result.user.displayName || ""), "success");
-                                await window.Savio.syncFromCloud(result.user.uid);
-                                await window.Savio.syncToCloud(result.user.uid);
-                            }
-                        }
+    if (typeof window.openLoginScreen === "function") window.openLoginScreen();
+}
                     } catch (err) {
     console.error("Google Sign-In Error:", err);
     const msg = err && (err.message || err.code) ? (err.code ? err.code + ": " : "") + err.message : "حدث خطأ غير معروف";

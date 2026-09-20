@@ -17,9 +17,7 @@ function initLoginPrompt() {
 if (sessionStorage.getItem("savio_login_skipped") === "true") {
     screen.classList.remove("show");
     screen.classList.remove("loading");
-    return;
 }
-
 function waitForSavio(callback) {
         if (window.Savio && window.Savio.ready && window.Savio.auth) {
             callback();
@@ -30,13 +28,14 @@ function waitForSavio(callback) {
 
     waitForSavio(function() {
         window.Savio.onAuthStateChanged(window.Savio.auth, function(user) {
-            screen.classList.remove("loading");
-            if (!user) {
-                screen.classList.add("show");
-            } else {
-                screen.classList.remove("show");
-            }
-        });
+    screen.classList.remove("loading");
+    const skipped = sessionStorage.getItem("savio_login_skipped") === "true";
+    if (!user && !skipped) {
+        screen.classList.add("show");
+    } else {
+        screen.classList.remove("show");
+    }
+});
     });
 
     if (passwordToggle && passwordInput) {
@@ -120,7 +119,14 @@ function waitForSavio(callback) {
         }
     }
 
-    if (signInBtn) signInBtn.addEventListener("click", function() { handleAuth("signin"); });
+    [emailInput, passwordInput].forEach(function(input) {
+    if (!input) return;
+    input.addEventListener("touchend", function() {
+        setTimeout(function() { input.focus(); }, 50);
+    });
+});
+
+if (signInBtn) signInBtn.addEventListener("click", function() { handleAuth("signin"); });
 if (signUpBtn) signUpBtn.addEventListener("click", function() { handleAuth("signup"); });
 if (skipBtn) {
     skipBtn.addEventListener("click", function() {
@@ -135,4 +141,9 @@ if (langToggleBtn) {
         setLanguage(current === "ar" ? "en" : "ar");
     });
 }
+
+window.openLoginScreen = function() {
+    screen.classList.remove("loading");
+    screen.classList.add("show");
+};
 }
