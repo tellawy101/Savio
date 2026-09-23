@@ -119,15 +119,18 @@ function waitForSavio(callback) {
         }
     }
 
-    [emailInput, passwordInput].forEach(function(input) {
-    if (!input) return;
-    input.addEventListener("touchend", function() {
-        setTimeout(function() { input.focus(); }, 50);
+if (signInBtn) {
+    signInBtn.addEventListener("click", function() {
+        handleAuth("signin");
     });
-});
+}
 
-if (signInBtn) signInBtn.addEventListener("click", function() { handleAuth("signin"); });
-if (signUpBtn) signUpBtn.addEventListener("click", function() { handleAuth("signup"); });
+if (signUpBtn) {
+    signUpBtn.addEventListener("click", function() {
+        handleAuth("signup");
+    });
+}
+
 if (skipBtn) {
     skipBtn.addEventListener("click", function() {
         sessionStorage.setItem("savio_login_skipped", "true");
@@ -141,9 +144,12 @@ if (langToggleBtn) {
         setLanguage(current === "ar" ? "en" : "ar");
     });
 }
+}
 
 window.openLoginScreen = function() {
-    screen.classList.remove("loading");
-    screen.classList.add("show");
+    const screen = document.getElementById("loginPromptScreen");
+    if (screen) {
+        screen.classList.remove("loading");
+        screen.classList.add("show");
+    }
 };
-}
