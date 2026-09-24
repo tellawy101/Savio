@@ -1,11 +1,5 @@
 {
   "appId": "com.savio.app",
   "appName": "Savio",
-  "webDir": "www",
-  "plugins": {
-    "FirebaseAuthentication": {
-      "skipNativeAuth": false,
-      "providers": ["google.com"]
-    }
-  }
+  "webDir": "www"
 }

@@ -60,11 +60,7 @@ function loadTransactions() {
 
 // بتحفظ كل المعاملات
 function triggerCloudSync() {
-    if (window.Savio && window.Savio.auth && window.Savio.auth.currentUser && typeof window.Savio.syncToCloud === "function") {
-        window.Savio.syncToCloud(window.Savio.auth.currentUser.uid).catch(err => {
-            console.warn("Cloud sync error:", err);
-        });
-    }
+    // cloud sync removed
 }
 
 function saveTransactions(transactions) {

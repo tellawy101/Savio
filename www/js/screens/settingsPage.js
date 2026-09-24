@@ -6,56 +6,6 @@
 // ==============================================================
 
 function initSettingsPage() {
-  // ------------------------------
-    // حساب جوجل (Google Sign-In)
-    // ------------------------------
-    const googleSignInBtn = document.getElementById("googleSignInBtn");
-    const accountStatusTitle = document.getElementById("accountStatusTitle");
-    const accountStatusDesc = document.getElementById("accountStatusDesc");
-
-    function updateAccountUI(user) {
-        if (!accountStatusTitle || !accountStatusDesc) return;
-        if (user) {
-            accountStatusTitle.textContent = user.displayName || user.email;
-            accountStatusDesc.textContent = "حساب متصل - اضغط لتسجيل الخروج";
-        } else {
-            accountStatusTitle.textContent = "Sign in";
-            accountStatusDesc.textContent = "Sync your data across devices";
-        }
-    }
-
-    function setupGoogleAuth() {
-        if (window.Savio && window.Savio.ready && window.Savio.auth) {
-            window.Savio.onAuthStateChanged(window.Savio.auth, function (user) {
-                updateAccountUI(user);
-            });
-
-            if (googleSignInBtn) {
-                googleSignInBtn.onclick = async function () {
-                    const currentUser = window.Savio.auth.currentUser;
-                    try {
-                        if (currentUser) {
-                            const confirmSignout = typeof customConfirm === "function" 
-                                ? await customConfirm("هل ترغب في تسجيل الخروج؟", { danger: false })
-                                : true;
-                            if (!confirmSignout) return;
-                            await window.Savio.signOut(window.Savio.auth);
-                            showToast("تم تسجيل الخروج بنجاح", "success");
-                        } else {
-    if (typeof window.openLoginScreen === "function") window.openLoginScreen();
-}
-                    } catch (err) {
-    console.error("Google Sign-In Error:", err);
-    const msg = err && (err.message || err.code) ? (err.code ? err.code + ": " : "") + err.message : "حدث خطأ غير معروف";
-    showToast("فشل: " + msg, "error");
-}
-                };
-            }
-        } else {
-            setTimeout(setupGoogleAuth, 50);
-        }
-    }
-    setupGoogleAuth();
     
     // تحديث رقم الإصدار في كل الأماكن من مصدر واحد (APP_VERSION)
     const aboutVersionText = document.getElementById("aboutVersionText");
