@@ -11,7 +11,8 @@ function initStatisticsPage() {
   // ------------------------------
   let currentPeriod = "week";
   let cashFlowChart = null;
-  
+  let categoryPieChart = null;
+  const CATEGORY_COLORS = ["#0F766E", "#14B8A6", "#2DD4BF", "#F59E0B", "#EF4444", "#8B5CF6", "#3B82F6", "#EC4899", "#84CC16", "#64748B"];
   // ------------------------------
   // FORMAT MONEY
   // ------------------------------
@@ -155,6 +156,53 @@ const topAccountElement = document.getElementById("topAccount");
     }
     }
 
+// ------------------------------
+    // CATEGORY PIE CHART
+    // ------------------------------
+    function updateCategoryPieChart(transactions) {
+
+        const canvas = document.getElementById("categoryPieChart");
+
+        if (!canvas || typeof Chart === "undefined") {
+            return;
+        }
+
+        if (categoryPieChart) {
+            categoryPieChart.destroy();
+            categoryPieChart = null;
+        }
+
+        const breakdown = calculateCategoryBreakdown(transactions);
+
+        if (!breakdown.length) {
+            canvas.parentElement.style.display = "none";
+            return;
+        }
+
+        canvas.parentElement.style.display = "";
+
+        const colors = CATEGORY_COLORS;
+
+        categoryPieChart = new Chart(canvas, {
+            type: "doughnut",
+            data: {
+                labels: breakdown.map(item => item.category),
+                datasets: [{
+                    data: breakdown.map(item => item.amount),
+                    backgroundColor: breakdown.map((item, i) => colors[i % colors.length]),
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "60%",
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
     // ------------------------------
     // CATEGORY STATISTICS
     // ------------------------------
@@ -182,7 +230,7 @@ if (!breakdown.length) {
     return;
 }
 
-container.innerHTML = breakdown.map(({ category, amount, percentage }) => {
+container.innerHTML = breakdown.map(({ category, amount, percentage }, index) => {
             
             return `
             <div class="category-row">
@@ -190,6 +238,7 @@ container.innerHTML = breakdown.map(({ category, amount, percentage }) => {
                 <div class="category-top">
 
                     <span class="category-name">
+                        <span class="category-dot" style="background: ${CATEGORY_COLORS[index % CATEGORY_COLORS.length]}"></span>
                         ${escapeHTML(category)}
                     </span>
 
@@ -416,6 +465,7 @@ groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, local
 
         updateCategoryStats(filteredTransactions);
 
+        updateCategoryPieChart(filteredTransactions);
         updateAccountStats(filteredTransactions);
 
         updateCashFlowChart(filteredTransactions);

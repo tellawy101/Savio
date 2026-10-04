@@ -250,9 +250,19 @@
 }
 
 .category-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     color: #374151;
     font-size: 14px;
     font-weight: 600;
+}
+
+.category-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
 .category-amount {
