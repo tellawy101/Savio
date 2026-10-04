@@ -12,6 +12,7 @@ function initStatisticsPage() {
   let currentPeriod = "week";
   let cashFlowChart = null;
   let categoryPieChart = null;
+  let barChart = null;
   const CATEGORY_COLORS = ["#0F766E", "#14B8A6", "#2DD4BF", "#F59E0B", "#EF4444", "#8B5CF6", "#3B82F6", "#EC4899", "#84CC16", "#64748B"];
   // ------------------------------
   // FORMAT MONEY
@@ -436,7 +437,142 @@ groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, local
 
         });
     }
+// ------------------------------
+    // BAR CHART
+    // ------------------------------
+    function updateBarChart(transactions) {
 
+        const canvas = document.getElementById("barChart");
+
+        if (!canvas || typeof Chart === "undefined") {
+            return;
+        }
+
+        const locale = getLanguage() === "ar" ? "ar-EG" : "en-US";
+
+        const { labels, incomeData, expenseData } =
+            groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, locale);
+
+        if (barChart) {
+            barChart.destroy();
+            barChart = null;
+        }
+
+        barChart = new Chart(canvas, {
+            type: "bar",
+            data: {
+                labels,
+                datasets: [
+                    {
+                        label: t("stats_income"),
+                        data: incomeData,
+                        backgroundColor: "#0F766E",
+                        borderRadius: 4
+                    },
+                    {
+                        label: t("stats_expense"),
+                        data: expenseData,
+                        backgroundColor: "#EF4444",
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // ------------------------------
+    // MONTH COMPARISON
+    // ------------------------------
+    function updateMonthCompare(transactions) {
+
+        const container = document.getElementById("monthCompare");
+
+        if (!container) {
+            return;
+        }
+
+        const now = new Date();
+        const thisYear = now.getFullYear();
+        const thisMonth = now.getMonth();
+        const lastDate = new Date(thisYear, thisMonth - 1, 1);
+
+        function inMonth(transaction, year, month) {
+            const date = getTransactionDate(transaction);
+            return date && date.getFullYear() === year && date.getMonth() === month;
+        }
+
+        const current = calculateSummary(
+            transactions.filter(item => inMonth(item, thisYear, thisMonth))
+        );
+
+        const previous = calculateSummary(
+            transactions.filter(item => inMonth(item, lastDate.getFullYear(), lastDate.getMonth()))
+        );
+
+        function buildRow(label, currentValue, previousValue, higherIsGood) {
+
+            let changeText = "-";
+            let changeClass = "compare-neutral";
+
+            if (previousValue > 0) {
+                const change = Math.round(((currentValue - previousValue) / previousValue) * 100);
+                const arrow = change > 0 ? "↑" : change < 0 ? "↓" : "";
+                changeText = arrow + " " + Math.abs(change) + "%";
+
+                if (change !== 0) {
+                    const isGood = higherIsGood ? change > 0 : change < 0;
+                    changeClass = isGood ? "compare-good" : "compare-bad";
+                }
+            }
+
+            return `
+            <div class="compare-row">
+
+                <div class="compare-top">
+                    <span class="compare-label">${label}</span>
+                    <span class="compare-change ${changeClass}">${changeText}</span>
+                </div>
+
+                <div class="compare-values">
+
+                    <div class="compare-value">
+                        <span>${t("stats_this_month")}</span>
+                        <strong>${formatMoney(currentValue)}</strong>
+                    </div>
+
+                    <div class="compare-value">
+                        <span>${t("stats_last_month")}</span>
+                        <strong>${formatMoney(previousValue)}</strong>
+                    </div>
+
+                </div>
+
+            </div>
+            `;
+        }
+
+        container.innerHTML =
+            buildRow(t("stats_income"), current.income, previous.income, true) +
+            buildRow(t("stats_expense"), current.expense, previous.expense, false);
+    }
+    
 // ------------------------------
     // ESCAPE HTML
     // ------------------------------
@@ -470,6 +606,8 @@ groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, local
 
         updateCashFlowChart(filteredTransactions);
 
+        updateBarChart(filteredTransactions);
+        updateMonthCompare(transactions);
         if (typeof lucide !== "undefined") {
             lucide.createIcons();
         }

@@ -205,6 +205,21 @@ function saveDebts(debts) {
     localStorage.setItem(DEBTS_KEY, JSON.stringify(debts));
     triggerCloudSync();
 }
+
+// ==============================
+// Savings Goals
+// ==============================
+
+const GOALS_KEY = "savioGoals";
+
+function getGoals() {
+    return JSON.parse(localStorage.getItem(GOALS_KEY)) || [];
+}
+
+function saveGoals(goals) {
+    localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
+    triggerCloudSync();
+}
 // ==============================
 // حساب إجمالي الديون (منطق بيزنس منفصل عن العرض)
 // ==============================
@@ -256,7 +271,7 @@ function calculateMonthlyTotals(transactions, selectedMonth) {
 
 const BACKUP_KEYS = [
     STORAGE_KEY, ACCOUNTS_KEY, CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY,
-    DEBTS_KEY, BUDGET_KEY, THEME_KEY, LANGUAGE_KEY, CURRENCY_KEY, BALANCE_HIDDEN_KEY
+    DEBTS_KEY, GOALS_KEY, BUDGET_KEY, THEME_KEY, LANGUAGE_KEY, CURRENCY_KEY, BALANCE_HIDDEN_KEY
 ];
 // ==============================
 // حساب إجمالي معاملات حساب معيّن (منطق بيزنس منفصل عن العرض)

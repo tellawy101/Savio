@@ -610,3 +610,79 @@ body.dark .category-progress {
     font-size: 22px;
     font-weight: 800;
 }
+/* =========================================
+   MONTH COMPARISON
+========================================= */
+
+.compare-row {
+    padding: 12px 0;
+}
+
+.compare-row + .compare-row {
+    border-top: 1px solid rgba(156, 163, 175, 0.25);
+}
+
+.compare-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.compare-label {
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.compare-change {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.compare-good {
+    color: #16a34a;
+}
+
+.compare-bad {
+    color: #dc2626;
+}
+
+.compare-neutral {
+    color: #9CA3AF;
+}
+
+.compare-values {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.compare-value {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.compare-value span {
+    color: #6B7280;
+    font-size: 12px;
+}
+
+.compare-value strong {
+    color: #111827;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+body.dark .compare-label {
+    color: #9CA3AF;
+}
+
+body.dark .compare-value span {
+    color: #9CA3AF;
+}
+
+body.dark .compare-value strong {
+    color: #F9FAFB;
+}

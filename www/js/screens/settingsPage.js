@@ -127,6 +127,18 @@ if (languageSelectBtn && languagePickerModal) {
         if (e.target === languagePickerModal) languagePickerModal.classList.remove("show");
     });
 }
+
+// ------------------------------
+    // Savings Goals
+    // ------------------------------
+    const goalsBtn = document.getElementById("goalsBtn");
+
+    if (goalsBtn) {
+        goalsBtn.onclick = function () {
+            navigateTo("goals");
+        };
+    }
+    
     // ------------------------------
     // About Savio Modal
     // ------------------------------

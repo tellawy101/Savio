@@ -29,6 +29,16 @@ const ROUTES = {
             }
         }
     },
+    
+    goals: {
+        template: "templates/goals.html",
+        init: function() {
+            if (typeof initGoalsPage === "function") {
+                initGoalsPage();
+            }
+        }
+    },
+    
     statistics: {
         template: "templates/statistics.html",
         init: function() {

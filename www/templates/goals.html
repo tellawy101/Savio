@@ -1,0 +1,57 @@
+<div class="debts-header">
+
+    <h3 data-i18n="goals_title">Savings Goals</h3>
+
+    <button id="addGoalBtn" class="add-debt-btn" data-i18n="goals_add_btn">
+        + Add Goal
+    </button>
+
+</div>
+
+<div id="goalsList" class="goals-list"></div>
+
+<!-- Goal Modal -->
+<div id="goalModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2 data-i18n="goals_add_title">New Savings Goal</h2>
+
+        <input type="text" id="goalName" placeholder="Goal name"
+            data-i18n-placeholder="goals_name_placeholder">
+
+        <input type="tel" id="goalTarget" placeholder="Target amount"
+            data-i18n-placeholder="goals_target_placeholder">
+
+        <input type="tel" id="goalCurrent" placeholder="Saved so far (optional)"
+            data-i18n-placeholder="goals_current_placeholder">
+
+        <input type="date" id="goalDate">
+
+        <div class="modal-actions">
+            <button id="cancelGoalBtn" data-i18n="cancel">Cancel</button>
+            <button id="saveGoalBtn" data-i18n="save">Save</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Add Money Modal -->
+<div id="goalMoneyModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2 data-i18n="goals_add_money_title">Add to Goal</h2>
+
+        <input type="tel" id="goalMoneyAmount" placeholder="Amount"
+            data-i18n-placeholder="debts_amount_placeholder">
+
+        <div class="modal-actions">
+            <button id="cancelGoalMoneyBtn" data-i18n="cancel">Cancel</button>
+            <button id="confirmGoalMoneyBtn" data-i18n="confirm_btn">Confirm</button>
+        </div>
+
+    </div>
+
+</div>
