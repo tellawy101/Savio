@@ -198,7 +198,7 @@ body.dark.expense-page {
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 12px !important;
 }
 
 .expense-swipe {
