@@ -127,6 +127,32 @@ const dailyElement = document.getElementById("dailyAverage");
             calculateDailyAverage(transactions, currentPeriod)
         );
     }
+    const topCategoryElement = document.getElementById("topCategory");
+
+if (topCategoryElement) {
+    const topCategory = calculateCategoryBreakdown(transactions)[0];
+    
+    topCategoryElement.innerHTML = topCategory ?
+        `<span class="stats-stat-value">${escapeHTML(topCategory.category)}</span> <span class="stats-stat-currency">${topCategory.share}%</span>` :
+        "-";
+}
+const topAccountElement = document.getElementById("topAccount");
+
+    if (topAccountElement) {
+        const accountsActivity = calculateAccountBreakdown(transactions)
+            .map(item => ({
+                account: item.account,
+                volume: item.income + item.expense
+            }))
+            .sort((a, b) => b.volume - a.volume);
+
+        const totalVolume = accountsActivity.reduce((sum, item) => sum + item.volume, 0);
+        const topAccount = accountsActivity[0];
+
+        topAccountElement.innerHTML = topAccount && totalVolume > 0
+            ? `<span class="stats-stat-value">${escapeHTML(topAccount.account)}</span> <span class="stats-stat-currency">${Math.round((topAccount.volume / totalVolume) * 100)}%</span>`
+            : "-";
+    }
     }
 
     // ------------------------------
