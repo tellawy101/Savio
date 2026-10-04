@@ -221,6 +221,50 @@ function saveGoals(goals) {
     triggerCloudSync();
 }
 // ==============================
+// PIN (القفل بالرقم السري)
+// ==============================
+const PIN_KEY = "savioPin";
+
+function hasPin() {
+    return !!localStorage.getItem(PIN_KEY);
+}
+
+async function hashPin(pin, salt) {
+    const data = new TextEncoder().encode(salt + ":" + pin);
+    const buffer = await crypto.subtle.digest("SHA-256", data);
+
+    return Array.from(new Uint8Array(buffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+}
+
+async function setPin(pin) {
+    const salt = Date.now().toString(36) + Math.random().toString(36).slice(2);
+    const hash = await hashPin(pin, salt);
+
+    localStorage.setItem(PIN_KEY, JSON.stringify({ salt: salt, hash: hash }));
+}
+
+async function verifyPin(pin) {
+    let saved = null;
+
+    try {
+        saved = JSON.parse(localStorage.getItem(PIN_KEY));
+    } catch (e) {
+        saved = null;
+    }
+
+    if (!saved || !saved.salt || !saved.hash) return false;
+
+    const hash = await hashPin(pin, saved.salt);
+
+    return hash === saved.hash;
+}
+
+function removePin() {
+    localStorage.removeItem(PIN_KEY);
+}
+// ==============================
 // حساب إجمالي الديون (منطق بيزنس منفصل عن العرض)
 // ==============================
 function calculateDebtTotals(debts) {

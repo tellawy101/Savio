@@ -140,6 +140,56 @@ if (languageSelectBtn && languagePickerModal) {
     }
     
     // ------------------------------
+    // PIN Lock
+    // ------------------------------
+    const pinBtn = document.getElementById("pinBtn");
+    const pinStatus = document.getElementById("pinStatus");
+
+    function updatePinStatus() {
+        if (!pinStatus) return;
+
+        pinStatus.textContent = hasPin() ? t("pin_enabled_toast") : t("pin_disabled_toast");
+    }
+
+    updatePinStatus();
+
+    if (pinBtn) {
+        pinBtn.onclick = function () {
+
+            if (hasPin()) {
+
+                showLockScreen({
+                    mode: "verify",
+                    cancellable: true,
+                    titleKey: "pin_current_title",
+                    descKey: "pin_current_desc",
+                    onSuccess: async function () {
+                        const confirmed = await customConfirm(t("pin_remove_confirm"), { danger: true });
+
+                        if (!confirmed) return;
+
+                        removePin();
+                        updatePinStatus();
+                        showToast(t("pin_disabled_toast"), "success");
+                    }
+                });
+
+            } else {
+
+                showLockScreen({
+                    mode: "set",
+                    cancellable: true,
+                    onSuccess: function () {
+                        updatePinStatus();
+                        showToast(t("pin_enabled_toast"), "success");
+                    }
+                });
+            }
+        };
+    }
+    
+    
+    // ------------------------------
     // About Savio Modal
     // ------------------------------
     const aboutBtn = document.getElementById("aboutSavioBtn");
