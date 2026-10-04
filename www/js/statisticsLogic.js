@@ -92,3 +92,33 @@ function groupTransactionsForChart(transactions, currentPeriod, getTransactionDa
         expenseData: entries.map(entry => entry[1].expense)
     };
 }
+function calculateDailyAverage(transactions, currentPeriod) {
+    const { expense } = calculateSummary(transactions);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let start = new Date(today);
+
+    if (currentPeriod === "week") {
+        const day = today.getDay();
+        const daysFromSaturday = day === 6 ? 0 : day + 1;
+        start.setDate(today.getDate() - daysFromSaturday);
+    } else if (currentPeriod === "month") {
+        start = new Date(today.getFullYear(), today.getMonth(), 1);
+    } else if (currentPeriod === "year") {
+        start = new Date(today.getFullYear(), 0, 1);
+    } else {
+        transactions.forEach(transaction => {
+            if (transaction.isTransfer === true || !transaction.date) return;
+            const parts = transaction.date.split("-").map(Number);
+            if (parts.length !== 3 || parts.some(Number.isNaN)) return;
+            const date = new Date(parts[0], parts[1] - 1, parts[2]);
+            if (date < start) start = date;
+        });
+    }
+
+    const days = Math.max(1, Math.round((today - start) / 86400000) + 1);
+
+    return expense / days;
+}

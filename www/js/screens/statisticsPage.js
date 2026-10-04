@@ -120,6 +120,13 @@ if (expenseElement) {
 if (balanceElement) {
     balanceElement.innerHTML = formatCurrencyHTMLStats(balance);
 }
+const dailyElement = document.getElementById("dailyAverage");
+
+    if (dailyElement) {
+        dailyElement.innerHTML = formatCurrencyHTMLStats(
+            calculateDailyAverage(transactions, currentPeriod)
+        );
+    }
     }
 
     // ------------------------------
