@@ -188,6 +188,29 @@ if (languageSelectBtn && languagePickerModal) {
         };
     }
     
+    // ------------------------------
+    // Auto Backup
+    // ------------------------------
+    const autoBackupToggle = document.getElementById("autoBackupToggle");
+
+    if (autoBackupToggle) {
+
+        autoBackupToggle.checked = isAutoBackupEnabled();
+
+        autoBackupToggle.onchange = function () {
+
+            if (autoBackupToggle.checked) {
+                setAutoBackupEnabled(true);
+                showToast(t("autobackup_enabled_toast"), "success");
+                saveAutoBackup().then(function () {
+                    updateLastBackupBadge();
+                });
+            } else {
+                setAutoBackupEnabled(false);
+                showToast(t("autobackup_disabled_toast"), "success");
+            }
+        };
+    }
     
     // ------------------------------
     // About Savio Modal

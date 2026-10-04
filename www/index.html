@@ -39,6 +39,7 @@
 </script>
 <script src="js/i18n.js"></script>
 <script src="js/storage.js"></script>
+<script src="js/autoBackup.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/lockScreen.js"></script>
@@ -67,6 +68,9 @@
             showLockScreen({ mode: "verify" });
         }
         navigateTo("home");
+        if (typeof runAutoBackupIfNeeded === "function") {
+            runAutoBackupIfNeeded();
+        }
     });
 </script>
 </body>
