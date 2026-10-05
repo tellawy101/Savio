@@ -76,6 +76,7 @@ if (expenses.length === 0) {
         const searchTerm = searchInput.value.trim().toLowerCase();
 
         sortedEntries.forEach(({ expense, index }) => {
+            if (expense.isTransfer && expense.type === "income") return;
 
             const searchableText = [
                 expense.description,

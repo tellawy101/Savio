@@ -251,6 +251,27 @@ saveAccounts(accounts);
         return { income, expense };
     }
 
+    function getSparklinePoints(accountKey, type, transactions) {
+        const MONTHS = 5;
+        const now = new Date();
+        const keys = [];
+        for (let i = MONTHS - 1; i >= 0; i--) {
+            const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            keys.push(d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"));
+        }
+        const sums = keys.map(function () { return 0; });
+        transactions.forEach(function (tr) {
+            if (tr.account !== accountKey || tr.type !== type || !tr.date) return;
+            const idx = keys.indexOf(tr.date.slice(0, 7));
+            if (idx !== -1) sums[idx] += Number(tr.amount) || 0;
+        });
+        const max = Math.max.apply(null, sums);
+        return sums.map(function (v, i) {
+            const y = max > 0 ? 22 - (v / max) * 20 : 22;
+            return (i * 15) + "," + y.toFixed(1);
+        }).join(" ");
+    }
+
     function renderAccountsPage() {
         const container = document.getElementById("accountsContainer");
         if (!container) return;
@@ -335,8 +356,7 @@ saveAccounts(accounts);
                                 </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
-                                <polyline points="0,20 15,16 30,14 45,8 60,4" fill="none" stroke="#16a34a" stroke-width="2"/>
-                            </svg>
+<polyline points="${getSparklinePoints(account.name, "income", transactions)}" fill="none" stroke="#16a34a" stroke-width="2"/>                            </svg>
                         </div>
                         <div class="stat-item">
                             <div class="stat-icon stat-icon-expense">
@@ -350,7 +370,7 @@ saveAccounts(accounts);
                                 </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
-                                <polyline points="0,4 15,8 30,10 45,16 60,20" fill="none" stroke="#dc2626" stroke-width="2"/>
+                                <polyline points="${getSparklinePoints(account.name, "expense", transactions)}" fill="none" stroke="#dc2626" stroke-width="2"/>
                             </svg>
                         </div>
                         <div class="stat-item stat-item-last">

@@ -723,22 +723,21 @@ function createTransactionElement(expense, options = {}) {
     // تحديد الإشارة والمبلغ
     let sign = "-";
     let amountClass = "expense-amount-negative";
-    if (isIncome) {
-        sign = "+";
-        amountClass = "expense-amount-positive";
-    } else if (isTransfer) {
+        if (isTransfer) {
         sign = "";
         amountClass = "expense-amount-transfer";
+    } else if (isIncome) {
+        sign = "+";
+        amountClass = "expense-amount-positive";
     }
-
     const formattedAmount = Math.round(Number(expense.amount) || 0).toLocaleString("en-US");
 
     // العنوان والوصف
     let title = expense.category || expense.title || (typeof t === "function" ? t("unspecified") : "Unspecified");
     let subtitle = expense.account || "";
     if (isTransfer) {
-        title = typeof t === "function" ? t("transfer") : "Transfer";
-        subtitle = `${expense.fromAccount || ""} ➔ ${expense.toAccount || ""}`;
+        title = typeof t === "function" ? t("transfer_title") : "Transfer";
+        subtitle = `${expense.account || ""} ➔ ${expense.transferTo || ""}`;
     }
 
     li.innerHTML = `

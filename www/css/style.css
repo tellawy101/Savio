@@ -1470,3 +1470,10 @@ body.dark .empty-state-title {
 body.dark .empty-state-sub {
     color: #64748B;
 }
+.expense-icon-box.transfer {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3B82F6;
+}
+.expense-amount-transfer {
+    color: #3B82F6 !important;
+}
