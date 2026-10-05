@@ -156,7 +156,7 @@ body.dark.expense-page {
     flex: 0 0 auto;
     width: auto;
     min-width: 90px;
-    max-width: 110px;
+    max-width: 160px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -514,4 +514,21 @@ body.add-transaction-page .transfer-header {
 
 .dark .tx-confirm {
     color: #22c55e;
+}
+@keyframes monthSlideNext {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes monthSlidePrev {
+    from { opacity: 0; transform: translateX(-24px); }
+    to { opacity: 1; transform: none; }
+}
+
+#expenseList.month-slide-next {
+    animation: monthSlideNext 0.25s ease;
+}
+
+#expenseList.month-slide-prev {
+    animation: monthSlidePrev 0.25s ease;
 }

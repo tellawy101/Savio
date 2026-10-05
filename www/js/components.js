@@ -737,7 +737,7 @@ function createTransactionElement(expense, options = {}) {
     let subtitle = expense.account || "";
     if (isTransfer) {
         title = typeof t === "function" ? t("transfer_title") : "Transfer";
-        subtitle = `${expense.account || ""} ➔ ${expense.transferTo || ""}`;
+        subtitle = `${expense.fromAccount || ""} ➔ ${expense.toAccount || ""}`;
     }
 
     li.innerHTML = `
@@ -758,7 +758,8 @@ function createTransactionElement(expense, options = {}) {
             </div>
             <div class="expense-right">
                 <span class="expense-amount ${amountClass}">${sign}${formattedAmount} <small class="expense-currency">${curr}</small></span>
-                <span class="expense-date">${expense.date || ""}</span>
+                <span class="expense-date">${formatDisplayDate(expense.date)}</span>
+${expense.time ? `<span class="expense-date">${expense.time}</span>` : ""}
             </div>
         </div>
     `;

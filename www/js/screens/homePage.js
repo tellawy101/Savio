@@ -225,8 +225,10 @@ const card = li.querySelector(".expense-main");
         window.selectedMonth = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0");
         renderMonthLabel();
         renderExpenses();
+        expenseList.classList.remove("month-slide-next", "month-slide-prev");
+        void expenseList.offsetWidth;
+        expenseList.classList.add(diff > 0 ? "month-slide-next" : "month-slide-prev");
     }
-
     // ------------------------------
     // تشغيل التطبيق
     // ------------------------------
