@@ -265,6 +265,74 @@ function removePin() {
     localStorage.removeItem(PIN_KEY);
 }
 // ==============================
+// PIN Attempts Limit
+// ==============================
+
+const PIN_ATTEMPTS_KEY = "savioPinAttempts";
+const PIN_FREE_ATTEMPTS = 5;
+const PIN_BASE_LOCK_SECONDS = 30;
+const PIN_MAX_LOCK_SECONDS = 900;
+
+function getPinAttempts() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(PIN_ATTEMPTS_KEY));
+        
+        if (saved && typeof saved.failed === "number" && typeof saved.lockedUntil === "number") {
+            return saved;
+        }
+    } catch (e) {}
+    
+    return { failed: 0, lockedUntil: 0 };
+}
+
+function getPinLockRemainingMs() {
+    return Math.max(0, getPinAttempts().lockedUntil - Date.now());
+}
+
+function registerPinFailure() {
+    const attempts = getPinAttempts();
+    
+    attempts.failed += 1;
+    
+    if (attempts.failed >= PIN_FREE_ATTEMPTS) {
+        const seconds = Math.min(
+            PIN_BASE_LOCK_SECONDS * Math.pow(2, attempts.failed - PIN_FREE_ATTEMPTS),
+            PIN_MAX_LOCK_SECONDS
+        );
+        
+        attempts.lockedUntil = Date.now() + seconds * 1000;
+    }
+    
+    localStorage.setItem(PIN_ATTEMPTS_KEY, JSON.stringify(attempts));
+}
+
+function resetPinAttempts() {
+    localStorage.removeItem(PIN_ATTEMPTS_KEY);
+}
+
+// ==============================
+// Auto Lock
+// ==============================
+
+const AUTO_LOCK_KEY = "savioAutoLockSeconds";
+const AUTO_LOCK_OPTIONS = [0, 60, 300, -1];
+const AUTO_LOCK_DEFAULT = 60;
+
+function getAutoLockSeconds() {
+    const raw = localStorage.getItem(AUTO_LOCK_KEY);
+
+    if (raw === null) return AUTO_LOCK_DEFAULT;
+
+    const value = Number(raw);
+
+    return AUTO_LOCK_OPTIONS.indexOf(value) === -1 ? AUTO_LOCK_DEFAULT : value;
+}
+
+function saveAutoLockSeconds(seconds) {
+    localStorage.setItem(AUTO_LOCK_KEY, seconds);
+}
+
+// ==============================
 // حساب إجمالي الديون (منطق بيزنس منفصل عن العرض)
 // ==============================
 function calculateDebtTotals(debts) {

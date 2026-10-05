@@ -189,6 +189,36 @@ if (languageSelectBtn && languagePickerModal) {
     }
     
     // ------------------------------
+    // Auto Lock
+    // ------------------------------
+    const autoLockBtn = document.getElementById("autoLockBtn");
+    const autoLockStatus = document.getElementById("autoLockStatus");
+
+    function updateAutoLockStatus() {
+        if (!autoLockStatus) return;
+
+        autoLockStatus.textContent = t(getAutoLockLabelKey(getAutoLockSeconds()));
+    }
+
+    updateAutoLockStatus();
+
+    if (autoLockBtn) {
+        autoLockBtn.onclick = function () {
+
+            if (!hasPin()) {
+                showToast(t("autolock_need_pin"), "error");
+                return;
+            }
+
+            const index = AUTO_LOCK_OPTIONS.indexOf(getAutoLockSeconds());
+            const next = AUTO_LOCK_OPTIONS[(index + 1) % AUTO_LOCK_OPTIONS.length];
+
+            saveAutoLockSeconds(next);
+            updateAutoLockStatus();
+        };
+    }
+    
+    // ------------------------------
     // Auto Backup
     // ------------------------------
     const autoBackupToggle = document.getElementById("autoBackupToggle");
