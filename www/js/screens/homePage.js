@@ -35,6 +35,7 @@ function initHomePage() {
     const monthLabelBtn = document.getElementById("monthLabelBtn");
     const monthPicker = document.getElementById("monthPicker");
     const accountFilter = document.getElementById("accountFilter");
+        const categoryFilter = document.getElementById("categoryFilter");
 
     window.selectedMonth = new Date().toISOString().slice(0, 7);
 
@@ -80,6 +81,8 @@ if (expenses.length === 0) {
             if (expense.isTransfer && expense.type === "income") return;
                         const accountValue = accountFilter ? accountFilter.value : "";
             if (accountValue && expense.account !== accountValue && expense.transferTo !== accountValue) return;
+                        const categoryValue = categoryFilter ? categoryFilter.value : "";
+            if (categoryValue && expense.category !== categoryValue) return;
 
             const searchableText = [
                 expense.description,
@@ -262,6 +265,19 @@ const card = li.querySelector(".expense-main");
     }
     fillAccountFilter();
     if (accountFilter) accountFilter.onchange = renderExpenses;
+        function fillCategoryFilter() {
+        if (!categoryFilter) return;
+        const allLabel = getLanguage() === "ar" ? "كل الفئات" : "All categories";
+        categoryFilter.innerHTML = `<option value="">${allLabel}</option>`;
+        getCategories().forEach(function(c) {
+            const opt = document.createElement("option");
+            opt.value = c.name;
+            opt.textContent = c.name;
+            categoryFilter.appendChild(opt);
+        });
+    }
+    fillCategoryFilter();
+    if (categoryFilter) categoryFilter.onchange = renderExpenses;
 
     document.addEventListener("touchstart", (e) => {
     
@@ -330,6 +346,7 @@ const card = li.querySelector(".expense-main");
             searchPanel.style.display = "none";
             searchInput.value = "";
             if (accountFilter) accountFilter.value = "";
+                        if (categoryFilter) categoryFilter.value = "";
             
             expensesTitle.style.display = "block";
             searchBtn.style.display = "flex";
