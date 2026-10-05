@@ -34,6 +34,7 @@ function initHomePage() {
     const nextMonthBtn = document.getElementById("nextMonthBtn");
     const monthLabelBtn = document.getElementById("monthLabelBtn");
     const monthPicker = document.getElementById("monthPicker");
+    const accountFilter = document.getElementById("accountFilter");
 
     window.selectedMonth = new Date().toISOString().slice(0, 7);
 
@@ -77,6 +78,8 @@ if (expenses.length === 0) {
 
         sortedEntries.forEach(({ expense, index }) => {
             if (expense.isTransfer && expense.type === "income") return;
+                        const accountValue = accountFilter ? accountFilter.value : "";
+            if (accountValue && expense.account !== accountValue && expense.transferTo !== accountValue) return;
 
             const searchableText = [
                 expense.description,
@@ -246,6 +249,19 @@ const card = li.querySelector(".expense-main");
     }
 
     if (searchInput) searchInput.oninput = renderExpenses;
+        function fillAccountFilter() {
+        if (!accountFilter) return;
+        const allLabel = getLanguage() === "ar" ? "كل الحسابات" : "All accounts";
+        accountFilter.innerHTML = `<option value="">${allLabel}</option>`;
+        getAccounts().forEach(function (a) {
+            const opt = document.createElement("option");
+            opt.value = a.name;
+            opt.textContent = a.name;
+            accountFilter.appendChild(opt);
+        });
+    }
+    fillAccountFilter();
+    if (accountFilter) accountFilter.onchange = renderExpenses;
 
     document.addEventListener("touchstart", (e) => {
     
@@ -278,51 +294,53 @@ const card = li.querySelector(".expense-main");
 }
 
     const searchBtn = document.getElementById("searchBtn");
+    const searchPanel = document.getElementById("searchPanel");
     const expensesTitle = document.querySelector(".expenses-header h2");
-
+    
     if (searchBtn) {
-        searchBtn.onclick = function () {
-
+        searchBtn.onclick = function() {
+            
             expensesTitle.style.display = "none";
             searchBtn.style.display = "none";
-
-            searchInput.style.display = "block";
-
+            
+            searchPanel.style.display = "block";
+            
             document.body.style.paddingBottom = "300px"; // مساحة إضافية عشان الاسكرول يشتغل
-
+            
             searchInput.focus();
-
+            
             setTimeout(() => {
                 searchInput.scrollIntoView({
                     behavior: "smooth",
                     block: "center"
                 });
             }, 400);
-
+            
         };
     }
-
-    document.addEventListener("click", function (e) {
-
-        // لو الخانة مش ظاهرة، متعملش حاجة
-        if (searchInput.style.display !== "block") return;
-
-        // لو اللي اتدوس عليه مش الخانة نفسها ولا زرار البحث
-        if (!searchInput.contains(e.target) && !searchBtn.contains(e.target)) {
-
-            searchInput.style.display = "none";
+    
+    document.addEventListener("click", function(e) {
+        
+        // لو لوحة البحث مش ظاهرة، متعملش حاجة
+        if (searchPanel.style.display !== "block") return;
+        
+        // لو اللي اتدوس عليه مش اللوحة نفسها ولا زرار البحث
+        if (!searchPanel.contains(e.target) && !searchBtn.contains(e.target)) {
+            
+            searchPanel.style.display = "none";
             searchInput.value = "";
-
+            if (accountFilter) accountFilter.value = "";
+            
             expensesTitle.style.display = "block";
             searchBtn.style.display = "flex";
-
+            
             document.body.style.paddingBottom = "";
-
+            
             if (typeof renderExpenses === "function") {
                 renderExpenses();
             }
         }
-
+        
     });
 
     // ------------------------------

@@ -1477,3 +1477,35 @@ body.dark .empty-state-sub {
 .expense-amount-transfer {
     color: #3B82F6 !important;
 }
+.search-panel {
+    display: none;
+    width: 100%;
+}
+
+#searchPanel #searchInput {
+    display: block;
+}
+
+.filters-row {
+    display: flex;
+    gap: 8px;
+    padding: 10px 0 0;
+}
+
+.filter-select {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    background: #FFFFFF;
+    color: #111827;
+    font-family: "Supreme", sans-serif;
+    font-size: 14px;
+}
+
+body.dark .filter-select {
+    background: #17202B;
+    color: #F3F4F6;
+    border-color: #374151;
+}

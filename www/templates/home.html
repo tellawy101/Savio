@@ -142,11 +142,16 @@
     <button id="searchBtn" class="search-btn">
         <i data-lucide="search"></i>
     </button>
-   <input
-    type="text"
-    id="searchInput"
-    placeholder="Search by category, description, or account..."
-    data-i18n-placeholder="search_placeholder">
+   <div id="searchPanel" class="search-panel">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search by category, description, or account..."
+        data-i18n-placeholder="search_placeholder">
+    <div class="filters-row">
+        <select id="accountFilter" class="filter-select"></select>
+    </div>
+   </div>
 
 </div>
 
