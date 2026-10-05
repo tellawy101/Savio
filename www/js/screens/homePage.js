@@ -36,7 +36,7 @@ function initHomePage() {
     const monthPicker = document.getElementById("monthPicker");
     const accountFilter = document.getElementById("accountFilter");
         const categoryFilter = document.getElementById("categoryFilter");
-
+    const sortFilter = document.getElementById("sortFilter");
     window.selectedMonth = new Date().toISOString().slice(0, 7);
 
     // تحميل البيانات
@@ -67,10 +67,17 @@ if (expenses.length === 0) {
         const sortedEntries = expenses
             .map((expense, index) => ({ expense, index }))
             .sort((a, b) => {
+                const mode = sortFilter ? sortFilter.value : "date_desc";
+                const amountA = Math.abs(Number(a.expense.amount || 0));
+                const amountB = Math.abs(Number(b.expense.amount || 0));
+                if (mode === "amount_desc" && amountA !== amountB) return amountB - amountA;
+                if (mode === "amount_asc" && amountA !== amountB) return amountA - amountB;
                 if (a.expense.date !== b.expense.date) {
-                    return b.expense.date.localeCompare(a.expense.date);
+                    return mode === "date_asc"
+                        ? a.expense.date.localeCompare(b.expense.date)
+                        : b.expense.date.localeCompare(a.expense.date);
                 }
-                return b.index - a.index;
+                return mode === "date_asc" ? a.index - b.index : b.index - a.index;
             });
 
 ({ income, total } = calculateMonthlyTotals(sortedEntries.map(e => e.expense), window.selectedMonth));
@@ -278,6 +285,26 @@ const card = li.querySelector(".expense-main");
     }
     fillCategoryFilter();
     if (categoryFilter) categoryFilter.onchange = renderExpenses;
+    
+        function fillSortFilter() {
+        if (!sortFilter) return;
+        const isAr = getLanguage() === "ar";
+        const options = [
+            ["date_desc", isAr ? "الأحدث أولاً" : "Newest first"],
+            ["date_asc", isAr ? "الأقدم أولاً" : "Oldest first"],
+            ["amount_desc", isAr ? "الأعلى مبلغاً" : "Highest amount"],
+            ["amount_asc", isAr ? "الأقل مبلغاً" : "Lowest amount"]
+        ];
+        sortFilter.innerHTML = "";
+        options.forEach(function(o) {
+            const opt = document.createElement("option");
+            opt.value = o[0];
+            opt.textContent = o[1];
+            sortFilter.appendChild(opt);
+        });
+    }
+    fillSortFilter();
+    if (sortFilter) sortFilter.onchange = renderExpenses;
 
     document.addEventListener("touchstart", (e) => {
     
@@ -347,6 +374,8 @@ const card = li.querySelector(".expense-main");
             searchInput.value = "";
             if (accountFilter) accountFilter.value = "";
                         if (categoryFilter) categoryFilter.value = "";
+            
+                        if (sortFilter) sortFilter.value = "date_desc";
             
             expensesTitle.style.display = "block";
             searchBtn.style.display = "flex";

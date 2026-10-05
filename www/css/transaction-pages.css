@@ -38,7 +38,9 @@ body.dark.expense-page {
 }
 
 .expenses-header h2 {
-    margin: 0;
+    margin: 10px 0 0;
+    order: 3;
+    flex-basis: 100%;
 }
 
 .search-btn {
