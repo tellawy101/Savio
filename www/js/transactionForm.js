@@ -85,7 +85,7 @@ if (window.lucide) lucide.createIcons();
         dateEl.value = entry.date || today;
     }
 
-    saveBtn.onclick = function () {
+    saveBtn.onclick = async function () {
         const missing = getMissingField();
         if (missing) {
             showToast("من فضلك حدد " + missing);
@@ -122,7 +122,7 @@ if (window.lucide) lucide.createIcons();
         if (type === "expense" && !editId) {
             const alertType = getBudgetAlertType(entryData.category, entryData.amount, entryData.date);
             if (alertType) {
-                showToast(t("cb_alert_" + alertType));
+                await customAlert(t("cb_alert_" + alertType));
             }
         }
         

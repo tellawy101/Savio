@@ -261,10 +261,8 @@ function getBudgetAlertType(category, amount, date) {
         }
     });
 
-    const before = after - amount;
-
-    if (before <= limit && after > limit) return "over";
-    if (before < limit * 0.8 && after >= limit * 0.8) return "near";
+        if (after > limit) return "over";
+    if (after >= limit * 0.8) return "near";
     return null;
 }
 // ==============================
