@@ -38,7 +38,14 @@ const ROUTES = {
             }
         }
     },
-    
+        budgets: {
+        template: "templates/budgets.html",
+        init: function() {
+            if (typeof initBudgetsPage === "function") {
+                initBudgetsPage();
+            }
+        }
+    },
     statistics: {
         template: "templates/statistics.html",
         init: function() {

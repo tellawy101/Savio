@@ -948,3 +948,5 @@ body.dark .payments-history-empty {
 body.dark .payment-delete-btn {
     background: #3f1d1d;
 }
+.cb-over .goal-progress-fill { background: #dc2626; }
+.cb-over .goal-percent { color: #dc2626; }

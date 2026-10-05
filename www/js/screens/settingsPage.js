@@ -138,6 +138,15 @@ if (languageSelectBtn && languagePickerModal) {
             navigateTo("goals");
         };
     }
+        const catBudgetsBtn = document.getElementById("catBudgetsBtn");
+
+    if (catBudgetsBtn) {
+        catBudgetsBtn.onclick = function () {
+            navigateTo("budgets");
+        };
+    }
+    
+    
     
     // ------------------------------
     // PIN Lock

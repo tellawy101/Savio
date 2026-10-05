@@ -118,7 +118,15 @@ if (window.lucide) lucide.createIcons();
         }
 
         saveTransactions(transactions);
-navigateTo("home");
+        
+        if (type === "expense" && !editId) {
+            const alertType = getBudgetAlertType(entryData.category, entryData.amount, entryData.date);
+            if (alertType) {
+                showToast(t("cb_alert_" + alertType));
+            }
+        }
+        
+        navigateTo("home");
 };
     renderAccounts();
     renderCategories();

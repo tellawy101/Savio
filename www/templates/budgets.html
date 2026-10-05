@@ -1,0 +1,32 @@
+<div class="debts-header">
+
+    <h3 data-i18n="cb_title">Category Budgets</h3>
+
+    <button id="addCatBudgetBtn" class="add-debt-btn" data-i18n="cb_add_btn">
+        + Add Budget
+    </button>
+
+</div>
+
+<div id="catBudgetsList" class="goals-list"></div>
+
+<!-- Category Budget Modal -->
+<div id="catBudgetModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2 data-i18n="cb_add_title">New Category Budget</h2>
+
+        <select id="catBudgetCategory"></select>
+
+        <input type="tel" id="catBudgetAmount" placeholder="Monthly limit"
+            data-i18n-placeholder="cb_amount_placeholder">
+
+        <div class="modal-actions">
+            <button id="cancelCatBudgetBtn" data-i18n="cancel">Cancel</button>
+            <button id="saveCatBudgetBtn" data-i18n="save">Save</button>
+        </div>
+
+    </div>
+
+</div>

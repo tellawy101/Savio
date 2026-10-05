@@ -221,6 +221,53 @@ function saveGoals(goals) {
     triggerCloudSync();
 }
 // ==============================
+// Category Budgets
+// ==============================
+
+const CATEGORY_BUDGETS_KEY = "savioCategoryBudgets";
+
+// شكل البيانات: { "اسم الفئة": مبلغ }
+function getCategoryBudgets() {
+    try {
+        return JSON.parse(localStorage.getItem(CATEGORY_BUDGETS_KEY)) || {};
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveCategoryBudgets(budgets) {
+    localStorage.setItem(CATEGORY_BUDGETS_KEY, JSON.stringify(budgets));
+    triggerCloudSync();
+}
+// بترجع "near" لو الفئة وصلت 80% من حدها بعد المصروف ده،
+// و "over" لو عدّت الحد، وإلا null
+function getBudgetAlertType(category, amount, date) {
+    const limit = Number(getCategoryBudgets()[category]) || 0;
+    if (limit <= 0) return null;
+
+    const now = new Date();
+    const txDate = new Date(date);
+    if (Number.isNaN(txDate.getTime())) return null;
+    if (txDate.getFullYear() !== now.getFullYear() || txDate.getMonth() !== now.getMonth()) return null;
+
+    let after = 0;
+    loadTransactions().forEach(function (tx) {
+        if (tx.type !== "expense" || tx.isTransfer === true) return;
+        if (tx.category !== category || !tx.date) return;
+
+        const d = new Date(tx.date);
+        if (d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()) {
+            after += Number(tx.amount) || 0;
+        }
+    });
+
+    const before = after - amount;
+
+    if (before <= limit && after > limit) return "over";
+    if (before < limit * 0.8 && after >= limit * 0.8) return "near";
+    return null;
+}
+// ==============================
 // PIN (القفل بالرقم السري)
 // ==============================
 const PIN_KEY = "savioPin";
@@ -383,7 +430,7 @@ function calculateMonthlyTotals(transactions, selectedMonth) {
 
 const BACKUP_KEYS = [
     STORAGE_KEY, ACCOUNTS_KEY, CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY,
-    DEBTS_KEY, GOALS_KEY, BUDGET_KEY, THEME_KEY, LANGUAGE_KEY, CURRENCY_KEY, BALANCE_HIDDEN_KEY
+DEBTS_KEY, GOALS_KEY, BUDGET_KEY, CATEGORY_BUDGETS_KEY, THEME_KEY, LANGUAGE_KEY, CURRENCY_KEY, BALANCE_HIDDEN_KEY
 ];
 // ==============================
 // حساب إجمالي معاملات حساب معيّن (منطق بيزنس منفصل عن العرض)
