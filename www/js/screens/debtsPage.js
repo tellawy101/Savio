@@ -66,8 +66,116 @@ function initDebtsPage() {
     // ------------------------------
     // Storage
     // ------------------------------
-    let debts = getDebts();
+    let debts = getDebts();                     
+    // ------------------------------
+    // Payments History
+    // ------------------------------
+    const paymentsHistoryModal = document.getElementById("paymentsHistoryModal");
+    const paymentsHistoryList = document.getElementById("paymentsHistoryList");
+    const paymentsHistoryTitle = document.getElementById("paymentsHistoryTitle");
+    const closePaymentsHistoryBtn = document.getElementById("closePaymentsHistoryBtn");
 
+    async function deletePayment(debt, payment) {
+        const confirmed = await customConfirm(t("debts_payment_delete_confirm"), { danger: true });
+
+        if (!confirmed) return;
+
+        debt.payments = debt.payments.filter(function (p) {
+            return p.id !== payment.id;
+        });
+
+        debt.paid = Math.max(0, Math.round((debt.paid - payment.amount) * 100) / 100);
+        debt.remaining = Math.round((debt.amount - debt.paid) * 100) / 100;
+        debt.status = debt.remaining <= 0 ? "paid" : "open";
+
+        saveDebts(debts);
+
+        const transactions = loadTransactions().filter(function (tx) {
+            return tx.debtPaymentId !== payment.id;
+        });
+
+        saveTransactions(transactions);
+
+        renderDebts();
+        openPaymentsHistory(debt);
+
+        showToast(t("debts_payment_deleted_toast"), "success");
+    }
+
+    function openPaymentsHistory(debt) {
+        if (!paymentsHistoryModal || !paymentsHistoryList) return;
+
+        const payments = Array.isArray(debt.payments) ? debt.payments : [];
+
+        paymentsHistoryTitle.textContent = t("debts_history_title") + " - " + debt.person;
+        paymentsHistoryList.innerHTML = "";
+
+        if (payments.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "payments-history-empty";
+            empty.textContent = t("debts_history_empty");
+            paymentsHistoryList.appendChild(empty);
+        } else {
+            [...payments].reverse().forEach(function (payment) {
+                const row = document.createElement("div");
+                row.className = "payment-row";
+
+                const main = document.createElement("div");
+                main.className = "payment-row-main";
+
+                const account = document.createElement("span");
+                account.className = "payment-row-account";
+                account.textContent = payment.account;
+
+                const date = document.createElement("span");
+                date.className = "payment-row-date";
+                date.textContent = payment.date + " " + payment.time;
+
+                main.appendChild(account);
+                main.appendChild(date);
+
+                const end = document.createElement("div");
+                end.className = "payment-row-end";
+
+                const amount = document.createElement("span");
+                amount.className = "payment-row-amount " + debt.type;
+                amount.textContent =
+                    (debt.type === "receivable" ? "+" : "-") + " EGP " +
+                    Number(payment.amount).toLocaleString("en-US");
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.type = "button";
+                deleteBtn.className = "payment-delete-btn";
+                deleteBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-2 14H7L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>';
+                deleteBtn.onclick = function () {
+                    deletePayment(debt, payment);
+                };
+
+                end.appendChild(amount);
+                end.appendChild(deleteBtn);
+
+                row.appendChild(main);
+                row.appendChild(end);
+                paymentsHistoryList.appendChild(row);
+            });
+        }
+
+        paymentsHistoryModal.classList.add("show");
+    }
+
+    if (closePaymentsHistoryBtn) {
+        closePaymentsHistoryBtn.onclick = function () {
+            paymentsHistoryModal.classList.remove("show");
+        };
+    }
+
+    if (paymentsHistoryModal) {
+        paymentsHistoryModal.onclick = function (e) {
+            if (e.target === paymentsHistoryModal) {
+                paymentsHistoryModal.classList.remove("show");
+            }
+        };
+    }
     // ------------------------------
     // Modals
     // ------------------------------
@@ -132,13 +240,13 @@ function initDebtsPage() {
                 const dueDate = debtDueDate.value || new Date().toISOString().split("T")[0];
                 
                 if (person === "") {
-                    await customAlert("Please enter person name");
+                    await customAlert(t("debts_enter_person_alert"));
                     debtPerson.focus();
                     return;
                 }
                 
                 if (!amount || amount <= 0) {
-                    await customAlert("Please enter a valid amount");
+                    await customAlert(t("debts_enter_amount_alert"));
                     debtAmount.focus();
                     return;
                 }
@@ -161,7 +269,7 @@ saveDebts(debts);
             renderDebts();
             clearForm();
             debtModal.classList.remove("show");
-            showToast("Debt Added", "success");
+            showToast(t("debts_added_toast"), "success");
         };
     }
 
@@ -171,44 +279,62 @@ saveDebts(debts);
     if (confirmPayBtn) {
         confirmPayBtn.onclick = async function() {
             if (!currentPayDebt) return;
-            
-            const payment = Number(payAmount.value);
+
+            const payment = Math.round(Number(payAmount.value) * 100) / 100;
             const account = payAccount.value;
-            
+
             if (!account) {
-                await customAlert("Please select an account");
+                await customAlert(t("debts_select_account_alert"));
                 return;
             }
-            
+
             if (!payment || payment <= 0) {
-                await customAlert("Please enter a valid amount");
+                await customAlert(t("debts_enter_amount_alert"));
                 payAmount.focus();
                 return;
             }
-            
+
             if (payment > currentPayDebt.remaining) {
-                await customAlert("Payment is greater than remaining amount");
+                await customAlert(t("debts_payment_exceeds_alert"));
                 return;
             }
 
-            currentPayDebt.paid += payment;
-            currentPayDebt.remaining -= payment;
-            currentPayDebt.status = currentPayDebt.remaining === 0 ? "paid" : "open";
+            const now = new Date();
+            const paymentId = Date.now();
+            const dateText = now.toISOString().split("T")[0];
+            const timeText = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
-saveDebts(debts);
+            if (!Array.isArray(currentPayDebt.payments)) currentPayDebt.payments = [];
+
+            currentPayDebt.payments.push({
+                id: paymentId,
+                amount: payment,
+                account: account,
+                date: dateText,
+                time: timeText
+            });
+
+            currentPayDebt.paid = Math.round((currentPayDebt.paid + payment) * 100) / 100;
+            currentPayDebt.remaining = Math.round((currentPayDebt.remaining - payment) * 100) / 100;
+            currentPayDebt.status = currentPayDebt.remaining <= 0 ? "paid" : "open";
+
+            saveDebts(debts);
+
             const transactions = loadTransactions();
 
             transactions.push({
                 amount: payment,
                 account: account,
                 description: currentPayDebt.type === "receivable" ?
-                    `Debt payment from ${currentPayDebt.person}` :
-                    `Debt payment to ${currentPayDebt.person}`,
+    `${t("debts_payment_from")} ${currentPayDebt.person}` :
+    `${t("debts_payment_to")} ${currentPayDebt.person}`,
                 category: "Debt Payment",
                 categoryIcon: "hand-coins",
                 type: currentPayDebt.type === "receivable" ? "income" : "expense",
-                date: new Date().toISOString().split("T")[0],
-                time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+                date: dateText,
+                time: timeText,
+                debtId: currentPayDebt.id,
+                debtPaymentId: paymentId
             });
 
             saveTransactions(transactions);
@@ -217,10 +343,9 @@ saveDebts(debts);
             payDebtModal.classList.remove("show");
             currentPayDebt = null;
 
-            showToast("Payment Added", "success");
+            showToast(t("debts_payment_added_toast"), "success");
         };
     }
-
     // ------------------------------
     // Save Edited Debt
     // ------------------------------
@@ -235,13 +360,13 @@ saveDebts(debts);
             const type = activeTypeBtn ? activeTypeBtn.dataset.type : editingDebt.type;
 
             if (person === "") {
-    await customAlert("Please enter person name");
+    await customAlert(t("debts_enter_person_alert"));
     editDebtPerson.focus();
     return;
 }
 
 if (!amount || amount <= 0) {
-    await customAlert("Please enter a valid amount");
+    await customAlert(t("debts_enter_amount_alert"));
     editDebtAmount.focus();
     return;
 }
@@ -252,15 +377,15 @@ if (!amount || amount <= 0) {
             editingDebt.dueDate = dueDate;
             editingDebt.notes = editDebtNotes.value.trim();
 
-            editingDebt.remaining = Math.max(0, editingDebt.amount - editingDebt.paid);
-            editingDebt.status = editingDebt.remaining === 0 ? "paid" : "open";
+            editingDebt.remaining = Math.max(0, Math.round((editingDebt.amount - editingDebt.paid) * 100) / 100);
+            editingDebt.status = editingDebt.remaining <= 0 ? "paid" : "open";
 
 saveDebts(debts);
             renderDebts();
             editDebtModal.classList.remove("show");
             editingDebt = null;
 
-            showToast("Debt Updated", "success");
+            showToast(t("debts_updated_toast"), "success");
         };
     }
 
@@ -276,10 +401,7 @@ saveDebts(debts);
         debtDueDate.value = "";
         debtNotes.value = "";
     }
-
-    // ------------------------------
-    // Render Debts
-    // ------------------------------
+    
     document.addEventListener("touchstart", function (e) {
         document.querySelectorAll(".debt-card").forEach(function (otherCard) {
             if (!otherCard.contains(e.target)) {
@@ -299,7 +421,7 @@ saveDebts(debts);
     const { receivable, payable, net } = calculateDebtTotals(debts);
 
         [...debts].reverse().forEach(debt => {
-            const isSettled = debt.remaining === 0;
+            const isSettled = debt.remaining <= 0;
 
             const wrapper = document.createElement("div");
             wrapper.className = "debt-card-wrapper";
@@ -317,14 +439,13 @@ saveDebts(debts);
         <div class="debt-card-header">
             <h3 class="debt-person-name">${debt.person}</h3>
             <span class="debt-badge ${isSettled ? "settled" : debt.type}">
-                ${isSettled ? "Settled" : (debt.type === "receivable" ? "Owed to You" : "You Owe")}
+                ${isSettled ? t("debts_settled_badge") : (debt.type === "receivable" ? t("debts_owed_to_you_badge") : t("debts_you_owe_badge"))}
             </span>
         </div>
 
         <div class="debt-card-main-row">
             <div class="debt-card-details">
-                ${debt.dueDate || "No due date"}
-            </div>
+                ${debt.dueDate || t("debts_no_due_date")}            </div>
 
           <div class="debt-card-amount">
                 ${debt.type === "receivable" ? "+" : "-"} <span class="debt-currency">EGP</span> <span class="debt-amount-value">${Number(debt.remaining).toLocaleString("en-US")}</span>
@@ -345,10 +466,19 @@ saveDebts(debts);
         </div>
     </div>
 `;
-            const card = wrapper.querySelector(".debt-card");
+            
+const card = wrapper.querySelector(".debt-card");
             const bgDelete = wrapper.querySelector(".bg-delete");
-            const bgEdit = wrapper.querySelector(".bg-edit");
+            const bgEdit = wrapper.querySelector(".bg-edit"); 
+            
+            const paidNote = wrapper.querySelector(".debt-paid-note");
 
+            if (paidNote) {
+                paidNote.onclick = function (e) {
+                    e.stopPropagation();
+                    openPaymentsHistory(debt);
+                };
+            }
             if (!isSettled) {
                 const payBtn = wrapper.querySelector(".debt-card-pay-btn");
                 payBtn.onclick = function (e) {
@@ -367,24 +497,51 @@ saveDebts(debts);
 
             async function deleteThisDebt() {
                 const confirmed = await customConfirm(
-                    typeof t === "function" ? t("debts_delete_confirm") : "Are you sure you want to delete this debt?",
+                    t("debts_delete_confirm"),
                     { danger: true }
                 );
 
                 if (!confirmed) return;
 
+                const linkedTransactions = loadTransactions().filter(function (tx) {
+                    return tx.debtId === debt.id;
+                });
+
+                let deleteLinked = false;
+
+                if (linkedTransactions.length > 0) {
+                    deleteLinked = await customConfirm(
+                        t("debts_delete_linked_confirm"),
+                        { danger: true }
+                    );
+                }
+
                 const deletedPosition = debts.indexOf(debt);
 
                 debts = debts.filter(d => d.id !== debt.id);
                 saveDebts(debts);
+
+                if (deleteLinked) {
+                    const remainingTransactions = loadTransactions().filter(function (tx) {
+                        return tx.debtId !== debt.id;
+                    });
+
+                    saveTransactions(remainingTransactions);
+                }
+
                 renderDebts();
 
                 showUndoToast(
-                    typeof t === "function" ? t("debts_deleted_toast") : "Debt Deleted",
+                    t("debts_deleted_toast"),
                     function () {
                         const insertAt = Math.min(deletedPosition, debts.length);
                         debts.splice(insertAt, 0, debt);
                         saveDebts(debts);
+
+                        if (deleteLinked) {
+                            saveTransactions(loadTransactions().concat(linkedTransactions));
+                        }
+
                         renderDebts();
                     }
                 );

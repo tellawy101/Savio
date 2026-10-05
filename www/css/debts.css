@@ -830,3 +830,121 @@ body.dark .goal-progress {
 body.dark .goal-done {
     border-color: #16a34a;
 }
+/* ==============================
+   Payments History
+============================== */
+
+#paymentsHistoryModal {
+    align-items: flex-end;
+    padding-top: 0;
+}
+
+#paymentsHistoryModal .modal-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: 20px 20px 0 0;
+    margin: 0;
+    transform: translateY(100%);
+}
+
+#paymentsHistoryModal.show .modal-content {
+    transform: translateY(0);
+}
+
+.debt-paid-note {
+    cursor: pointer;
+}
+
+.payments-history-list {
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.payment-row:last-child {
+    border-bottom: none;
+}
+
+.payment-row-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.payment-row-account {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.payment-row-date {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.payment-row-amount {
+    direction: ltr;
+    font-weight: 800;
+    font-size: 15px;
+}
+
+.payment-row-amount.receivable {
+    color: #16a34a;
+}
+
+.payment-row-amount.payable {
+    color: #dc2626;
+}
+
+.payments-history-empty {
+    text-align: center;
+    color: #6b7280;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+body.dark .payment-row {
+    border-bottom-color: #374151;
+}
+
+body.dark .payment-row-date,
+body.dark .payments-history-empty {
+    color: #9ca3af;
+}
+.payment-row-end {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.payment-delete-btn {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: #fee2e2;
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.payment-delete-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+body.dark .payment-delete-btn {
+    background: #3f1d1d;
+}
