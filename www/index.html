@@ -24,7 +24,6 @@
 <link rel="stylesheet" href="css/accounts.css?v=2">
 <link rel="stylesheet" href="css/debts.css">
 <link rel="stylesheet" href="css/account-transactions.css">
-<link rel="stylesheet" href="css/lock-screen.css">
 </head>
 <body>
 <div id="app">
@@ -45,9 +44,6 @@
 <script src="js/vendor/html2pdf.bundle.min.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/theme.js"></script>
-<script src="js/lockScreen.js"></script>
-<script src="js/biometric.js"></script>
-<script src="js/autoLock.js"></script>
 <script src="js/formHelpers.js"></script>
 <script src="js/transactionCommon.js"></script>
 <script src="js/category.js"></script>
@@ -70,9 +66,6 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         initIcons();
-        if (typeof hasPin === "function" && hasPin()) {
-            showLockScreen({ mode: "verify" });
-        }
         navigateTo("home");
         if (typeof runAutoBackupIfNeeded === "function") {
             runAutoBackupIfNeeded();
