@@ -271,8 +271,7 @@ const deleteBtn = e.target.closest(".goal-delete-btn");
                 sendNotificationNow(
                     Date.now() % 2147483647,
                     "🎉 " + goal.name,
-                    "Goal reached!"
-                );
+                    t("goals_completed")                );
             }
             renderGoals();
 

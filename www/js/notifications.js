@@ -34,8 +34,15 @@ async function sendNotificationNow(id, title, body) {
     if (!allowed) return;
 
     try {
+                await plugin.createChannel({
+            id: "savio_alerts",
+            name: "Savio Alerts",
+            importance: 5,
+            visibility: 1,
+            vibration: true
+        });
         await plugin.schedule({
-            notifications: [{ id: id, title: title, body: body }]
+                        notifications: [{ id: id, title: title, body: body, channelId: "savio_alerts" }]
         });
     } catch (error) {
         console.error("Notification send error:", error);
