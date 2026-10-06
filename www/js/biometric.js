@@ -12,13 +12,21 @@ function getBiometricPlugin() {
 async function isBiometricAvailable() {
     const plugin = getBiometricPlugin();
 
-    if (!plugin) return false;
+    if (!plugin) {
+        showToast("DEBUG: no plugin", "error");
+        return false;
+    }
 
     try {
         const info = await plugin.checkBiometry();
+
+        if (!info.isAvailable) {
+            showToast("DEBUG: " + info.code + " / " + info.biometryType + " / " + info.deviceIsSecure, "error");
+        }
+
         return !!info.isAvailable;
     } catch (err) {
-        console.warn("Biometric check error:", err);
+        showToast("DEBUG err: " + (err && (err.code || err.message)), "error");
         return false;
     }
 }
