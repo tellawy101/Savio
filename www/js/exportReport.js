@@ -50,7 +50,8 @@ async function saveExportFile(fileName, text, mimeType) {
                     });
                 } catch (shareErr) {
                     // المستخدم قفل قائمة المشاركة
-                    console.warn("Share dismissed:", shareErr);
+                                        console.warn("Share dismissed:", shareErr);
+                    return false;
                 }
             }
             return true;
@@ -161,6 +162,7 @@ async function saveExportBinary(fileName, base64Data, mimeType) {
                     });
                 } catch (shareErr) {
                     console.warn("Share dismissed:", shareErr);
+                    return false;
                 }
             }
             return true;
