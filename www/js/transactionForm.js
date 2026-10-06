@@ -119,10 +119,14 @@ if (window.lucide) lucide.createIcons();
 
         saveTransactions(transactions);
         
-        if (type === "expense" && !editId) {
+                if (type === "expense" && !editId) {
             const alertType = getBudgetAlertType(entryData.category, entryData.amount, entryData.date);
             if (alertType) {
-                await customAlert(t("cb_alert_" + alertType));
+                sendNotificationNow(
+                    Date.now() % 2147483647,
+                    "💰 " + entryData.category,
+                    t("cb_alert_" + alertType)
+                );
             }
         }
         
