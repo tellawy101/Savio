@@ -261,9 +261,19 @@ const deleteBtn = e.target.closest(".goal-delete-btn");
                 return;
             }
 
+                        const wasDone = (Number(goal.current) || 0) >= Number(goal.target);
             goal.current = (Number(goal.current) || 0) + amount;
-
+            const nowDone = goal.current >= Number(goal.target);
+            
             saveGoals(goals);
+            
+            if (nowDone && !wasDone) {
+                sendNotificationNow(
+                    Date.now() % 2147483647,
+                    "🎉 " + goal.name,
+                    "Goal reached!"
+                );
+            }
             renderGoals();
 
             goalMoneyModal.classList.remove("show");
