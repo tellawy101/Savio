@@ -306,8 +306,23 @@ async function verifyPin(pin) {
     return hash === saved.hash;
 }
 
+const BIOMETRIC_KEY = "savioBiometric";
+
+function isBiometricEnabled() {
+    return localStorage.getItem(BIOMETRIC_KEY) === "1";
+}
+
+function setBiometricEnabled(enabled) {
+    if (enabled) {
+        localStorage.setItem(BIOMETRIC_KEY, "1");
+    } else {
+        localStorage.removeItem(BIOMETRIC_KEY);
+    }
+}
+
 function removePin() {
     localStorage.removeItem(PIN_KEY);
+    setBiometricEnabled(false);
 }
 // ==============================
 // PIN Attempts Limit
