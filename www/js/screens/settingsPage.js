@@ -179,7 +179,7 @@ if (languageSelectBtn && languagePickerModal) {
 
                         removePin();
                         updatePinStatus();
-                        showToast(t("pin_disabled_toast"), "success");
+                        updateBiometricStatus();                        showToast(t("pin_disabled_toast"), "success");
                     }
                 });
 
@@ -194,6 +194,49 @@ if (languageSelectBtn && languagePickerModal) {
                     }
                 });
             }
+        };
+    }
+        // ------------------------------
+    // Biometric
+    // ------------------------------
+    const biometricBtn = document.getElementById("biometricBtn");
+    const biometricStatus = document.getElementById("biometricStatus");
+
+    function updateBiometricStatus() {
+        if (!biometricStatus) return;
+
+        biometricStatus.textContent = isBiometricEnabled() ? t("biometric_enabled_toast") : t("biometric_disabled_toast");
+    }
+
+    updateBiometricStatus();
+
+    if (biometricBtn) {
+        biometricBtn.onclick = async function () {
+
+            if (isBiometricEnabled()) {
+                setBiometricEnabled(false);
+                updateBiometricStatus();
+                showToast(t("biometric_disabled_toast"), "success");
+                return;
+            }
+
+            if (!hasPin()) {
+                showToast(t("biometric_need_pin"), "error");
+                return;
+            }
+
+            if (!(await isBiometricAvailable())) {
+                showToast(t("biometric_not_available"), "error");
+                return;
+            }
+
+            const ok = await authenticateBiometric();
+
+            if (!ok) return;
+
+            setBiometricEnabled(true);
+            updateBiometricStatus();
+            showToast(t("biometric_enabled_toast"), "success");
         };
     }
     

@@ -35,8 +35,7 @@ function showLockScreen(options) {
                 <button class="lock-key" data-key="7">7</button>
                 <button class="lock-key" data-key="8">8</button>
                 <button class="lock-key" data-key="9">9</button>
-                <button class="lock-key lock-key-small" id="lockCancelBtn">${cancellable ? t("pin_cancel") : ""}</button>
-                <button class="lock-key" data-key="0">0</button>
+                <button class="lock-key lock-key-small" id="lockCancelBtn">${cancellable ? t("pin_cancel") : (mode === "verify" && isBiometricEnabled() ? '<i data-lucide="fingerprint"></i>' : "")}</button>                <button class="lock-key" data-key="0">0</button>
                 <button class="lock-key lock-key-small" id="lockBackBtn">⌫</button>
             </div>
         </div>
@@ -203,15 +202,35 @@ function showLockScreen(options) {
         };
     }
     
+        async function tryBiometricUnlock() {
+        if (busy || lockedOut) return;
+
+        busy = true;
+        const ok = await authenticateBiometric();
+        busy = false;
+
+        if (!ok) return;
+
+        resetPinAttempts();
+        closeLock();
+
+        if (typeof options.onSuccess === "function") options.onSuccess();
+    }
+
     if (cancelBtn) {
         cancelBtn.onclick = function() {
-            if (!cancellable) return;
-            
+            if (!cancellable) {
+                if (mode === "verify" && isBiometricEnabled()) tryBiometricUnlock();
+                return;
+            }
+
             closeLock();
-            
+
             if (typeof options.onCancel === "function") options.onCancel();
         };
     }
-    
+
     if (mode === "verify") startLockoutCountdown();
+
+    if (mode === "verify" && isBiometricEnabled()) tryBiometricUnlock();
 }
