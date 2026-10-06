@@ -205,6 +205,52 @@ function saveDebts(debts) {
     localStorage.setItem(DEBTS_KEY, JSON.stringify(debts));
     triggerCloudSync();
 }
+function removeDebtPayment(paymentId) {
+    const debts = getDebts();
+    let removed = null;
+
+    debts.forEach(function (debt) {
+        if (!Array.isArray(debt.payments)) return;
+
+        const payment = debt.payments.find(function (p) {
+            return p.id === paymentId;
+        });
+        if (!payment) return;
+
+        removed = { debtId: debt.id, payment: payment };
+
+        debt.payments = debt.payments.filter(function (p) {
+            return p.id !== paymentId;
+        });
+        debt.paid = Math.max(0, Math.round((debt.paid - payment.amount) * 100) / 100);
+        debt.remaining = Math.round((debt.amount - debt.paid) * 100) / 100;
+        debt.status = debt.remaining <= 0 ? "paid" : "open";
+    });
+
+    if (removed) saveDebts(debts);
+    return removed;
+}
+function restoreDebtPayment(removed) {
+    if (!removed) return;
+
+    const debts = getDebts();
+    const debt = debts.find(function (d) {
+        return d.id === removed.debtId;
+    });
+    if (!debt) return;
+
+    if (!Array.isArray(debt.payments)) debt.payments = [];
+    debt.payments.push(removed.payment);
+    debt.payments.sort(function (a, b) {
+        return a.id - b.id;
+    });
+
+    debt.paid = Math.round((debt.paid + removed.payment.amount) * 100) / 100;
+    debt.remaining = Math.max(0, Math.round((debt.amount - debt.paid) * 100) / 100);
+    debt.status = debt.remaining <= 0 ? "paid" : "open";
+
+    saveDebts(debts);
+}
 
 // ==============================
 // Savings Goals

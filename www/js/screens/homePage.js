@@ -141,6 +141,10 @@ const card = li.querySelector(".expense-main");
                     ? expenses.filter(item => item.transferId !== expense.transferId)
                     : expenses.filter(item => item.id !== expense.id);
                 saveTransactions(expenses);
+               
+                               const removedDebtPayment = expense.debtPaymentId
+                    ? removeDebtPayment(expense.debtPaymentId)
+                    : null;
                 renderExpenses();
                 showUndoToast(
                     typeof t === "function" ? t("item_deleted_toast") : "Item Deleted",
@@ -151,7 +155,8 @@ const card = li.querySelector(".expense-main");
                                 const insertAt = Math.min(position, expenses.length);
                                 expenses.splice(insertAt, 0, item);
                             });
-                        saveTransactions(expenses);
+                            saveTransactions(expenses);
+                        restoreDebtPayment(removedDebtPayment);
                         renderExpenses();
                     }
                 );
