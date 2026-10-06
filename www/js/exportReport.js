@@ -264,3 +264,120 @@ document.addEventListener("click", function (e) {
         exportTransactionsExcel();
     }
 });
+// ---------- PDF ----------
+
+function exportEscapeHtml(value) {
+    return String(value === null || value === undefined ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+}
+
+function buildTransactionsPdfElement() {
+    const rows = getExportRows();
+    const currency = getCurrency();
+
+    let totalIncome = 0;
+    let totalExpense = 0;
+
+    const cellStyle = "padding:6px 4px;border-bottom:1px solid #e0e0e0;text-align:center;font-size:11px;";
+
+    const bodyRows = rows.map(function (tx) {
+        const amount = Number(tx.amount) || 0;
+        let color = "#555";
+
+        if (tx.type === "income") {
+            totalIncome += amount;
+            color = "#2E7D32";
+        } else if (tx.type === "expense") {
+            totalExpense += amount;
+            color = "#C62828";
+        }
+
+        return "<tr style='page-break-inside:avoid;'>" +
+            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.date) + "</td>" +
+            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.time) + "</td>" +
+            "<td style='" + cellStyle + "color:" + color + ";'>" + exportEscapeHtml(getExportTypeLabel(tx.type)) + "</td>" +
+            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.category) + "</td>" +
+            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.account) + "</td>" +
+            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.description) + "</td>" +
+            "<td style='" + cellStyle + "color:" + color + ";font-weight:bold;'>" +
+                amount.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " " + exportEscapeHtml(currency) +
+            "</td>" +
+            "</tr>";
+    }).join("");
+
+    const net = totalIncome - totalExpense;
+    const fmt = function (n) {
+        return n.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " " + exportEscapeHtml(currency);
+    };
+
+    const headStyle = "padding:8px 4px;background:#1976D2;color:#fff;text-align:center;font-size:11px;";
+    const heads = ["Date", "Time", "Type", "Category", "Account", "Description", "Amount"]
+        .map(function (h) { return "<th style='" + headStyle + "'>" + h + "</th>"; })
+        .join("");
+
+    const box = document.createElement("div");
+    box.style.cssText = "width:700px;padding:10px;font-family:Arial,sans-serif;color:#222;background:#fff;direction:ltr;";
+
+    box.innerHTML =
+        "<h2 style='text-align:center;margin:0 0 4px;'>Savio - Transactions</h2>" +
+        "<p style='text-align:center;margin:0 0 14px;color:#777;font-size:12px;'>" + getExportFileStamp() + "</p>" +
+        "<div style='display:flex;justify-content:space-around;margin-bottom:14px;font-size:12px;'>" +
+            "<div>Income: <b style='color:#2E7D32;'>" + fmt(totalIncome) + "</b></div>" +
+            "<div>Expense: <b style='color:#C62828;'>" + fmt(totalExpense) + "</b></div>" +
+            "<div>Net: <b>" + fmt(net) + "</b></div>" +
+        "</div>" +
+        "<table style='width:100%;border-collapse:collapse;'>" +
+            "<thead><tr>" + heads + "</tr></thead>" +
+            "<tbody>" + bodyRows + "</tbody>" +
+        "</table>";
+
+    return box;
+}
+
+async function exportTransactionsPdf() {
+    if (typeof html2pdf === "undefined") {
+        showToast("مكتبة PDF مش متحملة", "error");
+        return;
+    }
+
+    if (getExportRows().length === 0) {
+        showToast(t("export_empty_toast"), "error");
+        return;
+    }
+
+    const fileName = "savio-transactions-" + getExportFileStamp() + ".pdf";
+    let base64;
+
+    try {
+        const dataUri = await html2pdf()
+            .set({
+                margin: 10,
+                filename: fileName,
+                image: { type: "jpeg", quality: 0.95 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+                pagebreak: { mode: ["css", "legacy"] }
+            })
+            .from(buildTransactionsPdfElement())
+            .outputPdf("datauristring");
+
+        base64 = dataUri.split("base64,")[1];
+    } catch (err) {
+        console.error("PDF build error:", err);
+        showToast("حصلت مشكلة في تجهيز الـ PDF", "error");
+        return;
+    }
+
+    const ok = await saveExportBinary(fileName, base64, "application/pdf");
+
+    if (ok) showToast(t("export_pdf_done_toast"), "success");
+}
+
+document.addEventListener("click", function (e) {
+    if (e.target.closest("#exportPdfBtn")) {
+        exportTransactionsPdf();
+    }
+});
