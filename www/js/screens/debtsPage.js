@@ -490,7 +490,7 @@ const card = wrapper.querySelector(".debt-card");
 
                     payAccount.innerHTML = `<option value="">${t("select_account")}</option>` +
                         accounts.map(acc => `<option value="${acc.name}">${acc.name}</option>`).join("");
-
+makeSelectSheet(payAccount, t("select_account"));
                     payDebtModal.classList.add("show");
                 };
             }

@@ -1509,3 +1509,156 @@ body.dark .filter-select {
     color: #F3F4F6;
     border-color: #374151;
 }
+/* ==============================
+   Bottom Sheets (Goals / Budgets / Income / Backup)
+============================== */
+#goalModal,
+#goalMoneyModal,
+#catBudgetModal,
+#budgetModal,
+#incomeModal,
+#exportFallbackModal,
+#importManualModal,
+#restorePreviewModal {
+    align-items: flex-end;
+    padding-top: 0;
+}
+
+/* budgetModal كان display:none/center، نخليه زي باقي المودالات عشان الانزلاق يشتغل */
+#budgetModal,
+#budgetModal.show {
+    display: flex;
+    align-items: flex-end;
+    padding-top: 0;
+}
+
+#goalModal .modal-content,
+#goalMoneyModal .modal-content,
+#catBudgetModal .modal-content,
+#budgetModal .modal-content,
+#incomeModal .modal-content,
+#exportFallbackModal .modal-content,
+#importManualModal .modal-content,
+#restorePreviewModal .modal-content {
+    width: 100%;
+    max-width: 100% !important;
+    min-width: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+    transform: translateY(100%);
+    opacity: 1;
+    transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+}
+
+#goalModal.show .modal-content,
+#goalMoneyModal.show .modal-content,
+#catBudgetModal.show .modal-content,
+#budgetModal.show .modal-content,
+#incomeModal.show .modal-content,
+#exportFallbackModal.show .modal-content,
+#importManualModal.show .modal-content,
+#restorePreviewModal.show .modal-content {
+    transform: translateY(0);
+}
+/* ==============================
+   Select → Bottom Sheet
+============================== */
+:where(.select-sheet-trigger) {
+    width: 100%;
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    background: #fff;
+    color: #111827;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.select-sheet-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    text-align: start;
+    cursor: pointer;
+}
+
+.select-sheet-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.select-sheet-arrow { opacity: .5; font-size: 12px; }
+
+body.dark .select-sheet-trigger:not(.filter-select) {
+    background: #17202B;
+    color: #F3F4F6;
+    border-color: #374151;
+}
+
+.select-sheet { align-items: flex-end; padding-top: 0; }
+
+.select-sheet .modal-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px max(22px, env(safe-area-inset-bottom));
+    transform: translateY(100%);
+    opacity: 1;
+    transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+}
+
+.select-sheet.show .modal-content { transform: translateY(0); }
+
+.select-sheet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+.select-sheet-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1.5px solid #E5E7EB;
+    background: #fff;
+    color: #111827;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: start;
+}
+
+.select-sheet-option.selected {
+    border-color: #0F766E;
+    background: rgba(15, 118, 110, 0.08);
+    color: #0F766E;
+}
+
+.select-sheet-option.selected::after { content: "✓"; }
+
+body.dark .select-sheet-option {
+    background: #1f2937;
+    border-color: rgba(79, 209, 197, 0.15);
+    color: #fff;
+}
+
+body.dark .select-sheet-option.selected {
+    border-color: #4fd1c5;
+    background: rgba(79, 209, 197, 0.12);
+    color: #4fd1c5;
+}

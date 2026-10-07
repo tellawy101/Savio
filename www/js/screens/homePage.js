@@ -277,8 +277,10 @@ const card = li.querySelector(".expense-main");
             accountFilter.appendChild(opt);
         });
     }
-    fillAccountFilter();
+        fillAccountFilter();
     if (accountFilter) accountFilter.onchange = renderExpenses;
+    makeSelectSheet(accountFilter, getLanguage() === "ar" ? "الحساب" : "Account");
+    makeSelectSheet(categoryFilter, getLanguage() === "ar" ? "التصنيف" : "Category");
         function fillCategoryFilter() {
         if (!categoryFilter) return;
         const allLabel = getLanguage() === "ar" ? "كل الفئات" : "All categories";
@@ -312,7 +314,7 @@ const card = li.querySelector(".expense-main");
     }
     fillSortFilter();
     if (sortFilter) sortFilter.onchange = renderExpenses;
-
+makeSelectSheet(sortFilter, getLanguage() === "ar" ? "الترتيب" : "Sort by");
     document.addEventListener("touchstart", (e) => {
     
     document.querySelectorAll(".expense-main").forEach(card => {
