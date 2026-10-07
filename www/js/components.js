@@ -474,7 +474,10 @@ function renderTransactionFields(type) {
 <div class="form-group">
     <label data-i18n="date_label">Date</label>
     <div class="description-box">
-        <input type="date" id="${type}Date" class="description-input" placeholder="Write the date">
+        <div class="date-wrap">
+            <input type="text" id="${type}DateText" class="description-input date-visible" readonly>
+            <input type="date" id="${type}Date" class="date-native">
+        </div>
     </div>
 </div>
     `;

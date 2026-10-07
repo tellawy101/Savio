@@ -15,25 +15,42 @@
 <!-- Goal Modal -->
 <div id="goalModal" class="modal">
 
-    <div class="modal-content">
+    <div class="modal-content budget-modal-content">
 
-        <h2 data-i18n="goals_add_title">New Savings Goal</h2>
-
-        <input type="text" id="goalName" placeholder="Goal name"
-            data-i18n-placeholder="goals_name_placeholder">
-
-        <input type="tel" id="goalTarget" placeholder="Target amount"
-            data-i18n-placeholder="goals_target_placeholder">
-
-        <input type="tel" id="goalCurrent" placeholder="Saved so far (optional)"
-            data-i18n-placeholder="goals_current_placeholder">
-
-        <input type="date" id="goalDate">
-
-        <div class="modal-actions">
-            <button id="cancelGoalBtn" data-i18n="cancel">Cancel</button>
-            <button id="saveGoalBtn" data-i18n="save">Save</button>
+        <div class="budget-modal-header">
+            <div class="budget-modal-icon">
+                <i data-lucide="target"></i>
+            </div>
+            <h2 data-i18n="goals_add_title">New Savings Goal</h2>
+            <button id="cancelGoalBtn" class="budget-modal-close" aria-label="Close">
+                <i data-lucide="x"></i>
+            </button>
         </div>
+
+        <div class="goal-field">
+            <label for="goalName" data-i18n="goals_name_placeholder">Goal name</label>
+            <input type="text" id="goalName">
+        </div>
+
+        <div class="goal-field">
+            <label for="goalTarget" data-i18n="goals_target_placeholder">Target amount</label>
+            <input type="tel" id="goalTarget" placeholder="0">
+        </div>
+
+        <div class="goal-field">
+            <label for="goalCurrent" data-i18n="goals_current_placeholder">Saved so far (optional)</label>
+            <input type="tel" id="goalCurrent" placeholder="0">
+        </div>
+
+        <div class="goal-field">
+            <label for="goalDate" data-i18n="goals_date_label">Target date (optional)</label>
+                       <div class="date-wrap">
+                <input type="text" id="goalDateText" class="date-visible" readonly>
+                <input type="date" id="goalDate" class="date-native">
+            </div>
+        </div>
+
+        <button id="saveGoalBtn" class="budget-save-btn" data-i18n="save">Save</button>
 
     </div>
 
@@ -41,19 +58,26 @@
 
 <!-- Add Money Modal -->
 <div id="goalMoneyModal" class="modal">
-
-    <div class="modal-content">
-
-        <h2 data-i18n="goals_add_money_title">Add to Goal</h2>
-
-        <input type="tel" id="goalMoneyAmount" placeholder="Amount"
-            data-i18n-placeholder="debts_amount_placeholder">
-
-        <div class="modal-actions">
-            <button id="cancelGoalMoneyBtn" data-i18n="cancel">Cancel</button>
-            <button id="confirmGoalMoneyBtn" data-i18n="confirm_btn">Confirm</button>
+    
+    <div class="modal-content budget-modal-content">
+        
+        <div class="budget-modal-header">
+            <div class="budget-modal-icon">
+                <i data-lucide="piggy-bank"></i>
+            </div>
+            <h2 data-i18n="goals_add_money_title">Add to Goal</h2>
+            <button id="cancelGoalMoneyBtn" class="budget-modal-close" aria-label="Close">
+                <i data-lucide="x"></i>
+            </button>
         </div>
-
+        
+        <div class="goal-field">
+            <label for="goalMoneyAmount" data-i18n="debts_amount_placeholder">Amount</label>
+            <input type="tel" id="goalMoneyAmount" placeholder="0">
+        </div>
+        
+        <button id="confirmGoalMoneyBtn" class="budget-save-btn" data-i18n="confirm_btn">Confirm</button>
+        
     </div>
-
+    
 </div>

@@ -16,6 +16,7 @@ function initGoalsPage() {
     const goalTargetInput = document.getElementById("goalTarget");
     const goalCurrentInput = document.getElementById("goalCurrent");
     const goalDateInput = document.getElementById("goalDate");
+    const goalDateText = document.getElementById("goalDateText");
     const cancelGoalBtn = document.getElementById("cancelGoalBtn");
     const saveGoalBtn = document.getElementById("saveGoalBtn");
 
@@ -148,14 +149,19 @@ function initGoalsPage() {
     // ------------------------------
     // MODALS (فتح وقفل مودال إضافة الهدف)
     // ------------------------------
+        if (goalDateInput) {
+        goalDateInput.onchange = function () {
+            syncDateText(goalDateInput, goalDateText);
+        };
+    }
     if (addGoalBtn && goalModal) {
         addGoalBtn.onclick = function () {
 
             if (goalNameInput) goalNameInput.value = "";
             if (goalTargetInput) goalTargetInput.value = "";
             if (goalCurrentInput) goalCurrentInput.value = "";
-            if (goalDateInput) goalDateInput.value = "";
-
+                        if (goalDateInput) goalDateInput.value = getTodayDateString();
+              syncDateText(goalDateInput, goalDateText);
             goalModal.classList.add("show");
         };
     }

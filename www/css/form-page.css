@@ -351,7 +351,28 @@ body.has-scroll {
 .description-box {
     position: relative;
 }
+.date-wrap {
+    position: relative;
+}
 
+.date-wrap .date-visible {
+    text-align: left;
+    direction: ltr;
+}
+
+.date-wrap .date-native {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    z-index: 2;
+}
 .description-input {
     width: 100%;
     height: 56px;

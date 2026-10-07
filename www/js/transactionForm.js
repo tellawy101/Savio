@@ -19,7 +19,8 @@ setupCommonFormPage();
 
     const today = getTodayDateString();
     dateEl.value = today;
-
+    const dateTextEl = document.getElementById(type + "DateText");
+    syncDateText(dateEl, dateTextEl);
     editId = editId || new URLSearchParams(window.location.search).get("edit") || null;
 
     if (!editId) {
@@ -45,6 +46,7 @@ setupCommonFormPage();
 
     window.onFormFieldChanged = checkForm;
     dateEl.addEventListener("change", checkForm);
+        dateEl.addEventListener("change", () => syncDateText(dateEl, dateTextEl));
     attachAmountFormatter(amountEl, checkForm);
     attachThousandsFormatter(document.getElementById("newAccountBalance"));
 
@@ -83,6 +85,7 @@ if (entry.category) {
 if (window.lucide) lucide.createIcons();
         descriptionEl.value = entry.description || "";
         dateEl.value = entry.date || today;
+                syncDateText(dateEl, dateTextEl);
     }
 
     saveBtn.onclick = async function () {
