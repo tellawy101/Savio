@@ -203,13 +203,11 @@ if (categoryIconDropdownTrigger) {
         e.stopPropagation();
         const isOpen = categoryIconDropdownList.classList.contains("show");
         if (!isOpen) {
+            if (document.activeElement) document.activeElement.blur();
             document.body.appendChild(categoryIconDropdownList);
             categoryIconDropdownList.classList.add("show");
-            categoryIconDropdownList.style.top = Math.round(window.innerHeight * 0.08) + "px";
-            categoryIconDropdownList.style.height = Math.round(window.innerHeight * 0.84) + "px";
             if (categoryIconSearchInput) {
                 categoryIconSearchInput.value = "";
-                categoryIconSearchInput.focus();
             }
             renderCategoryIconResults("");
         } else {
