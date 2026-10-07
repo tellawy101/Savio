@@ -17,9 +17,6 @@ function initGoalsPage() {
     const goalCurrentInput = document.getElementById("goalCurrent");
     const goalDateInput = document.getElementById("goalDate");
     const goalDateText = document.getElementById("goalDateText");
-        attachThousandsFormatter(goalTargetInput);
-    attachThousandsFormatter(goalCurrentInput);
-    attachThousandsFormatter(goalMoneyAmountInput);
     const cancelGoalBtn = document.getElementById("cancelGoalBtn");
     const saveGoalBtn = document.getElementById("saveGoalBtn");
 
@@ -27,6 +24,9 @@ function initGoalsPage() {
     const goalMoneyAmountInput = document.getElementById("goalMoneyAmount");
     const cancelGoalMoneyBtn = document.getElementById("cancelGoalMoneyBtn");
     const confirmGoalMoneyBtn = document.getElementById("confirmGoalMoneyBtn");
+        attachThousandsFormatter(goalTargetInput);
+    attachThousandsFormatter(goalCurrentInput);
+    attachThousandsFormatter(goalMoneyAmountInput);
 
 // ------------------------------
     // ESCAPE HTML
@@ -276,7 +276,7 @@ const deleteBtn = e.target.closest(".goal-delete-btn");
     if (confirmGoalMoneyBtn) {
         confirmGoalMoneyBtn.onclick = async function () {
 
-            const amount = goalMoneyAmountInput ? Number(goalMoneyAmountInput.value) : 0;
+const amount = goalMoneyAmountInput ? Number(goalMoneyAmountInput.value.replace(/,/g, "")) : 0;
 
             if (!amount || amount <= 0) {
                 await customAlert("Please enter a valid amount");

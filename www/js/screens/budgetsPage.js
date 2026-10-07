@@ -92,19 +92,19 @@ function initBudgetsPage() {
 
                 <div class="goal-top">
                     <span class="goal-name">${escapeHTML(name)}</span>
-                    <span class="goal-percent">${rawPercent}%</span>
+                    <div class="cb-top-end">
+                        <span class="goal-percent">${rawPercent}%</span>
+                        <button class="cb-delete-btn" data-name="${escapeHTML(name)}"><i data-lucide="trash-2"></i></button>
+                    </div>
                 </div>
 
                 <div class="goal-progress">
                     <div class="goal-progress-fill" style="width: ${percent}%"></div>
                 </div>
 
-                <div class="goal-amounts">
-                    <span>${formatCurrency(used)} ${t("cb_spent_of")} ${formatCurrency(limit)}</span>
-                </div>
-
-                <div class="goal-actions">
-                    <button class="goal-btn cb-delete-btn" data-name="${escapeHTML(name)}"><i data-lucide="trash-2"></i></button>
+                <div class="cb-amounts">
+                    <span class="cb-used">${formatCurrency(used)}</span>
+                    <span class="cb-limit">${formatCurrency(limit)}</span>
                 </div>
 
             </div>
@@ -141,20 +141,48 @@ function initBudgetsPage() {
     // ------------------------------
     // MODALS
     // ------------------------------
-        function fillCategorySelect() {
+            function fillCategorySelect() {
         if (!catBudgetCategory) return;
-
+        
+        const picker = document.querySelector(".cb-picker");
+        const pickerBtn = document.getElementById("catBudgetPickerBtn");
+        const pickerText = document.getElementById("catBudgetPickerText");
+        const pickerList = document.getElementById("catBudgetPickerList");
+        
+        if (!picker || !pickerBtn || !pickerText || !pickerList) return;
+        
         const budgets = getCategoryBudgets();
-
-        const available = getCategories().filter(function (c) {
+        
+        const available = getCategories().filter(function(c) {
             return !(c.name in budgets);
         });
-
-        catBudgetCategory.innerHTML =
-            `<option value="">${t("cb_select_category")}</option>` +
-            available.map(function (c) {
-                return `<option value="${escapeHTML(c.name)}">${escapeHTML(c.name)}</option>`;
-            }).join("");
+        
+        catBudgetCategory.value = "";
+        pickerText.textContent = t("cb_select_category");
+        picker.classList.remove("open");
+        
+        pickerList.innerHTML = available.map(function(c) {
+            return `<div class="cb-picker-item" data-value="${escapeHTML(c.name)}">${escapeHTML(c.name)}</div>`;
+        }).join("");
+        
+        pickerBtn.onclick = function() {
+            picker.classList.toggle("open");
+        };
+        
+        pickerList.onclick = function(e) {
+            const item = e.target.closest(".cb-picker-item");
+            if (!item) return;
+            
+            catBudgetCategory.value = item.dataset.value;
+            pickerText.textContent = item.dataset.value;
+            
+            pickerList.querySelectorAll(".cb-picker-item").forEach(function(el) {
+                el.classList.remove("selected");
+            });
+            item.classList.add("selected");
+            
+            picker.classList.remove("open");
+        };
     }
 
     if (addCatBudgetBtn && catBudgetModal) {

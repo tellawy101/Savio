@@ -1,4 +1,4 @@
-<div class="debts-header">
+<div class="debts-header cb-header">
 
     <h3 data-i18n="cb_title">Category Budgets</h3>
 
@@ -13,19 +13,36 @@
 <!-- Category Budget Modal -->
 <div id="catBudgetModal" class="modal">
 
-    <div class="modal-content">
+    <div class="modal-content budget-modal-content">
 
-        <h2 data-i18n="cb_add_title">New Category Budget</h2>
-
-        <select id="catBudgetCategory"></select>
-
-        <input type="tel" id="catBudgetAmount" placeholder="Monthly limit"
-            data-i18n-placeholder="cb_amount_placeholder">
-
-        <div class="modal-actions">
-            <button id="cancelCatBudgetBtn" data-i18n="cancel">Cancel</button>
-            <button id="saveCatBudgetBtn" data-i18n="save">Save</button>
+        <div class="budget-modal-header">
+            <div class="budget-modal-icon">
+                <i data-lucide="wallet"></i>
+            </div>
+            <h2 data-i18n="cb_add_title">New Category Budget</h2>
+            <button id="cancelCatBudgetBtn" class="budget-modal-close" aria-label="Close">
+                <i data-lucide="x"></i>
+            </button>
         </div>
+
+        <div class="goal-field">
+            <label for="catBudgetCategory" data-i18n="category_label">Category</label>
+            <input type="hidden" id="catBudgetCategory">
+            <div class="cb-picker">
+                <button type="button" id="catBudgetPickerBtn" class="cb-picker-btn">
+                    <span id="catBudgetPickerText"></span>
+                    <i data-lucide="chevron-down"></i>
+                </button>
+                <div id="catBudgetPickerList" class="cb-picker-list"></div>
+            </div>
+        </div>
+
+        <div class="goal-field">
+            <label for="catBudgetAmount" data-i18n="cb_amount_placeholder">Monthly limit</label>
+            <input type="tel" id="catBudgetAmount" placeholder="0">
+        </div>
+
+        <button id="saveCatBudgetBtn" class="budget-save-btn" data-i18n="save">Save</button>
 
     </div>
 
