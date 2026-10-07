@@ -209,7 +209,21 @@ if (window.lucide) lucide.createIcons();
             addAccountModal.classList.add("show");
         };
     }
+    const setMainAccountBtn = document.getElementById("setMainAccountBtn");
 
+    if (setMainAccountBtn) {
+        setMainAccountBtn.onclick = function () {
+            let accounts = getAccounts();
+            const index = accounts.findIndex(a => a.name === selectedAccount);
+            if (index > 0) {
+                const mainAccount = accounts.splice(index, 1)[0];
+                accounts.unshift(mainAccount);
+                saveAccounts(accounts);
+                renderAccountsPage();
+            }
+            accountMenu.classList.remove("show");
+        };
+    }
     if (deleteAccountBtn) {
         deleteAccountBtn.onclick = function () {
             let accounts = getAccounts();
@@ -331,7 +345,7 @@ saveAccounts(accounts);
                             ${isMain ? `
                               <div class="account-main-badge">
                                 <i data-lucide="badge-check"></i>
-                                <span>Main Account</span>
+                                                        <span>${t("main_account_badge")}</span>
                               </div>
                             ` : `
                               <div class="account-sub-name">${account.description || ""}</div>
