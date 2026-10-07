@@ -406,9 +406,9 @@ body {
     left: 5%;
     right: 5%;
     top: 8vh;
-    
+    bottom: 8vh;
     width: 90%;
-    height: 84vh;
+    height: auto;
     
     overflow-y: auto;
     overscroll-behavior: contain;
