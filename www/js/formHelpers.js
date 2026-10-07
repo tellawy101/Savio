@@ -124,3 +124,13 @@ function notifyFormFieldChanged() {
         window.onFormFieldChanged();
     }
 }
+// فلترة قايمة الأيقونات (مشتركة بين accounts.js و accountsPage.js)
+function filterAccountIcons(term) {
+    term = (term || "").trim().toLowerCase();
+    document.querySelectorAll("#iconDropdownList .icon-option").forEach(function(opt) {
+        const label = (opt.dataset.label || "").toLowerCase();
+        const icon = (opt.dataset.icon || "").toLowerCase();
+        const match = label.includes(term) || icon.includes(term);
+        opt.style.display = match ? "flex" : "none";
+    });
+}
