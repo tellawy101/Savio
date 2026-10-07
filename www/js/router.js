@@ -81,7 +81,17 @@ const ROUTES = {
         }
     },
 };
-
+function renderSkeleton() {
+    return `
+    <div class="skeleton-page">
+        <div class="sk sk-title"></div>
+        <div class="sk sk-hero"></div>
+        <div class="sk sk-row"></div>
+        <div class="sk sk-row"></div>
+        <div class="sk sk-row"></div>
+        <div class="sk sk-row"></div>
+    </div>`;
+}
 async function navigateTo(pageName) {
     currentPageName = pageName;
     const route = ROUTES[pageName];
@@ -97,9 +107,10 @@ async function navigateTo(pageName) {
         return;
     }
     try {
-        let html = templateCache[pageName];
-if (!html) {
-    const res = await fetch(route.template + "?v=" + Date.now());
+                let html = templateCache[pageName];
+        if (!html) {
+            app.innerHTML = renderSkeleton();
+            const res = await fetch(route.template + "?v=" + Date.now());
     html = await res.text();
     templateCache[pageName] = html;
 }
