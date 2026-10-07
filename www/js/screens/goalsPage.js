@@ -177,19 +177,19 @@ if (saveGoalBtn) {
             const date = goalDateInput ? goalDateInput.value : "";
 
             if (name === "") {
-                await customAlert("Please enter goal name");
+                                await customAlert(t("goals_enter_name_alert"));
                 if (goalNameInput) goalNameInput.focus();
                 return;
             }
 
             if (!target || target <= 0) {
-                await customAlert("Please enter a valid target amount");
+                                await customAlert(t("goals_enter_target_alert"));
                 if (goalTargetInput) goalTargetInput.focus();
                 return;
             }
 
             if (current < 0) {
-                await customAlert("Please enter a valid amount");
+                await customAlert(t("enter_valid_amount_alert"));
                 if (goalCurrentInput) goalCurrentInput.focus();
                 return;
             }
@@ -208,8 +208,7 @@ if (saveGoalBtn) {
             renderGoals();
 
             if (goalModal) goalModal.classList.remove("show");
-
-            showToast("Goal Added", "success");
+ showToast(t("goals_added_toast"), "success");
         };
     }
     if (cancelGoalBtn && goalModal) {
@@ -234,8 +233,7 @@ const deleteBtn = e.target.closest(".goal-delete-btn");
 
             if (deleteBtn) {
                 const goalId = deleteBtn.dataset.id;
-
-                customConfirm("Are you sure you want to delete this goal?", { danger: true }).then(function (confirmed) {
+                 customConfirm(t("goals_delete_confirm"), { danger: true }).then(function (confirmed) {
 
                     if (!confirmed) return;
 
@@ -243,8 +241,7 @@ const deleteBtn = e.target.closest(".goal-delete-btn");
 
                     saveGoals(goals);
                     renderGoals();
-
-                    showToast("Goal Deleted", "success");
+     showToast(t("goals_deleted_toast"), "success");
                 });
 
                 return;
@@ -279,7 +276,7 @@ const deleteBtn = e.target.closest(".goal-delete-btn");
 const amount = goalMoneyAmountInput ? Number(goalMoneyAmountInput.value.replace(/,/g, "")) : 0;
 
             if (!amount || amount <= 0) {
-                await customAlert("Please enter a valid amount");
+                                await customAlert(t("enter_valid_amount_alert"));
                 if (goalMoneyAmountInput) goalMoneyAmountInput.focus();
                 return;
             }
@@ -308,7 +305,7 @@ const amount = goalMoneyAmountInput ? Number(goalMoneyAmountInput.value.replace(
 
             goalMoneyModal.classList.remove("show");
 
-            showToast("Amount Added", "success");
+            showToast(t("goals_amount_added_toast"), "success");
         };
     }
 }

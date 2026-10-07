@@ -115,7 +115,21 @@ if (!html) {
             document.body.classList.remove("has-scroll");
         }
         
-        app.innerHTML = html;
+                app.innerHTML = html;
+        if (!document.getElementById("customConfirmModal")) {
+            const confirmHolder = document.createElement("div");
+            confirmHolder.innerHTML = `
+            <div id="customConfirmModal" class="modal">
+                <div class="modal-content custom-confirm-content">
+                    <p id="customConfirmMessage" class="custom-confirm-message"></p>
+                    <div class="custom-confirm-actions">
+                        <button id="customConfirmCancelBtn" class="custom-confirm-cancel-btn">Cancel</button>
+                        <button id="customConfirmOkBtn" class="custom-confirm-ok-btn">OK</button>
+                    </div>
+                </div>
+            </div>`;
+            document.body.appendChild(confirmHolder.firstElementChild);
+        }
         if (window.lucide) lucide.createIcons({ root: app });
         const navPlaceholder = document.getElementById("nav-placeholder");
         if (navPlaceholder && typeof renderBottomNav === "function") {

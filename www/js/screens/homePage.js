@@ -585,7 +585,7 @@ if (budgetModal) {
                 const amt = Number(budgetAmountInput.value.replace(/,/g, ""));
                 
                 if (!amt || amt <= 0) {
-                    await customAlert("Please enter a valid budget.");
+                                        await customAlert(t("enter_valid_amount_alert"));
                 return;
             }
 

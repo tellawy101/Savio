@@ -156,7 +156,7 @@ if (balance === "") {
 }
 
 if (name === "") {
-    alert(t("enter_account_name_alert"));
+customAlert(t("enter_account_name_alert"));
     return;
 }
         
