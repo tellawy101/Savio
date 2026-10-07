@@ -435,35 +435,7 @@ body.dark .picker-option.selected {
 body.dark .picker-option .picker-check {
     color: #4fd1c5;
 }
-/* ==============================
-   Bottom Sheet Style (Language / Currency / About)
-============================== */
-#languagePickerModal,
-#currencyPickerModal,
-#aboutModal,
-#privacyModal {
-    align-items: flex-end;
-    padding-top: 0;
-}
 
-#languagePickerModal .modal-content,
-#currencyPickerModal .modal-content,
-#aboutModal .modal-content,
-#privacyModal .modal-content {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 20px 20px 0 0;
-    padding-bottom: max(22px, env(safe-area-inset-bottom));
-    transform: translateY(100%);
-    transition: transform .3s cubic-bezier(.2, .8, .2, 1);
-}
-
-#languagePickerModal.show .modal-content,
-#currencyPickerModal.show .modal-content,
-#aboutModal.show .modal-content,
-#privacyModal.show .modal-content {
-    transform: translateY(0);
-}
 /* ==============================
    About Savio Modal
 ============================== */

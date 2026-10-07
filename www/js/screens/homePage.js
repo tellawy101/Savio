@@ -315,29 +315,33 @@ const card = li.querySelector(".expense-main");
     fillSortFilter();
     if (sortFilter) sortFilter.onchange = renderExpenses;
 makeSelectSheet(sortFilter, getLanguage() === "ar" ? "الترتيب" : "Sort by");
-    document.addEventListener("touchstart", (e) => {
-    
-    document.querySelectorAll(".expense-main").forEach(card => {
-        
-        const swipe = card.parentElement;
-        
-        if (!swipe.contains(e.target)) {
-            
-            card.style.transform = "translateX(0px)";
-            
-            const deleteBtn = swipe.querySelector(".swipe-delete");
-            const editBtn = swipe.querySelector(".swipe-edit");
-            
-            deleteBtn.style.opacity = 0;
-            deleteBtn.style.pointerEvents = "none";
-            editBtn.style.opacity = 0;
-            editBtn.style.pointerEvents = "none";
-            
-        }
-        
-    });
-    
-});
+        if (window._homeTouchHandler) {
+        document.removeEventListener("touchstart", window._homeTouchHandler);
+    }
+    window._homeTouchHandler = (e) => {
+
+        document.querySelectorAll(".expense-main").forEach(card => {
+
+            const swipe = card.parentElement;
+
+            if (!swipe.contains(e.target)) {
+
+                card.style.transform = "translateX(0px)";
+
+                const deleteBtn = swipe.querySelector(".swipe-delete");
+                const editBtn = swipe.querySelector(".swipe-edit");
+
+                deleteBtn.style.opacity = 0;
+                deleteBtn.style.pointerEvents = "none";
+                editBtn.style.opacity = 0;
+                editBtn.style.pointerEvents = "none";
+
+            }
+
+        });
+
+    };
+    document.addEventListener("touchstart", window._homeTouchHandler);
     if (addMenuBtn) {
     addMenuBtn.onclick = function() {
         window.pendingAddTransactionTab = "expense";
@@ -371,7 +375,10 @@ makeSelectSheet(sortFilter, getLanguage() === "ar" ? "الترتيب" : "Sort by
         };
     }
     
-    document.addEventListener("click", function(e) {
+        if (window._homeClickHandler) {
+        document.removeEventListener("click", window._homeClickHandler);
+    }
+    window._homeClickHandler = function(e) {
         
         // لو لوحة البحث مش ظاهرة، متعملش حاجة
         if (searchPanel.style.display !== "block") return;
@@ -382,9 +389,9 @@ makeSelectSheet(sortFilter, getLanguage() === "ar" ? "الترتيب" : "Sort by
             searchPanel.style.display = "none";
             searchInput.value = "";
             if (accountFilter) accountFilter.value = "";
-                        if (categoryFilter) categoryFilter.value = "";
+            if (categoryFilter) categoryFilter.value = "";
             
-                        if (sortFilter) sortFilter.value = "date_desc";
+            if (sortFilter) sortFilter.value = "date_desc";
             
             expensesTitle.style.display = "block";
             searchBtn.style.display = "flex";
@@ -396,8 +403,8 @@ makeSelectSheet(sortFilter, getLanguage() === "ar" ? "الترتيب" : "Sort by
             }
         }
         
-    });
-
+    };
+    document.addEventListener("click", window._homeClickHandler);
     // ------------------------------
     // Balance Chart (last 7 days, week starts Saturday)
     // ------------------------------

@@ -402,7 +402,10 @@ saveDebts(debts);
         debtNotes.value = "";
     }
     
-    document.addEventListener("touchstart", function (e) {
+        if (window._debtsTouchHandler) {
+        document.removeEventListener("touchstart", window._debtsTouchHandler);
+    }
+    window._debtsTouchHandler = function (e) {
         document.querySelectorAll(".debt-card").forEach(function (otherCard) {
             if (!otherCard.contains(e.target)) {
                 otherCard.style.transform = "translateX(0px)";
@@ -413,8 +416,8 @@ saveDebts(debts);
                 }
             }
         });
-    });
-
+    };
+    document.addEventListener("touchstart", window._debtsTouchHandler);
     function renderDebts() {
     debtsList.innerHTML = "";
     
@@ -488,8 +491,17 @@ const card = wrapper.querySelector(".debt-card");
 
                     const accounts = getAccounts();
 
-                    payAccount.innerHTML = `<option value="">${t("select_account")}</option>` +
-                        accounts.map(acc => `<option value="${acc.name}">${acc.name}</option>`).join("");
+                                        payAccount.innerHTML = "";
+                    const defaultOpt = document.createElement("option");
+                    defaultOpt.value = "";
+                    defaultOpt.textContent = t("select_account");
+                    payAccount.appendChild(defaultOpt);
+                    accounts.forEach(function (acc) {
+                        const opt = document.createElement("option");
+                        opt.value = acc.name;
+                        opt.textContent = acc.name;
+                        payAccount.appendChild(opt);
+                    });
 makeSelectSheet(payAccount, t("select_account"));
                     payDebtModal.classList.add("show");
                 };

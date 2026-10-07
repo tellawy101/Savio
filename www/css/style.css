@@ -1526,7 +1526,7 @@ body.dark .filter-select {
     border-color: #374151;
 }
 /* ==============================
-   Bottom Sheets (Goals / Budgets / Income / Backup)
+   Bottom Sheets (Goals / Budgets / Income / Backup / Settings)
 ============================== */
 #goalModal,
 #goalMoneyModal,
@@ -1535,7 +1535,11 @@ body.dark .filter-select {
 #incomeModal,
 #exportFallbackModal,
 #importManualModal,
-#restorePreviewModal {
+#restorePreviewModal,
+#languagePickerModal,
+#currencyPickerModal,
+#aboutModal,
+#privacyModal {
     align-items: flex-end;
     padding-top: 0;
 }
@@ -1555,7 +1559,11 @@ body.dark .filter-select {
 #incomeModal .modal-content,
 #exportFallbackModal .modal-content,
 #importManualModal .modal-content,
-#restorePreviewModal .modal-content {
+#restorePreviewModal .modal-content,
+#languagePickerModal .modal-content,
+#currencyPickerModal .modal-content,
+#aboutModal .modal-content,
+#privacyModal .modal-content {
     width: 100%;
     max-width: 100% !important;
     min-width: 0;
@@ -1575,7 +1583,11 @@ body.dark .filter-select {
 #incomeModal.show .modal-content,
 #exportFallbackModal.show .modal-content,
 #importManualModal.show .modal-content,
-#restorePreviewModal.show .modal-content {
+#restorePreviewModal.show .modal-content,
+#languagePickerModal.show .modal-content,
+#currencyPickerModal.show .modal-content,
+#aboutModal.show .modal-content,
+#privacyModal.show .modal-content {
     transform: translateY(0);
 }
 /* ==============================
