@@ -636,7 +636,8 @@ function attachSwipeActions(cardElement, options) {
         if (currentX < -maxOffset) currentX = -maxOffset;
 
         cardElement.style.transform = `translateX(${currentX}px)`;
-
+        if (deleteBtn) deleteBtn.style.transition = "none";
+        if (editBtn) editBtn.style.transition = "none";
         if (currentX > 0) {
             if (deleteBtn) {
                 deleteBtn.style.opacity = currentX / maxOffset;
@@ -659,6 +660,8 @@ function attachSwipeActions(cardElement, options) {
     }, { passive: false });
 
     cardElement.addEventListener("touchend", function() {
+                if (deleteBtn) deleteBtn.style.transition = "";
+        if (editBtn) editBtn.style.transition = "";
         if (currentX > threshold) {
             offsetX = maxOffset;
         } else if (currentX < -threshold) {

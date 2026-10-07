@@ -1,12 +1,14 @@
-<div class="debts-header">
-
-    <h3 data-i18n="goals_title">Savings Goals</h3>
-
-    <button id="addGoalBtn" class="add-debt-btn" data-i18n="goals_add_btn">
-        + Add Goal
+<div class="goals-header">
+    <div>
+        <h3 data-i18n="goals_title">Savings Goals</h3>
+        <span id="goalsSubtitle" class="goals-subtitle"></span>
+    </div>
+    <button id="addGoalBtn" class="goals-add-btn" aria-label="Add goal">
+        <i data-lucide="plus"></i>
     </button>
-
 </div>
+
+<div id="goalsSummary"></div>
 
 <div id="goalsList" class="goals-list"></div>
 

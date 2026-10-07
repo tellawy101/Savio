@@ -47,7 +47,28 @@ function initGoalsPage() {
         }
 
         const goals = getGoals();
+        const summaryEl = document.getElementById("goalsSummary");
+        const subtitleEl = document.getElementById("goalsSubtitle");
+        const doneCount = goals.filter(g => Number(g.target) > 0 && Number(g.current) >= Number(g.target)).length;
+        const totalSaved = goals.reduce((s, g) => s + (Number(g.current) || 0), 0);
+        const totalTarget = goals.reduce((s, g) => s + (Number(g.target) || 0), 0);
+        const totalPercent = totalTarget > 0 ? Math.min(100, Math.round((totalSaved / totalTarget) * 100)) : 0;
 
+        if (subtitleEl) {
+            subtitleEl.textContent = goals.length
+                ? `${goals.length} ${t("goals_count_label")} · ${doneCount} ${t("goals_done_label")}`
+                : "";
+        }
+
+        if (summaryEl) {
+            summaryEl.innerHTML = goals.length ? `
+            <div class="goals-summary-card">
+                <span class="goals-summary-label">${t("goals_total_saved")}</span>
+                <div class="goals-summary-value">${formatCurrency(totalSaved)}</div>
+                <div class="goal-progress"><div class="goal-progress-fill" style="width: ${totalPercent}%"></div></div>
+                <span class="goals-summary-sub">${totalPercent}% ${t("goals_total_progress")}</span>
+            </div>` : "";
+        }
         if (!goals.length) {
 
             goalsList.innerHTML = `
@@ -86,27 +107,28 @@ function initGoalsPage() {
                 }
             }
 
-            return `
+                        return `
             <div class="goal-card ${done ? "goal-done" : ""}">
 
                 <div class="goal-top">
-                    <span class="goal-name">${escapeHTML(goal.name)}</span>
-                    <span class="goal-percent">${percent}%</span>
+                    <div class="goal-icon"><i data-lucide="${done ? "check" : "target"}"></i></div>
+                    <div class="goal-info">
+                        <span class="goal-name">${escapeHTML(goal.name)}</span>
+                        <span class="goal-amounts-text">${formatCurrency(current)} ${t("goals_saved_of")} ${formatCurrency(target)}</span>
+                    </div>
+                    ${done
+                        ? `<span class="goal-badge">${t("goals_done_label")}</span>`
+                        : `<span class="goal-percent">${percent}%</span>`}
                 </div>
 
                 <div class="goal-progress">
                     <div class="goal-progress-fill" style="width: ${percent}%"></div>
                 </div>
 
-                <div class="goal-amounts">
-                    <span>${formatCurrency(current)} ${t("goals_saved_of")} ${formatCurrency(target)}</span>
-                    <span>${dateText}</span>
-                </div>
-
-                ${done ? `<div class="goal-completed-text">${t("goals_completed")}</div>` : ""}
+                ${dateText ? `<div class="goal-date"><i data-lucide="calendar"></i><span>${dateText}</span></div>` : ""}
 
                 <div class="goal-actions">
-                    <button class="goal-btn goal-add-btn" data-id="${goal.id}">${t("goals_deposit")}</button>
+                    <button class="goal-btn goal-add-btn" data-id="${goal.id}"><i data-lucide="plus"></i><span>${t("goals_deposit")}</span></button>
                     <button class="goal-btn goal-delete-btn" data-id="${goal.id}"><i data-lucide="trash-2"></i></button>
                 </div>
 
