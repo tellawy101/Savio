@@ -17,6 +17,9 @@ function initGoalsPage() {
     const goalCurrentInput = document.getElementById("goalCurrent");
     const goalDateInput = document.getElementById("goalDate");
     const goalDateText = document.getElementById("goalDateText");
+        attachThousandsFormatter(goalTargetInput);
+    attachThousandsFormatter(goalCurrentInput);
+    attachThousandsFormatter(goalMoneyAmountInput);
     const cancelGoalBtn = document.getElementById("cancelGoalBtn");
     const saveGoalBtn = document.getElementById("saveGoalBtn");
 
@@ -169,8 +172,8 @@ if (saveGoalBtn) {
         saveGoalBtn.onclick = async function () {
 
             const name = goalNameInput ? goalNameInput.value.trim() : "";
-            const target = goalTargetInput ? Number(goalTargetInput.value) : 0;
-            const current = goalCurrentInput ? Number(goalCurrentInput.value) || 0 : 0;
+                        const target = goalTargetInput ? Number(goalTargetInput.value.replace(/,/g, "")) : 0;
+            const current = goalCurrentInput ? Number(goalCurrentInput.value.replace(/,/g, "")) || 0 : 0;
             const date = goalDateInput ? goalDateInput.value : "";
 
             if (name === "") {

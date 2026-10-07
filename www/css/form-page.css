@@ -359,6 +359,31 @@ body.has-scroll {
     text-align: left;
     direction: ltr;
 }
+html[dir="rtl"] .date-wrap .date-visible {
+    text-align: right;
+}
+.date-wrap::after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #6B7280;
+    border-bottom: 2px solid #6B7280;
+    transform: translateY(-75%) rotate(45deg);
+    pointer-events: none;
+    z-index: 3;
+}
+
+html[dir="rtl"] .date-wrap::after {
+    right: auto;
+    left: 18px;
+}
+
+.dark .date-wrap::after {
+    border-color: #ffffff;
+}
 
 .date-wrap .date-native {
     position: absolute;

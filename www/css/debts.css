@@ -1149,6 +1149,10 @@ body.dark .payment-delete-btn {
     font-size: 15px;
     color: #111827;
 }
+html[dir="rtl"] .goal-field input[type="tel"] {
+    direction: rtl;
+    text-align: right;
+}
 
 #goalModal .budget-save-btn {
     margin-top: 6px;
