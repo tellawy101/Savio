@@ -115,7 +115,7 @@ document.addEventListener("click", function(e) {
             const label = this.dataset.label;
             newAccountIconInput.value = icon;
             document.getElementById("selectedIconPreviewWrap").innerHTML =
-                `<i data-lucide="${icon}" id="selectedIconPreview"></i>`;
+            `<i data-lucide="${escapeHTML(icon)}" id="selectedIconPreview"></i>`;
             selectedIconLabel.textContent = label;
 iconDropdownList.classList.remove("show");
 if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
@@ -184,7 +184,7 @@ if (window.lucide) lucide.createIcons();
             document.getElementById("newAccountName").value = editingAccount.name;
             document.getElementById("newAccountDescription").value = editingAccount.description || "";
             document.getElementById("selectedIconPreviewWrap").innerHTML =
-                `<i data-lucide="${editingAccount.icon}" id="selectedIconPreview"></i>`;
+              `<i data-lucide="${escapeHTML(editingAccount.icon)}" id="selectedIconPreview"></i>`;
             const matchedOption = document.querySelector(`.icon-option[data-icon="${editingAccount.icon}"]`);
             selectedIconLabel.textContent = matchedOption ? matchedOption.dataset.label : editingAccount.icon;
             newAccountIconInput.value = editingAccount.icon;
@@ -326,7 +326,7 @@ saveAccounts(accounts);
                 item.innerHTML = `
                     <div class="account-card-top">
                         <div class="account-avatar">
-                            <i data-lucide="${account.icon}"></i>
+                           <i data-lucide="${escapeHTML(account.icon)}"></i>
                         </div>
                         <div class="account-card-info">
 <div class="account-name">${escapeHTML(account.name)}</div>

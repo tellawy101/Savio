@@ -125,7 +125,7 @@ item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
     }
     
     const iconEl = window.activeAccountBox ? window.activeAccountBox.querySelector(".account-icon") : null;
-    if (iconEl) iconEl.innerHTML = `<i data-lucide="${account.icon}"></i>`;
+    if (iconEl) iconEl.innerHTML = `<i data-lucide="${escapeHTML(account.icon)}"></i>`;
     
     if (window.lucide) lucide.createIcons();
     
@@ -203,7 +203,7 @@ if (field) {
 }
 
 const iconEl = window.activeAccountBox ? window.activeAccountBox.querySelector(".account-icon") : null;
-if (iconEl) iconEl.innerHTML = `<i data-lucide="${icon}"></i>`;
+if (iconEl) iconEl.innerHTML = `<i data-lucide="${escapeHTML(icon)}"></i>`;
 
 if (window.lucide) lucide.createIcons();
 renderAccounts();
@@ -237,7 +237,7 @@ if (editAccountBtn) {
         document.getElementById("newAccountName").value = editingAccount.name;
 document.getElementById("newAccountDescription").value = editingAccount.description || "";
 document.getElementById("selectedIconPreviewWrap").innerHTML =
-    `<i data-lucide="${editingAccount.icon}" id="selectedIconPreview"></i>`;
+   `<i data-lucide="${escapeHTML(editingAccount.icon)}" id="selectedIconPreview"></i>`;
 const matchedOption = document.querySelector(`.icon-option[data-icon="${editingAccount.icon}"]`);
 selectedIconLabel.textContent = matchedOption ? matchedOption.dataset.label : editingAccount.icon;
 newAccountIconInput.value = editingAccount.icon;
@@ -342,7 +342,7 @@ document.querySelectorAll(".icon-option").forEach(option => {
 
         newAccountIconInput.value = icon;
 document.getElementById("selectedIconPreviewWrap").innerHTML =
-    `<i data-lucide="${icon}" id="selectedIconPreview"></i>`;
+  `<i data-lucide="${escapeHTML(icon)}" id="selectedIconPreview"></i>`;
 selectedIconLabel.textContent = label;
 
         iconDropdownList.classList.remove("show");

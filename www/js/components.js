@@ -596,7 +596,7 @@ function closeModalOnBackdropClick(modal, onClose) {
 // ==============================
 function renderListItemHTML(icon, name, extraHTML) {
     return `
-    <div class="account-item-icon"><i data-lucide="${icon}"></i></div>
+   <div class="account-item-icon"><i data-lucide="${escapeHTML(icon)}"></i></div>
     <div class="account-info">
         <div class="account-name">${escapeHTML(name)}</div>
         ${extraHTML || ""}
@@ -781,7 +781,7 @@ function renderEmptyState(icon = "inbox", title = "No data found", subtitle = ""
     return `
         <div class="empty-state">
             <div class="empty-state-icon">
-                <i data-lucide="${icon}"></i>
+               <i data-lucide="${escapeHTML(icon)}"></i>
             </div>
             <p class="empty-state-title">${title}</p>
             ${subtitle ? `<span class="empty-state-sub">${subtitle}</span>` : ""}

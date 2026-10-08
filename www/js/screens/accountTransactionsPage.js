@@ -48,7 +48,7 @@ if (accountName && accountIconEl) {
     const account = accounts.find(a => a.name === accountName);
     if (account) {
         accountNameEl.textContent = account.name;
-        accountIconEl.innerHTML = `<i data-lucide="${account.icon}"></i>`;
+  accountIconEl.innerHTML = `<i data-lucide="${escapeHTML(account.icon)}"></i>`;
         if (window.lucide) {
             lucide.createIcons();
         }
