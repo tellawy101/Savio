@@ -598,7 +598,7 @@ function renderListItemHTML(icon, name, extraHTML) {
     return `
     <div class="account-item-icon"><i data-lucide="${icon}"></i></div>
     <div class="account-info">
-        <div class="account-name">${name}</div>
+        <div class="account-name">${escapeHTML(name)}</div>
         ${extraHTML || ""}
     </div>
     <div class="account-arrow">›</div>
@@ -759,9 +759,9 @@ function createTransactionElement(expense, options = {}) {
                 ${iconHTML}
             </div>
             <div class="expense-info">
-                <span class="expense-title">${title}</span>
-                <span class="expense-category">${subtitle}</span>
-                ${(!isTransfer && expense.description) ? `<span class="expense-note">${expense.description}</span>` : ""}
+                <span class="expense-title">${escapeHTML(title)}</span>
+                <span class="expense-category">${escapeHTML(subtitle)}</span>
+                ${(!isTransfer && expense.description) ? `<span class="expense-note">${escapeHTML(expense.description)}</span>` : ""}
             </div>
             <div class="expense-right">
                 <span class="expense-amount ${amountClass}">${sign}${formattedAmount} <small class="expense-currency">${curr}</small></span>
