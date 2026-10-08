@@ -535,6 +535,8 @@ if (budgetAmountInput) {
 
 if (budgetBtn && budgetModal) {
         budgetBtn.onclick = function () {
+                        const currencyLabel = budgetModal.querySelector(".budget-input-currency");
+            if (currencyLabel) currencyLabel.textContent = getCurrency();
             budgetModal.classList.add("show");
         };
     }

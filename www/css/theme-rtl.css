@@ -1,0 +1,65 @@
+/* =========================================
+   DARK MODE
+========================================= */
+
+body.dark {
+    background: #101817;
+    color: #F1F5F4;
+}
+
+body.dark .stat {
+    background: transparent;
+}
+/* =========================================
+   RTL (Arabic)
+========================================= */
+
+[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+[dir="rtl"] .eye-btn {
+    left: auto !important;
+    right: 18px !important;
+}
+
+[dir="rtl"] .budget-btn {
+    right: auto !important;
+    left: 18px !important;
+}
+
+[dir="rtl"] .expense-icon-box {
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+[dir="rtl"] .expense-info {
+    text-align: right;
+}
+
+[dir="rtl"] .expense-right {
+    align-items: flex-start;
+}
+
+
+
+[dir="rtl"] .settings-arrow {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .month-nav-btn svg {
+    transform: scaleX(-1);
+}
+[dir="rtl"] .settings-divider {
+    margin-left: 0;
+    margin-right: 72px;
+}
+
+[dir="rtl"] .slider::before {
+    left: auto;
+    right: 3px;
+}
+[dir="rtl"] .switch input:checked + .slider::before {
+    transform: translateX(-20px);
+}

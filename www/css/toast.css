@@ -1,0 +1,79 @@
+/* ==============================
+    Toast (Undo) - يدعم الوضع النهاري والليلي
+============================== */
+#toast.show.toast-with-undo {
+    display: block !important;
+    position: fixed;
+    padding: 3px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* الوضع النهاري: خلفية بيضاء وخط داكن */
+.toast-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: #FFFFFF;
+    color: #111827;
+    border-radius: 13px;
+    padding: 12px 20px;
+    white-space: nowrap;
+}
+
+.toast-message {
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#toast .toast-undo-btn {
+    flex-shrink: 0;
+    background: none !important;
+    border: none;
+    color: #0F766E;
+    font-family: "Supreme", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    padding: 2px 0 !important;
+    margin: 0 !important;
+    width: auto !important;
+    cursor: pointer;
+}
+
+#toast .toast-undo-btn:hover {
+    opacity: .8;
+}
+
+/* الوضع الليلي: خلفية داكنة */
+body.dark .toast-inner {
+    background: #17202B;
+    color: #FFFFFF;
+}
+
+body.dark #toast .toast-undo-btn {
+    color: #4fd1c5;
+}
+/* منع سكرول الصفحة اللي ورا لما أي بوب أب يكون مفتوح */
+body:has(.modal.show) {
+    overflow: hidden;
+}
+
+/* منع تحديد النص ونسخه من كل التطبيق */
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* لكن نسمح بالتحديد جوه خانات الكتابة (Input/Textarea) عشان المستخدم يقدر يعدل فيها عادي */
+input,
+textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+}

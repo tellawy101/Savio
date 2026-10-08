@@ -1,0 +1,98 @@
+/* =========================================
+   تنسيقات نافذة الميزانية في الوضع الليلي (Dark Mode)
+========================================= */
+body.dark #budgetModal .budget-modal-content {
+    background: #1F2937 !important;
+    border: 1px solid #374151;
+    color: #F9FAFB !important;
+}
+
+/* عنوان الميزانية */
+body.dark .budget-modal-header h2 {
+    color: #F9FAFB !important;
+}
+
+/* أيقونة المحفظة */
+body.dark .budget-modal-icon {
+    background: rgba(15, 118, 110, 0.25) !important;
+    color: #2DD4BF !important;
+}
+
+/* زرار الإغلاق X */
+body.dark .budget-modal-close {
+    background: rgba(255, 255, 255, 0.06) !important; /* خلفية ناعمة جداً وخفيفة */
+    color: #9CA3AF !important; /* لون الـ X مريح للعين */
+    border: 1px solid rgba(255, 255, 255, 0.08) !important; /* تحديد خفيف جداً */
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+body.dark .budget-modal-close:active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #FFFFFF !important;
+}
+
+/* عنوان الحقل "الميزانية الشهرية" */
+body.dark .budget-modal-content label {
+    color: #9CA3AF !important;
+}
+
+/* صندوق كتابة المبلغ */
+body.dark .budget-input-wrap {
+    background: #111827 !important;
+    border: 2px solid #0F766E !important; /* لون هوية البرنامج في الدارك مود */
+}
+
+/* النص والعملة EGP داخل الصندوق */
+body.dark .budget-input-currency {
+    color: #2DD4BF !important;
+}
+
+body.dark .budget-input-wrap input {
+    color: #FFFFFF !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+body.dark .budget-input-wrap input::placeholder {
+    color: #6B7280 !important;
+}
+
+/* زر الحفظ */
+body.dark .budget-save-btn {
+    background: #0F766E !important;
+    color: #ffffff !important;
+}
+body.dark .budget-input-wrap:focus-within {
+border-color: #2DD4BF !important;
+box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2) !important;
+}
+/* =========================================
+   تنسيق العملة والمبلغ في زر الميزانية
+========================================= */
+#budgetValue {
+    display: inline-flex !important;
+    align-items: baseline !important;
+    gap: 4px !important;
+    direction: ltr !important;
+    white-space: nowrap !important;
+}
+
+/* العملة (EGP) بحجم أصغر وهادئ */
+.budget-currency {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    opacity: 0.85 !important;
+}
+
+/* الرقم (900) عريض (Bold) وواضح */
+.budget-number {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+}
+
+.budget-over {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    opacity: 0.85 !important;
+}
