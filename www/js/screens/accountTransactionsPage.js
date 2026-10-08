@@ -95,8 +95,8 @@ if (totalAmountEl) {
             </div>
 
             <div class="transaction-info">
-                <strong>${transaction.category || "Transaction"}</strong>
-                <small>${transaction.description || ""}</small>
+                                <strong>${escapeHTML(transaction.category || "Transaction")}</strong>
+                <small>${escapeHTML(transaction.description || "")}</small>
             </div>
 
             <strong class="transaction-amount">

@@ -329,14 +329,14 @@ saveAccounts(accounts);
                             <i data-lucide="${account.icon}"></i>
                         </div>
                         <div class="account-card-info">
-                            <div class="account-name">${account.name}</div>
+<div class="account-name">${escapeHTML(account.name)}</div>
                             ${isMain ? `
                               <div class="account-main-badge">
                                 <i data-lucide="badge-check"></i>
                                                         <span>${t("main_account_badge")}</span>
                               </div>
                             ` : `
-                              <div class="account-sub-name">${account.description || ""}</div>
+<div class="account-sub-name">${escapeHTML(account.description || "")}</div>
                             `}
                         </div>
 <div class="account-card-balance">

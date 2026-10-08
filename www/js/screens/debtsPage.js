@@ -440,7 +440,7 @@ saveDebts(debts);
     <div class="debt-card">
 
         <div class="debt-card-header">
-            <h3 class="debt-person-name">${debt.person}</h3>
+<h3 class="debt-person-name">${escapeHTML(debt.person)}</h3>
             <span class="debt-badge ${isSettled ? "settled" : debt.type}">
                 ${isSettled ? t("debts_settled_badge") : (debt.type === "receivable" ? t("debts_owed_to_you_badge") : t("debts_you_owe_badge"))}
             </span>
