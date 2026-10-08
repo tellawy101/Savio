@@ -573,18 +573,6 @@ groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, local
             buildRow(t("stats_expense"), current.expense, previous.expense, false);
     }
     
-// ------------------------------
-    // ESCAPE HTML
-    // ------------------------------
-    function escapeHTML(value) {
-
-        return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
 
     // ------------------------------
     // UPDATE EVERYTHING

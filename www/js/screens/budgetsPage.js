@@ -22,17 +22,6 @@ function initBudgetsPage() {
         });
     }
 
-    // ------------------------------
-    // ESCAPE HTML
-    // ------------------------------
-    function escapeHTML(value) {
-        return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
 
     // ------------------------------
     // المصروف الفعلي لكل فئة في الشهر الحالي

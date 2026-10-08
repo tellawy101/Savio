@@ -67,7 +67,7 @@ setupCommonFormPage();
     accountEl.removeAttribute("data-i18n");
     const accountIconEl = document.getElementById(type + "AccountIcon");
     if (accountIconEl) {
-        accountIconEl.innerHTML = `<i data-lucide="${accIcon}"></i>`;
+        accountIconEl.innerHTML = `<i data-lucide="${escapeHTML(accIcon)}"></i>`;
     }
 } else {
     accountEl.textContent = t("select_account");
@@ -79,7 +79,7 @@ if (entry.category) {
     categoryEl.removeAttribute("data-i18n");
     const categoryIconEl = document.getElementById(type + "CategoryIcon");
     if (categoryIconEl && entry.categoryIcon) {
-        categoryIconEl.innerHTML = `<i data-lucide="${entry.categoryIcon}"></i>`;
+        categoryIconEl.innerHTML = `<i data-lucide="${escapeHTML(entry.categoryIcon)}"></i>`;
     }
 }
 if (window.lucide) lucide.createIcons();

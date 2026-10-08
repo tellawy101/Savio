@@ -131,7 +131,7 @@ function selectCategoryIcon(icon, label) {
     document.getElementById(
             "selectedCategoryIconPreviewWrap"
         ).innerHTML =
-        `<i data-lucide="${icon}"
+       `<i data-lucide="${escapeHTML(icon)}"
             id="selectedCategoryIconPreview"></i>`;
     selectedCategoryIconLabel.textContent = label;
     categoryIconDropdownList.classList.remove("show");
