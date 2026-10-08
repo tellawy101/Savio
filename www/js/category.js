@@ -160,7 +160,7 @@ function renderCategoryIconResults(filter) {
         option.className = "icon-option";
         option.dataset.icon = item.icon;
         option.dataset.label = item.label;
-        option.innerHTML = `<i data-lucide="${item.icon}"></i><span>${item.label}</span>`;
+option.innerHTML = `<i data-lucide="${escapeHTML(item.icon)}"></i><span>${escapeHTML(item.label)}</span>`;
         option.onclick = function () {
             selectCategoryIcon(item.icon, item.label);
         };
@@ -177,8 +177,8 @@ function renderCategoryIconResults(filter) {
         if (!exactMatch) {
             const customOption = document.createElement("div");
             customOption.className = "icon-option icon-option-custom";
-            customOption.innerHTML =
-                `<i data-lucide="${term}"></i><span>Use "${filter}" as icon name</span>`;
+                        customOption.innerHTML =
+                `<i data-lucide="${escapeHTML(term)}"></i><span>Use "${escapeHTML(filter)}" as icon name</span>`;
             customOption.onclick = function () {
                 const svg = customOption.querySelector("svg");
                 if (!svg) {
@@ -345,7 +345,7 @@ const isEditing = editingCategory !== null;
 
             const field = getCategoryFieldEl();
             if (field && field.textContent.includes(editingCategory.name)) {
-                field.innerHTML = `<i data-lucide="${icon}"></i> ${name}`;
+field.innerHTML = `<i data-lucide="${escapeHTML(icon)}"></i> ${escapeHTML(name)}`;
 field.dataset.icon = icon;
 field.removeAttribute("data-i18n");
 if (window.lucide) lucide.createIcons();
