@@ -308,7 +308,7 @@ window.renderCategories = function() {
         field.removeAttribute("data-i18n");
     }
     const iconEl = window.activeCategoryBox ? window.activeCategoryBox.querySelector(".category-icon") : null;
-    if (iconEl) iconEl.innerHTML = `<i data-lucide="${category.icon}"></i>`;
+    if (iconEl) iconEl.innerHTML = `<i data-lucide="${escapeHTML(category.icon)}"></i>`;
     if (window.lucide) lucide.createIcons();
     categoryModal.classList.remove("show");
     notifyFormFieldChanged();
@@ -394,7 +394,7 @@ if (editCategoryBtn) {
 document.getElementById(
     "selectedCategoryIconPreviewWrap"
 ).innerHTML =
-    `<i data-lucide="${icon}"
+   `<i data-lucide="${escapeHTML(icon)}"
         id="selectedCategoryIconPreview"></i>`;
 
 const matchedIcon = getFullIconLibrary().find(item => item.icon === icon);
