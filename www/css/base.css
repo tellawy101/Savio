@@ -1,3 +1,7 @@
+/* ==============================
+   Base
+   الخطوط + الـ body + الكروت والأزرار والمودال العام + الوضع الغامق الأساسي + مربع البحث
+============================== */
 @font-face {
     font-family: "Supreme";
     src: url("../fonts/Supreme-Regular.woff2") format("woff2");
@@ -303,70 +307,4 @@ button:hover {
     background: #2c2c2c;
     color: white;
     border: 1px solid #555;
-}
-
-/* ==============================
-   Bottom Sheets (Goals / Budgets / Income / Backup / Settings)
-============================== */
-#goalModal,
-#goalMoneyModal,
-#catBudgetModal,
-#budgetModal,
-#incomeModal,
-#exportFallbackModal,
-#importManualModal,
-#restorePreviewModal,
-#languagePickerModal,
-#currencyPickerModal,
-#aboutModal,
-#privacyModal {
-    align-items: flex-end;
-    padding-top: 0;
-}
-
-/* budgetModal كان display:none/center، نخليه زي باقي المودالات عشان الانزلاق يشتغل */
-#budgetModal,
-#budgetModal.show {
-    display: flex;
-    align-items: flex-end;
-    padding-top: 0;
-}
-
-#goalModal .modal-content,
-#goalMoneyModal .modal-content,
-#catBudgetModal .modal-content,
-#budgetModal .modal-content,
-#incomeModal .modal-content,
-#exportFallbackModal .modal-content,
-#importManualModal .modal-content,
-#restorePreviewModal .modal-content,
-#languagePickerModal .modal-content,
-#currencyPickerModal .modal-content,
-#aboutModal .modal-content,
-#privacyModal .modal-content {
-    width: 100%;
-    max-width: 100% !important;
-    min-width: 0;
-    margin: 0;
-    box-sizing: border-box;
-    border-radius: 20px 20px 0 0;
-    padding-bottom: max(22px, env(safe-area-inset-bottom));
-    transform: translateY(100%);
-    opacity: 1;
-    transition: transform .3s cubic-bezier(.2, .8, .2, 1);
-}
-
-#goalModal.show .modal-content,
-#goalMoneyModal.show .modal-content,
-#catBudgetModal.show .modal-content,
-#budgetModal.show .modal-content,
-#incomeModal.show .modal-content,
-#exportFallbackModal.show .modal-content,
-#importManualModal.show .modal-content,
-#restorePreviewModal.show .modal-content,
-#languagePickerModal.show .modal-content,
-#currencyPickerModal.show .modal-content,
-#aboutModal.show .modal-content,
-#privacyModal.show .modal-content {
-    transform: translateY(0);
 }
