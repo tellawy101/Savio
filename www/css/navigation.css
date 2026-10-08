@@ -1,0 +1,180 @@
+/* ==============================
+   Navigation
+   الشريط السفلي (Bottom Nav) + زرار الإضافة (FAB) + أيقونات Lucide
+============================== */
+.bottom-nav{
+    position: fixed;
+    overflow: visible;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    height: 70px;
+    background: rgba(255, 255, 255, .25);
+    border: 1px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 25px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.12);
+    z-index: 1000;
+}
+/* APK ONLY */
+body.capacitor-app .bottom-nav {
+    bottom: 40px;
+}
+
+.nav-item{
+    background:none;
+    border:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:auto;
+    height:50px;
+    margin:0;
+    padding:0;
+    color:#777;
+    font-size:14px;
+    cursor:pointer;
+    position:relative;
+}
+.nav-item.active{
+    color:#0F766E;
+    font-weight:bold;
+}
+main{
+    padding-bottom:90px;
+}
+body.capacitor-app main {
+    padding-bottom: 150px;
+}
+.dark .bottom-nav{
+    background:rgba(30,30,30,.25);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.dark .nav-item{
+    color:#bbb;
+}
+
+.dark .nav-item.active{
+    color:#4fd1c5;
+}
+.fab-nav{
+    position:absolute;
+    top:-60px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:65px;
+    height:65px;
+
+    border-radius:50%;
+    background: rgba(255,255,255,.75);
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.9);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:30px;
+    font-weight:bold;
+
+    box-shadow: 0 8px 30px rgba(0,0,0,.12);
+    margin:0;
+    padding:0;
+    transition: .3s;
+    padding: 0;
+    backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+color: #0F766E;
+}
+
+.dark .fab-nav{
+    border:4px solid #121212;
+}
+.fab-menu{
+    position:absolute;
+    bottom:150px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+
+    display:flex;
+    flex-direction:row;
+    gap:12px;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:1002;
+}
+.fab-menu.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateX(-50%) translateY(0);
+}
+.fab-menu button{
+    width:90px;
+    height:90px;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    border:none;
+    border-radius:18px;
+
+    background:#0F766E;
+    color:#fff;
+
+    font-size:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+    overflow:hidden;
+    position:relative;
+}
+.fab-menu button i{
+    font-size:30px;
+    transition:.3s;
+}
+
+.fab-menu button span{
+    position:absolute;
+    bottom:12px;
+
+    opacity:1;
+    transform:none;
+
+    font-size:13px;
+}
+
+.dark .fab-menu button{
+    background:#0b5d56;
+}
+.fab-nav.open{
+    transform:translateX(-50%) rotate(45deg);
+}
+*{
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ==============================
+   ضبط مقاس ولون أيقونات Lucide
+============================== */
+svg.lucide {
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: -0.2em;
+    stroke: currentColor;
+}

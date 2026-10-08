@@ -1,0 +1,58 @@
+/* ==========================
+   Swipe Card
+========================== */
+
+.expense-swipe {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    margin-bottom: 12px;
+}
+
+.swipe-action {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 24px;
+
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity .2s ease;
+    pointer-events: none;
+    z-index: 5;
+    border-radius: 18px;
+    direction: ltr;
+}
+
+.swipe-delete {
+    justify-content: flex-start;
+    background: #E53935;
+}
+
+.swipe-edit {
+    justify-content: flex-end;
+    background: #1976D2;
+}
+.dark .expense-desc {
+    color: #fff;
+}
+
+.dark .expense-category-text {
+    color: #cbd5e1;
+}
+
+.dark .expense-account {
+    color: #94a3b8;
+}
+
+.dark .expense-meta {
+    color: #94a3b8;
+}
+
+.dark .expense-amount {
+    color: #4fd1c5;
+}

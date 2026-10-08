@@ -1,0 +1,238 @@
+/* =========================
+   BUDGET BUTTON
+========================= */
+
+.dashboard {
+    position: relative !important;
+    padding-bottom: 10px;
+}
+.budget-btn {
+    position: absolute !important;
+    top: 18px !important;
+    right: 18px !important;
+    left: auto !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: auto !important;
+    height: auto !important;
+
+    gap: 6px !important;
+    padding: 7px 12px !important;
+    margin: 0 !important;
+
+    border: none !important;
+    border-radius: 14px !important;
+
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+
+    font-size: 11px !important;
+    font-weight: 900 !important;
+
+    cursor: pointer;
+    z-index: 20 !important;
+}
+
+.budget-btn svg {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.budget-btn:active {
+    transform: scale(0.95);
+}
+
+#budgetValue {
+    white-space: nowrap !important;
+    font-weight: 700 !important;
+}
+/* =========================
+   BALANCE CHART
+========================= */
+
+.balance-chart {
+    width: calc(100% - 36px);
+    margin: 8px auto 5px;
+    position: relative;
+}
+
+.balance-chart svg {
+    width: 100%;
+    height: 105px;
+    display: block;
+    overflow: hidden;
+}
+
+.balance-chart line {
+    stroke: rgba(255, 255, 255, 0.12);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 6;
+}
+
+.chart-line {
+    fill: none;
+    stroke: #8fffc8;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.chart-area {
+    fill: rgba(143, 255, 200, 0.10);
+}
+
+.chart-days {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 2px 0;
+
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 11px;
+    font-weight: 500;
+}
+/* =========================
+   BUDGET MODAL
+========================= */
+
+#budgetModal {
+    display: none;
+}
+
+#budgetModal.show {
+    display: flex;
+    align-items: center;
+    padding-top: 0;
+}
+
+.budget-modal-content {
+    border-radius: 22px;
+    padding: 24px;
+}
+
+.budget-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.budget-modal-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 13px;
+    
+    background: #F0FDFA;
+    color: #0F766E;
+}
+
+.budget-modal-header h2 {
+    margin: 0;
+    flex: 1;
+    font-size: 20px;
+    color: #111827;
+}
+
+.budget-modal-close {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    background: #F3F4F6;
+    color: #4B5563;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.budget-modal-close svg {
+    width: 32px !important;
+    height: 32px !important;
+    stroke-width: 3 !important;
+}
+
+.budget-modal-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6B7280;
+}
+.budget-input-currency {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0F766E;
+}
+.budget-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 16px;
+    margin-bottom: 22px;
+    border: 2px solid #0F766E !important; /* لون هوية البرنامج الأساسي */
+    border-radius: 14px;
+    background: #F9FAFB;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.budget-input-wrap:focus-within {
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.25); /* توهج خفيف ناعم بنفس هوية البرنامج */
+}
+
+.budget-input-wrap input {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important; /* إلغاء أي بوردر داخلي نهائياً */
+    -webkit-appearance: none;
+    background: transparent !important;
+    padding: 14px 0 !important;
+    margin: 0 !important;
+    font-size: 20px;
+    font-weight: 700;
+    width: 100%;
+}
+
+.budget-input-wrap input:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.budget-save-btn {
+    width: 100%;
+    padding: 15px;
+    
+    border: 0;
+    border-radius: 14px;
+    
+    background: #0F766E;
+    color: #ffffff;
+    
+    font-size: 15px;
+    font-weight: 700;
+    
+    cursor: pointer;
+}
+
+.budget-save-btn:active {
+    opacity: .85;
+}
+#balanceCurrency {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#balanceValue {
+    font-size: 36px;
+    font-weight: 800;
+}

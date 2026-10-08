@@ -1,0 +1,267 @@
+/* ==============================
+   Home
+   هيدر الرئيسية (الرصيد) + قايمة المصروفات + أزرار التعديل والحذف
+============================== */
+header{
+    position: relative;
+    background:#0F766E;
+    color:white;
+    padding:30px 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+header h1{
+    margin:0;
+    font-size:32px;
+}
+
+header p{
+    margin:5px 0 25px;
+    opacity:.8;
+}
+.balance-box{
+    text-align:center;
+    margin-bottom:0px;
+}
+
+.balance-header{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+}
+
+.balance-box h3{
+    margin:0;
+    font-size:18px;
+    font-weight:normal;
+}
+
+.eye-btn{
+    position: absolute !important;
+    top: 18px !important;
+    left: 18px !important;
+    z-index: 10 !important;
+    width: auto !important;
+    margin: 0 !important;
+
+    background:none;
+    border:none;
+    padding:4px;
+    color:inherit;
+    opacity:.75;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+.eye-btn svg{
+    width:17px;
+    height:17px;
+}
+
+.eye-btn:active{
+    opacity:.4;
+}
+
+body.amounts-hidden .balance-amount,
+body.amounts-hidden .stat p{
+    filter:blur(7px);
+    -webkit-filter:blur(7px);
+    user-select:none;
+    transition:filter .2s ease;
+}
+
+.balance-box h2 {
+    display: inline-flex;
+    direction: ltr;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+    
+    margin: 16px 0 0;
+    font-size: 40px;
+    font-weight: 800;
+}
+.stats{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.stat {
+    flex: 1;
+    background: transparent;
+    border-radius: 0;
+    padding: 10px;
+    text-align: center;
+    min-width: 0;
+    position: relative;
+}
+
+.stat+.stat::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 85%;
+    background: rgba(255, 255, 255, .35);
+}
+
+.stat span {
+    font-size: 18px;
+}
+.stat h4 {
+    margin: 6px 0 4px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.stat p {
+    display: inline-flex;
+    direction: ltr;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4px;
+    margin: 6px 0;
+    font-size: 18px;
+    font-weight: 800;
+}
+.stat .stat-currency {
+    font-size: 9px;
+    font-weight: 600;
+    opacity: .85;
+}
+
+.stat .stat-value {
+    font-size: 18px;
+    font-weight: 800;
+}
+#expenseList{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+#expenseList li {
+    margin-bottom: 12px;
+    
+    list-style: none;
+    
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+}
+
+.expense-icon-box{
+    width:44px;
+    height:44px;
+    flex-shrink:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:12px;
+    font-size:20px;
+}
+
+.expense-info{
+    flex:1;
+    min-width:0;
+
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.expense-desc{
+    font-weight:bold;
+    font-size:15px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.expense-category-text{
+    font-size:12px;
+    color:#777;
+}
+
+.expense-account{
+    font-size:11px;
+    color:#aaa;
+}
+
+.expense-right{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:2px;
+    flex-shrink:0;
+}
+
+.expense-amount {
+    display: inline-flex;
+    direction: ltr;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4px;
+    
+    color: #0F766E;
+    white-space: nowrap;
+}
+.expense-amount-currency {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.expense-amount-value {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.expense-meta{
+    font-size:12px;
+    color:#999;
+    white-space:nowrap;
+}
+
+.expense-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+}
+
+.expense-actions button{
+    width:auto;
+    padding:4px 6px;
+    margin:0;
+    background:none;
+    font-size:16px;
+}
+
+#expenseList strong{
+    color:#0F766E;
+    font-size:18px;
+}
+
+.editBtn,
+.deleteBtn{
+    border:none;
+    background:none;
+    font-size:22px;
+    cursor:pointer;
+    margin-left:8px;
+}
+
+.editBtn:hover{
+    transform:scale(1.2);
+}
+
+.deleteBtn:hover{
+    transform:scale(1.2);
+}
