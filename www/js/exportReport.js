@@ -3,6 +3,24 @@
 // تصدير المعاملات (CSV الأول، وبعدين Excel وPDF)
 // ==============================
 
+// تحميل مكتبة JS عند الطلب بس (عشان فتح التطبيق يبقى أسرع)
+function loadScriptOnce(src) {
+    return new Promise(function (resolve, reject) {
+        const existing = document.querySelector('script[data-lazy="' + src + '"]');
+        if (existing) {
+            if (existing.dataset.loaded === "1") return resolve();
+            existing.addEventListener("load", resolve);
+            existing.addEventListener("error", reject);
+            return;
+        }
+        const s = document.createElement("script");
+        s.src = src;
+        s.dataset.lazy = src;
+        s.onload = function () { s.dataset.loaded = "1"; resolve(); };
+        s.onerror = function () { reject(new Error("load failed: " + src)); };
+        document.head.appendChild(s);
+    });
+}
 // ---------- دوال مشتركة (هنستخدمها في Excel وPDF كمان) ----------
 
 // بترجع المعاملات مرتبة من الأحدث للأقدم
@@ -235,7 +253,9 @@ function buildTransactionsWorkbook() {
 }
 
 async function exportTransactionsExcel() {
-    if (typeof XLSX === "undefined") {
+        try {
+        await loadScriptOnce("js/vendor/xlsx.full.min.js");
+    } catch (err) {
         showToast("مكتبة Excel مش متحملة", "error");
         return;
     }
@@ -338,7 +358,9 @@ function buildTransactionsPdfElement() {
 }
 
 async function exportTransactionsPdf() {
-    if (typeof html2pdf === "undefined") {
+        try {
+        await loadScriptOnce("js/vendor/html2pdf.bundle.min.js");
+    } catch (err) {
         showToast("مكتبة PDF مش متحملة", "error");
         return;
     }

@@ -8,6 +8,9 @@
             var dir = lang === "ar" ? "rtl" : "ltr";
             document.documentElement.setAttribute("lang", lang);
             document.documentElement.setAttribute("dir", dir);
+                        if (localStorage.getItem("theme") === "dark") {
+                document.documentElement.style.background = "#101817";
+            }
         })();
     </script>
    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -17,6 +20,7 @@
     <script src="js/vendor/lucide.js" defer></script>
 
     <link rel="stylesheet" href="css/style.css">
+       <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/form-page.css">
 <link rel="stylesheet" href="css/transaction-pages.css">
 <link rel="stylesheet" href="css/settings.css">
@@ -26,8 +30,18 @@
 <link rel="stylesheet" href="css/account-transactions.css">
 </head>
 <body>
+    <script>
+    if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
+</script>
 <div id="app">
-
+    <div class="skeleton-page">
+        <div class="sk sk-title"></div>
+        <div class="sk sk-hero"></div>
+        <div class="sk sk-row"></div>
+        <div class="sk sk-row"></div>
+        <div class="sk sk-row"></div>
+        <div class="sk sk-row"></div>
+    </div>
 </div>
 <div id="toast" class="toast"></div>
 <div id="nav-placeholder"></div>
@@ -41,8 +55,6 @@
 <script src="js/notifications.js"></script>
 <script src="js/autoBackup.js"></script>
 <script src="js/exportReport.js"></script>
-<script src="js/vendor/xlsx.full.min.js"></script>
-<script src="js/vendor/html2pdf.bundle.min.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/formHelpers.js"></script>
@@ -75,4 +87,5 @@
     });
 </script>
 </body>
+
 </html> 
