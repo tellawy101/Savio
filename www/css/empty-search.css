@@ -1,0 +1,94 @@
+/* =========================================
+   REUSABLE EMPTY STATE (Light & Dark)
+   ========================================= */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 45px 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.empty-state-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(15, 118, 110, 0.1);
+    color: #0F766E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.empty-state-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.empty-state-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4B5563;
+    margin: 0 0 6px 0;
+}
+
+.empty-state-sub {
+    font-size: 13px;
+    color: #9CA3AF;
+}
+
+/* Dark Mode */
+body.dark .empty-state-icon {
+    background: rgba(45, 212, 191, 0.15);
+    color: #2DD4BF;
+}
+
+body.dark .empty-state-title {
+    color: #E2E8F0;
+}
+
+body.dark .empty-state-sub {
+    color: #64748B;
+}
+.expense-icon-box.transfer {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3B82F6;
+}
+.expense-amount-transfer {
+    color: #3B82F6 !important;
+}
+.search-panel {
+    display: none;
+    width: 100%;
+}
+
+#searchPanel #searchInput {
+    display: block;
+}
+
+.filters-row {
+    display: flex;
+    gap: 8px;
+    padding: 10px 0 0;
+}
+
+.filter-select {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    background: #FFFFFF;
+    color: #111827;
+    font-family: "Supreme", sans-serif;
+    font-size: 14px;
+}
+
+body.dark .filter-select {
+    background: #17202B;
+    color: #F3F4F6;
+    border-color: #374151;
+}
