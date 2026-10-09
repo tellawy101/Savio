@@ -27,7 +27,13 @@ function loadScriptOnce(src) {
 function getExportRows() {
     return loadTransactions()
         .slice()
-        .sort(function (a, b) {
+        .map(function(tx) {
+            return Object.assign({}, tx, {
+                category: getTxCategoryName(tx),
+                account: getTxAccountName(tx)
+            });
+        })
+        .sort(function(a, b) {
             const da = (a.date || "") + " " + (a.time || "");
             const db = (b.date || "") + " " + (b.time || "");
             return db.localeCompare(da);

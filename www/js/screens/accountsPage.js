@@ -145,17 +145,17 @@ if (window.lucide) lucide.createIcons();
             let accounts = getAccounts();
             let sameAccount = accounts.find(a => a.name.toLowerCase() === name.toLowerCase());
 
-            if (sameAccount && (!editingAccount || sameAccount.name !== editingAccount.name)) {
+            if (sameAccount && (!editingAccount || sameAccount.id !== editingAccount.id)) {
                 showToast(t("account_exists_toast"));
                 return;
             }
 
-            if (editingAccount) {
-                let index = accounts.findIndex(a => a.name === editingAccount.name);
-                accounts[index] = { name, description, icon, balance: Number(balance.replace(/,/g, "")) };
+                        if (editingAccount) {
+                let index = accounts.findIndex(a => a.id === editingAccount.id);
+                accounts[index] = { id: editingAccount.id, name, description, icon, balance: Number(balance.replace(/,/g, "")) };
                 editingAccount = null;
             } else {
-                accounts.push({ name, description, icon, balance: Number(balance.replace(/,/g, "")) });
+                accounts.push({ id: generateId("acc"), name, description, icon, balance: Number(balance.replace(/,/g, "")) });
             }
 
             saveAccounts(accounts);
@@ -178,7 +178,7 @@ if (window.lucide) lucide.createIcons();
     if (editAccountBtn) {
         editAccountBtn.onclick = function () {
             let accounts = getAccounts();
-            editingAccount = accounts.find(a => a.name === selectedAccount);
+            editingAccount = accounts.find(a => a.id === selectedAccount);
             if (!editingAccount) return;
 
             document.getElementById("newAccountName").value = editingAccount.name;
@@ -202,7 +202,7 @@ if (window.lucide) lucide.createIcons();
     if (setMainAccountBtn) {
         setMainAccountBtn.onclick = function () {
             let accounts = getAccounts();
-            const index = accounts.findIndex(a => a.name === selectedAccount);
+            const index = accounts.findIndex(a => a.id === selectedAccount);
             if (index > 0) {
                 const mainAccount = accounts.splice(index, 1)[0];
                 accounts.unshift(mainAccount);
@@ -215,10 +215,10 @@ if (window.lucide) lucide.createIcons();
     if (deleteAccountBtn) {
         deleteAccountBtn.onclick = function () {
             let accounts = getAccounts();
-const deletedAccount = accounts.find(a => a.name === selectedAccount);
+const deletedAccount = accounts.find(a => a.id === selectedAccount);
 const deletedPosition = accounts.indexOf(deletedAccount);
 
-accounts = accounts.filter(a => a.name !== selectedAccount);
+accounts = accounts.filter(a => a.id !== selectedAccount);
 saveAccounts(accounts);
             renderAccountsPage();
             accountMenu.classList.remove("show");
@@ -246,7 +246,7 @@ saveAccounts(accounts);
     function getAccountActivity(accountKey, transactions) {
         let income = 0, expense = 0;
         transactions.forEach(function (tr) {
-            if (tr.account !== accountKey) return;
+if (getTxAccountId(tr) !== accountKey) return;
             if (tr.type === "income") income += Number(tr.amount) || 0;
             else if (tr.type === "expense") expense += Number(tr.amount) || 0;
         });
@@ -263,7 +263,7 @@ saveAccounts(accounts);
         }
         const sums = keys.map(function () { return 0; });
         transactions.forEach(function (tr) {
-            if (tr.account !== accountKey || tr.type !== type || !tr.date) return;
+if (getTxAccountId(tr) !== accountKey || tr.type !== type || !tr.date) return;
             const idx = keys.indexOf(tr.date.slice(0, 7));
             if (idx !== -1) sums[idx] += Number(tr.amount) || 0;
         });
@@ -282,7 +282,7 @@ saveAccounts(accounts);
         const transactions = loadTransactions();
 
         const accountsWithBalance = accounts.map(function (account) {
-            const activity = getAccountActivity(account.name, transactions);
+            const activity = getAccountActivity(account.id, transactions);
             const currentBalance = Number(account.balance) + activity.income - activity.expense;
             return Object.assign({}, account, activity, { currentBalance });
         });
@@ -358,7 +358,7 @@ saveAccounts(accounts);
                                 </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
-<polyline points="${getSparklinePoints(account.name, "income", transactions)}" fill="none" stroke="#16a34a" stroke-width="2"/>                            </svg>
+<polyline points="${getSparklinePoints(account.id, "income", transactions)}" fill="none" stroke="#16a34a" stroke-width="2"/>                            </svg>
                         </div>
                         <div class="stat-item">
                             <div class="stat-icon stat-icon-expense">
@@ -372,7 +372,7 @@ saveAccounts(accounts);
                                 </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
-                                <polyline points="${getSparklinePoints(account.name, "expense", transactions)}" fill="none" stroke="#dc2626" stroke-width="2"/>
+                                <polyline points="${getSparklinePoints(account.id, "expense", transactions)}" fill="none" stroke="#dc2626" stroke-width="2"/>
                             </svg>
                         </div>
                         <div class="stat-item stat-item-last">
@@ -400,7 +400,7 @@ saveAccounts(accounts);
                 if (incomeStat) {
     incomeStat.onclick = function(e) {
         e.stopPropagation();
-        window.pendingAccountTransactionsAccount = account.name;
+        window.pendingAccountTransactionsAccount = account.id;
         window.pendingAccountTransactionsType = "income";
         navigateTo("account-transactions");
     };
@@ -409,7 +409,7 @@ saveAccounts(accounts);
 if (expenseStat) {
     expenseStat.onclick = function(e) {
         e.stopPropagation();
-        window.pendingAccountTransactionsAccount = account.name;
+        window.pendingAccountTransactionsAccount = account.id;
         window.pendingAccountTransactionsType = "expense";
         navigateTo("account-transactions");
     };
@@ -419,7 +419,7 @@ if (expenseStat) {
 let pressTimer;
 cardHeader.addEventListener("touchstart", function() {
             pressTimer = setTimeout(function() {
-                        selectedAccount = account.name;
+                        selectedAccount = account.id;
                         document.getElementById("accountMenu").classList.add("show");
                     }, 700);
                 });
@@ -431,7 +431,7 @@ cardHeader.addEventListener("touchmove", function() {
 });
                 cardHeader.onclick = function (e) {
                     e.stopPropagation();
-                    selectedAccount = account.name;
+                    selectedAccount = account.id;
                     document.getElementById("accountMenu").classList.add("show");
                 };
 

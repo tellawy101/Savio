@@ -35,7 +35,7 @@ const transactionsListEl = document.getElementById("transactionsList");
 const emptyStateEl = document.getElementById("emptyState");
 const transactions = loadTransactions();
 const accountTransactions = transactions.filter(transaction => {
-    const sameAccount = transaction.account === accountName;
+const sameAccount = getTxAccountId(transaction) === accountName;
     const sameType = transaction.type === type;
     return sameAccount && sameType;
 });
@@ -45,7 +45,7 @@ if (accountNameEl) {
 }
 if (accountName && accountIconEl) {
     const accounts = getAccounts();
-    const account = accounts.find(a => a.name === accountName);
+const account = accounts.find(a => a.id === accountName);
     if (account) {
         accountNameEl.textContent = account.name;
   accountIconEl.innerHTML = `<i data-lucide="${escapeHTML(account.icon)}"></i>`;
@@ -95,7 +95,7 @@ if (totalAmountEl) {
             </div>
 
             <div class="transaction-info">
-                                <strong>${escapeHTML(transaction.category || "Transaction")}</strong>
+                                <strong>${escapeHTML(getTxCategoryName(transaction) || "Transaction")}</strong>
                 <small>${escapeHTML(transaction.description || "")}</small>
             </div>
 

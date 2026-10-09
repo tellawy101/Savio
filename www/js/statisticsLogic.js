@@ -19,10 +19,12 @@ function calculateSummary(transactions) {
 
 function calculateCategoryBreakdown(transactions) {
     const categories = {};
+    const catNameById = {};
+    getCategories().forEach(function(c) { catNameById[c.id] = c.name; });
 
     transactions.forEach(transaction => {
         if (transaction.type !== "expense" || transaction.isTransfer === true) return;
-        const category = transaction.category || "Other";
+const category = (transaction.categoryId && catNameById[transaction.categoryId]) || transaction.category || "Other";
         const amount = Number(transaction.amount) || 0;
         categories[category] = (categories[category] || 0) + amount;
     });
@@ -43,10 +45,12 @@ function calculateCategoryBreakdown(transactions) {
 
 function calculateAccountBreakdown(transactions) {
     const accounts = {};
+    const accNameById = {};
+    getAccounts().forEach(function(a) { accNameById[a.id] = a.name; });
 
     transactions.forEach(transaction => {
         if (transaction.isTransfer === true) return;
-        const account = transaction.account || "Unknown";
+const account = (transaction.accountId && accNameById[transaction.accountId]) || transaction.account || "Unknown";
         const amount = Number(transaction.amount) || 0;
 
         if (!accounts[account]) accounts[account] = { income: 0, expense: 0 };

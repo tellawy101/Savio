@@ -125,7 +125,7 @@ function initDebtsPage() {
 
                 const account = document.createElement("span");
                 account.className = "payment-row-account";
-                account.textContent = payment.account;
+account.textContent = getAccountNameById(payment.accountId, payment.account);
 
                 const date = document.createElement("span");
                 date.className = "payment-row-date";
@@ -308,9 +308,10 @@ saveDebts(debts);
 
             currentPayDebt.payments.push({
                 id: paymentId,
-                amount: payment,
-                account: account,
-                date: dateText,
+                                amount: payment,
+                    account: account,
+                    accountId: getAccountIdByName(account),
+                    date: dateText,
                 time: timeText
             });
 
@@ -323,9 +324,10 @@ saveDebts(debts);
             const transactions = loadTransactions();
 
             transactions.push({
-                amount: payment,
-                account: account,
-                description: currentPayDebt.type === "receivable" ?
+                         amount: payment,
+                    account: account,
+                    accountId: getAccountIdByName(account),
+                    description: currentPayDebt.type === "receivable" ?
     `${t("debts_payment_from")} ${currentPayDebt.person}` :
     `${t("debts_payment_to")} ${currentPayDebt.person}`,
                 category: "Debt Payment",

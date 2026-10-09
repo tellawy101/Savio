@@ -740,11 +740,11 @@ function createTransactionElement(expense, options = {}) {
     const formattedAmount = Math.round(Number(expense.amount) || 0).toLocaleString("en-US");
 
     // العنوان والوصف
-    let title = expense.category || expense.title || (typeof t === "function" ? t("unspecified") : "Unspecified");
-    let subtitle = expense.account || "";
+let title = getTxCategoryName(expense) || expense.title || (typeof t === "function" ? t("unspecified") : "Unspecified");
+let subtitle = getTxAccountName(expense);
     if (isTransfer) {
         title = typeof t === "function" ? t("transfer_title") : "Transfer";
-        subtitle = `${expense.fromAccount || ""} ➔ ${expense.toAccount || ""}`;
+subtitle = `${getTxAccountName(expense)} ➔ ${getAccountNameById(expense.transferToId, expense.transferTo)}`;
     }
 
     li.innerHTML = `

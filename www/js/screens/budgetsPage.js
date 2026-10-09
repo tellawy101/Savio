@@ -38,7 +38,7 @@ function initBudgetsPage() {
             if (Number.isNaN(date.getTime())) return;
             if (date.getFullYear() !== now.getFullYear() || date.getMonth() !== now.getMonth()) return;
 
-            const category = tx.category || "Other";
+const category = tx.categoryId || getCategoryIdByName(tx.category) || tx.category || "Other";
             spent[category] = (spent[category] || 0) + (Number(tx.amount) || 0);
         });
 
@@ -53,9 +53,9 @@ function initBudgetsPage() {
         if (!catBudgetsList) return;
 
         const budgets = getCategoryBudgets();
-        const names = Object.keys(budgets);
-
-        if (!names.length) {
+                const ids = Object.keys(budgets);
+        
+        if (!ids.length) {
             catBudgetsList.innerHTML = `
             <div class="empty-stat">
                 <i data-lucide="wallet"></i>
@@ -68,10 +68,12 @@ function initBudgetsPage() {
 
         const spent = getMonthSpentByCategory();
 
-        catBudgetsList.innerHTML = names.map(function (name) {
-
-            const limit = Number(budgets[name]) || 0;
-            const used = spent[name] || 0;
+                catBudgetsList.innerHTML = ids.map(function(id) {
+                    
+                    const cat = getCategories().find(function(c) { return c.id === id; });
+                    const name = cat ? cat.name : id;
+                    const limit = Number(budgets[id]) || 0;
+                    const used = spent[id] || 0;
 
             const rawPercent = limit > 0 ? Math.round((used / limit) * 100) : 0;
             const percent = Math.min(100, rawPercent);
@@ -83,7 +85,7 @@ function initBudgetsPage() {
                     <span class="goal-name">${escapeHTML(name)}</span>
                     <div class="cb-top-end">
                         <span class="goal-percent">${rawPercent}%</span>
-                        <button class="cb-delete-btn" data-name="${escapeHTML(name)}"><i data-lucide="trash-2"></i></button>
+                        <button class="cb-delete-btn" data-id="${escapeHTML(id)}"><i data-lucide="trash-2"></i></button>
                     </div>
                 </div>
 
@@ -114,13 +116,13 @@ function initBudgetsPage() {
             const deleteBtn = e.target.closest(".cb-delete-btn");
             if (!deleteBtn) return;
 
-            const name = deleteBtn.dataset.name;
+const id = deleteBtn.dataset.id;
 
             customConfirm(t("cb_delete_confirm"), { danger: true }).then(function (confirmed) {
                 if (!confirmed) return;
 
                 const budgets = getCategoryBudgets();
-                delete budgets[name];
+delete budgets[id];
                 saveCategoryBudgets(budgets);
                 renderCatBudgets();
             });
@@ -143,7 +145,7 @@ function initBudgetsPage() {
         const budgets = getCategoryBudgets();
         
         const available = getCategories().filter(function(c) {
-            return !(c.name in budgets);
+return !(c.id in budgets);
         });
         
         catBudgetCategory.value = "";
@@ -151,7 +153,7 @@ function initBudgetsPage() {
         picker.classList.remove("open");
         
         pickerList.innerHTML = available.map(function(c) {
-            return `<div class="cb-picker-item" data-value="${escapeHTML(c.name)}">${escapeHTML(c.name)}</div>`;
+            return `<div class="cb-picker-item" data-value="${escapeHTML(c.id)}">${escapeHTML(c.name)}</div>`;
         }).join("");
         
         pickerBtn.onclick = function() {
@@ -163,7 +165,7 @@ function initBudgetsPage() {
             if (!item) return;
             
             catBudgetCategory.value = item.dataset.value;
-            pickerText.textContent = item.dataset.value;
+pickerText.textContent = item.textContent;
             
             pickerList.querySelectorAll(".cb-picker-item").forEach(function(el) {
                 el.classList.remove("selected");

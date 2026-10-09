@@ -594,7 +594,14 @@ const importFileInput = document.getElementById("importFileInput");    const res
                                 knownSignatures.add(txSignature(x));
                             });
                             
+                            const curAccIds = new Set(getAccounts().map(a => a.id));
+                            const curCatIds = new Set(getCategories().map(c => c.id));
+                            
                             JSON.parse(data.transactions).forEach(function(x) {
+                                        ["accountId", "transferToId", "transferFromId"].forEach(function(k) {
+                                            if (x[k] && !curAccIds.has(x[k])) delete x[k];
+                                        });
+                                        if (x.categoryId && !curCatIds.has(x.categoryId)) delete x.categoryId;
                                 if (x.id) {
                                     if (knownIds.has(x.id)) return;
                                 } else {
@@ -621,7 +628,14 @@ const importFileInput = document.getElementById("importFileInput");    const res
                                 knownSignatures.add(debtSignature(x));
                             });
 
-                            JSON.parse(data.debts).forEach(function (x) {
+                            const curDebtAccIds = new Set(getAccounts().map(a => a.id));
+                            
+                            JSON.parse(data.debts).forEach(function(x) {
+                                        if (Array.isArray(x.payments)) {
+                                            x.payments.forEach(function(p) {
+                                                if (p.accountId && !curDebtAccIds.has(p.accountId)) delete p.accountId;
+                                            });
+                                        }
                                 if (x.id !== undefined && x.id !== null) {
                                     if (knownIds.has(x.id)) return;
                                 } else {
@@ -636,7 +650,12 @@ const importFileInput = document.getElementById("importFileInput");    const res
                         if (data.accounts) {
                             const merged = readCurrent("accounts");
                             const names = new Set(merged.map(x => x.name));
-                            JSON.parse(data.accounts).forEach(x => { if (!names.has(x.name)) merged.push(x); });
+                            const ids = new Set(merged.map(x => x.id).filter(Boolean));
+                            JSON.parse(data.accounts).forEach(x => {
+                                if (names.has(x.name)) return;
+                                if (x.id && ids.has(x.id)) return;
+                                merged.push(x);
+                            });
                             writes.accounts = merged;
                         }
 

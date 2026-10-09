@@ -82,7 +82,7 @@ let accounts = getAccounts();
         let expense = 0;
         
         transactions.forEach(t => {
-            if (t.account !== account.name) return;
+if (getTxAccountId(t) !== account.id) return;
             if (t.type === "income") income += Number(t.amount) || 0;
             else if (t.type === "expense") expense += Number(t.amount) || 0;
         });
@@ -106,7 +106,7 @@ item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
         
         item.addEventListener("touchstart", function() {
             pressTimer = setTimeout(function() {
-                selectedAccount = account.name;
+                            selectedAccount = account.id;
                 document.getElementById("accountMenu").classList.add("show");
             }, 700);
         });
@@ -166,7 +166,7 @@ customAlert(t("enter_account_name_alert"));
             account.name.toLowerCase() === name.toLowerCase()
         );
         
-        if (sameAccount && (!editingAccount || sameAccount.name !== editingAccount.name)) {
+        if (sameAccount && (!editingAccount || sameAccount.id !== editingAccount.id)) {
             showToast(t("account_exists_toast"));
             return;
         }
@@ -201,6 +201,7 @@ saveAccounts(accounts);
       const field = getAccountFieldEl();
 if (field) {
     field.textContent = name;
+    
     field.removeAttribute("data-i18n");
 }
 
@@ -232,7 +233,7 @@ if (editAccountBtn) {
         
         let accounts = getAccounts();
         
-        editingAccount = accounts.find(a => a.name === selectedAccount);
+        editingAccount = accounts.find(a => a.id === selectedAccount);
         
         if (!editingAccount) return;
         
@@ -262,10 +263,10 @@ if (deleteAccountBtn) {
         
         let accounts = getAccounts();
         
-        const deletedAccount = accounts.find(account => account.name === selectedAccount);
+        const deletedAccount = accounts.find(account => account.id === selectedAccount);
         const deletedPosition = accounts.indexOf(deletedAccount);
         
-        accounts = accounts.filter(account => account.name !== selectedAccount);
+        accounts = accounts.filter(account => account.id !== selectedAccount);
         
         saveAccounts(accounts);
         

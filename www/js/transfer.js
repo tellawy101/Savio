@@ -114,8 +114,8 @@ function loadEditingTransfer() {
     transferAmount.value = formatted;
     resizeAmountInput(transferAmount, formatted);
 
-    transferFromAccount.textContent = fromSide.account;
-    transferToAccount.textContent = toSide.account;
+        transferFromAccount.textContent = getTxAccountName(fromSide);
+    transferToAccount.textContent = getTxAccountName(toSide);
 
     transferDescription.value = fromSide.note || "";
     transferDate.value = fromSide.date;
@@ -162,8 +162,10 @@ saveTransferBtn.onclick = function () {
         date,
         time,
         isTransfer: true,
-        transferId,
-        transferTo: toAccount
+              transferId,
+        transferTo: toAccount,
+            accountId: getAccountIdByName(fromAccount),
+            transferToId: getAccountIdByName(toAccount)
     };
 
     const toEntry = {
@@ -177,8 +179,10 @@ saveTransferBtn.onclick = function () {
         date,
         time,
         isTransfer: true,
-        transferId,
-        transferFrom: fromAccount
+               transferId,
+        transferFrom: fromAccount,
+            accountId: getAccountIdByName(toAccount),
+            transferFromId: getAccountIdByName(fromAccount)
     };
 
     transactions.push(fromEntry, toEntry);

@@ -87,14 +87,14 @@ if (expenses.length === 0) {
         sortedEntries.forEach(({ expense, index }) => {
             if (expense.isTransfer && expense.type === "income") return;
                         const accountValue = accountFilter ? accountFilter.value : "";
-            if (accountValue && expense.account !== accountValue && expense.transferTo !== accountValue) return;
+            if (accountValue && getTxAccountId(expense) !== accountValue && (expense.transferToId || getAccountIdByName(expense.transferTo)) !== accountValue) return;
                         const categoryValue = categoryFilter ? categoryFilter.value : "";
-            if (categoryValue && expense.category !== categoryValue) return;
+            if (categoryValue && getTxCategoryId(expense) !== categoryValue) return;
 
             const searchableText = [
-                expense.description,
-                expense.category,
-                expense.account
+                                expense.description,
+                    getTxCategoryName(expense),
+                    getTxAccountName(expense)
             ]
                 .filter(Boolean)
                 .join(" ")
@@ -272,7 +272,7 @@ if (!saveTransactions(expenses)) return;
         accountFilter.innerHTML = `<option value="">${allLabel}</option>`;
         getAccounts().forEach(function (a) {
             const opt = document.createElement("option");
-            opt.value = a.name;
+           opt.value = a.id;
             opt.textContent = a.name;
             accountFilter.appendChild(opt);
         });
@@ -287,7 +287,7 @@ if (!saveTransactions(expenses)) return;
         categoryFilter.innerHTML = `<option value="">${allLabel}</option>`;
         getCategories().forEach(function(c) {
             const opt = document.createElement("option");
-            opt.value = c.name;
+           opt.value = c.id;
             opt.textContent = c.name;
             categoryFilter.appendChild(opt);
         });

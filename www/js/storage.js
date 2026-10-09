@@ -205,6 +205,39 @@ function saveCategories(categories) {
 function generateId(prefix) {
     return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
 }
+function getAccountIdByName(name) {
+    const acc = getAccounts().find(a => a.name === name);
+    return acc ? acc.id : null;
+}
+
+function getCategoryIdByName(name) {
+    const cat = getCategories().find(c => c.name === name);
+    return cat ? cat.id : null;
+}
+function getTxAccountId(tx) {
+    return tx.accountId || getAccountIdByName(tx.account);
+}
+
+function getTxCategoryId(tx) {
+    return tx.categoryId || getCategoryIdByName(tx.category);
+}
+function getAccountNameById(id, fallback) {
+    const acc = id ? getAccounts().find(a => a.id === id) : null;
+    return acc ? acc.name : (fallback || "");
+}
+
+function getCategoryNameById(id, fallback) {
+    const cat = id ? getCategories().find(c => c.id === id) : null;
+    return cat ? cat.name : (fallback || "");
+}
+
+function getTxAccountName(tx) {
+    return getAccountNameById(tx.accountId, tx.account);
+}
+
+function getTxCategoryName(tx) {
+    return getCategoryNameById(tx.categoryId, tx.category);
+}
 function ensureAccountAndCategoryIds() {
     const accounts = getAccounts();
     let accountsChanged = false;
@@ -228,6 +261,7 @@ function ensureAccountAndCategoryIds() {
 }
 function migrateDataToIds() {
     ensureAccountAndCategoryIds();
+    if (localStorage.getItem("savioIdMigrationDone") === "1") return;
 
     const accountIdByName = {};
     getAccounts().forEach(function (account) {
@@ -285,7 +319,8 @@ function migrateDataToIds() {
         }
     });
     if (budgetsChanged) saveCategoryBudgets(newBudgets);
-}
+    localStorage.setItem("savioIdMigrationDone", "1");
+    }
 function getCustomCategoryIcons() {
     return safeParse(CUSTOM_CATEGORY_ICONS_KEY, []);
 }

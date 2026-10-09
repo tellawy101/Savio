@@ -61,9 +61,9 @@ setupCommonFormPage();
         resizeAmountInput(amountEl, formatted);
 
         if (entry.account) {
-    const matchedAccount = getAccounts().find(acc => acc.name === entry.account);
+const matchedAccount = getAccounts().find(acc => acc.id === getTxAccountId(entry));
     const accIcon = matchedAccount ? matchedAccount.icon : "credit-card";
-    accountEl.textContent = entry.account;
+accountEl.textContent = getTxAccountName(entry);
     accountEl.removeAttribute("data-i18n");
     const accountIconEl = document.getElementById(type + "AccountIcon");
     if (accountIconEl) {
@@ -73,7 +73,7 @@ setupCommonFormPage();
     accountEl.textContent = t("select_account");
 }
 
-categoryEl.textContent = entry.category || t("select_category");
+categoryEl.textContent = getTxCategoryName(entry) || t("select_category");
 categoryEl.dataset.icon = entry.categoryIcon || "tag";
 if (entry.category) {
     categoryEl.removeAttribute("data-i18n");
@@ -98,9 +98,11 @@ if (window.lucide) lucide.createIcons();
         let transactions = loadTransactions();
         const entryData = {
             amount: Number(amountEl.value.replace(/,/g, "")),
-            account: accountEl.textContent.trim(),
-            description: descriptionEl.value.trim(),
-            category: categoryEl.textContent.trim(),
+                        account: accountEl.textContent.trim(),
+                accountId: getAccountIdByName(accountEl.textContent.trim()),
+                description: descriptionEl.value.trim(),
+                category: categoryEl.textContent.trim(),
+                categoryId: categoryEl.dataset.id || getCategoryIdByName(categoryEl.textContent.trim()),
             categoryIcon: categoryEl.dataset.icon || "tag",
             type: type,
             date: dateEl.value,
@@ -123,7 +125,7 @@ if (window.lucide) lucide.createIcons();
 if (!saveTransactions(transactions)) return;
         
                 if (type === "expense" && !editId) {
-            const alertType = getBudgetAlertType(entryData.category, entryData.amount, entryData.date);
+            const alertType = getBudgetAlertType(entryData.categoryId, entryData.amount, entryData.date);
             if (alertType) {
                 sendNotificationNow(
                     Date.now() % 2147483647,
