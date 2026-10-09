@@ -606,10 +606,31 @@ const importFileInput = document.getElementById("importFileInput");    const res
                             
                             writes.transactions = merged;
                         }
-                        if (data.debts) {
+                                                if (data.debts) {
                             const merged = readCurrent("debts");
-                            const ids = new Set(merged.map(x => x.id));
-                            JSON.parse(data.debts).forEach(x => { if (!ids.has(x.id)) merged.push(x); });
+
+                            // الدين اللي من غير id بنقارنه بمحتواه
+                            const debtSignature = function (x) {
+                                return [x.type, x.person, x.amount, x.dueDate, x.createdAt, x.notes].join("|");
+                            };
+
+                            const knownIds = new Set();
+                            const knownSignatures = new Set();
+                            merged.forEach(function (x) {
+                                if (x.id !== undefined && x.id !== null) knownIds.add(x.id);
+                                knownSignatures.add(debtSignature(x));
+                            });
+
+                            JSON.parse(data.debts).forEach(function (x) {
+                                if (x.id !== undefined && x.id !== null) {
+                                    if (knownIds.has(x.id)) return;
+                                } else {
+                                    if (knownSignatures.has(debtSignature(x))) return;
+                                    x.id = Date.now() + Math.floor(Math.random() * 1000);
+                                }
+                                merged.push(x);
+                            });
+
                             writes.debts = merged;
                         }
                         if (data.accounts) {
