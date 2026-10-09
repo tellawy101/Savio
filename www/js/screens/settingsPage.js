@@ -223,7 +223,51 @@ if (languageSelectBtn && languagePickerModal) {
             }
         });
     }
+    // ------------------------------
+    // Restore Last Snapshot
+    // ------------------------------
+    const restoreSnapshotBtn = document.getElementById("restoreSnapshotBtn");
 
+    if (restoreSnapshotBtn) {
+        restoreSnapshotBtn.onclick = async function () {
+            const snapshotKeys = Object.keys(localStorage)
+                .filter(function (k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; })
+                .sort();
+
+            if (snapshotKeys.length === 0) {
+                await customAlert(t("snapshot_restore_none"));
+                return;
+            }
+
+            let snapshot;
+            try {
+                snapshot = JSON.parse(localStorage.getItem(snapshotKeys[snapshotKeys.length - 1]));
+                if (!snapshot || !snapshot.data) throw new Error("bad snapshot");
+            } catch (e) {
+                await customAlert(t("snapshot_restore_failed"));
+                return;
+            }
+
+            const ok = await customConfirm(t("snapshot_restore_confirm"), { danger: true });
+            if (!ok) return;
+
+            if (!createPreRestoreSnapshot()) {
+                showToast(t("snapshot_restore_failed"), "error");
+                return;
+            }
+
+            BACKUP_KEYS.forEach(function (key) {
+                if (Object.prototype.hasOwnProperty.call(snapshot.data, key)) {
+                    localStorage.setItem(key, snapshot.data[key]);
+                } else {
+                    localStorage.removeItem(key);
+                }
+            });
+
+            await customAlert(t("snapshot_restore_done"));
+            window.location.href = "index.html";
+        };
+    }
 
     // ------------------------------
     // Clear All Data
@@ -535,10 +579,31 @@ const importFileInput = document.getElementById("importFileInput");    const res
                         // بنجهّز كل النتايج الأول من غير ما نكتب أي حاجة
                         const writes = {};
 
-                        if (data.transactions) {
+                                                if (data.transactions) {
                             const merged = readCurrent("transactions");
-                            const ids = new Set(merged.map(x => x.id));
-                            JSON.parse(data.transactions).forEach(x => { if (!ids.has(x.id)) merged.push(x); });
+                            
+                            // المعاملة اللي من غير id بنقارنها بمحتواها
+                            const txSignature = function(x) {
+                                return [x.date, x.time, x.amount, x.account, x.type, x.category, x.description].join("|");
+                            };
+                            
+                            const knownIds = new Set();
+                            const knownSignatures = new Set();
+                            merged.forEach(function(x) {
+                                if (x.id) knownIds.add(x.id);
+                                knownSignatures.add(txSignature(x));
+                            });
+                            
+                            JSON.parse(data.transactions).forEach(function(x) {
+                                if (x.id) {
+                                    if (knownIds.has(x.id)) return;
+                                } else {
+                                    if (knownSignatures.has(txSignature(x))) return;
+                                    x.id = "tx_" + Date.now() + "_" + Math.random().toString(36).slice(2, 9);
+                                }
+                                merged.push(x);
+                            });
+                            
                             writes.transactions = merged;
                         }
                         if (data.debts) {
