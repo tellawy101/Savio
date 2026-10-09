@@ -482,6 +482,47 @@ function validateBackupData(data) {
     return null;
 }
 // ==============================
+// لقطة احتياطية تلقائية قبل الاستبدال الكامل
+// بتحفظ نسخة من كل البيانات الحالية وبتحتفظ بآخر 3 لقطات بس
+// بترجع true لو اتحفظت، و false لو فشلت (مثلاً مفيش مساحة)
+// ==============================
+const SNAPSHOT_PREFIX = "savio_pre_restore_snapshot_";
+const MAX_SNAPSHOTS = 3;
+
+function createPreRestoreSnapshot() {
+    try {
+        const data = {};
+        BACKUP_KEYS.forEach(function (key) {
+            const value = localStorage.getItem(key);
+            if (value !== null) data[key] = value;
+        });
+
+        localStorage.setItem(
+            SNAPSHOT_PREFIX + Date.now(),
+            JSON.stringify({
+                app: "Savio",
+                version: 1,
+                createdAt: new Date().toISOString(),
+                data: data
+            })
+        );
+
+        // نمسح اللقطات القديمة ونسيب آخر MAX_SNAPSHOTS بس
+        const snapshotKeys = Object.keys(localStorage)
+            .filter(function (k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; })
+            .sort();
+
+        while (snapshotKeys.length > MAX_SNAPSHOTS) {
+            localStorage.removeItem(snapshotKeys.shift());
+        }
+
+        return true;
+    } catch (e) {
+        console.error("Snapshot failed:", e);
+        return false;
+    }
+}
+// ==============================
 // حساب إجمالي معاملات حساب معيّن (منطق بيزنس منفصل عن العرض)
 // ==============================
 function calculateTransactionsTotal(transactions) {
@@ -489,3 +530,9 @@ function calculateTransactionsTotal(transactions) {
         return sum + Number(transaction.amount || 0);
     }, 0);
 }
+
+// ===== اختبار مؤقت - امسحه بعد التجربة =====
+(function () {
+    const keys = Object.keys(localStorage).filter(function (k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; });
+    alert("snapshots: " + keys.length);
+})();

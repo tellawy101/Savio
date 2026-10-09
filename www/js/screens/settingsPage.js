@@ -496,7 +496,13 @@ const importFileInput = document.getElementById("importFileInput");    const res
                 const modeRadio = document.querySelector('input[name="restoreMode"]:checked');
                 const mode = modeRadio ? modeRadio.value : "replace";
 
-                if (mode === "replace") {
+                                if (mode === "replace") {
+                    // لقطة احتياطية من البيانات الحالية قبل ما نمسحها
+                    if (!createPreRestoreSnapshot()) {
+                        showToast("مقدرتش آخد نسخة احتياطية من بياناتك الحالية، الاستبدال اتلغى ومفيش حاجة اتغيّرت", "error");
+                        return;
+                    }
+
                     // استبدال كامل
                     BACKUP_KEYS.forEach(function (key) {
                         if (Object.prototype.hasOwnProperty.call(pendingBackupPayload.data, key)) {
