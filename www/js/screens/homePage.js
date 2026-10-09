@@ -137,11 +137,11 @@ const card = li.querySelector(".expense-main");
                     item,
                     position: expenses.indexOf(item)
                 }));
-                expenses = expense.isTransfer
-                    ? expenses.filter(item => item.transferId !== expense.transferId)
-                    : expenses.filter(item => item.id !== expense.id);
-                saveTransactions(expenses);
-               
+                                const remaining = expense.isTransfer ?
+                    expenses.filter(item => item.transferId !== expense.transferId) :
+                    expenses.filter(item => item.id !== expense.id);
+                if (!saveTransactions(remaining)) return;
+                expenses = remaining;
                                const removedDebtPayment = expense.debtPaymentId
                     ? removeDebtPayment(expense.debtPaymentId)
                     : null;
@@ -155,7 +155,7 @@ const card = li.querySelector(".expense-main");
                                 const insertAt = Math.min(position, expenses.length);
                                 expenses.splice(insertAt, 0, item);
                             });
-                            saveTransactions(expenses);
+if (!saveTransactions(expenses)) return;
                         restoreDebtPayment(removedDebtPayment);
                         renderExpenses();
                     }

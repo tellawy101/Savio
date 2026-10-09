@@ -120,7 +120,7 @@ if (window.lucide) lucide.createIcons();
             transactions.push(entryData);
         }
 
-        saveTransactions(transactions);
+if (!saveTransactions(transactions)) return;
         
                 if (type === "expense" && !editId) {
             const alertType = getBudgetAlertType(entryData.category, entryData.amount, entryData.date);

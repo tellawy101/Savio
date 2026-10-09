@@ -183,7 +183,7 @@ saveTransferBtn.onclick = function () {
 
     transactions.push(fromEntry, toEntry);
 
-    saveTransactions(transactions);
+if (!saveTransactions(transactions)) return;
 navigateTo("home");
 };
 

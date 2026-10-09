@@ -88,13 +88,13 @@ function initDebtsPage() {
         debt.remaining = Math.round((debt.amount - debt.paid) * 100) / 100;
         debt.status = debt.remaining <= 0 ? "paid" : "open";
 
-        saveDebts(debts);
-
-        const transactions = loadTransactions().filter(function (tx) {
+                const transactions = loadTransactions().filter(function(tx) {
             return tx.debtPaymentId !== payment.id;
         });
-
-        saveTransactions(transactions);
+        
+        if (!saveTransactions(transactions)) return;
+        
+        saveDebts(debts);
 
         renderDebts();
         openPaymentsHistory(debt);
@@ -318,7 +318,7 @@ saveDebts(debts);
             currentPayDebt.remaining = Math.round((currentPayDebt.remaining - payment) * 100) / 100;
             currentPayDebt.status = currentPayDebt.remaining <= 0 ? "paid" : "open";
 
-            saveDebts(debts);
+            
 
             const transactions = loadTransactions();
 
@@ -337,7 +337,9 @@ saveDebts(debts);
                 debtPaymentId: paymentId
             });
 
-            saveTransactions(transactions);
+            if (!saveTransactions(transactions)) return;
+            
+            saveDebts(debts);
             renderDebts();
 
             payDebtModal.classList.remove("show");
@@ -530,16 +532,16 @@ makeSelectSheet(payAccount, t("select_account"));
 
                 const deletedPosition = debts.indexOf(debt);
 
-                debts = debts.filter(d => d.id !== debt.id);
-                saveDebts(debts);
-
-                if (deleteLinked) {
-                    const remainingTransactions = loadTransactions().filter(function (tx) {
+                                if (deleteLinked) {
+                    const remainingTransactions = loadTransactions().filter(function(tx) {
                         return tx.debtId !== debt.id;
                     });
-
-                    saveTransactions(remainingTransactions);
+                    
+                    if (!saveTransactions(remainingTransactions)) return;
                 }
+                
+                debts = debts.filter(d => d.id !== debt.id);
+                saveDebts(debts);
 
                 renderDebts();
 
@@ -547,12 +549,12 @@ makeSelectSheet(payAccount, t("select_account"));
                     t("debts_deleted_toast"),
                     function () {
                         const insertAt = Math.min(deletedPosition, debts.length);
+                                                if (deleteLinked) {
+                            if (!saveTransactions(loadTransactions().concat(linkedTransactions))) return;
+                        }
+                        
                         debts.splice(insertAt, 0, debt);
                         saveDebts(debts);
-
-                        if (deleteLinked) {
-                            saveTransactions(loadTransactions().concat(linkedTransactions));
-                        }
 
                         renderDebts();
                     }

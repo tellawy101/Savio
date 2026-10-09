@@ -27,11 +27,14 @@ function safeParse(key, fallback) {
     } catch (error) {
         console.error("Corrupted data in '" + key + "':", error);
 
-        // نسخة احتياطية من التالف بدل ما يضيع
-        try {
-            localStorage.setItem(key + "_corrupted_backup", raw);
-        } catch (e) {}
-
+              // نسخة احتياطية مرة واحدة لكل مفتاح، وباسم فيه الوقت عشان متتكتبش فوق نفسها
+        safeParse._backedUp = safeParse._backedUp || {};
+        if (!safeParse._backedUp[key]) {
+            safeParse._backedUp[key] = true;
+            try {
+                localStorage.setItem(key + "_corrupted_backup_" + Date.now(), raw);
+            } catch (e) {}
+        }
         return fallback;
     }
 }
@@ -201,7 +204,7 @@ function saveCategories(categories) {
 }
 
 function getCustomCategoryIcons() {
-    return JSON.parse(localStorage.getItem(CUSTOM_CATEGORY_ICONS_KEY)) || [];
+    return safeParse(CUSTOM_CATEGORY_ICONS_KEY, []);
 }
 
 function saveCustomCategoryIcons(icons) {
@@ -265,8 +268,8 @@ function removeDebtPayment(paymentId) {
         debt.payments = debt.payments.filter(function (p) {
             return p.id !== paymentId;
         });
-        debt.paid = Math.max(0, Math.round((debt.paid - payment.amount) * 00) / 00);
-        debt.remaining = Math.round((debt.amount - debt.paid) * 00) / 00;
+                debt.paid = Math.max(0, Math.round((debt.paid - payment.amount) * 100) / 100);
+        debt.remaining = Math.round((debt.amount - debt.paid) * 100) / 100;
         debt.status = debt.remaining <= 0 ? "paid" : "open";
     });
 
@@ -288,7 +291,7 @@ function restoreDebtPayment(removed) {
         return a.id - b.id;
     });
 
-    debt.paid = Math.round((debt.paid + removed.payment.amount) * 00) / 100;
+debt.paid = Math.round((debt.paid + removed.payment.amount) * 100) / 100;
     debt.remaining = Math.max(0, Math.round((debt.amount - debt.paid) * 100) / 100);
     debt.status = debt.remaining <= 0 ? "paid" : "open";
 
