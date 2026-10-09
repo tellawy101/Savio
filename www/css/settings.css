@@ -513,3 +513,215 @@ body.dark .about-info-divider {
     color: #128C7E;
     flex-shrink: 0;
 }
+/* ==============================
+   Restore Preview Modal
+============================== */
+.restore-modal-content {
+    text-align: center;
+    padding: 28px 20px 20px;
+    max-width: 360px;
+}
+
+.restore-stats {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(15, 118, 110, 0.15);
+    background: rgba(15, 118, 110, 0.04);
+    border-radius: 14px;
+    padding: 4px 14px;
+    margin-bottom: 18px;
+}
+
+.restore-stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 0;
+    font-size: 13.5px;
+}
+
+.restore-stat + .restore-stat {
+    border-top: 1px solid rgba(15, 118, 110, 0.12);
+}
+
+.restore-stat i {
+    width: 18px;
+    height: 18px;
+    color: #0F766E;
+    flex-shrink: 0;
+}
+
+.restore-stat-label {
+    flex: 1;
+    text-align: start;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.restore-stat-value {
+    font-weight: 700;
+    color: #0F766E;
+}
+
+.restore-section-label {
+    text-align: start;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.restore-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.restore-option {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.restore-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.restore-option-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1.5px solid rgba(107, 114, 128, 0.25);
+    border-radius: 14px;
+    transition: border-color .2s ease, background .2s ease;
+}
+
+.restore-option-body > i {
+    width: 22px;
+    height: 22px;
+    color: #6b7280;
+    flex-shrink: 0;
+}
+
+.restore-option-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: start;
+}
+
+.restore-option-text strong {
+    font-size: 14px;
+}
+
+.restore-option-text small {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #6b7280;
+}
+
+.restore-option-check {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(107, 114, 128, 0.4);
+    flex-shrink: 0;
+    transition: border-color .2s ease, background .2s ease;
+}
+
+.restore-option-check::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: #fff;
+    transform: scale(0);
+    transition: transform .15s ease;
+}
+
+.restore-option input:checked + .restore-option-body {
+    border-color: #0F766E;
+    background: rgba(15, 118, 110, 0.07);
+}
+
+.restore-option input:checked + .restore-option-body > i {
+    color: #0F766E;
+}
+
+.restore-option input:checked + .restore-option-body .restore-option-check {
+    border-color: #0F766E;
+    background: #0F766E;
+}
+
+.restore-option input:checked + .restore-option-body .restore-option-check::after {
+    transform: scale(1);
+}
+
+.restore-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 0 !important;
+}
+
+.restore-actions .import-close-btn {
+    flex: 1.4;
+    width: auto;
+    cursor: pointer;
+}
+
+.restore-cancel-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(107, 114, 128, 0.3);
+    background: transparent;
+    color: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Dark mode */
+body.dark .restore-stats {
+    border-color: rgba(79, 209, 197, 0.2);
+    background: rgba(79, 209, 197, 0.06);
+}
+
+body.dark .restore-stat + .restore-stat {
+    border-top-color: rgba(79, 209, 197, 0.15);
+}
+
+body.dark .restore-stat i,
+body.dark .restore-stat-value {
+    color: #4fd1c5;
+}
+
+body.dark .restore-stat-label,
+body.dark .restore-section-label,
+body.dark .restore-option-text small,
+body.dark .restore-option-body > i {
+    color: #9ca3af;
+}
+
+body.dark .restore-option input:checked + .restore-option-body {
+    border-color: #4fd1c5;
+    background: rgba(79, 209, 197, 0.1);
+}
+
+body.dark .restore-option input:checked + .restore-option-body > i {
+    color: #4fd1c5;
+}
+
+body.dark .restore-option input:checked + .restore-option-body .restore-option-check {
+    border-color: #4fd1c5;
+    background: #4fd1c5;
+}
+
+body.dark .restore-option-check::after {
+    background: #0f1f1e;
+}
