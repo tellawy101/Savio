@@ -305,6 +305,7 @@ window.renderCategories = function() {
     if (field) {
         field.textContent = category.name;
         field.dataset.icon = category.icon;
+                field.dataset.id = category.id;
         field.removeAttribute("data-i18n");
     }
     const iconEl = window.activeCategoryBox ? window.activeCategoryBox.querySelector(".category-icon") : null;
@@ -338,15 +339,16 @@ if (saveCategoryBtn) {
         let categories = getCategories();
 const isEditing = editingCategory !== null;
         if (editingCategory) {
-            const index = categories.findIndex(c => c.name === editingCategory.name);
+                        const index = categories.findIndex(c => c.id === editingCategory.id);
             if (index !== -1) {
-                categories[index] = { name, icon };
+                categories[index] = { id: editingCategory.id, name, icon };
             }
 
             const field = getCategoryFieldEl();
-            if (field && field.textContent.includes(editingCategory.name)) {
+            if (field && field.dataset.id === editingCategory.id) {
 field.innerHTML = `<i data-lucide="${escapeHTML(icon)}"></i> ${escapeHTML(name)}`;
 field.dataset.icon = icon;
+field.dataset.id = editingCategory.id;
 field.removeAttribute("data-i18n");
 if (window.lucide) lucide.createIcons();
 }
@@ -354,11 +356,13 @@ if (window.lucide) lucide.createIcons();
             editingCategory = null;
             selectedCategory = null;
         } else {
-    categories.push({ name, icon });
+            const newCategory = { id: generateId("cat"), name, icon };
+    categories.push(newCategory);
     const field = getCategoryFieldEl();
-    if (field) {
+       if (field) {
         field.textContent = name;
         field.dataset.icon = icon;
+        field.dataset.id = newCategory.id;
         field.removeAttribute("data-i18n");
     }
     const iconEl = window.activeCategoryBox ? window.activeCategoryBox.querySelector(".category-icon") : null;
@@ -417,14 +421,14 @@ if (deleteCategoryBtn) {
         if (!selectedCategory) return;
 
         let categories = getCategories();
-        categories = categories.filter(category => category.name !== selectedCategory.name);
-
+                categories = categories.filter(category => category.id !== selectedCategory.id);
         saveCategories(categories);
         renderCategories();
 
         const field = getCategoryFieldEl();
-        if (field && field.textContent.includes(selectedCategory.name)) {
+        if (field && field.dataset.id === selectedCategory.id) {
             field.textContent = t("select_category");
+                        delete field.dataset.id;
         }
 
         if (categoryMenu) categoryMenu.classList.remove("show");
