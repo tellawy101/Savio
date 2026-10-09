@@ -412,6 +412,7 @@ const BACKUP_KEYS = [
     STORAGE_KEY, ACCOUNTS_KEY, CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY,
 DEBTS_KEY, GOALS_KEY, BUDGET_KEY, CATEGORY_BUDGETS_KEY, THEME_KEY, LANGUAGE_KEY, CURRENCY_KEY, BALANCE_HIDDEN_KEY
 ];
+
 // ==============================
 // حساب إجمالي معاملات حساب معيّن (منطق بيزنس منفصل عن العرض)
 // ==============================

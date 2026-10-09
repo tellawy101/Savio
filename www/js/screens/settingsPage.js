@@ -424,7 +424,14 @@ const importFileInput = document.getElementById("importFileInput");    const res
     function processBackupJson(rawText) {
         try {
             const payload = JSON.parse(rawText);
-            if (!payload || payload.app !== "Savio" || !payload.data) {
+                        if (!payload || payload.app !== "Savio" || !payload.data) {
+                showToast(t("settings_import_invalid"), "error");
+                return;
+            }
+            
+            const validationError = validateBackupData(payload.data);
+            if (validationError) {
+                console.error("Backup rejected:", validationError);
                 showToast(t("settings_import_invalid"), "error");
                 return;
             }
@@ -500,30 +507,50 @@ const importFileInput = document.getElementById("importFileInput");    const res
                     });
                 } else {
                     // دمج ذكي (Smart Merge)
-                    try {
-                        if (pendingBackupPayload.data.transactions) {
-                            const newTxs = JSON.parse(pendingBackupPayload.data.transactions);
-                            const currentTxs = JSON.parse(localStorage.getItem("transactions")) || [];
-                            const currentIds = new Set(currentTxs.map(t => t.id));
-                            newTxs.forEach(t => { if (!currentIds.has(t.id)) currentTxs.push(t); });
-                            localStorage.setItem("transactions", JSON.stringify(currentTxs));
+                                        try {
+                        const data = pendingBackupPayload.data;
+
+                        // قراءة صارمة: لو البيانات الحالية تالفة نوقف الدمج كله
+                        const readCurrent = function (key) {
+                            const raw = localStorage.getItem(key);
+                            if (raw === null) return [];
+                            const value = JSON.parse(raw);
+                            if (!Array.isArray(value)) {
+                                throw new Error("Current data is corrupted: " + key);
+                            }
+                            return value;
+                        };
+
+                        // بنجهّز كل النتايج الأول من غير ما نكتب أي حاجة
+                        const writes = {};
+
+                        if (data.transactions) {
+                            const merged = readCurrent("transactions");
+                            const ids = new Set(merged.map(x => x.id));
+                            JSON.parse(data.transactions).forEach(x => { if (!ids.has(x.id)) merged.push(x); });
+                            writes.transactions = merged;
                         }
-                        if (pendingBackupPayload.data.debts) {
-                            const newDebts = JSON.parse(pendingBackupPayload.data.debts);
-                            const currentDebts = JSON.parse(localStorage.getItem("debts")) || [];
-                            const currentDebtIds = new Set(currentDebts.map(d => d.id));
-                            newDebts.forEach(d => { if (!currentDebtIds.has(d.id)) currentDebts.push(d); });
-                            localStorage.setItem("debts", JSON.stringify(currentDebts));
+                        if (data.debts) {
+                            const merged = readCurrent("debts");
+                            const ids = new Set(merged.map(x => x.id));
+                            JSON.parse(data.debts).forEach(x => { if (!ids.has(x.id)) merged.push(x); });
+                            writes.debts = merged;
                         }
-                        if (pendingBackupPayload.data.accounts) {
-                            const newAccs = JSON.parse(pendingBackupPayload.data.accounts);
-                            const currentAccs = JSON.parse(localStorage.getItem("accounts")) || [];
-                            const currentNames = new Set(currentAccs.map(a => a.name));
-                            newAccs.forEach(a => { if (!currentNames.has(a.name)) currentAccs.push(a); });
-                            localStorage.setItem("accounts", JSON.stringify(currentAccs));
+                        if (data.accounts) {
+                            const merged = readCurrent("accounts");
+                            const names = new Set(merged.map(x => x.name));
+                            JSON.parse(data.accounts).forEach(x => { if (!names.has(x.name)) merged.push(x); });
+                            writes.accounts = merged;
                         }
+
+                        // الكتابة بعد ما كله نجح
+                        Object.keys(writes).forEach(function (key) {
+                            localStorage.setItem(key, JSON.stringify(writes[key]));
+                        });
                     } catch (e) {
-                        console.error(e);
+                        console.error("Merge aborted:", e);
+                        showToast("بياناتك الحالية تالفة، الدمج اتلغى ومفيش حاجة اتغيّرت. استخدم الاستبدال الكامل", "error");
+                        return;
                     }
                 }
 
