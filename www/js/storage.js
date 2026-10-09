@@ -6,6 +6,34 @@ const APP_VERSION = "2.4.2";
 const STORAGE_KEY = "transactions";
 const CURRENCY_KEY = "currency";
 
+// ==============================
+// safeParse - قراءة آمنة من localStorage
+// ==============================
+function safeParse(key, fallback) {
+    const raw = localStorage.getItem(key);
+
+    if (raw === null) return fallback;
+
+    try {
+        const data = JSON.parse(raw);
+
+        // لو النوع مختلف عن الـ fallback (array مقابل object) يبقى الداتا تالفة
+        if (data === null || Array.isArray(data) !== Array.isArray(fallback)) {
+            throw new Error("Unexpected data type for key: " + key);
+        }
+
+        return data;
+    } catch (error) {
+        console.error("Corrupted data in '" + key + "':", error);
+
+        // نسخة احتياطية من التالف بدل ما يضيع
+        try {
+            localStorage.setItem(key + "_corrupted_backup", raw);
+        } catch (e) {}
+
+        return fallback;
+    }
+}
 
 // ==============================
 // Transactions
@@ -125,10 +153,8 @@ const ACCOUNTS_KEY = "accounts";
 
 // بترجع كل الحسابات المخزّنة
 function getAccounts() {
-    return JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || [];
+    return safeParse(ACCOUNTS_KEY, []);
 }
-
-// بتحفظ كل الحسابات
 function saveAccounts(accounts) {
     localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
     triggerCloudSync();
@@ -150,7 +176,7 @@ const CATEGORIES_KEY = "categories";
 const CUSTOM_CATEGORY_ICONS_KEY = "customCategoryIcons";
 
 function getCategories() {
-    return JSON.parse(localStorage.getItem(CATEGORIES_KEY)) || [];
+    return safeParse(CATEGORIES_KEY, []);
 }
 
 function saveCategories(categories) {
@@ -198,7 +224,7 @@ function saveBudget(amount) {
 const DEBTS_KEY = "debts";
 
 function getDebts() {
-    return JSON.parse(localStorage.getItem(DEBTS_KEY)) || [];
+    return safeParse(DEBTS_KEY, []);
 }
 
 function saveDebts(debts) {
@@ -222,8 +248,8 @@ function removeDebtPayment(paymentId) {
         debt.payments = debt.payments.filter(function (p) {
             return p.id !== paymentId;
         });
-        debt.paid = Math.max(0, Math.round((debt.paid - payment.amount) * 100) / 100);
-        debt.remaining = Math.round((debt.amount - debt.paid) * 100) / 100;
+        debt.paid = Math.max(0, Math.round((debt.paid - payment.amount) * 00) / 00);
+        debt.remaining = Math.round((debt.amount - debt.paid) * 00) / 00;
         debt.status = debt.remaining <= 0 ? "paid" : "open";
     });
 
@@ -245,7 +271,7 @@ function restoreDebtPayment(removed) {
         return a.id - b.id;
     });
 
-    debt.paid = Math.round((debt.paid + removed.payment.amount) * 100) / 100;
+    debt.paid = Math.round((debt.paid + removed.payment.amount) * 00) / 100;
     debt.remaining = Math.max(0, Math.round((debt.amount - debt.paid) * 100) / 100);
     debt.status = debt.remaining <= 0 ? "paid" : "open";
 
@@ -259,7 +285,7 @@ function restoreDebtPayment(removed) {
 const GOALS_KEY = "savioGoals";
 
 function getGoals() {
-    return JSON.parse(localStorage.getItem(GOALS_KEY)) || [];
+    return safeParse(GOALS_KEY, []);
 }
 
 function saveGoals(goals) {
