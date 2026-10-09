@@ -173,20 +173,22 @@ customAlert(t("enter_account_name_alert"));
         
         if (editingAccount) {
             
-            let index = accounts.findIndex(a => a.name === editingAccount.name);
+                        let index = accounts.findIndex(a => a.id === editingAccount.id);
             
             accounts[index] = {
-    name,
-    description,
-    icon,
-    balance: Number(balance.replace(/,/g, ""))
-};
+                id: editingAccount.id,
+                name,
+                description,
+                icon,
+                balance: Number(balance.replace(/,/g, ""))
+            };
 
             editingAccount = null;
             
         } else {
             
             accounts.push({
+                    id: generateId("acc"),
     name,
     description,
     icon,

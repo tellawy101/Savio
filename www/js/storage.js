@@ -202,7 +202,90 @@ function getCategories() {
 function saveCategories(categories) {
     localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
 }
+function generateId(prefix) {
+    return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
+}
+function ensureAccountAndCategoryIds() {
+    const accounts = getAccounts();
+    let accountsChanged = false;
+    accounts.forEach(function (account) {
+        if (!account.id) {
+            account.id = generateId("acc");
+            accountsChanged = true;
+        }
+    });
+    if (accountsChanged) saveAccounts(accounts);
 
+    const categories = getCategories();
+    let categoriesChanged = false;
+    categories.forEach(function (category) {
+        if (!category.id) {
+            category.id = generateId("cat");
+            categoriesChanged = true;
+        }
+    });
+    if (categoriesChanged) saveCategories(categories);
+}
+function migrateDataToIds() {
+    ensureAccountAndCategoryIds();
+
+    const accountIdByName = {};
+    getAccounts().forEach(function (account) {
+        accountIdByName[account.name] = account.id;
+    });
+
+    const categoryIdByName = {};
+    getCategories().forEach(function (category) {
+        categoryIdByName[category.name] = category.id;
+    });
+
+    const transactions = loadTransactions();
+    let transactionsChanged = false;
+    transactions.forEach(function (tx) {
+        if (!tx.accountId && tx.account && accountIdByName[tx.account]) {
+            tx.accountId = accountIdByName[tx.account];
+            transactionsChanged = true;
+        }
+        if (!tx.categoryId && tx.category && categoryIdByName[tx.category]) {
+            tx.categoryId = categoryIdByName[tx.category];
+            transactionsChanged = true;
+        }
+        if (!tx.transferToId && tx.transferTo && accountIdByName[tx.transferTo]) {
+            tx.transferToId = accountIdByName[tx.transferTo];
+            transactionsChanged = true;
+        }
+        if (!tx.transferFromId && tx.transferFrom && accountIdByName[tx.transferFrom]) {
+            tx.transferFromId = accountIdByName[tx.transferFrom];
+            transactionsChanged = true;
+        }
+    });
+    if (transactionsChanged) saveTransactions(transactions);
+    
+        const debts = getDebts();
+    let debtsChanged = false;
+    debts.forEach(function (debt) {
+        if (!Array.isArray(debt.payments)) return;
+        debt.payments.forEach(function (payment) {
+            if (!payment.accountId && payment.account && accountIdByName[payment.account]) {
+                payment.accountId = accountIdByName[payment.account];
+                debtsChanged = true;
+            }
+        });
+    });
+    if (debtsChanged) saveDebts(debts);   
+        const budgets = getCategoryBudgets();
+    const newBudgets = {};
+    let budgetsChanged = false;
+    Object.keys(budgets).forEach(function(key) {
+        if (categoryIdByName[key]) {
+            newBudgets[categoryIdByName[key]] = budgets[key];
+            budgetsChanged = true;
+        } else {
+            newBudgets[key] = budgets[key];
+        }
+    });
+    if (budgetsChanged) saveCategoryBudgets(newBudgets);
+}
 function getCustomCategoryIcons() {
     return safeParse(CUSTOM_CATEGORY_ICONS_KEY, []);
 }
@@ -333,8 +416,8 @@ function saveCategoryBudgets(budgets) {
 }
 // بترجع "near" لو الفئة وصلت 80% من حدها بعد المصروف ده،
 // و "over" لو عدّت الحد، وإلا null
-function getBudgetAlertType(category, amount, date) {
-    const limit = Number(getCategoryBudgets()[category]) || 0;
+function getBudgetAlertType(categoryId, amount, date) {
+    const limit = Number(getCategoryBudgets()[categoryId]) || 0;
     if (limit <= 0) return null;
 
     const now = new Date();
@@ -345,7 +428,7 @@ function getBudgetAlertType(category, amount, date) {
     let after = 0;
     loadTransactions().forEach(function (tx) {
         if (tx.type !== "expense" || tx.isTransfer === true) return;
-        if (tx.category !== category || !tx.date) return;
+                if (tx.categoryId !== categoryId || !tx.date) return;
 
         const d = new Date(tx.date);
         if (d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()) {

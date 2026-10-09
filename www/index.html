@@ -90,6 +90,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+                migrateDataToIds();
         initIcons();
         navigateTo("home");
         if (typeof runAutoBackupIfNeeded === "function") {
