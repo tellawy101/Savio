@@ -412,7 +412,75 @@ const BACKUP_KEYS = [
     STORAGE_KEY, ACCOUNTS_KEY, CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY,
 DEBTS_KEY, GOALS_KEY, BUDGET_KEY, CATEGORY_BUDGETS_KEY, THEME_KEY, LANGUAGE_KEY, CURRENCY_KEY, BALANCE_HIDDEN_KEY
 ];
+// ==============================
+// فحص بيانات ملف الاستعادة قبل ما تتكتب
+// بترجع null لو كله سليم، أو سبب الرفض
+// ==============================
+function validateBackupData(data) {
+    if (!data || typeof data !== "object" || Array.isArray(data)) {
+        return "backup data is not an object";
+    }
 
+    // كل القيم لازم تكون نصوص (زي ما التصدير بيكتبها)
+    for (const key of BACKUP_KEYS) {
+        if (key in data && typeof data[key] !== "string") {
+            return "value is not a string: " + key;
+        }
+    }
+
+    // مفاتيح لازم تكون array، وعناصرها object (ماعدا الفئات والأيقونات)
+    const objectArrayKeys = [STORAGE_KEY, ACCOUNTS_KEY, DEBTS_KEY, GOALS_KEY];
+    const plainArrayKeys = [CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY];
+
+    for (const key of objectArrayKeys.concat(plainArrayKeys)) {
+        if (!(key in data)) continue;
+
+        let parsed;
+        try {
+            parsed = JSON.parse(data[key]);
+        } catch (e) {
+            return "invalid JSON: " + key;
+        }
+
+        if (!Array.isArray(parsed)) return "not an array: " + key;
+
+        if (objectArrayKeys.indexOf(key) !== -1) {
+            for (const item of parsed) {
+                if (!item || typeof item !== "object" || Array.isArray(item)) {
+                    return "invalid item in: " + key;
+                }
+                if (key === STORAGE_KEY && !Number.isFinite(Number(item.amount))) {
+                    return "invalid amount in transactions";
+                }
+            }
+        }
+    }
+
+    // حدود الفئات لازم تكون object مش array
+    if (CATEGORY_BUDGETS_KEY in data) {
+        let budgets;
+        try {
+            budgets = JSON.parse(data[CATEGORY_BUDGETS_KEY]);
+        } catch (e) {
+            return "invalid JSON: " + CATEGORY_BUDGETS_KEY;
+        }
+        if (!budgets || typeof budgets !== "object" || Array.isArray(budgets)) {
+            return "not an object: " + CATEGORY_BUDGETS_KEY;
+        }
+    }
+
+    if (BUDGET_KEY in data && !Number.isFinite(Number(data[BUDGET_KEY]))) {
+        return "budget is not a number";
+    }
+
+    if (BALANCE_HIDDEN_KEY in data &&
+        data[BALANCE_HIDDEN_KEY] !== "true" &&
+        data[BALANCE_HIDDEN_KEY] !== "false") {
+        return "balanceHidden must be true or false";
+    }
+
+    return null;
+}
 // ==============================
 // حساب إجمالي معاملات حساب معيّن (منطق بيزنس منفصل عن العرض)
 // ==============================
