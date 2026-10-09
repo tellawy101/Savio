@@ -497,6 +497,15 @@ function createPreRestoreSnapshot() {
             if (value !== null) data[key] = value;
         });
 
+        // نمسح اللقطات القديمة الأول ونسيب مكان للجديدة
+        const snapshotKeys = Object.keys(localStorage)
+            .filter(function(k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; })
+            .sort();
+        
+        while (snapshotKeys.length >= MAX_SNAPSHOTS) {
+            localStorage.removeItem(snapshotKeys.shift());
+        }
+        
         localStorage.setItem(
             SNAPSHOT_PREFIX + Date.now(),
             JSON.stringify({
@@ -506,15 +515,6 @@ function createPreRestoreSnapshot() {
                 data: data
             })
         );
-
-        // نمسح اللقطات القديمة ونسيب آخر MAX_SNAPSHOTS بس
-        const snapshotKeys = Object.keys(localStorage)
-            .filter(function (k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; })
-            .sort();
-
-        while (snapshotKeys.length > MAX_SNAPSHOTS) {
-            localStorage.removeItem(snapshotKeys.shift());
-        }
 
         return true;
     } catch (e) {
@@ -530,9 +530,3 @@ function calculateTransactionsTotal(transactions) {
         return sum + Number(transaction.amount || 0);
     }, 0);
 }
-
-// ===== اختبار مؤقت - امسحه بعد التجربة =====
-(function () {
-    const keys = Object.keys(localStorage).filter(function (k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; });
-    alert("snapshots: " + keys.length);
-})();

@@ -235,6 +235,11 @@ if (languageSelectBtn && languagePickerModal) {
                     const confirmClear = await customConfirm(t("settings_clear_confirm"), { danger: true });
                     if (!confirmClear) return;
 
+            if (!createPreRestoreSnapshot()) {
+                showToast("مقدرتش آخد نسخة احتياطية من بياناتك الحالية، المسح اتلغى ومفيش حاجة اتغيّرت", "error");
+                return;
+            }
+            
             BACKUP_KEYS.forEach(key => localStorage.removeItem(key));
 
             await customAlert(t("settings_clear_done"));
