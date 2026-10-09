@@ -296,7 +296,7 @@ if (getTxAccountId(tr) !== accountKey || tr.type !== type || !tr.date) return;
         summary.innerHTML = `
             <h3>Total Balance</h3>
             <h1 id="accountsTotalBalance">
-                <span class="currency">EGP</span>
+<span class="currency">${getCurrency()}</span>
                 <span class="amount">${Math.round(totalBalance).toLocaleString("en-US")}</span>
             </h1>
         `;

@@ -140,7 +140,7 @@ account.textContent = getAccountNameById(payment.accountId, payment.account);
                 const amount = document.createElement("span");
                 amount.className = "payment-row-amount " + debt.type;
                 amount.textContent =
-                    (debt.type === "receivable" ? "+" : "-") + " EGP " +
+(debt.type === "receivable" ? "+" : "-") + " " + getCurrency() + " " +
                     Number(payment.amount).toLocaleString("en-US");
 
                 const deleteBtn = document.createElement("button");
@@ -455,14 +455,14 @@ saveDebts(debts);
                 ${debt.dueDate || t("debts_no_due_date")}            </div>
 
           <div class="debt-card-amount">
-                ${debt.type === "receivable" ? "+" : "-"} <span class="debt-currency">EGP</span> <span class="debt-amount-value">${Number(debt.remaining).toLocaleString("en-US")}</span>
+${debt.type === "receivable" ? "+" : "-"} <span class="debt-currency">${getCurrency()}</span> <span class="debt-amount-value">${Number(debt.remaining).toLocaleString("en-US")}</span>
             </div>
         </div>
 
         <div class="debt-card-main-row">
             ${
                 debt.paid > 0
-                ? `<span class="debt-paid-note"><span class="debt-currency">EGP</span> <span class="debt-amount-value">${Number(debt.paid).toLocaleString("en-US")}</span> ${typeof t === "function" ? t("debts_paid_note") : "Paid"}</span>`
+? `<span class="debt-paid-note"><span class="debt-currency">${getCurrency()}</span> <span class="debt-amount-value">${Number(debt.paid).toLocaleString("en-US")}</span> ${typeof t === "function" ? t("debts_paid_note") : "Paid"}</span>`
                 : `<span></span>`
             }
             ${
@@ -598,8 +598,10 @@ attachSwipeActions(card, { deleteEl: bgDelete, editEl: bgEdit, maxOffset: 60, th
         });
 
         totalReceivable.querySelector(".stat-value").innerText = Math.round(receivable).toLocaleString("en-US");
-totalPayable.querySelector(".stat-value").innerText = Math.round(payable).toLocaleString("en-US");
-        netBalance.querySelector(".currency").innerText = "EGP";
+        totalPayable.querySelector(".stat-value").innerText = Math.round(payable).toLocaleString("en-US");
+        totalReceivable.querySelector(".stat-currency").innerText = getCurrency();
+        totalPayable.querySelector(".stat-currency").innerText = getCurrency();
+netBalance.querySelector(".currency").innerText = getCurrency();
         netBalance.querySelector(".amount").innerText = Math.round(net).toLocaleString("en-US");
 
         if (window.lucide) lucide.createIcons();

@@ -100,7 +100,7 @@ item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
         item.innerHTML = renderListItemHTML(
     account.icon,
     account.name,
-    `<div class="account-balance">${currentBalance.toLocaleString()} EGP</div>`
+`<div class="account-balance">${currentBalance.toLocaleString()} ${getCurrency()}</div>`
 );
         let pressTimer;
         

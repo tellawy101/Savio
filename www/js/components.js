@@ -493,7 +493,7 @@ ${renderFormHeader(type, capitalize(type), '<i data-lucide="check"></i>')}
 
 <div class="amount-section">
     <div class="amount-display">
-        <span class="currency">EGP</span>
+<span class="currency">${getCurrency()}</span>
         <input type="tel" id="${type}Amount" inputmode="numeric" value="0">
     </div>
 </div>
@@ -554,7 +554,7 @@ ${renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>')}
 <main class="transfer-content">
 <div class="amount-section">
     <div class="amount-display">
-        <span class="currency">EGP</span>
+<span class="currency">${getCurrency()}</span>
         <input type="tel" id="transferAmount" inputmode="numeric" value="0">
     </div>
 </div>
@@ -564,7 +564,7 @@ ${renderTransferFields()}
 }
 
 // 7.3) بناء صندوق إحصائية واحد (Income/Expense بالهوم، Receivable/Payable بالديون) - نفس الشكل بيتفرق بس بالمحتوى
-function renderStatBox({ statClass = "", icon, labelKey, labelText, valueId, currency = "EGP" }) {
+function renderStatBox({ statClass = "", icon, labelKey, labelText, valueId, currency = getCurrency() }) {
     return `
 <div class="stat ${statClass}">
     <span>${icon}</span>

@@ -67,6 +67,8 @@ if (listTitleEl) {
 const total = calculateTransactionsTotal(accountTransactions);
 if (totalAmountEl) {
     totalAmountEl.textContent = total.toLocaleString("en-US");
+    const totalCurrencyEl = totalAmountEl.parentElement.querySelector(".currency");
+    if (totalCurrencyEl) totalCurrencyEl.textContent = getCurrency();
     const totalLen = String(Math.round(total)).length;
     if (totalLen <= 4) {
         totalAmountEl.style.fontSize = "26px";
@@ -100,7 +102,7 @@ if (totalAmountEl) {
             </div>
 
             <strong class="transaction-amount">
-                EGP ${amount.toLocaleString("en-US")}
+${getCurrency()} ${amount.toLocaleString("en-US")}
             </strong>
         `;
 
