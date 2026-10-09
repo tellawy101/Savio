@@ -5,7 +5,8 @@
 const APP_VERSION = "2.4.2";
 const STORAGE_KEY = "transactions";
 const CURRENCY_KEY = "currency";
-
+// بتبقى true لو معاملات المستخدم تالفة، عشان نمنع الكتابة فوقها
+let transactionsCorrupted = false;
 // ==============================
 // safeParse - قراءة آمنة من localStorage
 // ==============================
@@ -75,11 +76,14 @@ function loadTransactions() {
 
     } catch (error) {
 
-        console.error("Failed to load transactions, data may be corrupted:", error);
-
-        // بنعمل نسخة احتياطية من البيانات التالفة بدل ما نمسحها نهائي
-        localStorage.setItem(STORAGE_KEY + "_corrupted_backup", raw);
-
+                console.error("Failed to load transactions, data may be corrupted:", error);
+        
+        // backup مرة واحدة بس وباسم فيه الوقت، عشان أي تلف جديد ميمسحش القديم
+        if (!transactionsCorrupted) {
+            localStorage.setItem(STORAGE_KEY + "_corrupted_backup_" + Date.now(), raw);
+            transactionsCorrupted = true;
+        }
+        
         return [];
 
     }
@@ -92,11 +96,24 @@ function triggerCloudSync() {
 }
 
 function saveTransactions(transactions) {
+    
+    // لو البيانات الأصلية تالفة، مفيش كتابة فوقها عشان منخسرهاش
+    if (transactionsCorrupted) {
+        console.error("Save blocked: stored transactions are corrupted");
+        
+        if (typeof showToast === "function") {
+            showToast("بيانات المعاملات تالفة، الحفظ متوقف لحماية بياناتك", "error");
+        }
+        
+        return false;
+    }
+    
     localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(transactions)
     );
     triggerCloudSync();
+    return true;
 }
 
 
