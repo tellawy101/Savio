@@ -21,6 +21,19 @@ function initStatisticsPage() {
     return formatCurrency(amount);
   }
   
+    // حساب التصنيفات مرة واحدة لكل تحديث
+  let breakdownCache = { source: null, value: null };
+
+  function getCategoryBreakdown(transactions) {
+    if (breakdownCache.source !== transactions) {
+      breakdownCache = {
+        source: transactions,
+        value: calculateCategoryBreakdown(transactions)
+      };
+    }
+    return breakdownCache.value;
+  }
+  
   // ------------------------------
   // GET DATE
   // ------------------------------
@@ -98,14 +111,6 @@ function initStatisticsPage() {
         });
     }
 
-    // ------------------------------
-    // IGNORE TRANSFERS
-    // ------------------------------
-    // بعد
-function isTransfer(transaction) {
-    return transaction.isTransfer === true;
-}
-
 // ------------------------------
     // SUMMARY
     // ------------------------------
@@ -138,7 +143,7 @@ const dailyElement = document.getElementById("dailyAverage");
     const topCategoryElement = document.getElementById("topCategory");
 
 if (topCategoryElement) {
-    const topCategory = calculateCategoryBreakdown(transactions)[0];
+const topCategory = getCategoryBreakdown(transactions)[0];
     
     topCategoryElement.innerHTML = topCategory ?
         `<span class="stats-stat-value">${escapeHTML(topCategory.category)}</span> <span class="stats-stat-currency">${topCategory.share}%</span>` :
@@ -179,7 +184,7 @@ const topAccountElement = document.getElementById("topAccount");
             categoryPieChart = null;
         }
 
-        const breakdown = calculateCategoryBreakdown(transactions);
+const breakdown = getCategoryBreakdown(transactions);
 
         if (!breakdown.length) {
             canvas.parentElement.style.display = "none";
@@ -205,7 +210,14 @@ const topAccountElement = document.getElementById("topAccount");
                 maintainAspectRatio: false,
                 cutout: "60%",
                 plugins: {
-                    legend: { display: false }
+                    legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ": " + formatMoney(context.parsed);
+                                }
+                            }
+                        }
                 }
             }
         });
@@ -221,7 +233,7 @@ const topAccountElement = document.getElementById("topAccount");
             return;
         }
 
-        const breakdown = calculateCategoryBreakdown(transactions);
+const breakdown = getCategoryBreakdown(transactions);
 
 if (!breakdown.length) {
     
@@ -231,9 +243,7 @@ if (!breakdown.length) {
         <span>${t("stats_no_expense_data")}</span>
     </div>
 `;
-    
-    if (window.lucide) lucide.createIcons();
-    
+
     return;
 }
 
@@ -292,8 +302,6 @@ container.innerHTML = breakdown.map(({ category, amount, percentage }, index) =>
         <span>${t("stats_no_account_data")}</span>
     </div>
 `;
-
-            if (window.lucide) lucide.createIcons();
 
             return;
         }
@@ -361,7 +369,9 @@ groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, local
             cashFlowChart.destroy();
             cashFlowChart = null;
         }
-
+        const flowCard = canvas.closest(".statistics-card");
+        if (flowCard) flowCard.style.display = labels.length ? "" : "none";
+        if (!labels.length) return;
         cashFlowChart = new Chart(canvas, {
 
             type: "line",
@@ -431,7 +441,7 @@ groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, local
                         ticks: {
 
                             callback: function(value) {
-                                return value.toLocaleString();
+return value.toLocaleString("en-US");
                             }
 
                         }
@@ -464,7 +474,9 @@ groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, local
             barChart.destroy();
             barChart = null;
         }
-
+        const barCard = canvas.closest(".statistics-card");
+        if (barCard) barCard.style.display = labels.length ? "" : "none";
+        if (!labels.length) return;
         barChart = new Chart(canvas, {
             type: "bar",
             data: {
@@ -495,7 +507,7 @@ groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, local
                         beginAtZero: true,
                         ticks: {
                             callback: function(value) {
-                                return value.toLocaleString();
+return value.toLocaleString("en-US");
                             }
                         }
                     }
@@ -546,8 +558,12 @@ groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, local
                 if (change !== 0) {
                     const isGood = higherIsGood ? change > 0 : change < 0;
                     changeClass = isGood ? "compare-good" : "compare-bad";
+                    
                 }
-            }
+                } else if (currentValue > 0) {
+                    changeText = t("stats_compare_new");
+                    changeClass = higherIsGood ? "compare-good" : "compare-bad";
+                }
 
             return `
             <div class="compare-row">

@@ -71,18 +71,19 @@ const account = (transaction.accountId && accNameById[transaction.accountId]) ||
 
 function groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, locale) {
     const grouped = {};
-
+    const formatOptions = currentPeriod === "year"
+        ? { month: "short" }
+        : currentPeriod === "all"
+            ? { month: "short", year: "numeric" }
+            : { month: "short", day: "numeric" };
+    const formatter = new Intl.DateTimeFormat(locale, formatOptions);
     transactions.forEach(transaction => {
         if (transaction.isTransfer === true || !transaction.date) return;
         const date = getTransactionDate(transaction);
         if (!date) return;
 
-                const key = currentPeriod === "year" ?
-            date.toLocaleString(locale, { month: "short" }) :
-            currentPeriod === "all" ?
-            date.toLocaleDateString(locale, { month: "short", year: "numeric" }) :
-            date.toLocaleDateString(locale, { month: "short", day: "numeric" });
-        if (!grouped[key]) grouped[key] = { income: 0, expense: 0, date };
+const key = formatter.format(date);        
+if (!grouped[key]) grouped[key] = { income: 0, expense: 0, date };
 
         const amount = Number(transaction.amount) || 0;
         if (transaction.type === "income") grouped[key].income += amount;
