@@ -327,6 +327,9 @@ restore_preview_title: "Backup preview",
     restore_btn: "Restore",
     total_balance: "Total Balance",
 ok: "OK",
+no_transactions: "No transactions",
+add_first_transaction: "Tap + to add a new transaction",
+unspecified: "Unspecified",
     },
     ar: {
         // Bottom nav
@@ -646,6 +649,9 @@ stats_week: "أسبوع",
         restore_btn: "استعادة",
             total_balance: "إجمالي الرصيد",
     ok: "موافق",
+        no_transactions: "لا توجد معاملات",
+    add_first_transaction: "اضغط على + لإضافة معاملة جديدة",
+    unspecified: "غير محدد",
     }
 };
 

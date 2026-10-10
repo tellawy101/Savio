@@ -17,7 +17,7 @@ function loadScriptOnce(src) {
         s.src = src;
         s.dataset.lazy = src;
         s.onload = function () { s.dataset.loaded = "1"; resolve(); };
-        s.onerror = function () { reject(new Error("load failed: " + src)); };
+s.onerror = function () { s.remove(); reject(new Error("load failed: " + src)); };
         document.head.appendChild(s);
     });
 }
@@ -40,7 +40,12 @@ function getExportRows() {
         });
 }
 
-function getExportTypeLabel(type) {
+function getExportTypeLabel(type, isTransfer) {
+    if (isTransfer) {
+        if (type === "income") return "Transfer In";
+        if (type === "expense") return "Transfer Out";
+        return "Transfer";
+    }
     if (type === "income") return "Income";
     if (type === "expense") return "Expense";
     return type || "";
@@ -82,6 +87,8 @@ async function saveExportFile(fileName, text, mimeType) {
         }
     } catch (nativeErr) {
         console.warn("Native export error:", nativeErr);
+                showToast(t("export_failed"), "error");
+        return false;
     }
 
     // 2) متصفح عادي: تنزيل مباشر
@@ -127,7 +134,7 @@ function buildTransactionsCsv() {
         lines.push([
             tx.date,
             tx.time,
-            getExportTypeLabel(tx.type),
+getExportTypeLabel(tx.type, tx.isTransfer),
             tx.category,
             tx.account,
             tx.description,
@@ -193,6 +200,8 @@ async function saveExportBinary(fileName, base64Data, mimeType) {
         }
     } catch (nativeErr) {
         console.warn("Native binary export error:", nativeErr);
+                showToast(t("export_failed"), "error");
+        return false;
     }
 
     // 2) متصفح عادي: تنزيل مباشر
@@ -229,7 +238,7 @@ function buildTransactionsWorkbook() {
         sheetData.push([
             tx.date || "",
             tx.time || "",
-            getExportTypeLabel(tx.type),
+getExportTypeLabel(tx.type, tx.isTransfer),
             tx.category || "",
             tx.account || "",
             tx.description || "",
@@ -313,7 +322,9 @@ function buildTransactionsPdfElement() {
         const amount = Number(tx.amount) || 0;
         let color = "#555";
 
-        if (tx.type === "income") {
+        if (tx.isTransfer) {
+            color = "#555";
+        } else if (tx.type === "income") {
             totalIncome += amount;
             color = "#2E7D32";
         } else if (tx.type === "expense") {
@@ -324,7 +335,7 @@ function buildTransactionsPdfElement() {
         return "<tr style='page-break-inside:avoid;'>" +
             "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.date) + "</td>" +
             "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.time) + "</td>" +
-            "<td style='" + cellStyle + "color:" + color + ";'>" + exportEscapeHtml(getExportTypeLabel(tx.type)) + "</td>" +
+"<td style='" + cellStyle + "color:" + color + ";'>" + exportEscapeHtml(getExportTypeLabel(tx.type, tx.isTransfer)) + "</td>" +
             "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.category) + "</td>" +
             "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.account) + "</td>" +
             "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.description) + "</td>" +
