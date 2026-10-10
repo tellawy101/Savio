@@ -690,7 +690,12 @@ function attachSwipeActions(cardElement, options) {
         currentX = 0;
     });
 
-    document.addEventListener("touchstart", function(e) {
+    function handleOutsideTouch(e) {
+        // لو الكارت اتشال من الصفحة، نشيل المستمع ده من على الصفحة
+        if (!cardElement.isConnected) {
+            document.removeEventListener("touchstart", handleOutsideTouch);
+            return;
+        }
         if (deleteBtn && deleteBtn.contains(e.target)) return;
         if (editBtn && editBtn.contains(e.target)) return;
 
@@ -703,7 +708,9 @@ function attachSwipeActions(cardElement, options) {
                 if (editBtn) { editBtn.style.opacity = 0; editBtn.style.pointerEvents = "none"; }
             }, 250);
         }
-    });
+    }
+    document.addEventListener("touchstart", handleOutsideTouch);
+    
 }
 
 // ==========================================

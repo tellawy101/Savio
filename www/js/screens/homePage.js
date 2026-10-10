@@ -37,7 +37,8 @@ function initHomePage() {
     const accountFilter = document.getElementById("accountFilter");
         const categoryFilter = document.getElementById("categoryFilter");
     const sortFilter = document.getElementById("sortFilter");
-    window.selectedMonth = new Date().toISOString().slice(0, 7);
+    const nowLocal = new Date();
+    window.selectedMonth = nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0");
 
     // تحميل البيانات
     let expenses = loadTransactions();
@@ -60,6 +61,10 @@ if (expenses.length === 0) {
             typeof t === "function" ? t("add_first_transaction") : "اضغط على + لإضافة معاملة جديدة"
         );
         if (window.lucide) lucide.createIcons();
+                totalExpense.innerHTML = formatCurrencyHTML(0);
+        totalIncome.innerHTML = formatCurrencyHTML(0);
+        balanceCurrency.innerText = getCurrency();
+        balance.innerText = "0";
         return;
     }
         // بنرتب المعاملات حسب التاريخ (الأحدث فوق)، ولو نفس التاريخ الأحدث إضافة الأول
@@ -115,9 +120,6 @@ if (expenses.length === 0) {
             const li = createTransactionElement(expense);
             expenseList.appendChild(li);
 
-            if (window.lucide) {
-                lucide.createIcons();
-            }
 const card = li.querySelector(".expense-main");
             const deleteBtn = li.querySelector(".swipe-delete");
             const editBtn = li.querySelector(".swipe-edit");
@@ -146,6 +148,8 @@ const card = li.querySelector(".expense-main");
                     ? removeDebtPayment(expense.debtPaymentId)
                     : null;
                 renderExpenses();
+            updateBalanceChart();
+                updateBudgetButton();
                 showUndoToast(
                     typeof t === "function" ? t("item_deleted_toast") : "Item Deleted",
                     function () {
@@ -158,6 +162,8 @@ const card = li.querySelector(".expense-main");
 if (!saveTransactions(expenses)) return;
                         restoreDebtPayment(removedDebtPayment);
                         renderExpenses();
+                                                updateBalanceChart();
+                        updateBudgetButton();
                     }
                 );
             });
