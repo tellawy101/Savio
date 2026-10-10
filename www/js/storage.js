@@ -7,6 +7,27 @@ const STORAGE_KEY = "transactions";
 const CURRENCY_KEY = "currency";
 // بتبقى true لو معاملات المستخدم تالفة، عشان نمنع الكتابة فوقها
 let transactionsCorrupted = false;
+// كتابة آمنة في localStorage: لو المساحة خلصت نعرض رسالة ونرجع false
+function safeSetItem(key, value) {
+    try {
+        localStorage.setItem(key, value);
+        return true;
+    } catch (error) {
+        const isQuota = error && (
+            error.name === "QuotaExceededError" ||
+            error.name === "NS_ERROR_DOM_QUOTA_REACHED" ||
+            error.code === 22 ||
+            error.code === 1014
+        );
+        console.error("Failed to save '" + key + "':", error);
+        if (typeof showToast === "function") {
+            showToast(isQuota
+                ? "مساحة التخزين ممتلئة، اعمل نسخة احتياطية وامسح بيانات قديمة"
+                : "تعذر حفظ البيانات");
+        }
+        return false;
+    }
+}
 // ==============================
 // safeParse - قراءة آمنة من localStorage
 // ==============================
@@ -72,7 +93,7 @@ function loadTransactions() {
         });
 
         if (needsSave) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+safeSetItem(STORAGE_KEY, JSON.stringify(data));
         }
 
         return data;
@@ -111,10 +132,9 @@ function saveTransactions(transactions) {
         return false;
     }
     
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(transactions)
-    );
+        if (!safeSetItem(STORAGE_KEY, JSON.stringify(transactions))) {
+        return false;
+    }
     triggerCloudSync();
     return true;
 }
@@ -139,10 +159,7 @@ function getCurrency() {
 // بتغير العملة
 function setCurrency(currency) {
     
-    localStorage.setItem(
-        CURRENCY_KEY,
-        currency
-    );
+    safeSetItem(CURRENCY_KEY, currency);
 }
 
 
@@ -176,7 +193,7 @@ function getAccounts() {
     return safeParse(ACCOUNTS_KEY, []);
 }
 function saveAccounts(accounts) {
-    localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
+safeSetItem(ACCOUNTS_KEY, JSON.stringify(accounts));
     triggerCloudSync();
 }
 const THEME_KEY = "theme";
@@ -186,7 +203,7 @@ function getTheme() {
 }
 
 function saveTheme(theme) {
-    localStorage.setItem(THEME_KEY, theme);
+safeSetItem(THEME_KEY, theme);
 }
 // ==============================
 // Categories
@@ -200,7 +217,7 @@ function getCategories() {
 }
 
 function saveCategories(categories) {
-    localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
+safeSetItem(CATEGORIES_KEY, JSON.stringify(categories));
 }
 function generateId(prefix) {
     return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
@@ -326,7 +343,7 @@ function getCustomCategoryIcons() {
 }
 
 function saveCustomCategoryIcons(icons) {
-    localStorage.setItem(CUSTOM_CATEGORY_ICONS_KEY, JSON.stringify(icons));
+safeSetItem(CUSTOM_CATEGORY_ICONS_KEY, JSON.stringify(icons));
 }
 // ==============================
 // Balance Visibility
@@ -339,7 +356,7 @@ function getBalanceHidden() {
 }
 
 function saveBalanceHidden(hidden) {
-    localStorage.setItem(BALANCE_HIDDEN_KEY, hidden);
+safeSetItem(BALANCE_HIDDEN_KEY, hidden);
 }
 // ==============================
 // Budget
@@ -352,7 +369,7 @@ function getBudget() {
 }
 
 function saveBudget(amount) {
-    localStorage.setItem(BUDGET_KEY, amount);
+safeSetItem(BUDGET_KEY, amount);
     triggerCloudSync();
 }
 // ==============================
@@ -366,7 +383,7 @@ function getDebts() {
 }
 
 function saveDebts(debts) {
-    localStorage.setItem(DEBTS_KEY, JSON.stringify(debts));
+safeSetItem(DEBTS_KEY, JSON.stringify(debts));
     triggerCloudSync();
 }
 function removeDebtPayment(paymentId) {
@@ -405,8 +422,15 @@ function restoreDebtPayment(removed) {
 
     if (!Array.isArray(debt.payments)) debt.payments = [];
     debt.payments.push(removed.payment);
+        // المعرّفات القديمة أرقام (Date.now) والجديدة نصوص "pay_<وقت>_<عشوائي>"
+    // فبنستخرج الوقت من النوعين عشان الترتيب يفضل صح
+    function idTime(id) {
+        if (typeof id === "number") return id;
+        const m = /_(\d{10,})_/.exec(String(id));
+        return m ? Number(m[1]) : 0;
+    }
     debt.payments.sort(function (a, b) {
-        return a.id - b.id;
+        return idTime(a.id) - idTime(b.id);
     });
 
 debt.paid = Math.round((debt.paid + removed.payment.amount) * 100) / 100;
@@ -427,7 +451,7 @@ function getGoals() {
 }
 
 function saveGoals(goals) {
-    localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
+safeSetItem(GOALS_KEY, JSON.stringify(goals));
     triggerCloudSync();
 }
 // ==============================
@@ -446,7 +470,7 @@ function getCategoryBudgets() {
 }
 
 function saveCategoryBudgets(budgets) {
-    localStorage.setItem(CATEGORY_BUDGETS_KEY, JSON.stringify(budgets));
+safeSetItem(CATEGORY_BUDGETS_KEY, JSON.stringify(budgets));
     triggerCloudSync();
 }
 // بترجع "near" لو الفئة وصلت 80% من حدها بعد المصروف ده،
@@ -513,9 +537,9 @@ function calculateMonthlyTotals(transactions, selectedMonth) {
 
         if (!expense.isTransfer) {
             if (expense.type === "expense") {
-                total += expense.amount;
+total += Number(expense.amount) || 0;
             } else if (expense.type === "income") {
-                income += expense.amount;
+income += Number(expense.amount) || 0;
             }
         }
     });

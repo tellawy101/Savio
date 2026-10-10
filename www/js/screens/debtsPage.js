@@ -252,7 +252,7 @@ account.textContent = getAccountNameById(payment.accountId, payment.account);
                 }
 
             const debt = {
-                id: Date.now(),
+                id: generateTransactionId("debt"),
                 type: debtType.value,
                 person: person,
                 amount: amount,
@@ -300,7 +300,7 @@ saveDebts(debts);
             }
 
             const now = new Date();
-            const paymentId = Date.now();
+const paymentId = generateTransactionId("pay");
             const dateText = now.toISOString().split("T")[0];
             const timeText = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 

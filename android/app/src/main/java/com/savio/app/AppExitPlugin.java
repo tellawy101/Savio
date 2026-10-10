@@ -13,5 +13,6 @@ public class AppExitPlugin extends Plugin {
         if (getActivity() != null) {
             getActivity().finishAffinity();
         }
+                call.resolve();
     }
 }
