@@ -262,7 +262,7 @@ async function exportTransactionsExcel() {
         try {
         await loadScriptOnce("js/vendor/xlsx.full.min.js");
     } catch (err) {
-        showToast("مكتبة Excel مش متحملة", "error");
+showToast(t("excel_lib_missing"), "error");
         return;
     }
 
@@ -367,7 +367,7 @@ async function exportTransactionsPdf() {
         try {
         await loadScriptOnce("js/vendor/html2pdf.bundle.min.js");
     } catch (err) {
-        showToast("مكتبة PDF مش متحملة", "error");
+showToast(t("pdf_lib_missing"), "error");
         return;
     }
 
@@ -395,7 +395,7 @@ async function exportTransactionsPdf() {
         base64 = dataUri.split("base64,")[1];
     } catch (err) {
         console.error("PDF build error:", err);
-        showToast("حصلت مشكلة في تجهيز الـ PDF", "error");
+showToast(t("pdf_prepare_error"), "error");
         return;
     }
 

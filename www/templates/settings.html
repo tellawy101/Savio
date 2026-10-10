@@ -510,42 +510,37 @@
         <i data-lucide="history"></i>
       </div>
       
-      <h2>معاينة النسخة الاحتياطية</h2>
-      <p class="import-modal-desc">محتويات الملف الذي اخترته</p>
+           <h2 data-i18n="restore_preview_title">معاينة النسخة الاحتياطية</h2>
+      <p class="import-modal-desc" data-i18n="restore_preview_desc">محتويات الملف الذي اخترته</p>
       
       <div class="restore-stats">
         <div class="restore-stat">
           <i data-lucide="calendar"></i>
-          <span class="restore-stat-label">التاريخ</span>
-          <span class="restore-stat-value" id="previewBackupDate">-</span>
+          <span class="restore-stat-label" data-i18n="restore_stat_date">التاريخ</span>          <span class="restore-stat-value" id="previewBackupDate">-</span>
         </div>
         <div class="restore-stat">
           <i data-lucide="receipt"></i>
-          <span class="restore-stat-label">المعاملات</span>
-          <span class="restore-stat-value" id="previewTxCount">0</span>
+          <span class="restore-stat-label" data-i18n="restore_stat_transactions">المعاملات</span>          <span class="restore-stat-value" id="previewTxCount">0</span>
         </div>
         <div class="restore-stat">
           <i data-lucide="hand-coins"></i>
-          <span class="restore-stat-label">الديون</span>
-          <span class="restore-stat-value" id="previewDebtsCount">0</span>
+          <span class="restore-stat-label" data-i18n="restore_stat_debts">الديون</span>          <span class="restore-stat-value" id="previewDebtsCount">0</span>
         </div>
         <div class="restore-stat">
           <i data-lucide="landmark"></i>
-          <span class="restore-stat-label">الحسابات</span>
-          <span class="restore-stat-value" id="previewAccountsCount">0</span>
+          <span class="restore-stat-label" data-i18n="restore_stat_accounts">الحسابات</span>          <span class="restore-stat-value" id="previewAccountsCount">0</span>
         </div>
       </div>
       
-      <div class="restore-section-label">طريقة الاستعادة</div>
-      
+      <div class="restore-section-label" data-i18n="restore_method_label">طريقة الاستعادة</div>      
       <div class="restore-options">
         <label class="restore-option">
           <input type="radio" name="restoreMode" value="replace" checked>
           <div class="restore-option-body">
             <i data-lucide="replace"></i>
             <div class="restore-option-text">
-              <strong>استبدال كامل</strong>
-              <small>يمسح بياناتك الحالية ويحط اللي في الملف مكانها</small>
+                           <strong data-i18n="restore_replace_title">استبدال كامل</strong>
+              <small data-i18n="restore_replace_desc">يمسح بياناتك الحالية ويحط اللي في الملف مكانها</small>
             </div>
             <span class="restore-option-check"></span>
           </div>
@@ -556,8 +551,8 @@
           <div class="restore-option-body">
             <i data-lucide="git-merge"></i>
             <div class="restore-option-text">
-              <strong>دمج ذكي</strong>
-              <small>يضيف الجديد بس ويسيب بياناتك الحالية زي ما هي</small>
+                            <strong data-i18n="restore_merge_title">دمج ذكي</strong>
+              <small data-i18n="restore_merge_desc">يضيف الجديد بس ويسيب بياناتك الحالية زي ما هي</small>
             </div>
             <span class="restore-option-check"></span>
           </div>
@@ -565,8 +560,8 @@
       </div>
       
       <div class="modal-actions restore-actions">
-        <button id="confirmRestoreBtn" class="import-close-btn">استعادة</button>
-        <button id="cancelRestorePreviewBtn" class="restore-cancel-btn">إلغاء</button>
+                <button id="confirmRestoreBtn" class="import-close-btn" data-i18n="restore_btn">استعادة</button>
+        <button id="cancelRestorePreviewBtn" class="restore-cancel-btn" data-i18n="cancel">إلغاء</button>
       </div>
       
     </div>

@@ -77,11 +77,11 @@ function getMissingField() {
     const to = transferToAccount.textContent.trim();
     const date = transferDate.value;
 
-    if (amount <= 0) return "المبلغ";
-    if (from === t("select_account")) return "حساب المصدر";
-if (to === t("select_account")) return "حساب الوجهة";
-    if (from === to) return "حساب وجهة مختلف عن حساب المصدر";
-    if (date.length === 0) return "التاريخ";
+        if (amount <= 0) return t("field_amount");
+    if (from === t("select_account")) return t("field_source_account");
+    if (to === t("select_account")) return t("field_dest_account");
+    if (from === to) return t("field_different_dest");
+    if (date.length === 0) return t("field_date");
     return null;
 }
 
@@ -131,7 +131,7 @@ saveTransferBtn.onclick = function () {
     const missing = getMissingField();
 
     if (missing) {
-        showToast("من فضلك حدد " + missing);
+showToast(t("missing_prefix") + missing);
         return;
     }
 

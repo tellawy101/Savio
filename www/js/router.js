@@ -196,10 +196,10 @@ async function navigateTo(pageName) {
         // نعرض الخطأ بس لو ده آخر تنقل (مش تنقل قديم اتلغى)
         if (navToken === navigationToken) {
             if (typeof showToast === "function") {
-                showToast("تعذر تحميل الصفحة، حاول مرة تانية");
+showToast(t("page_load_failed_retry"));
             }
             if (!templateCache[pageName]) {
-                app.innerHTML = '<div style="padding:40px 20px;text-align:center;">تعذر تحميل الصفحة</div>';
+app.innerHTML = '<div style="padding:40px 20px;text-align:center;">' + t("page_load_failed") + '</div>';
             }
         }
     }

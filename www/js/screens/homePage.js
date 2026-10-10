@@ -268,7 +268,7 @@ if (!saveTransactions(expenses)) return;
     if (searchInput) searchInput.oninput = renderExpenses;
         function fillAccountFilter() {
         if (!accountFilter) return;
-        const allLabel = getLanguage() === "ar" ? "كل الحسابات" : "All accounts";
+const allLabel = t("filter_all_accounts");
         accountFilter.innerHTML = `<option value="">${allLabel}</option>`;
         getAccounts().forEach(function (a) {
             const opt = document.createElement("option");
@@ -279,11 +279,11 @@ if (!saveTransactions(expenses)) return;
     }
         fillAccountFilter();
     if (accountFilter) accountFilter.onchange = renderExpenses;
-    makeSelectSheet(accountFilter, getLanguage() === "ar" ? "الحساب" : "Account");
-    makeSelectSheet(categoryFilter, getLanguage() === "ar" ? "التصنيف" : "Category");
+makeSelectSheet(accountFilter, t("filter_account"));
+makeSelectSheet(categoryFilter, t("filter_category"));
         function fillCategoryFilter() {
         if (!categoryFilter) return;
-        const allLabel = getLanguage() === "ar" ? "كل الفئات" : "All categories";
+const allLabel = t("filter_all_categories");
         categoryFilter.innerHTML = `<option value="">${allLabel}</option>`;
         getCategories().forEach(function(c) {
             const opt = document.createElement("option");
@@ -299,10 +299,10 @@ if (!saveTransactions(expenses)) return;
         if (!sortFilter) return;
         const isAr = getLanguage() === "ar";
         const options = [
-            ["date_desc", isAr ? "الأحدث أولاً" : "Newest first"],
-            ["date_asc", isAr ? "الأقدم أولاً" : "Oldest first"],
-            ["amount_desc", isAr ? "الأعلى مبلغاً" : "Highest amount"],
-            ["amount_asc", isAr ? "الأقل مبلغاً" : "Lowest amount"]
+                        ["date_desc", t("sort_newest")],
+            ["date_asc", t("sort_oldest")],
+            ["amount_desc", t("sort_highest")],
+            ["amount_asc", t("sort_lowest")]
         ];
         sortFilter.innerHTML = "";
         options.forEach(function(o) {
@@ -314,7 +314,7 @@ if (!saveTransactions(expenses)) return;
     }
     fillSortFilter();
     if (sortFilter) sortFilter.onchange = renderExpenses;
-makeSelectSheet(sortFilter, getLanguage() === "ar" ? "الترتيب" : "Sort by");
+makeSelectSheet(sortFilter, t("sort_by"));
         if (window._homeTouchHandler) {
         document.removeEventListener("touchstart", window._homeTouchHandler);
     }

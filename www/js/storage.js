@@ -21,9 +21,7 @@ function safeSetItem(key, value) {
         );
         console.error("Failed to save '" + key + "':", error);
         if (typeof showToast === "function") {
-            showToast(isQuota
-                ? "مساحة التخزين ممتلئة، اعمل نسخة احتياطية وامسح بيانات قديمة"
-                : "تعذر حفظ البيانات");
+                        showToast(isQuota ? t("storage_full") : t("save_failed"));
         }
         return false;
     }
@@ -126,7 +124,7 @@ function saveTransactions(transactions) {
         console.error("Save blocked: stored transactions are corrupted");
         
         if (typeof showToast === "function") {
-            showToast("بيانات المعاملات تالفة، الحفظ متوقف لحماية بياناتك", "error");
+showToast(t("data_corrupted_save_stopped"), "error");
         }
         
         return false;

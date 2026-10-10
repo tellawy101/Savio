@@ -32,10 +32,10 @@ setupCommonFormPage();
         const category = categoryEl.textContent.trim();
         const date = dateEl.value;
 
-        if (amount <= 0) return "المبلغ";
-        if (account === t("select_account")) return "الحساب";
-        if (category === t("select_category")) return "التصنيف";
-        if (date.length === 0) return "التاريخ";
+                if (amount <= 0) return t("field_amount");
+        if (account === t("select_account")) return t("field_account");
+        if (category === t("select_category")) return t("field_category");
+        if (date.length === 0) return t("field_date");
         return null;
     }
 
@@ -91,7 +91,7 @@ if (window.lucide) lucide.createIcons();
     saveBtn.onclick = async function () {
         const missing = getMissingField();
         if (missing) {
-            showToast("من فضلك حدد " + missing);
+showToast(t("missing_prefix") + missing);
             return;
         }
 

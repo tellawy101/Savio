@@ -312,7 +312,7 @@ if (getTxAccountId(tr) !== accountKey || tr.type !== type || !tr.date) return;
         if (accountsWithBalance.length === 0) {
             list.innerHTML = `
                 <p class="accounts-empty">
-                    لسه معندكش حسابات. دوس على + بالأسفل عشان تضيف أول حساب.
+                    ${t("accounts_empty_hint")}
                 </p>
             `;
         } else {

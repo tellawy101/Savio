@@ -405,13 +405,12 @@ function showNoAccountsModal(existingAccountsCount) {
     if (!modal) return;
 
     if (existingAccountsCount === 0) {
-        title.textContent = "لسه معملتش أي حساب";
-        message.textContent = "لازم تعمل حسابين على الأقل عشان تقدر تحوّل فلوس بينهم.";
+title.textContent = t("need_two_accounts_title");
+        message.textContent = t("need_two_accounts_msg");
     } else {
-        title.textContent = "محتاج حساب واحد كمان";
-        message.textContent = "عندك حساب واحد بس دلوقتي. اعمل حساب تاني عشان تقدر تحوّل.";
+        title.textContent = t("need_one_more_title");
+        message.textContent = t("need_one_more_msg");
     }
-
     modal.classList.add("show");
 
 closeModalOnBackdropClick(modal);

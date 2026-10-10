@@ -280,7 +280,7 @@ if (languageSelectBtn && languagePickerModal) {
                     if (!confirmClear) return;
 
             if (!createPreRestoreSnapshot()) {
-                showToast("مقدرتش آخد نسخة احتياطية من بياناتك الحالية، المسح اتلغى ومفيش حاجة اتغيّرت", "error");
+showToast(t("backup_take_failed_clear"), "error");
                 return;
             }
             
@@ -355,7 +355,7 @@ window.location.href = "index.html";
                         fileName: fileName,
                         content: jsonText
                     });
-                    showToast("تم حفظ النسخة في Downloads", "success");
+showToast(t("backup_saved_downloads"), "success");
                     downloadsSaved = true;
                 }
             } catch (downloadsErr) {
@@ -377,10 +377,10 @@ window.location.href = "index.html";
                         if (Share) {
                             try {
                                 await Share.share({
-                                    title: "نسخة احتياطية - Savio",
-                                    text: "ملف النسخة الاحتياطية لتطبيق Savio",
-                                    url: writtenFile.uri,
-                                    dialogTitle: "حفظ أو مشاركة النسخة الاحتياطية"
+                                                                        title: t("share_title"),
+                                        text: t("share_text_app"),
+                                        url: writtenFile.uri,
+                                        dialogTitle: t("share_dialog_title")
                                 });
                             } catch (shareErr) {
                                 // المستخدم لغى قائمة المشاركة - تجاهل بهدوء، الملف أصلاً محفوظ
@@ -402,8 +402,8 @@ window.location.href = "index.html";
                 const file = new File([jsonText], fileName, { type: "application/json" });
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({
-                        title: "نسخة احتياطية - Savio",
-                        text: "ملف النسخة الاحتياطية",
+                                                title: t("share_title"),
+                            text: t("share_text_file"),
                         files: [file]
                     });
                     return;
@@ -416,7 +416,7 @@ window.location.href = "index.html";
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: "نسخة احتياطية - Savio",
+title: t("share_title"),
                         text: jsonText
                     });
                     return;
@@ -434,9 +434,9 @@ window.location.href = "index.html";
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                showToast("تم بدء التنزيل", "success");
+showToast(t("download_started"), "success");
             } catch (err) {
-                showToast("حدث خطأ أثناء التصدير", "error");
+showToast(t("export_failed"), "error");
             }
         });
 
@@ -461,10 +461,10 @@ const importFileInput = document.getElementById("importFileInput");    const res
         if (!badge) return;
         const lastTime = localStorage.getItem("savio_last_backup_time");
         if (!lastTime) {
-            badge.textContent = "لم يتم إنشاء نسخة بعد";
+badge.textContent = t("backup_none_yet");
         } else {
             const d = new Date(lastTime);
-            badge.textContent = "آخر نسخة: " + d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+badge.textContent = t("backup_last_prefix") + d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
     }
     updateLastBackupBadge();
@@ -548,7 +548,7 @@ const importFileInput = document.getElementById("importFileInput");    const res
                                 if (mode === "replace") {
                     // لقطة احتياطية من البيانات الحالية قبل ما نمسحها
                     if (!createPreRestoreSnapshot()) {
-                        showToast("مقدرتش آخد نسخة احتياطية من بياناتك الحالية، الاستبدال اتلغى ومفيش حاجة اتغيّرت", "error");
+showToast(t("backup_take_failed_replace"), "error");
                         return;
                     }
 
@@ -665,7 +665,7 @@ const importFileInput = document.getElementById("importFileInput");    const res
                         });
                     } catch (e) {
                         console.error("Merge aborted:", e);
-                        showToast("بياناتك الحالية تالفة، الدمج اتلغى ومفيش حاجة اتغيّرت. استخدم الاستبدال الكامل", "error");
+showToast(t("merge_cancelled_corrupt"), "error");
                         return;
                     }
                 }
