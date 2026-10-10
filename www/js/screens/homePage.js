@@ -18,8 +18,7 @@ function initHomePage() {
     // ------------------------------
     // العناصر
     // ------------------------------
-    const amount = document.getElementById("amount");
-    const category = document.getElementById("category");
+    
 
     const expenseList = document.getElementById("expenseList");
     const searchInput = document.getElementById("searchInput");
@@ -44,12 +43,7 @@ function initHomePage() {
     let expenses = loadTransactions();
     let income = 0;
     let total = 0;
-    let editIndex = -1;
-function cleanLabel(text) {
-        return String(text || "")
-            .replace(/^[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\s]+/u, "")
-            .trim();
-    }
+    
     // عرض البيانات
     function renderExpenses() {
 
@@ -189,7 +183,13 @@ const card = li.querySelector(".expense-main");
             attachSwipeActions(card, { deleteEl: deleteBtn, editEl: editBtn });
 
         });
-
+        if (!expenseList.children.length) {
+            expenseList.innerHTML = renderEmptyState(
+                "search",
+                t("no_transactions"),
+                ""
+            );
+        }
                 totalExpense.innerHTML = formatCurrencyHTML(total);
         totalIncome.innerHTML = formatCurrencyHTML(income);
 
@@ -227,7 +227,7 @@ balance.innerText = formatAmountNumber(income - total);
         if (!monthLabelBtn) return;
         const [year, month] = window.selectedMonth.split("-");
         const date = new Date(Number(year), Number(month) - 1);
-        const monthName = date.toLocaleDateString("en-US", { month: "long" });
+const monthName = date.toLocaleDateString(getLanguage() === "ar" ? "ar-EG" : "en-US", { month: "long" });
         monthLabelBtn.innerHTML = `
             <span class="month-label-month">${monthName}</span>
             <span class="month-label-year">${year}</span>
@@ -275,7 +275,13 @@ balance.innerText = formatAmountNumber(income - total);
         };
     }
 
-    if (searchInput) searchInput.oninput = renderExpenses;
+    let searchTimer = null;
+    if (searchInput) {
+        searchInput.oninput = function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(renderExpenses, 250);
+        };
+    }
         function fillAccountFilter() {
         if (!accountFilter) return;
 const allLabel = t("filter_all_accounts");
@@ -307,7 +313,6 @@ const allLabel = t("filter_all_categories");
     
         function fillSortFilter() {
         if (!sortFilter) return;
-        const isAr = getLanguage() === "ar";
         const options = [
                         ["date_desc", t("sort_newest")],
             ["date_asc", t("sort_oldest")],
@@ -381,9 +386,7 @@ makeSelectSheet(sortFilter, t("sort_by"));
             
             document.body.style.paddingBottom = "";
             
-            if (typeof renderExpenses === "function") {
-                renderExpenses();
-            }
+            renderExpenses();
         }
         
     };
@@ -392,7 +395,7 @@ makeSelectSheet(sortFilter, t("sort_by"));
     // Balance Chart (last 7 days, week starts Saturday)
     // ------------------------------
     function updateChartDays() {
-        const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+const days = [t("day_sat"), t("day_sun"), t("day_mon"), t("day_tue"), t("day_wed"), t("day_thu"), t("day_fri")];
         for (let i = 0; i < 7; i++) {
             const element = document.getElementById(`day${i}`);
             if (element) element.textContent = days[i];
@@ -511,9 +514,15 @@ makeSelectSheet(sortFilter, t("sort_by"));
 
 if (budgetAmountInput) {
     budgetAmountInput.addEventListener("input", function() {
-        const digits = budgetAmountInput.value.replace(/\D/g, "");
-        budgetAmountInput.value = digits ? Number(digits).toLocaleString("en-US") : "";
-    });
+                // نحوّل الأرقام العربية لإنجليزي، ونسمح بعلامة عشرية واحدة ورقمين بعدها
+        const raw = budgetAmountInput.value
+            .replace(/[٠-٩]/g, function(d) { return "٠١٢٣٤٥٦٧٨٩".indexOf(d); })
+            .replace(/[^0-9.]/g, "");
+        const dotIndex = raw.indexOf(".");
+        const intPart = dotIndex === -1 ? raw : raw.slice(0, dotIndex);
+        const decPart = dotIndex === -1 ? "" : raw.slice(dotIndex + 1).replace(/\./g, "").slice(0, 2);
+        const intText = intPart ? Number(intPart).toLocaleString("en-US") : (dotIndex === -1 ? "" : "0");
+        budgetAmountInput.value = dotIndex === -1 ? intText : intText + "." + decPart;    });
 }
 
 if (budgetBtn && budgetModal) {
