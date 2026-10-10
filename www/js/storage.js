@@ -154,23 +154,31 @@ function setCurrency(currency) {
     safeSetItem(CURRENCY_KEY, currency);
 }
 
-
+// بتنسق الرقم بحد أقصى رقمين عشريين
+function formatAmountNumber(amount) {
+    const n = Number(amount) || 0;
+    const rounded = (Math.round(n * 100) / 100) || 0;
+    return rounded.toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    });
+}
 // بتنسق المبلغ مع العملة
 function formatCurrency(amount) {
     const currency = getCurrency();
 
-    return `${currency} ${Math.round(Number(amount) || 0).toLocaleString("en-US")}`;
+return `${currency} ${formatAmountNumber(amount)}`;
 }
 function formatCurrencyHTML(amount) {
     const currency = getCurrency();
-    const value = Math.round(Number(amount) || 0).toLocaleString("en-US");
+const value = formatAmountNumber(amount);
     
     return `<span class="stat-currency">${currency}</span> <span class="stat-value">${value}</span>`;
 }
 
 function formatCurrencyHTMLStats(amount) {
     const currency = getCurrency();
-    const value = Math.round(Number(amount) || 0).toLocaleString("en-US");
+const value = formatAmountNumber(amount);
     
     return `<span class="stats-stat-currency">${currency}</span> <span class="stats-stat-value">${value}</span>`;
 }

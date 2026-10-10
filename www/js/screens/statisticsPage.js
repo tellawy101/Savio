@@ -29,7 +29,10 @@ function initStatisticsPage() {
       return null;
     }
     
-    const date = new Date(transaction.date);
+    const parts = String(transaction.date).split("-").map(Number);
+    const date = parts.length === 3 && !parts.some(Number.isNaN) ?
+        new Date(parts[0], parts[1] - 1, parts[2]) :
+        new Date(transaction.date);
     
     if (Number.isNaN(date.getTime())) {
       return null;
@@ -72,7 +75,10 @@ function initStatisticsPage() {
                     start.getDate() - daysFromSaturday
                 );
 
-                return date >= start && date <= now;
+                const end = new Date(start);
+                end.setDate(start.getDate() + 7);
+                
+                return date >= start && date < end;
             }
 
             if (currentPeriod === "month") {
@@ -351,8 +357,9 @@ const locale = getLanguage() === "ar" ? "ar-EG" : "en-US";
 
 const { labels, incomeData, expenseData } =
 groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, locale);
-        if (cashFlowChart) {
+                if (cashFlowChart) {
             cashFlowChart.destroy();
+            cashFlowChart = null;
         }
 
         cashFlowChart = new Chart(canvas, {
@@ -643,4 +650,10 @@ movePeriodIndicator(document.querySelector(".period-btn.active"));
     // Initialize
     // ------------------------------
     updateStatistics();
+        // تنظيف الرسوم لما نسيب الصفحة
+    window.cleanupStatisticsPage = function() {
+        if (cashFlowChart) { cashFlowChart.destroy(); cashFlowChart = null; }
+        if (categoryPieChart) { categoryPieChart.destroy(); categoryPieChart = null; }
+        if (barChart) { barChart.destroy(); barChart = null; }
+    };
 }

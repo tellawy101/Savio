@@ -24,7 +24,7 @@ function calculateCategoryBreakdown(transactions) {
 
     transactions.forEach(transaction => {
         if (transaction.type !== "expense" || transaction.isTransfer === true) return;
-const category = (transaction.categoryId && catNameById[transaction.categoryId]) || transaction.category || "Other";
+const category = (transaction.categoryId && catNameById[transaction.categoryId]) || transaction.category || t("stats_category_other");
         const amount = Number(transaction.amount) || 0;
         categories[category] = (categories[category] || 0) + amount;
     });
@@ -50,7 +50,7 @@ function calculateAccountBreakdown(transactions) {
 
     transactions.forEach(transaction => {
         if (transaction.isTransfer === true) return;
-const account = (transaction.accountId && accNameById[transaction.accountId]) || transaction.account || "Unknown";
+const account = (transaction.accountId && accNameById[transaction.accountId]) || transaction.account || t("stats_account_unknown");
         const amount = Number(transaction.amount) || 0;
 
         if (!accounts[account]) accounts[account] = { income: 0, expense: 0 };
@@ -77,10 +77,11 @@ function groupTransactionsForChart(transactions, currentPeriod, getTransactionDa
         const date = getTransactionDate(transaction);
         if (!date) return;
 
-        const key = currentPeriod === "year"
-            ? date.toLocaleString(locale, { month: "short" })
-            : date.toLocaleDateString(locale, { month: "short", day: "numeric" });
-
+                const key = currentPeriod === "year" ?
+            date.toLocaleString(locale, { month: "short" }) :
+            currentPeriod === "all" ?
+            date.toLocaleDateString(locale, { month: "short", year: "numeric" }) :
+            date.toLocaleDateString(locale, { month: "short", day: "numeric" });
         if (!grouped[key]) grouped[key] = { income: 0, expense: 0, date };
 
         const amount = Number(transaction.amount) || 0;

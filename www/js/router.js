@@ -132,7 +132,10 @@ async function navigateTo(pageName) {
             document.body.classList.remove("add-transaction-page");
             document.body.classList.remove("has-scroll");
         }
-        
+                if (typeof window.cleanupStatisticsPage === "function") {
+            window.cleanupStatisticsPage();
+            window.cleanupStatisticsPage = null;
+        }
                 app.innerHTML = html;
         if (!document.getElementById("customConfirmModal")) {
             const confirmHolder = document.createElement("div");
