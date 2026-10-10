@@ -294,7 +294,7 @@ if (getTxAccountId(tr) !== accountKey || tr.type !== type || !tr.date) return;
         const summary = document.createElement("div");
         summary.className = "balance-card";
         summary.innerHTML = `
-            <h3>Total Balance</h3>
+<h3>${t("total_balance")}</h3>
             <h1 id="accountsTotalBalance">
 <span class="currency">${getCurrency()}</span>
                 <span class="amount">${Math.round(totalBalance).toLocaleString("en-US")}</span>

@@ -63,7 +63,6 @@ function safeParse(key, fallback) {
 // ==============================
 
 // بترجع كل المعاملات المخزّنة
-// بترجع كل المعاملات المخزّنة
 function loadTransactions() {
 
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -73,8 +72,7 @@ function loadTransactions() {
     try {
 
         const data = JSON.parse(raw);
-
-        // لازم يكون array، أي شكل تاني يعتبر تلف في البيانات
+        
         // لازم يكون array، أي شكل تاني يعتبر تلف في البيانات
         if (!Array.isArray(data)) {
             throw new Error("Corrupted transactions data (not an array)");
@@ -113,10 +111,6 @@ safeSetItem(STORAGE_KEY, JSON.stringify(data));
 }
 
 // بتحفظ كل المعاملات
-function triggerCloudSync() {
-    // cloud sync removed
-}
-
 function saveTransactions(transactions) {
     
     // لو البيانات الأصلية تالفة، مفيش كتابة فوقها عشان منخسرهاش
@@ -133,7 +127,7 @@ showToast(t("data_corrupted_save_stopped"), "error");
         if (!safeSetItem(STORAGE_KEY, JSON.stringify(transactions))) {
         return false;
     }
-    triggerCloudSync();
+
     return true;
 }
 
@@ -192,7 +186,7 @@ function getAccounts() {
 }
 function saveAccounts(accounts) {
 safeSetItem(ACCOUNTS_KEY, JSON.stringify(accounts));
-    triggerCloudSync();
+
 }
 const THEME_KEY = "theme";
 
@@ -368,7 +362,7 @@ function getBudget() {
 
 function saveBudget(amount) {
 safeSetItem(BUDGET_KEY, amount);
-    triggerCloudSync();
+
 }
 // ==============================
 // Debts
@@ -382,7 +376,6 @@ function getDebts() {
 
 function saveDebts(debts) {
 safeSetItem(DEBTS_KEY, JSON.stringify(debts));
-    triggerCloudSync();
 }
 function removeDebtPayment(paymentId) {
     const debts = getDebts();
@@ -450,7 +443,7 @@ function getGoals() {
 
 function saveGoals(goals) {
 safeSetItem(GOALS_KEY, JSON.stringify(goals));
-    triggerCloudSync();
+
 }
 // ==============================
 // Category Budgets
@@ -469,7 +462,6 @@ function getCategoryBudgets() {
 
 function saveCategoryBudgets(budgets) {
 safeSetItem(CATEGORY_BUDGETS_KEY, JSON.stringify(budgets));
-    triggerCloudSync();
 }
 // بترجع "near" لو الفئة وصلت 80% من حدها بعد المصروف ده،
 // و "over" لو عدّت الحد، وإلا null
@@ -550,7 +542,7 @@ income += Number(expense.amount) || 0;
 
 const BACKUP_KEYS = [
     STORAGE_KEY, ACCOUNTS_KEY, CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY,
-DEBTS_KEY, GOALS_KEY, BUDGET_KEY, CATEGORY_BUDGETS_KEY, THEME_KEY, LANGUAGE_KEY, CURRENCY_KEY, BALANCE_HIDDEN_KEY
+DEBTS_KEY, GOALS_KEY, BUDGET_KEY, CATEGORY_BUDGETS_KEY, THEME_KEY, "language", CURRENCY_KEY, BALANCE_HIDDEN_KEY
 ];
 // ==============================
 // فحص بيانات ملف الاستعادة قبل ما تتكتب

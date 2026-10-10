@@ -325,6 +325,8 @@ restore_preview_title: "Backup preview",
     restore_merge_title: "Smart merge",
     restore_merge_desc: "Adds only new items and keeps your current data as it is",
     restore_btn: "Restore",
+    total_balance: "Total Balance",
+ok: "OK",
     },
     ar: {
         // Bottom nav
@@ -642,6 +644,8 @@ stats_week: "أسبوع",
         restore_merge_title: "دمج ذكي",
         restore_merge_desc: "يضيف الجديد بس ويسيب بياناتك الحالية زي ما هي",
         restore_btn: "استعادة",
+            total_balance: "إجمالي الرصيد",
+    ok: "موافق",
     }
 };
 

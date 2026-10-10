@@ -141,8 +141,8 @@ async function navigateTo(pageName) {
                 <div class="modal-content custom-confirm-content">
                     <p id="customConfirmMessage" class="custom-confirm-message"></p>
                     <div class="custom-confirm-actions">
-                        <button id="customConfirmCancelBtn" class="custom-confirm-cancel-btn">Cancel</button>
-                        <button id="customConfirmOkBtn" class="custom-confirm-ok-btn">OK</button>
+                                                <button id="customConfirmCancelBtn" class="custom-confirm-cancel-btn" data-i18n="cancel">Cancel</button>
+                        <button id="customConfirmOkBtn" class="custom-confirm-ok-btn" data-i18n="ok">OK</button>
                     </div>
                 </div>
             </div>`;
