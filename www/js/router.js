@@ -132,11 +132,15 @@ async function navigateTo(pageName) {
             document.body.classList.remove("add-transaction-page");
             document.body.classList.remove("has-scroll");
         }
-                if (typeof window.cleanupStatisticsPage === "function") {
+                        if (typeof window.cleanupStatisticsPage === "function") {
             window.cleanupStatisticsPage();
             window.cleanupStatisticsPage = null;
         }
-                app.innerHTML = html;
+        if (typeof window.cleanupHomePage === "function") {
+            window.cleanupHomePage();
+            window.cleanupHomePage = null;
+        }
+        app.innerHTML = html;
         if (!document.getElementById("customConfirmModal")) {
             const confirmHolder = document.createElement("div");
             confirmHolder.innerHTML = `

@@ -77,10 +77,12 @@ if (expenses.length === 0) {
                 const amountB = Math.abs(Number(b.expense.amount || 0));
                 if (mode === "amount_desc" && amountA !== amountB) return amountB - amountA;
                 if (mode === "amount_asc" && amountA !== amountB) return amountA - amountB;
-                if (a.expense.date !== b.expense.date) {
+                                const dateA = a.expense.date || "";
+                const dateB = b.expense.date || "";
+                if (dateA !== dateB) {
                     return mode === "date_asc"
-                        ? a.expense.date.localeCompare(b.expense.date)
-                        : b.expense.date.localeCompare(a.expense.date);
+                        ? dateA.localeCompare(dateB)
+                        : dateB.localeCompare(dateA);
                 }
                 return mode === "date_asc" ? a.index - b.index : b.index - a.index;
             });
@@ -153,13 +155,15 @@ const card = li.querySelector(".expense-main");
                 showUndoToast(
                     typeof t === "function" ? t("item_deleted_toast") : "Item Deleted",
                     function () {
+                                                const currentList = loadTransactions();
                         deletedWithPositions
                             .sort((a, b) => a.position - b.position)
                             .forEach(({ item, position }) => {
-                                const insertAt = Math.min(position, expenses.length);
-                                expenses.splice(insertAt, 0, item);
+                                const insertAt = Math.min(position, currentList.length);
+                                currentList.splice(insertAt, 0, item);
                             });
-if (!saveTransactions(expenses)) return;
+                        if (!saveTransactions(currentList)) return;
+                        expenses = currentList;
                         restoreDebtPayment(removedDebtPayment);
                         renderExpenses();
                                                 updateBalanceChart();
@@ -186,11 +190,11 @@ if (!saveTransactions(expenses)) return;
 
         });
 
-        totalExpense.innerHTML = formatCurrencyHTML(Math.round(total));
-        totalIncome.innerHTML = formatCurrencyHTML(Math.round(income));
+                totalExpense.innerHTML = formatCurrencyHTML(total);
+        totalIncome.innerHTML = formatCurrencyHTML(income);
 
         balanceCurrency.innerText = getCurrency();
-        balance.innerText = Math.round(income - total).toLocaleString("en-US");
+balance.innerText = formatAmountNumber(income - total);
 
         if (window.lucide) {
             lucide.createIcons();
@@ -321,33 +325,6 @@ const allLabel = t("filter_all_categories");
     fillSortFilter();
     if (sortFilter) sortFilter.onchange = renderExpenses;
 makeSelectSheet(sortFilter, t("sort_by"));
-        if (window._homeTouchHandler) {
-        document.removeEventListener("touchstart", window._homeTouchHandler);
-    }
-    window._homeTouchHandler = (e) => {
-
-        document.querySelectorAll(".expense-main").forEach(card => {
-
-            const swipe = card.parentElement;
-
-            if (!swipe.contains(e.target)) {
-
-                card.style.transform = "translateX(0px)";
-
-                const deleteBtn = swipe.querySelector(".swipe-delete");
-                const editBtn = swipe.querySelector(".swipe-edit");
-
-                deleteBtn.style.opacity = 0;
-                deleteBtn.style.pointerEvents = "none";
-                editBtn.style.opacity = 0;
-                editBtn.style.pointerEvents = "none";
-
-            }
-
-        });
-
-    };
-    document.addEventListener("touchstart", window._homeTouchHandler);
     if (addMenuBtn) {
     addMenuBtn.onclick = function() {
         window.pendingAddTransactionTab = "expense";
@@ -588,10 +565,10 @@ if (budgetModal) {
     const curr = getCurrency();
     
     if (remaining >= 0) {
-        const val = Math.round(remaining).toLocaleString("en-US");
+const val = formatAmountNumber(remaining);
         budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span>`;
     } else {
-    const val = Math.round(Math.abs(remaining)).toLocaleString("en-US");
+const val = formatAmountNumber(Math.abs(remaining));
     const overText = typeof t === "function" ? t("budget_over") : "over";
     budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span> <span class="budget-over">${overText}</span>`;
 }
@@ -616,4 +593,12 @@ if (budgetModal) {
     }
 
     updateBudgetButton();
+        // تنظيف لما نسيب الصفحة الرئيسية
+    window.cleanupHomePage = function() {
+        if (window._homeClickHandler) {
+            document.removeEventListener("click", window._homeClickHandler);
+            window._homeClickHandler = null;
+        }
+        document.body.style.paddingBottom = "";
+    };
 }
