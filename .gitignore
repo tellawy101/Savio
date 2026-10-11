@@ -5,5 +5,3 @@ android/local.properties
 *.keystore
 node_modules/
 www_backup/
-
-ignore node_modules and www_backup
