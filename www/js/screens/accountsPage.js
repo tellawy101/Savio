@@ -46,6 +46,7 @@ function initAccountsPage() {
 
     if (openAddAccountBtn) {
         openAddAccountBtn.onclick = function () {
+                        resetAddAccountForm();
             document.getElementById("addAccountModal").classList.add("show");
         };
     }
@@ -68,7 +69,17 @@ function initAccountsPage() {
     const iconDropdownList = document.getElementById("iconDropdownList");
     const selectedIconLabel = document.getElementById("selectedIconLabel");
     const newAccountIconInput = document.getElementById("newAccountIcon");
-
+    function resetAddAccountForm() {
+        editingAccount = null;
+        document.getElementById("newAccountName").value = "";
+        document.getElementById("newAccountDescription").value = "";
+        document.getElementById("newAccountBalance").value = "";
+        document.getElementById("selectedIconPreviewWrap").innerHTML =
+            `<i data-lucide="wallet" id="selectedIconPreview"></i>`;
+        selectedIconLabel.textContent = t("choose_icon_label");
+        newAccountIconInput.value = "wallet";
+        if (window.lucide) lucide.createIcons();
+    }
     closeModalOnBackdropClick(accountModal);
     closeModalOnBackdropClick(addAccountModal);
     closeModalOnBackdropClick(accountMenu);

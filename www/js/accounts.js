@@ -28,7 +28,17 @@ const deleteAccountBtn = document.getElementById("deleteAccountBtn");
 // State
 let selectedAccount = "";
 let editingAccount = null;
-
+    function resetAddAccountForm() {
+        editingAccount = null;
+        document.getElementById("newAccountName").value = "";
+        document.getElementById("newAccountDescription").value = "";
+        document.getElementById("newAccountBalance").value = "";
+        document.getElementById("selectedIconPreviewWrap").innerHTML =
+            `<i data-lucide="wallet" id="selectedIconPreview"></i>`;
+        selectedIconLabel.textContent = t("choose_icon_label");
+        newAccountIconInput.value = "wallet";
+        if (window.lucide) lucide.createIcons();
+    }
 // ==============================
 // Events
 // ==============================
@@ -45,7 +55,7 @@ closeModalOnBackdropClick(accountModal);
 if (addAccountBtn) {
     addAccountBtn.onclick = function(e) {
         e.stopPropagation();
-        
+                resetAddAccountForm();
         accountModal.classList.remove("show");
         
         setTimeout(function() {
