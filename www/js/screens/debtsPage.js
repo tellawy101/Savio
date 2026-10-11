@@ -181,7 +181,7 @@ account.textContent = getAccountNameById(payment.accountId, payment.account);
     // ------------------------------
     if (addDebtBtn) {
         addDebtBtn.onclick = function () {
-            debtDueDate.value = new Date().toISOString().split("T")[0];
+            debtDueDate.value = getTodayDateString();
             debtModal.classList.add("show");
         };
     }
@@ -237,7 +237,7 @@ account.textContent = getAccountNameById(payment.accountId, payment.account);
     saveDebtBtn.onclick = async function() {
                 const person = debtPerson.value.trim();
                 const amount = Number(debtAmount.value);
-                const dueDate = debtDueDate.value || new Date().toISOString().split("T")[0];
+                const dueDate = debtDueDate.value || getTodayDateString();
                 
                 if (person === "") {
                     await customAlert(t("debts_enter_person_alert"));
@@ -281,7 +281,9 @@ saveDebts(debts);
             if (!currentPayDebt) return;
 
             const payment = Math.round(Number(payAmount.value) * 100) / 100;
-            const account = payAccount.value;
+            const accountId = payAccount.value;
+const accountObj = getAccounts().find(function(a) { return a.id === accountId; });
+const account = accountObj ? accountObj.name : "";
 
             if (!account) {
                 await customAlert(t("debts_select_account_alert"));
@@ -301,7 +303,7 @@ saveDebts(debts);
 
             const now = new Date();
 const paymentId = generateTransactionId("pay");
-            const dateText = now.toISOString().split("T")[0];
+            const dateText = getTodayDateString();
             const timeText = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
             if (!Array.isArray(currentPayDebt.payments)) currentPayDebt.payments = [];
@@ -310,8 +312,7 @@ const paymentId = generateTransactionId("pay");
                 id: paymentId,
                                 amount: payment,
                     account: account,
-                    accountId: getAccountIdByName(account),
-                    date: dateText,
+                    accountId: accountId,                    date: dateText,
                 time: timeText
             });
 
@@ -326,8 +327,7 @@ const paymentId = generateTransactionId("pay");
             transactions.push({
                          amount: payment,
                     account: account,
-                    accountId: getAccountIdByName(account),
-                    description: currentPayDebt.type === "receivable" ?
+                    accountId: accountId,                    description: currentPayDebt.type === "receivable" ?
     `${t("debts_payment_from")} ${currentPayDebt.person}` :
     `${t("debts_payment_to")} ${currentPayDebt.person}`,
                 category: "Debt Payment",
@@ -374,7 +374,15 @@ if (!amount || amount <= 0) {
     editDebtAmount.focus();
     return;
 }
-
+if (amount < editingDebt.paid) {
+    await customAlert(t("debts_amount_below_paid_alert"));
+    editDebtAmount.focus();
+    return;
+}
+if (type !== editingDebt.type && Array.isArray(editingDebt.payments) && editingDebt.payments.length > 0) {
+    await customAlert(t("debts_type_change_blocked_alert"));
+    return;
+}
             editingDebt.person = person;
             editingDebt.amount = amount;
             editingDebt.type = type;
@@ -452,17 +460,18 @@ saveDebts(debts);
 
         <div class="debt-card-main-row">
             <div class="debt-card-details">
-                ${debt.dueDate || t("debts_no_due_date")}            </div>
-
+${debt.dueDate ? escapeHTML(debt.dueDate) : t("debts_no_due_date")}
+                </div>
           <div class="debt-card-amount">
-${debt.type === "receivable" ? "+" : "-"} <span class="debt-currency">${getCurrency()}</span> <span class="debt-amount-value">${Number(debt.remaining).toLocaleString("en-US")}</span>
+
+${debt.type === "receivable" ? "+" : "-"} <span class="debt-currency">${escapeHTML(getCurrency())}</span> <span class="debt-amount-value">${Number(debt.remaining).toLocaleString("en-US")}</span>
             </div>
         </div>
 
         <div class="debt-card-main-row">
             ${
                 debt.paid > 0
-? `<span class="debt-paid-note"><span class="debt-currency">${getCurrency()}</span> <span class="debt-amount-value">${Number(debt.paid).toLocaleString("en-US")}</span> ${typeof t === "function" ? t("debts_paid_note") : "Paid"}</span>`
+? `<span class="debt-paid-note"><span class="debt-currency">${escapeHTML(getCurrency())}</span> <span class="debt-amount-value">${Number(debt.paid).toLocaleString("en-US")}</span> ${typeof t === "function" ? t("debts_paid_note") : "Paid"}</span>`
                 : `<span></span>`
             }
             ${
@@ -502,7 +511,7 @@ const card = wrapper.querySelector(".debt-card");
                     payAccount.appendChild(defaultOpt);
                     accounts.forEach(function (acc) {
                         const opt = document.createElement("option");
-                        opt.value = acc.name;
+                        opt.value = acc.id;
                         opt.textContent = acc.name;
                         payAccount.appendChild(opt);
                     });
