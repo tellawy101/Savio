@@ -318,10 +318,6 @@ const currentBalance = calculateAccountBalance(account, transactions);
         const list = document.createElement("div");
         list.className = "accounts-list";
 
-        // مسار روابط "الدخل/المصروف" جوه كارت الحساب - لازم يتظبط حسب مكان الصفحة
-        // (فاتحة من /pages/ القديمة ولا من الراوتر جوه الهوم)
-        const transactionsBase = window.location.pathname.includes("/pages/") ? "" : "pages/";
-
         if (accountsWithBalance.length === 0) {
             list.innerHTML = `
                 <p class="accounts-empty">
@@ -364,7 +360,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
                                 <i data-lucide="arrow-up-right"></i>
                             </div>
                             <div class="stat-texts">
-                                <div class="stat-label">Income</div>
+<div class="stat-label">${t("stats_income")}</div>
                                 <div class="stat-amount-row">
                                     <span class="stat-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
                                     <span class="stat-value stat-value-income">${Math.round(account.income).toLocaleString("en-US")}</span>
@@ -378,7 +374,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
                                 <i data-lucide="arrow-down-right"></i>
                             </div>
                             <div class="stat-texts">
-                                <div class="stat-label">Expense</div>
+<div class="stat-label">${t("stats_expense")}</div>
                                 <div class="stat-amount-row">
                                     <span class="stat-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
                                     <span class="stat-value stat-value-expense">${Math.round(account.expense).toLocaleString("en-US")}</span>
@@ -393,7 +389,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
                                 <i data-lucide="wallet"></i>
                             </div>
                             <div class="stat-texts">
-                                <div class="stat-label">Net Balance</div>
+<div class="stat-label">${t("stats_net_balance")}</div>
                                 <div class="stat-amount-row">
                                     <span class="stat-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
                                     <span class="stat-value stat-value-balance">${Math.round(netBalance).toLocaleString("en-US")}</span>

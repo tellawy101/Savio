@@ -51,21 +51,6 @@ ${ isHome ? `
 </nav>
     `;
 }
-
-// 2) دالة الانتقال بين الصفحات مع أنيميشن (موحدة بدل ما كانت مكررة)
-function navigateWithAnimation(button, url) {
-    const nav = button.closest(".bottom-nav");
-    const current = nav ? nav.querySelector(".nav-item.active") : null;
-
-    if (current && current !== button) {
-        current.classList.remove("active");
-    }
-
-    button.classList.add("active");
-
-        window.location.href = url;
-}
-
 // 3) تفعيل أيقونات lucide (موحدة)
 // 3) تفعيل أيقونات lucide (موحدة)
 function initIcons() {
@@ -81,13 +66,7 @@ function initIcons() {
 function setupBottomNav(basePath = '') {
     initIcons();
 
-    const routes = {
-    home: basePath + 'index.html',
-    debts: basePath + 'pages/debts.html',
-    statistics: basePath + 'pages/statistics.html',
-    accounts: basePath + 'pages/accounts.html',
-    settings: basePath + 'pages/settings.html'
-};
+
 
     document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -102,8 +81,6 @@ if (typeof ROUTES !== 'undefined' && ROUTES[page] && typeof navigateTo === 'func
             navigateTo(page);
             return;
         }
-        
-        navigateWithAnimation(this, routes[page]);
     });
 });
 }
@@ -291,18 +268,17 @@ function renderSharedModals() {
 
     <div id="accountMenu" class="modal">
         <div class="modal-content">
-            <button id="editAccountBtn"><i data-lucide="pencil"></i> Edit</button>
+<button id="editAccountBtn"><i data-lucide="pencil"></i> <span data-i18n="menu_edit">Edit</span></button>
                         <button id="setMainAccountBtn" data-i18n="set_main_account_btn"><i data-lucide="badge-check"></i> Set as Main</button>
-<button id="deleteAccountBtn"><i data-lucide="trash-2"></i> Delete</button>
+<button id="deleteAccountBtn"><i data-lucide="trash-2"></i> <span data-i18n="menu_delete">Delete</span></button>
         </div>
     </div>
-   <div id="categoryMenu" class="modal">
+    <div id="categoryMenu" class="modal">
         <div class="modal-content">
-            <button id="editCategoryBtn"><i data-lucide="pencil"></i> Edit</button>
-<button id="deleteCategoryBtn"><i data-lucide="trash-2"></i> Delete</button>
+            <button id="editCategoryBtn"><i data-lucide="pencil"></i> <span data-i18n="menu_edit">Edit</span></button>
+            <button id="deleteCategoryBtn"><i data-lucide="trash-2"></i> <span data-i18n="menu_delete">Delete</span></button>
         </div>
     </div>
-
     <div id="noAccountsModal" class="modal">
         <div class="modal-content" style="text-align:center;">
             <div style="width:56px;height:56px;border-radius:50%;background:#F3F4F6;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
@@ -493,7 +469,7 @@ ${renderTransactionFields(type)}
 function renderTransferFields() {
     return `
 <div class="form-group">
-    <label>From Account</label>
+<label data-i18n="transfer_from_label">From Account</label>
     <div class="account-select-box">
         <span class="account-icon">💳</span>
         <div id="transferFromAccount" class="account-select" data-i18n="select_account">Select Account</div>
@@ -508,7 +484,7 @@ function renderTransferFields() {
 </div>
 
 <div class="form-group">
-    <label>To Account</label>
+<label data-i18n="transfer_to_label">To Account</label>
     <div class="account-select-box">
         <span class="account-icon">💳</span>
         <div id="transferToAccount" class="account-select" data-i18n="select_account">Select Account</div>
@@ -757,7 +733,7 @@ subtitle = `${getTxAccountName(expense)} ➔ ${getAccountNameById(expense.transf
             <div class="expense-right">
                 <span class="expense-amount ${amountClass}">${sign}${formattedAmount} <small class="expense-currency">${curr}</small></span>
                 <span class="expense-date">${formatDisplayDate(expense.date)}</span>
-${expense.time ? `<span class="expense-date">${expense.time}</span>` : ""}
+${expense.time ? `<span class="expense-date">${escapeHTML(expense.time)}</span>` : ""}
             </div>
         </div>
     `;

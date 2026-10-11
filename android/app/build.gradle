@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
-
+// رقم الإصدار بيتقري من www/js/storage.js (APP_VERSION) كمصدر واحد
+def savioVersionMatch = file("../../www/js/storage.js").text =~ /APP_VERSION\s*=\s*"(\d+)\.(\d+)\.(\d+)"/
+if (!savioVersionMatch.find()) {
+    throw new GradleException("APP_VERSION not found in www/js/storage.js")
+}
+def savioVersionName = savioVersionMatch.group(1) + "." + savioVersionMatch.group(2) + "." + savioVersionMatch.group(3)
+def savioVersionCode = savioVersionMatch.group(1).toInteger() * 10000 + savioVersionMatch.group(2).toInteger() * 100 + savioVersionMatch.group(3).toInteger()
 android {
     namespace "com.savio.app"
     compileSdk rootProject.ext.compileSdkVersion
@@ -7,9 +13,9 @@ android {
         applicationId "com.savio.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        //الاصدار
-        versionCode 4
-        versionName "2.4.2"
+        // الإصدار بيتقري من www/js/storage.js (APP_VERSION)
+        versionCode savioVersionCode
+        versionName savioVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

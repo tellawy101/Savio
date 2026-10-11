@@ -6,10 +6,9 @@
 function initBackButton(btn) {
     if (!btn) return;
     btn.onclick = function () {
-        window.location.href = "../index.html";
+        navigateTo("home");
     };
 }
-
 function setupCommonFormPage() {
     fixScrollOnFocusOut();
     applyStoredTheme();

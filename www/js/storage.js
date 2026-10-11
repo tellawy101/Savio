@@ -7,12 +7,16 @@ const STORAGE_KEY = "transactions";
 const CURRENCY_KEY = "currency";
 // بتبقى true لو معاملات المستخدم تالفة، عشان نمنع الكتابة فوقها
 let transactionsCorrupted = false;
+// عدّاد فشل الكتابة في التخزين (بنستخدمه عشان نعرف لو عملية كتابة فشلت)
+let storageWriteFailures = 0;
+
 // كتابة آمنة في localStorage: لو المساحة خلصت نعرض رسالة ونرجع false
 function safeSetItem(key, value) {
     try {
         localStorage.setItem(key, value);
         return true;
     } catch (error) {
+        storageWriteFailures++;
         const isQuota = error && (
             error.name === "QuotaExceededError" ||
             error.name === "NS_ERROR_DOM_QUOTA_REACHED" ||
@@ -21,7 +25,7 @@ function safeSetItem(key, value) {
         );
         console.error("Failed to save '" + key + "':", error);
         if (typeof showToast === "function") {
-                        showToast(isQuota ? t("storage_full") : t("save_failed"));
+            showToast(isQuota ? t("storage_full") : t("save_failed"));
         }
         return false;
     }
@@ -100,7 +104,11 @@ safeSetItem(STORAGE_KEY, JSON.stringify(data));
         
         // backup مرة واحدة بس وباسم فيه الوقت، عشان أي تلف جديد ميمسحش القديم
         if (!transactionsCorrupted) {
-            localStorage.setItem(STORAGE_KEY + "_corrupted_backup_" + Date.now(), raw);
+            try {
+                localStorage.setItem(STORAGE_KEY + "_corrupted_backup_" + Date.now(), raw);
+            } catch (backupErr) {
+                console.error("Could not save corrupted-data backup:", backupErr);
+            }
             transactionsCorrupted = true;
         }
         
@@ -324,6 +332,7 @@ function ensureAccountAndCategoryIds() {
     if (categoriesChanged) saveCategories(categories);
 }
 function migrateDataToIds() {
+    const failuresBefore = storageWriteFailures;
     ensureAccountAndCategoryIds();
     if (localStorage.getItem("savioIdMigrationDone") === "1") return;
 
@@ -383,7 +392,10 @@ function migrateDataToIds() {
         }
     });
     if (budgetsChanged) saveCategoryBudgets(newBudgets);
-    localStorage.setItem("savioIdMigrationDone", "1");
+    // العلامة بتتحط بس لو كل الكتابات نجحت، عشان لو فشلت التحويل يتعاد بعدين
+    if (storageWriteFailures === failuresBefore) {
+        safeSetItem("savioIdMigrationDone", "1");
+    }
     }
 function getCustomCategoryIcons() {
     return safeParse(CUSTOM_CATEGORY_ICONS_KEY, []);

@@ -344,7 +344,17 @@ window.location.href = "index.html";
             const jsonText = JSON.stringify(payload, null, 2);
             const fileName = "savio-backup-" + Date.now() + ".json";
 
-            // حفظ تاريخ التصدير وتحديث الشارة
+            // حفظ تاريخ التصدير مؤقتاً، ولو التصدير فشل نرجّع التاريخ القديم
+            const previousBackupTime = localStorage.getItem("savio_last_backup_time");
+            const restoreBackupTime = function() {
+                if (previousBackupTime === null) {
+                    localStorage.removeItem("savio_last_backup_time");
+                } else {
+                    localStorage.setItem("savio_last_backup_time", previousBackupTime);
+                }
+                if (typeof updateLastBackupBadge === "function") updateLastBackupBadge();
+            };
+            
             localStorage.setItem("savio_last_backup_time", new Date().toISOString());
             if (typeof updateLastBackupBadge === "function") updateLastBackupBadge();
 // حفظ تلقائي في Downloads + بعدها فتح قائمة المشاركة
@@ -383,8 +393,9 @@ showToast(t("backup_saved_downloads"), "success");
                                         dialogTitle: t("share_dialog_title")
                                 });
                             } catch (shareErr) {
-                                // المستخدم لغى قائمة المشاركة - تجاهل بهدوء، الملف أصلاً محفوظ
+                                // المشاركة اتلغت: لو الملف مااتحفظش في Downloads يبقى مفيش نسخة حقيقية اتحفظت
                                 console.warn("Share dismissed or failed:", shareErr);
+                                if (!downloadsSaved) restoreBackupTime();          console.warn("Share dismissed or failed:", shareErr);
                             }
                             return;
                         }
@@ -436,7 +447,8 @@ title: t("share_title"),
                 URL.revokeObjectURL(url);
 showToast(t("download_started"), "success");
             } catch (err) {
-showToast(t("export_failed"), "error");
+                restoreBackupTime();
+                showToast(t("export_failed"), "error");
             }
         });
 
