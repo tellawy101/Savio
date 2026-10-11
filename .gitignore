@@ -3,3 +3,5 @@ android/app/build/
 android/.gradle/
 android/local.properties
 *.keystore
+node_modules/
+www_backup/
