@@ -35,9 +35,9 @@ const transactionsListEl = document.getElementById("transactionsList");
 const emptyStateEl = document.getElementById("emptyState");
 const transactions = loadTransactions();
 const accountTransactions = transactions.filter(transaction => {
-const sameAccount = getTxAccountId(transaction) === accountName;
+    const sameAccount = getTxAccountId(transaction) === accountName;
     const sameType = transaction.type === type;
-    return sameAccount && sameType;
+    return sameAccount && sameType && !transaction.isTransfer;
 });
 
 if (accountNameEl) {

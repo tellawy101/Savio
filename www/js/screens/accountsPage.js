@@ -258,13 +258,14 @@ saveAccounts(accounts);
     function getAccountActivity(accountKey, transactions) {
         let income = 0, expense = 0;
         transactions.forEach(function (tr) {
-if (getTxAccountId(tr) !== accountKey) return;
+            if (getTxAccountId(tr) !== accountKey) return;
+            // التحويلات مش دخل ولا مصروف حقيقي، فمش بتتعد هنا
+            if (tr.isTransfer) return;
             if (tr.type === "income") income += Number(tr.amount) || 0;
             else if (tr.type === "expense") expense += Number(tr.amount) || 0;
         });
         return { income, expense };
     }
-
     function getSparklinePoints(accountKey, type, transactions) {
         const MONTHS = 5;
         const now = new Date();
@@ -275,7 +276,7 @@ if (getTxAccountId(tr) !== accountKey) return;
         }
         const sums = keys.map(function () { return 0; });
         transactions.forEach(function (tr) {
-if (getTxAccountId(tr) !== accountKey || tr.type !== type || !tr.date) return;
+if (getTxAccountId(tr) !== accountKey || tr.type !== type || !tr.date || tr.isTransfer) return;
             const idx = keys.indexOf(tr.date.slice(0, 7));
             if (idx !== -1) sums[idx] += Number(tr.amount) || 0;
         });
@@ -295,7 +296,7 @@ if (getTxAccountId(tr) !== accountKey || tr.type !== type || !tr.date) return;
 
         const accountsWithBalance = accounts.map(function (account) {
             const activity = getAccountActivity(account.id, transactions);
-            const currentBalance = Number(account.balance) + activity.income - activity.expense;
+const currentBalance = calculateAccountBalance(account, transactions);
             return Object.assign({}, account, activity, { currentBalance });
         });
 

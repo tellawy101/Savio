@@ -222,13 +222,38 @@ safeSetItem(CATEGORIES_KEY, JSON.stringify(categories));
 function generateId(prefix) {
     return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
 }
+// جداول بحث (بالـ id وبالاسم) للحسابات والفئات
+// بتتبني مرة واحدة وبتتجدد بس لما البيانات المخزّنة تتغير (بدل JSON.parse مع كل معاملة)
+const lookupCache = {};
+
+function getLookup(storageKey, readList) {
+    const raw = localStorage.getItem(storageKey);
+    let entry = lookupCache[storageKey];
+
+    if (!entry || entry.raw !== raw) {
+        const byId = new Map();
+        const byName = new Map();
+
+        readList().forEach(function (item) {
+            if (!item) return;
+            if (item.id && !byId.has(item.id)) byId.set(item.id, item);
+            if (!byName.has(item.name)) byName.set(item.name, item);
+        });
+
+        entry = { raw: raw, byId: byId, byName: byName };
+        lookupCache[storageKey] = entry;
+    }
+
+    return entry;
+}
+
 function getAccountIdByName(name) {
-    const acc = getAccounts().find(a => a.name === name);
+    const acc = getLookup(ACCOUNTS_KEY, getAccounts).byName.get(name);
     return acc ? acc.id : null;
 }
 
 function getCategoryIdByName(name) {
-    const cat = getCategories().find(c => c.name === name);
+    const cat = getLookup(CATEGORIES_KEY, getCategories).byName.get(name);
     return cat ? cat.id : null;
 }
 function getTxAccountId(tx) {
@@ -239,21 +264,43 @@ function getTxCategoryId(tx) {
     return tx.categoryId || getCategoryIdByName(tx.category);
 }
 function getAccountNameById(id, fallback) {
-    const acc = id ? getAccounts().find(a => a.id === id) : null;
+    const acc = id ? getLookup(ACCOUNTS_KEY, getAccounts).byId.get(id) : null;
     return acc ? acc.name : (fallback || "");
 }
 
 function getCategoryNameById(id, fallback) {
-    const cat = id ? getCategories().find(c => c.id === id) : null;
+    const cat = id ? getLookup(CATEGORIES_KEY, getCategories).byId.get(id) : null;
     return cat ? cat.name : (fallback || "");
 }
-
 function getTxAccountName(tx) {
     return getAccountNameById(tx.accountId, tx.account);
 }
 
 function getTxCategoryName(tx) {
     return getCategoryNameById(tx.categoryId, tx.category);
+}
+// رصيد حساب واحد = الرصيد الافتتاحي + كل الدخل - كل المصروف (التحويلات داخلة في الرصيد)
+function calculateAccountBalance(account, transactions) {
+    let balance = Number(account.balance) || 0;
+
+    transactions.forEach(function (tr) {
+        if (getTxAccountId(tr) !== account.id) return;
+
+        const amount = Number(tr.amount) || 0;
+        if (tr.type === "income") balance += amount;
+        else if (tr.type === "expense") balance -= amount;
+    });
+
+    return balance;
+}
+
+// إجمالي رصيد كل الحسابات (نفس الرقم اللي في صفحة الحسابات)
+function getTotalBalance(transactions) {
+    const list = transactions || loadTransactions();
+
+    return getAccounts().reduce(function (sum, account) {
+        return sum + calculateAccountBalance(account, list);
+    }, 0);
 }
 function ensureAccountAndCategoryIds() {
     const accounts = getAccounts();

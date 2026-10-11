@@ -194,7 +194,7 @@ const card = li.querySelector(".expense-main");
         totalIncome.innerHTML = formatCurrencyHTML(income);
 
         balanceCurrency.innerText = getCurrency();
-balance.innerText = formatAmountNumber(income - total);
+balance.innerText = formatAmountNumber(getTotalBalance(expenses));
 
         if (window.lucide) {
             lucide.createIcons();

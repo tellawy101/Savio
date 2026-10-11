@@ -94,7 +94,7 @@ function renderSkeleton() {
 }
 let navigationToken = 0;
 
-async function navigateTo(pageName) {
+async function navigateTo(pageName, fromPopState = false) {
         currentPageName = pageName;
         const navToken = ++navigationToken;
         const route = ROUTES[pageName];
@@ -195,7 +195,11 @@ async function navigateTo(pageName) {
         if (typeof applyLanguage === "function") applyLanguage();
         
         app.style.visibility = "visible";
-        history.pushState({ page: pageName }, "", "#" + pageName);
+        if (fromPopState) {
+            history.replaceState({ page: pageName }, "", "#" + pageName);
+        } else {
+            history.pushState({ page: pageName }, "", "#" + pageName);
+        }
     } catch (err) {
         app.style.visibility = "visible";
         console.error("Router failed to load page:", pageName, err);
@@ -312,7 +316,7 @@ window.addEventListener("popstate", function(e) {
     
     const page = (e.state && e.state.page) || "home";
     if (page !== currentPageName) {
-        navigateTo(page);
+navigateTo(page, true);
     }
 });
 // تحميل باقي الصفحات في الخلفية بعد أول تحميل
