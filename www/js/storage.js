@@ -438,7 +438,39 @@ debt.paid = Math.round((debt.paid + removed.payment.amount) * 100) / 100;
 
     saveDebts(debts);
 }
+function updateDebtPayment(paymentId, newAmount, account, accountId, date) {
+    const debts = getDebts();
+    let found = false;
+    let exceeds = false;
 
+    debts.forEach(function (debt) {
+        if (found || !Array.isArray(debt.payments)) return;
+
+        const payment = debt.payments.find(function (p) {
+            return p.id === paymentId;
+        });
+        if (!payment) return;
+        found = true;
+
+        const newPaid = Math.round((debt.paid - payment.amount + newAmount) * 100) / 100;
+        if (newPaid > debt.amount) {
+            exceeds = true;
+            return;
+        }
+
+        payment.amount = newAmount;
+        payment.account = account;
+        payment.accountId = accountId;
+        payment.date = date;
+        debt.paid = newPaid;
+        debt.remaining = Math.round((debt.amount - debt.paid) * 100) / 100;
+        debt.status = debt.remaining <= 0 ? "paid" : "open";
+    });
+
+    if (exceeds) return false;
+    if (found) saveDebts(debts);
+    return true;
+}
 // ==============================
 // Savings Goals
 // ==============================

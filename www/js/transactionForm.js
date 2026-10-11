@@ -112,6 +112,20 @@ showToast(t("missing_prefix") + missing);
         if (editId) {
             const entryIndex = transactions.findIndex(tx => tx.id === editId);
             if (entryIndex !== -1) {
+                                const oldTx = transactions[entryIndex];
+                if (oldTx.debtPaymentId) {
+                    const debtOk = updateDebtPayment(
+                        oldTx.debtPaymentId,
+                        entryData.amount,
+                        entryData.account,
+                        entryData.accountId,
+                        entryData.date
+                    );
+                    if (!debtOk) {
+                        await customAlert(t("debts_payment_exceeds_alert"));
+                        return;
+                    }
+                }
                 transactions[entryIndex] = { ...transactions[entryIndex], ...entryData };
             } else {
                 entryData.id = generateTransactionId("tx");
