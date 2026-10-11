@@ -669,6 +669,16 @@ function createPreRestoreSnapshot() {
             if (value !== null) data[key] = value;
         });
 
+        // نمسح اللقطات القديمة الأول ونسيب (MAX_SNAPSHOTS - 1) بس
+        // عشان نفضّي مساحة قبل ما نكتب اللقطة الجديدة
+        const snapshotKeys = Object.keys(localStorage)
+            .filter(function(k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; })
+            .sort();
+        
+        while (snapshotKeys.length > MAX_SNAPSHOTS - 1) {
+            localStorage.removeItem(snapshotKeys.shift());
+        }
+        
         localStorage.setItem(
             SNAPSHOT_PREFIX + Date.now(),
             JSON.stringify({
@@ -678,15 +688,6 @@ function createPreRestoreSnapshot() {
                 data: data
             })
         );
-
-        // نمسح اللقطات القديمة ونسيب آخر MAX_SNAPSHOTS بس
-        const snapshotKeys = Object.keys(localStorage)
-            .filter(function (k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; })
-            .sort();
-
-        while (snapshotKeys.length > MAX_SNAPSHOTS) {
-            localStorage.removeItem(snapshotKeys.shift());
-        }
 
         return true;
     } catch (e) {
