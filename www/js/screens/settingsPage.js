@@ -371,7 +371,7 @@ showToast(t("backup_saved_downloads"), "success");
                         const writtenFile = await Filesystem.writeFile({
                             path: fileName,
                             data: jsonText,
-                            directory: Directory ? Directory.Cache : 'CACHE'
+             encoding: 'utf8',      directory: Directory ? Directory.Cache : 'CACHE'
                         });
 
                         if (Share) {
