@@ -296,11 +296,6 @@ function renderSharedModals() {
 <button id="deleteAccountBtn"><i data-lucide="trash-2"></i> Delete</button>
         </div>
     </div>
-
-    <div id="toast" class="toast">
-        Account name already exists
-    </div>
-
    <div id="categoryMenu" class="modal">
         <div class="modal-content">
             <button id="editCategoryBtn"><i data-lucide="pencil"></i> Edit</button>
@@ -322,16 +317,6 @@ function renderSharedModals() {
                 <button id="noAccountsAddBtn" class="account-save-btn">+ Add Account</button>
             </div>
       </div>
-    </div>
-
-    <div id="customConfirmModal" class="modal">
-        <div class="modal-content custom-confirm-content">
-            <p id="customConfirmMessage" class="custom-confirm-message"></p>
-            <div class="custom-confirm-actions">
-                <button id="customConfirmCancelBtn" class="custom-confirm-cancel-btn">Cancel</button>
-                <button id="customConfirmOkBtn" class="custom-confirm-ok-btn">OK</button>
-            </div>
-        </div>
     </div>
     `;
 }
@@ -743,7 +728,7 @@ function createTransactionElement(expense, options = {}) {
         sign = "+";
         amountClass = "expense-amount-positive";
     }
-    const formattedAmount = Math.round(Number(expense.amount) || 0).toLocaleString("en-US");
+const formattedAmount = formatAmountNumber(expense.amount);
 
     // العنوان والوصف
 let title = getTxCategoryName(expense) || expense.title || (typeof t === "function" ? t("unspecified") : "Unspecified");

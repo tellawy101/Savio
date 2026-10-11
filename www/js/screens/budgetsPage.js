@@ -53,7 +53,11 @@ const category = tx.categoryId || getCategoryIdByName(tx.category) || tx.categor
         if (!catBudgetsList) return;
 
         const budgets = getCategoryBudgets();
-                const ids = Object.keys(budgets);
+        // بنخفي أي ميزانية فئتها اتمسحت (ميزانيات يتيمة قديمة)
+        const existingCategoryIds = getCategories().map(function(c) { return c.id; });
+        const ids = Object.keys(budgets).filter(function(id) {
+            return existingCategoryIds.indexOf(id) !== -1;
+        });
         
         if (!ids.length) {
             catBudgetsList.innerHTML = `

@@ -44,11 +44,16 @@ setupCommonFormPage();
         saveBtn.style.opacity = getMissingField() ? "0.5" : "1";
     }
 
-    window.onFormFieldChanged = checkForm;
+    // بنضيف التحقق بتاع الفورم ده فوق اللي قبله (بدل ما نكتب فوقه)
+    const previousFieldHandler = window.onFormFieldChanged;
+    window.onFormFieldChanged = function() {
+        checkForm();
+        if (typeof previousFieldHandler === "function") previousFieldHandler();
+    };
     dateEl.addEventListener("change", checkForm);
         dateEl.addEventListener("change", () => syncDateText(dateEl, dateTextEl));
     attachAmountFormatter(amountEl, checkForm);
-    attachThousandsFormatter(document.getElementById("newAccountBalance"));
+attachThousandsFormatter(document.getElementById("newAccountBalance"), true);
 
     function loadEditingEntry() {
         if (!editId) return;

@@ -19,7 +19,8 @@ document.body.classList.add("has-scroll");
     }
 
     if (window.lucide) lucide.createIcons();
-
+    // نصفّر الـ handler القديم (من صفحة تانية)، وكل فورم هيضيف نفسه بعد كده
+    window.onFormFieldChanged = null;
     // تشغيل منطق الحسابات/التصنيفات/الفورمات على العناصر الجديدة
     initAccountPicker();
     initCategoryPicker();

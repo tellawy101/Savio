@@ -1,21 +1,40 @@
+let toastTimer = null;
+
 function showToast(message, type = "error") {
-
+    
     const toast = document.getElementById("toast");
-
+    if (!toast) return;
+    
+    // نلغي أي مؤقتات قديمة (توست عادي أو تراجع) عشان متقفلش التوست الجديد بدري
+    if (toastTimer) {
+        clearTimeout(toastTimer);
+        toastTimer = null;
+    }
+    if (undoToastTimer) {
+        clearTimeout(undoToastTimer);
+        undoToastTimer = null;
+    }
+    if (undoToastFrame) {
+        cancelAnimationFrame(undoToastFrame);
+        undoToastFrame = null;
+    }
+    
+    toast.classList.remove("toast-with-undo");
     toast.textContent = message;
-
+    
     if (type === "success") {
         toast.style.background = "#43A047";
     } else {
         toast.style.background = "#E53935";
     }
-
+    
     toast.classList.add("show");
-
-    setTimeout(() => {
+    
+    toastTimer = setTimeout(() => {
+        toastTimer = null;
         toast.classList.remove("show");
     }, 2500);
-
+    
 }
 // ==============================
 // Toast مع خيار "تراجع" (Undo)
@@ -36,6 +55,10 @@ function showUndoToast(message, onUndo, duration = 5000) {
         undoToastTimer = null;
     }
     
+    if (toastTimer) {
+        clearTimeout(toastTimer);
+        toastTimer = null;
+    }
     if (undoToastFrame) {
         cancelAnimationFrame(undoToastFrame);
         undoToastFrame = null;

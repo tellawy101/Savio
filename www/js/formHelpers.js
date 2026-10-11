@@ -35,63 +35,81 @@ function resizeAmountInput(inputEl, formatted) {
     inputEl.style.width = (Math.ceil(textWidth) + 8) + "px";
 }
 
+// بتحوّل الأرقام العربية/الفارسية (٠-٩ و ۰-۹) لإنجليزي وبتوحّد علامات الكسر والآلاف والسالب
+function normalizeDigits(str) {
+    return String(str)
+        .replace(/[٠-٩]/g, function(d) { return String(d.charCodeAt(0) - 0x0660); })
+        .replace(/[۰-۹]/g, function(d) { return String(d.charCodeAt(0) - 0x06F0); })
+        .replace(/٫/g, ".")
+        .replace(/[٬،]/g, ",")
+        .replace(/[−–—]/g, "-");
+}
+
+// بتنظّف النص وتنسّقه: أرقام + كسر لحد خانتين + (اختياري) سالب + فواصل آلاف
+function formatNumberText(raw, allowNegative) {
+    let s = normalizeDigits(raw).replace(/,/g, "");
+    const negative = allowNegative && s.trim().charAt(0) === "-";
+    s = s.replace(/[^\d.]/g, "");
+    
+    const dotIndex = s.indexOf(".");
+    let intPart = dotIndex === -1 ? s : s.slice(0, dotIndex);
+    const decPart = dotIndex === -1 ? null : s.slice(dotIndex + 1).replace(/\./g, "").slice(0, 2);
+    
+    intPart = intPart.replace(/^0+(?=\d)/, "");
+    
+    if (intPart === "" && decPart === null) return negative ? "-" : "";
+    
+    const groupedInt = (intPart === "" ? "0" : intPart).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return (negative ? "-" : "") + groupedInt + (decPart !== null ? "." + decPart : "");
+}
+
 // بتربط خانة "المبلغ" (Income/Expense) بمنطق التنسيق + التحجيم + التحقق من الفورم
 // onValidChange: دالة بتتنده كل مرة القيمة تتغير (زي checkIncomeForm / checkExpenseForm)
 function attachAmountFormatter(inputEl, onValidChange) {
     if (!inputEl) return;
-
-    inputEl.addEventListener("input", function () {
-        let value = this.value.replace(/,/g, "");
-
-        if (value === "") {
-            this.value = "0";
-            if (typeof onValidChange === "function") onValidChange();
-            return;
-        }
-
-        value = value.replace(/\D/g, "");
-
-        if (value === "") {
-            this.value = "0";
-            if (typeof onValidChange === "function") onValidChange();
-            return;
-        }
-
-        const formatted = Number(value).toLocaleString("en-US");
+    
+    inputEl.addEventListener("input", function() {
+        let formatted = formatNumberText(this.value, false);
+        if (formatted === "") formatted = "0";
+        
         this.value = formatted;
-
         resizeAmountInput(inputEl, formatted);
-
+        
         if (typeof onValidChange === "function") onValidChange();
     });
 }
 
 // بتربط أي خانة رقم عادية (زي رصيد الحساب الجديد) بفواصل الآلاف تلقائيًا
-function attachThousandsFormatter(inputEl) {
+// allowNegative: true بس للحقول اللي تقبل رقم سالب (زي رصيد الحساب)
+function attachThousandsFormatter(inputEl, allowNegative) {
     if (!inputEl) return;
-
-    inputEl.addEventListener("input", function () {
-        let value = this.value.replace(/,/g, "");
-        value = value.replace(/\D/g, "");
-
-        if (value === "") {
-            this.value = "";
-            return;
-        }
-
-        this.value = Number(value).toLocaleString("en-US");
+    
+    inputEl.addEventListener("input", function() {
+        this.value = formatNumberText(this.value, allowNegative);
+    });
+    
+    inputEl.addEventListener("blur", function() {
+        if (this.value === "-") this.value = "";
+        else if (this.value.endsWith(".")) this.value = this.value.slice(0, -1);
     });
 }
-
 // بترجع الصفحة لفوق تلقائي لما الكيبورد يقفل (بعد الكتابة في أي input/textarea)
+let focusOutScrollFixed = false;
+
 function fixScrollOnFocusOut() {
-    document.addEventListener("focusout", function (e) {
+    // نسجّل الـ listener مرة واحدة بس
+    if (focusOutScrollFixed) return;
+    focusOutScrollFixed = true;
+    
+    document.addEventListener("focusout", function(e) {
+        // الرجوع لفوق في صفحة إضافة المعاملة بس، مش في باقي الصفحات
+        if (!document.body.classList.contains("add-transaction-page")) return;
+        
         if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") {
             window.scrollTo(0, 0);
         }
     });
 }
-
 // بتفعّل الوضع الليلي المحفوظ فور تحميل الصفحة (لأي صفحة معندهاش زرار تبديل ثيم بنفسها)
 function applyStoredTheme() {
     if (getTheme() === "dark") {

@@ -553,10 +553,13 @@ showToast(t("backup_take_failed_replace"), "error");
                     }
 
                     // استبدال كامل
-                    BACKUP_KEYS.forEach(function (key) {
+                    // الميزانيات منمسحهاش لو النسخة القديمة مفيهاش (النسخ القديمة قبل الميزة دي)
+                    const KEEP_IF_MISSING = [BUDGET_KEY, CATEGORY_BUDGETS_KEY];
+                    
+                    BACKUP_KEYS.forEach(function(key) {
                         if (Object.prototype.hasOwnProperty.call(pendingBackupPayload.data, key)) {
                             localStorage.setItem(key, pendingBackupPayload.data[key]);
-                        } else {
+                        } else if (KEEP_IF_MISSING.indexOf(key) === -1) {
                             localStorage.removeItem(key);
                         }
                     });
@@ -579,7 +582,46 @@ showToast(t("backup_take_failed_replace"), "error");
                         // بنجهّز كل النتايج الأول من غير ما نكتب أي حاجة
                         const writes = {};
 
-                                                if (data.transactions) {
+                                             // الفئات: بنضيف الجديد بس (بالاسم أو الـ id) من غير تكرار
+                        if (data[CATEGORIES_KEY]) {
+                            const merged = readCurrent(CATEGORIES_KEY);
+                            const names = new Set(merged.map(x => x.name));
+                            const ids = new Set(merged.map(x => x.id).filter(Boolean));
+                            JSON.parse(data[CATEGORIES_KEY]).forEach(function (x) {
+                                if (names.has(x.name)) return;
+                                if (x.id && ids.has(x.id)) return;
+                                merged.push(x);
+                            });
+                            writes[CATEGORIES_KEY] = merged;
+                        }
+
+                        // الأهداف: بنضيف الجديد بس (بالـ id، أو بالمحتوى لو من غير id)
+                        if (data[GOALS_KEY]) {
+                            const merged = readCurrent(GOALS_KEY);
+
+                            const goalSignature = function (x) {
+                                return [x.name, x.target, x.date].join("|");
+                            };
+
+                            const knownIds = new Set();
+                            const knownSignatures = new Set();
+                            merged.forEach(function (x) {
+                                if (x.id !== undefined && x.id !== null) knownIds.add(x.id);
+                                knownSignatures.add(goalSignature(x));
+                            });
+
+                            JSON.parse(data[GOALS_KEY]).forEach(function (x) {
+                                if (x.id !== undefined && x.id !== null) {
+                                    if (knownIds.has(x.id)) return;
+                                } else {
+                                    if (knownSignatures.has(goalSignature(x))) return;
+                                    x.id = Date.now() + Math.floor(Math.random() * 1000);
+                                }
+                                merged.push(x);
+                            });
+
+                            writes[GOALS_KEY] = merged;
+                        }                           if (data.transactions) {
                             const merged = readCurrent("transactions");
                             
                             // المعاملة اللي من غير id بنقارنها بمحتواها
@@ -595,7 +637,7 @@ showToast(t("backup_take_failed_replace"), "error");
                             });
                             
                             const curAccIds = new Set(getAccounts().map(a => a.id));
-                            const curCatIds = new Set(getCategories().map(c => c.id));
+const curCatIds = new Set((writes[CATEGORIES_KEY] || getCategories()).map(c => c.id));
                             
                             JSON.parse(data.transactions).forEach(function(x) {
                                         ["accountId", "transferToId", "transferFromId"].forEach(function(k) {
@@ -670,6 +712,8 @@ showToast(t("merge_cancelled_corrupt"), "error");
                     }
                 }
 
+                             // نمسح علامة التحويل عشان الاستعادة من نسخة قديمة تتحوّل للـ IDs تاني
+                localStorage.removeItem("savioIdMigrationDone");
                 restorePreviewModal.classList.remove("show");
                 showToast(t("settings_import_done"), "success");
                 setTimeout(function () { window.location.href = "index.html"; }, 800);

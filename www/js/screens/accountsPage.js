@@ -84,7 +84,7 @@ function initAccountsPage() {
     closeModalOnBackdropClick(addAccountModal);
     closeModalOnBackdropClick(accountMenu);
 
-    attachThousandsFormatter(document.getElementById("newAccountBalance"));
+attachThousandsFormatter(document.getElementById("newAccountBalance"), true);
 
     const iconSearchInput = document.getElementById("iconSearchInput");
 const iconDropdownHome = iconDropdownTrigger ? iconDropdownTrigger.parentElement : null;
@@ -224,7 +224,8 @@ if (window.lucide) lucide.createIcons();
         };
     }
     if (deleteAccountBtn) {
-        deleteAccountBtn.onclick = function () {
+        deleteAccountBtn.onclick = async function() {
+                    if (!(await customConfirm(t("delete_confirm"), { danger: true }))) return;
             let accounts = getAccounts();
 const deletedAccount = accounts.find(a => a.id === selectedAccount);
 const deletedPosition = accounts.indexOf(deletedAccount);

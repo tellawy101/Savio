@@ -417,12 +417,19 @@ if (window.lucide) {
 }
 
 if (deleteCategoryBtn) {
-    deleteCategoryBtn.onclick = function () {
-        if (!selectedCategory) return;
+    deleteCategoryBtn.onclick = async function() {
+                if (!selectedCategory) return;
+                if (!(await customConfirm(t("delete_confirm"), { danger: true }))) return;
 
         let categories = getCategories();
                 categories = categories.filter(category => category.id !== selectedCategory.id);
         saveCategories(categories);
+                // نمسح ميزانية الفئة معاها عشان متفضلش يتيمة
+        const budgets = getCategoryBudgets();
+        if (Object.prototype.hasOwnProperty.call(budgets, selectedCategory.id)) {
+            delete budgets[selectedCategory.id];
+            saveCategoryBudgets(budgets);
+        }
         renderCategories();
 
         const field = getCategoryFieldEl();

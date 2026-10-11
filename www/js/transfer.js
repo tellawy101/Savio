@@ -89,7 +89,12 @@ function checkTransferForm() {
     saveTransferBtn.style.opacity = getMissingField() ? "0.5" : "1";
 }
 
-window.onFormFieldChanged = checkTransferForm;
+// بنضيف التحقق بتاع التحويل فوق اللي قبله (بدل ما نكتب فوقه)
+const previousFieldHandler = window.onFormFieldChanged;
+window.onFormFieldChanged = function() {
+    checkTransferForm();
+    if (typeof previousFieldHandler === "function") previousFieldHandler();
+};
 
 transferDate.addEventListener("change", checkTransferForm);
 

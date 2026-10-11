@@ -269,8 +269,8 @@ if (window.lucide) lucide.createIcons();
 // ==============================
 
 if (deleteAccountBtn) {
-    deleteAccountBtn.onclick = function() {
-        
+    deleteAccountBtn.onclick = async function() {
+        if (!(await customConfirm(t("delete_confirm"), { danger: true }))) return;
         let accounts = getAccounts();
         
         const deletedAccount = accounts.find(account => account.id === selectedAccount);
@@ -308,7 +308,7 @@ if (deleteAccountBtn) {
 
 closeModalOnBackdropClick(accountMenu);
 // فواصل الآلاف تلقائيًا في خانة "رصيد الحساب الجديد" (من formHelpers.js)
-attachThousandsFormatter(document.getElementById("newAccountBalance"));
+attachThousandsFormatter(document.getElementById("newAccountBalance"), true);
 
 // ==============================
 // Icon Dropdown
