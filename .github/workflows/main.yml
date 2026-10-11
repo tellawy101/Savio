@@ -5,14 +5,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
 
@@ -25,7 +25,7 @@ jobs:
           npm install --no-save "@capacitor/android@$CAP_VERSION"
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
@@ -47,7 +47,7 @@ jobs:
           SAVIO_KEY_PASSWORD: ${{ secrets.SAVIO_KEY_PASSWORD }}
         run: ./gradlew assembleDebug
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: savio-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
