@@ -131,6 +131,8 @@ showToast(t("missing_prefix") + missing);
                         return;
                     }
                 }
+                // بنحافظ على وقت المعاملة الأصلي (التعديل ميغيّرش الوقت)
+                entryData.time = oldTx.time || entryData.time;
                 transactions[entryIndex] = { ...transactions[entryIndex], ...entryData };
             } else {
                 entryData.id = generateTransactionId("tx");

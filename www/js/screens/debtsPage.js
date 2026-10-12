@@ -304,7 +304,7 @@ const account = accountObj ? accountObj.name : "";
             const now = new Date();
 const paymentId = generateTransactionId("pay");
             const dateText = getTodayDateString();
-            const timeText = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+const timeText = getCurrentTimeString();
 
             if (!Array.isArray(currentPayDebt.payments)) currentPayDebt.payments = [];
 

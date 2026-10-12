@@ -683,6 +683,31 @@ function validateBackupData(data) {
                 if (key === STORAGE_KEY && !Number.isFinite(Number(item.amount))) {
                     return "invalid amount in transactions";
                 }
+
+                // رصيد الحساب (لو موجود) لازم يكون رقم
+                if (key === ACCOUNTS_KEY && item.balance !== undefined && !Number.isFinite(Number(item.balance))) {
+                    return "invalid balance in accounts";
+                }
+
+                // الهدف لازم له رقم هدف، والمبلغ الحالي (لو موجود) لازم يكون رقم
+                if (key === GOALS_KEY) {
+                    if (!Number.isFinite(Number(item.target))) return "invalid target in goals";
+                    if (item.current !== undefined && !Number.isFinite(Number(item.current))) return "invalid current in goals";
+                }
+
+                // الدين: المبلغ والمدفوع والدفعات لازم تكون أرقام
+                if (key === DEBTS_KEY) {
+                    if (!Number.isFinite(Number(item.amount))) return "invalid amount in debts";
+                    if (item.paid !== undefined && !Number.isFinite(Number(item.paid))) return "invalid paid in debts";
+                    if (item.payments !== undefined) {
+                        if (!Array.isArray(item.payments)) return "invalid payments in debts";
+                        for (const payment of item.payments) {
+                            if (!payment || typeof payment !== "object" || !Number.isFinite(Number(payment.amount))) {
+                                return "invalid payment amount in debts";
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -697,6 +722,13 @@ function validateBackupData(data) {
         }
         if (!budgets || typeof budgets !== "object" || Array.isArray(budgets)) {
             return "not an object: " + CATEGORY_BUDGETS_KEY;
+        }
+
+        // كل قيمة ميزانية لازم تكون رقم صحيح
+        for (const id of Object.keys(budgets)) {
+            if (!Number.isFinite(Number(budgets[id]))) {
+                return "invalid amount in: " + CATEGORY_BUDGETS_KEY;
+            }
         }
     }
 

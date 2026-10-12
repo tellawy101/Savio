@@ -124,7 +124,9 @@ item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
         item.addEventListener("touchend", function() {
             clearTimeout(pressTimer);
         });
-        
+                item.addEventListener("touchmove", function() {
+            clearTimeout(pressTimer);
+        });
         item.onclick = function() {
     if (isDisabled) return;
     

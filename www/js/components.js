@@ -297,33 +297,41 @@ function renderSharedModals() {
     `;
 }
 
+// بتقفل رسالة التأكيد/التنبيه المفتوحة (زي ما لو المستخدم داس Cancel)
+// بنستخدمها من زر الرجوع عشان الكود اللي مستني الرسالة يكمّل بدل ما يفضل معلّق
+let dismissCustomDialog = null;
+
 function customConfirm(message, options) {
     options = options || {};
-    return new Promise(function (resolve) {
+    return new Promise(function(resolve) {
         const modal = document.getElementById("customConfirmModal");
         const msgEl = document.getElementById("customConfirmMessage");
         const okBtn = document.getElementById("customConfirmOkBtn");
         const cancelBtn = document.getElementById("customConfirmCancelBtn");
-
+        
         if (!modal || !msgEl || !okBtn || !cancelBtn) {
             resolve(window.confirm(message));
             return;
         }
-
+        
         msgEl.textContent = message;
         okBtn.className = "custom-confirm-ok-btn" + (options.danger ? " danger" : "");
+        // زرار Cancel لازم يظهر دايماً (ممكن يكون اتخفى من customAlert قبل كده)
+        cancelBtn.style.display = "";
         modal.classList.add("show");
-
+        
         function cleanup(result) {
             modal.classList.remove("show");
             okBtn.onclick = null;
             cancelBtn.onclick = null;
+            dismissCustomDialog = null;
             resolve(result);
         }
-
+        
         okBtn.onclick = function() { cleanup(true); };
-cancelBtn.onclick = function() { cleanup(false); };
-});
+        cancelBtn.onclick = function() { cleanup(false); };
+        dismissCustomDialog = function() { cleanup(false); };
+    });
 }
 
 function customAlert(message) {
@@ -348,13 +356,14 @@ function customAlert(message) {
             modal.classList.remove("show");
             cancelBtn.style.display = "";
             okBtn.onclick = null;
+            dismissCustomDialog = null;
             resolve();
         }
         
         okBtn.onclick = cleanup;
+        dismissCustomDialog = cleanup;
     });
 }
-
 // بيفتح مودال "محتاج تعمل حسابين" برسالة تختلف حسب عدد الحسابات الموجود
 
 // existingAccountsCount = عدد الحسابات الحالي (0 أو 1)

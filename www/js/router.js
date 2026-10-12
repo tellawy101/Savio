@@ -235,6 +235,11 @@ window.handleHardwareBack = function() {
     const openModals = Array.from(document.querySelectorAll(".modal.show"));
     if (openModals.length > 0) {
         const topmostModal = openModals[openModals.length - 1];
+                // رسايل التأكيد/التنبيه: بنقفلها بدالتها عشان الكود اللي مستنيها يكمّل (مش مجرد إخفاء)
+        if (topmostModal.id === "customConfirmModal" && typeof dismissCustomDialog === "function") {
+            dismissCustomDialog();
+            return true;
+        }
         topmostModal.classList.remove("show");
         
         if (topmostModal.id === "addAccountModal" && window.activeAccountBox) {

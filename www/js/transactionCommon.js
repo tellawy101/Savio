@@ -21,8 +21,10 @@ function getTodayDateString() {
         String(d.getDate()).padStart(2, "0");
 }
 
+// الوقت بصيغة HH:mm بنظام 24 ساعة (مستقل عن لغة الجهاز)
 function getCurrentTimeString() {
-    return new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const d = new Date();
+    return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
 }
 function formatDisplayDate(dateStr) {
     if (!dateStr) return "";
