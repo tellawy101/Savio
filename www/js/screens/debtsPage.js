@@ -61,8 +61,10 @@ function initDebtsPage() {
     });
 
     let editingDebt = null;
-    let currentPayDebt = null;
-
+        // بتقرا المبلغ وتحوّل الأرقام العربية والفواصل لرقم عادي
+    function readAmount(input) {
+        return Number(normalizeDigits(input.value).replace(/,/g, ""));
+    }
     // ------------------------------
     // Storage
     // ------------------------------
@@ -80,19 +82,20 @@ function initDebtsPage() {
 
         if (!confirmed) return;
 
-        debt.payments = debt.payments.filter(function (p) {
-            return p.id !== payment.id;
-        });
-
-        debt.paid = Math.max(0, Math.round((debt.paid - payment.amount) * 100) / 100);
-        debt.remaining = Math.round((debt.amount - debt.paid) * 100) / 100;
-        debt.status = debt.remaining <= 0 ? "paid" : "open";
-
                 const transactions = loadTransactions().filter(function(tx) {
             return tx.debtPaymentId !== payment.id;
         });
         
+        // نحفظ المعاملات الأول، ولو فشل مفيش حاجة اتغيرت في الدين
         if (!saveTransactions(transactions)) return;
+        
+        debt.payments = debt.payments.filter(function(p) {
+            return p.id !== payment.id;
+        });
+        
+        debt.paid = Math.max(0, Math.round((debt.paid - payment.amount) * 100) / 100);
+        debt.remaining = Math.round((debt.amount - debt.paid) * 100) / 100;
+        debt.status = debt.remaining <= 0 ? "paid" : "open";
         
         saveDebts(debts);
 
@@ -129,7 +132,7 @@ account.textContent = getAccountNameById(payment.accountId, payment.account);
 
                 const date = document.createElement("span");
                 date.className = "payment-row-date";
-                date.textContent = payment.date + " " + payment.time;
+date.textContent = [payment.date, payment.time].filter(Boolean).join(" ");
 
                 main.appendChild(account);
                 main.appendChild(date);
@@ -141,7 +144,7 @@ account.textContent = getAccountNameById(payment.accountId, payment.account);
                 amount.className = "payment-row-amount " + debt.type;
                 amount.textContent =
 (debt.type === "receivable" ? "+" : "-") + " " + getCurrency() + " " +
-                    Number(payment.amount).toLocaleString("en-US");
+formatAmountNumber(payment.amount);
 
                 const deleteBtn = document.createElement("button");
                 deleteBtn.type = "button";
@@ -236,7 +239,7 @@ account.textContent = getAccountNameById(payment.accountId, payment.account);
     if (saveDebtBtn) {
     saveDebtBtn.onclick = async function() {
                 const person = debtPerson.value.trim();
-                const amount = Number(debtAmount.value);
+const amount = readAmount(debtAmount);
                 const dueDate = debtDueDate.value || getTodayDateString();
                 
                 if (person === "") {
@@ -280,7 +283,7 @@ saveDebts(debts);
         confirmPayBtn.onclick = async function() {
             if (!currentPayDebt) return;
 
-            const payment = Math.round(Number(payAmount.value) * 100) / 100;
+const payment = Math.round(readAmount(payAmount) * 100) / 100;
             const accountId = payAccount.value;
 const accountObj = getAccounts().find(function(a) { return a.id === accountId; });
 const account = accountObj ? accountObj.name : "";
@@ -301,35 +304,19 @@ const account = accountObj ? accountObj.name : "";
                 return;
             }
 
-            const now = new Date();
-const paymentId = generateTransactionId("pay");
+            const paymentId = generateTransactionId("pay");
             const dateText = getTodayDateString();
-const timeText = getCurrentTimeString();
-
-            if (!Array.isArray(currentPayDebt.payments)) currentPayDebt.payments = [];
-
-            currentPayDebt.payments.push({
-                id: paymentId,
-                                amount: payment,
-                    account: account,
-                    accountId: accountId,                    date: dateText,
-                time: timeText
-            });
-
-            currentPayDebt.paid = Math.round((currentPayDebt.paid + payment) * 100) / 100;
-            currentPayDebt.remaining = Math.round((currentPayDebt.remaining - payment) * 100) / 100;
-            currentPayDebt.status = currentPayDebt.remaining <= 0 ? "paid" : "open";
-
-            
+            const timeText = getCurrentTimeString();
 
             const transactions = loadTransactions();
 
             transactions.push({
-                         amount: payment,
-                    account: account,
-                    accountId: accountId,                    description: currentPayDebt.type === "receivable" ?
-    `${t("debts_payment_from")} ${currentPayDebt.person}` :
-    `${t("debts_payment_to")} ${currentPayDebt.person}`,
+                amount: payment,
+                account: account,
+                accountId: accountId,
+                description: currentPayDebt.type === "receivable" ?
+                    `${t("debts_payment_from")} ${currentPayDebt.person}` :
+                    `${t("debts_payment_to")} ${currentPayDebt.person}`,
                 category: "Debt Payment",
                 categoryIcon: "hand-coins",
                 type: currentPayDebt.type === "receivable" ? "income" : "expense",
@@ -339,8 +326,24 @@ const timeText = getCurrentTimeString();
                 debtPaymentId: paymentId
             });
 
+            // نحفظ المعاملات الأول، ولو فشل مفيش حاجة اتغيرت في الدين
             if (!saveTransactions(transactions)) return;
-            
+
+            if (!Array.isArray(currentPayDebt.payments)) currentPayDebt.payments = [];
+
+            currentPayDebt.payments.push({
+                id: paymentId,
+                amount: payment,
+                account: account,
+                accountId: accountId,
+                date: dateText,
+                time: timeText
+            });
+
+            currentPayDebt.paid = Math.round((currentPayDebt.paid + payment) * 100) / 100;
+            currentPayDebt.remaining = Math.round((currentPayDebt.remaining - payment) * 100) / 100;
+            currentPayDebt.status = currentPayDebt.remaining <= 0 ? "paid" : "open";
+
             saveDebts(debts);
             renderDebts();
 
@@ -358,7 +361,7 @@ const timeText = getCurrentTimeString();
                 if (!editingDebt) return;
 
             const person = editDebtPerson.value.trim();
-            const amount = Number(editDebtAmount.value);
+const amount = readAmount(editDebtAmount);
             const dueDate = editDebtDueDate.value || editingDebt.dueDate;
             const activeTypeBtn = document.querySelector(".edit-debt-type-btn.active");
             const type = activeTypeBtn ? activeTypeBtn.dataset.type : editingDebt.type;
@@ -464,19 +467,19 @@ ${debt.dueDate ? escapeHTML(debt.dueDate) : t("debts_no_due_date")}
                 </div>
           <div class="debt-card-amount">
 
-${debt.type === "receivable" ? "+" : "-"} <span class="debt-currency">${escapeHTML(getCurrency())}</span> <span class="debt-amount-value">${Number(debt.remaining).toLocaleString("en-US")}</span>
+${debt.type === "receivable" ? "+" : "-"} <span class="debt-currency">${escapeHTML(getCurrency())}</span> <span class="debt-amount-value">${formatAmountNumber(debt.remaining)}</span>
             </div>
         </div>
 
         <div class="debt-card-main-row">
             ${
                 debt.paid > 0
-? `<span class="debt-paid-note"><span class="debt-currency">${escapeHTML(getCurrency())}</span> <span class="debt-amount-value">${Number(debt.paid).toLocaleString("en-US")}</span> ${typeof t === "function" ? t("debts_paid_note") : "Paid"}</span>`
+? `<span class="debt-paid-note"><span class="debt-currency">${escapeHTML(getCurrency())}</span> <span class="debt-amount-value">${formatAmountNumber(debt.paid)}</span> ${t("debts_paid_note")}</span>`
                 : `<span></span>`
             }
             ${
                 !isSettled
-                ? `<button class="debt-card-pay-btn">${typeof t === "function" ? t("debts_pay_btn") : "Pay"}</button>`
+? `<button class="debt-card-pay-btn">${t("debts_pay_btn")}</button>`
                 : ``
             }
         </div>
@@ -606,15 +609,20 @@ attachSwipeActions(card, { deleteEl: bgDelete, editEl: bgEdit, maxOffset: 60, th
             debtsList.appendChild(wrapper);
         });
 
-        totalReceivable.querySelector(".stat-value").innerText = Math.round(receivable).toLocaleString("en-US");
-        totalPayable.querySelector(".stat-value").innerText = Math.round(payable).toLocaleString("en-US");
+          totalReceivable.querySelector(".stat-value").innerText = formatAmountNumber(receivable);
+        totalPayable.querySelector(".stat-value").innerText = formatAmountNumber(payable);
         totalReceivable.querySelector(".stat-currency").innerText = getCurrency();
         totalPayable.querySelector(".stat-currency").innerText = getCurrency();
-netBalance.querySelector(".currency").innerText = getCurrency();
-        netBalance.querySelector(".amount").innerText = Math.round(net).toLocaleString("en-US");
+        netBalance.querySelector(".currency").innerText = getCurrency();
+        netBalance.querySelector(".amount").innerText = formatAmountNumber(net);
 
         if (window.lucide) lucide.createIcons();
     }
 
-    renderDebts();
+    window.cleanupDebtsPage = function() {
+        if (window._debtsTouchHandler) {
+            document.removeEventListener("touchstart", window._debtsTouchHandler);
+            window._debtsTouchHandler = null;
+        }
+    };
 }
