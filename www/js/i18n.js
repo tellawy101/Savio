@@ -88,6 +88,7 @@ income_title: "Income",
         // Category modal
         add_category: "Add Category",
         category_name_placeholder: "Category Name",
+                category_exists_toast: "Category name already exists",
         category_icon_placeholder: "😀 Icon",
 
         // Settings
@@ -427,6 +428,7 @@ enter_person_name_alert: "من فضلك اكتب اسم الشخص",
         // Category modal
         add_category: "إضافة تصنيف",
         category_name_placeholder: "اسم التصنيف",
+                category_exists_toast: "اسم التصنيف موجود بالفعل",
         category_icon_placeholder: "😀 أيقونة",
 
         // Settings

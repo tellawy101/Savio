@@ -562,28 +562,29 @@ function getCategoryBudgets() {
 function saveCategoryBudgets(budgets) {
 safeSetItem(CATEGORY_BUDGETS_KEY, JSON.stringify(budgets));
 }
+// بيقارن شهر التاريخ (YYYY-MM-DD) بالشهر الحالي كنص، من غير تحويل لـ Date
+function isDateInCurrentMonth(dateStr) {
+    const now = new Date();
+    const key = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
+    return String(dateStr || "").slice(0, 7) === key;
+}
 // بترجع "near" لو الفئة وصلت 80% من حدها بعد المصروف ده،
 // و "over" لو عدّت الحد، وإلا null
 function getBudgetAlertType(categoryId, amount, date) {
     const limit = Number(getCategoryBudgets()[categoryId]) || 0;
     if (limit <= 0) return null;
 
-    const now = new Date();
-    const txDate = new Date(date);
-    if (Number.isNaN(txDate.getTime())) return null;
-    if (txDate.getFullYear() !== now.getFullYear() || txDate.getMonth() !== now.getMonth()) return null;
-
+    if (!isDateInCurrentMonth(date)) return null;
+    
     let after = 0;
-    loadTransactions().forEach(function (tx) {
+    loadTransactions().forEach(function(tx) {
         if (tx.type !== "expense" || tx.isTransfer === true) return;
-                if (tx.categoryId !== categoryId || !tx.date) return;
-
-        const d = new Date(tx.date);
-        if (d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()) {
+        if (tx.categoryId !== categoryId || !tx.date) return;
+        
+        if (isDateInCurrentMonth(tx.date)) {
             after += Number(tx.amount) || 0;
         }
     });
-
     if (after > limit) return "over";
     if (after >= limit) return "full";
     if (after >= limit * 0.8) return "near";

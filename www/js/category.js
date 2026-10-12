@@ -338,6 +338,15 @@ if (saveCategoryBtn) {
 
         let categories = getCategories();
 const isEditing = editingCategory !== null;
+        // منع تكرار الاسم (من غير حساس لحالة الحروف)، مع تجاهل الفئة اللي بتتعدّل
+        const nameTaken = categories.some(function (c) {
+            return c.name.trim().toLowerCase() === name.toLowerCase() &&
+                (!editingCategory || c.id !== editingCategory.id);
+        });
+        if (nameTaken) {
+            showToast(t("category_exists_toast"));
+            return;
+        }
         if (editingCategory) {
                         const index = categories.findIndex(c => c.id === editingCategory.id);
             if (index !== -1) {

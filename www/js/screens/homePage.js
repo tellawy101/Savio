@@ -370,7 +370,13 @@ makeSelectSheet(sortFilter, t("sort_by"));
         
         // لو لوحة البحث مش ظاهرة، متعملش حاجة
         if (searchPanel.style.display !== "block") return;
-        
+                // لو فيه فلتر شغّال، سيب اللوحة مفتوحة والفلتر زي ما هو
+        const hasActiveFilter =
+            searchInput.value.trim() !== "" ||
+            (accountFilter && accountFilter.value !== "") ||
+            (categoryFilter && categoryFilter.value !== "") ||
+            (sortFilter && sortFilter.value !== "date_desc");
+        if (hasActiveFilter) return;
         // لو اللي اتدوس عليه مش اللوحة نفسها ولا زرار البحث
         if (!searchPanel.contains(e.target) && !searchBtn.contains(e.target)) {
             

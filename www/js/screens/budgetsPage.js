@@ -27,16 +27,12 @@ function initBudgetsPage() {
     // المصروف الفعلي لكل فئة في الشهر الحالي
     // ------------------------------
     function getMonthSpentByCategory() {
-        const now = new Date();
         const spent = {};
-
-        loadTransactions().forEach(function (tx) {
-            if (tx.type !== "expense" || tx.isTransfer === true) return;
-            if (!tx.date) return;
-
-            const date = new Date(tx.date);
-            if (Number.isNaN(date.getTime())) return;
-            if (date.getFullYear() !== now.getFullYear() || date.getMonth() !== now.getMonth()) return;
+        
+        loadTransactions().forEach(function(tx) {
+                    if (tx.type !== "expense" || tx.isTransfer === true) return;
+                    if (!tx.date) return;
+                    if (!isDateInCurrentMonth(tx.date)) return;
 
 const category = tx.categoryId || getCategoryIdByName(tx.category) || tx.category || "Other";
             spent[category] = (spent[category] || 0) + (Number(tx.amount) || 0);
