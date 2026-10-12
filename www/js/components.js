@@ -52,7 +52,6 @@ ${ isHome ? `
     `;
 }
 // 3) تفعيل أيقونات lucide (موحدة)
-// 3) تفعيل أيقونات lucide (موحدة)
 function initIcons() {
     if (!window.lucide) return;
     lucide.createIcons();

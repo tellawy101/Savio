@@ -308,7 +308,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
         summary.className = "balance-card";
         summary.innerHTML = `
 <h3>${t("total_balance")}</h3>
-            <h1 id="accountsTotalBalance">
+<h1>
 <span class="currency">${getCurrency()}</span>
                 <span class="amount">${Math.round(totalBalance).toLocaleString("en-US")}</span>
             </h1>
