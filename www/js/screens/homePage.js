@@ -144,8 +144,7 @@ const card = li.querySelector(".expense-main");
                     ? removeDebtPayment(expense.debtPaymentId)
                     : null;
                 renderExpenses();
-            updateBalanceChart();
-                updateBudgetButton();
+ updateBudgetButton();
                 showUndoToast(
                     typeof t === "function" ? t("item_deleted_toast") : "Item Deleted",
                     function () {
@@ -160,7 +159,6 @@ const card = li.querySelector(".expense-main");
                         expenses = currentList;
                         restoreDebtPayment(removedDebtPayment);
                         renderExpenses();
-                                                updateBalanceChart();
                         updateBudgetButton();
                     }
                 );
@@ -397,117 +395,6 @@ makeSelectSheet(sortFilter, t("sort_by"));
         
     };
     document.addEventListener("click", window._homeClickHandler);
-    // ------------------------------
-    // Balance Chart (last 7 days, week starts Saturday)
-    // ------------------------------
-    function updateChartDays() {
-const days = [t("day_sat"), t("day_sun"), t("day_mon"), t("day_tue"), t("day_wed"), t("day_thu"), t("day_fri")];
-        for (let i = 0; i < 7; i++) {
-            const element = document.getElementById(`day${i}`);
-            if (element) element.textContent = days[i];
-        }
-    }
-    updateChartDays();
-
-    function getLocalDateKey(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    }
-
-    function updateBalanceChart() {
-        const chartLine = document.getElementById("chartLine");
-        const chartArea = document.getElementById("chartArea");
-        if (!chartLine || !chartArea) return;
-
-        const transactions = loadTransactions();
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const currentDay = today.getDay();
-        const daysFromSaturday = (currentDay + 1) % 7;
-        const weekStart = new Date(today);
-        weekStart.setDate(today.getDate() - daysFromSaturday);
-
-        const dates = [];
-        for (let i = 0; i < 7; i++) {
-            const date = new Date(weekStart);
-            date.setDate(weekStart.getDate() + i);
-            dates.push(date);
-        }
-
-        let runningBalance = 0;
-        const firstDayKey = getLocalDateKey(weekStart);
-
-        transactions.forEach(transaction => {
-            if (!transaction.date) return;
-            if (transaction.date >= firstDayKey) return;
-            if (transaction.isTransfer) return;
-            const amt = Number(transaction.amount) || 0;
-            if (transaction.type === "income") runningBalance += amt;
-            if (transaction.type === "expense") runningBalance -= amt;
-        });
-
-        const balances = [];
-        dates.forEach(date => {
-            const dateKey = getLocalDateKey(date);
-            if (date > today) {
-                balances.push(runningBalance);
-                return;
-            }
-            transactions.forEach(transaction => {
-                if (transaction.date !== dateKey) return;
-                if (transaction.isTransfer) return;
-                const amt = Number(transaction.amount) || 0;
-                if (transaction.type === "income") runningBalance += amt;
-                if (transaction.type === "expense") runningBalance -= amt;
-            });
-            balances.push(runningBalance);
-        });
-
-        let minValue = Math.min(...balances);
-        let maxValue = Math.max(...balances);
-
-        if (minValue === maxValue) {
-            minValue -= 100;
-            maxValue += 100;
-        } else {
-            const padding = (maxValue - minValue) * 0.15;
-            minValue -= padding;
-            maxValue += padding;
-        }
-
-        const width = 700;
-        const height = 120;
-        const topPadding = 15;
-        const bottomPadding = 15;
-        const chartHeight = height - topPadding - bottomPadding;
-
-        const points = balances.map((value, index) => {
-            const x = (width / 6) * index;
-            const ratio = (value - minValue) / (maxValue - minValue);
-            const y = height - bottomPadding - (ratio * chartHeight);
-            return { x, y };
-        });
-
-        let linePath = "";
-        points.forEach((point, index) => {
-            if (index === 0) {
-                linePath = `M ${point.x} ${point.y}`;
-            } else {
-                const previous = points[index - 1];
-                const midX = (previous.x + point.x) / 2;
-                linePath += ` C ${midX} ${previous.y}, ${midX} ${point.y}, ${point.x} ${point.y} `;
-            }
-        });
-
-        const areaPath = linePath + ` L ${width} ${height} L 0 ${height} Z`;
-
-        chartLine.setAttribute("d", linePath);
-        chartArea.setAttribute("d", areaPath);
-    }
-    updateBalanceChart();
 
     // ------------------------------
     // Budget Modal

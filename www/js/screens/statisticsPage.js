@@ -13,7 +13,7 @@ function initStatisticsPage() {
   let cashFlowChart = null;
   let categoryPieChart = null;
   let barChart = null;
-  const CATEGORY_COLORS = ["#0F766E", "#14B8A6", "#2DD4BF", "#F59E0B", "#EF4444", "#8B5CF6", "#3B82F6", "#EC4899", "#84CC16", "#64748B"];
+const CATEGORY_COLORS = ["#0F766E", "#14B8A6", "#2DD4BF", "#F59E0B", "#EF4444", "#8B5CF6", "#3B82F6", "#EC4899", "#84CC16", "#64748B", "#F97316", "#06B6D4", "#A855F7", "#10B981", "#E11D48", "#6366F1", "#EAB308", "#0EA5E9", "#D946EF", "#78716C"];
   // ------------------------------
   // FORMAT MONEY
   // ------------------------------
@@ -59,8 +59,8 @@ function initStatisticsPage() {
     // ------------------------------
     function filterTransactions(transactions) {
 
-        if (currentPeriod === "all") {
-            return transactions;
+                if (currentPeriod === "all") {
+            return transactions.filter(transaction => getTransactionDate(transaction));
         }
 
         const now = new Date();
@@ -75,18 +75,8 @@ function initStatisticsPage() {
 
             if (currentPeriod === "week") {
 
-                const start = new Date(now);
-                start.setHours(0, 0, 0, 0);
-
-                const day = start.getDay();
-
                 // الأسبوع يبدأ من السبت
-                const daysFromSaturday =
-                    day === 6 ? 0 : day + 1;
-
-                start.setDate(
-                    start.getDate() - daysFromSaturday
-                );
+                const start = getWeekStart(now);
 
                 const end = new Date(start);
                 end.setDate(start.getDate() + 7);
