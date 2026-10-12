@@ -543,7 +543,8 @@ transform: translateY(-10px);
     white-space: nowrap;
 }
 
-body {
+body:not(.dark):has(#netBalance),
+body:not(.dark):has(.goals-header) {
     background-color: #F4F5F7;
 }
 

@@ -5,6 +5,11 @@
 body.dark {
     background: #101817;
     color: #F1F5F4;
+        --border-color: #3d3d3d;
+    --input-bg: #2c2c2c;
+    --hover-bg: #374151;
+    --card-bg: #1F2937;
+    --brand-color: #4fd1c5;
 }
 
 body.dark .stat {
