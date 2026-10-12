@@ -51,8 +51,8 @@ function initHomePage() {
 if (expenses.length === 0) {
         expenseList.innerHTML = renderEmptyState(
             "receipt-text", 
-            typeof t === "function" ? t("no_transactions") : "لا توجد معاملات", 
-            typeof t === "function" ? t("add_first_transaction") : "اضغط على + لإضافة معاملة جديدة"
+                        t("no_transactions"),
+                t("add_first_transaction")
         );
         if (window.lucide) lucide.createIcons();
                 totalExpense.innerHTML = formatCurrencyHTML(0);
@@ -105,10 +105,9 @@ if (expenses.length === 0) {
                 return;
             }
 
-            if (
+                        if (
                 window.selectedMonth &&
-                expense.date &&
-                !expense.date.startsWith(window.selectedMonth)
+                (!expense.date || !expense.date.startsWith(window.selectedMonth))
             ) {
                 return;
             }
@@ -123,7 +122,7 @@ const card = li.querySelector(".expense-main");
             deleteBtn.addEventListener("click", async (e) => {
                 e.stopPropagation();
                 const confirmed = await customConfirm(
-                    typeof t === "function" ? t("delete_confirm") : "Delete this item?",
+t("delete_confirm"),
                     { danger: true }
                 );
                 if (!confirmed) return;
@@ -146,7 +145,7 @@ const card = li.querySelector(".expense-main");
                 renderExpenses();
  updateBudgetButton();
                 showUndoToast(
-                    typeof t === "function" ? t("item_deleted_toast") : "Item Deleted",
+t("item_deleted_toast"),
                     function () {
                                                 const currentList = loadTransactions();
                         deletedWithPositions
@@ -445,7 +444,7 @@ if (budgetModal) {
     if (!budgetValue) return;
     const budget = getBudget();
     if (budget <= 0) {
-        budgetValue.textContent = typeof t === "function" ? t("budget") : "Budget";
+budgetValue.textContent = t("budget");
         return;
     }
     const now = new Date();
@@ -471,7 +470,7 @@ const val = formatAmountNumber(remaining);
         budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span>`;
     } else {
 const val = formatAmountNumber(Math.abs(remaining));
-    const overText = typeof t === "function" ? t("budget_over") : "over";
+const overText = t("budget_over");
     budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span> <span class="budget-over">${overText}</span>`;
 }
 }
@@ -502,5 +501,6 @@ const val = formatAmountNumber(Math.abs(remaining));
             window._homeClickHandler = null;
         }
         document.body.style.paddingBottom = "";
+                clearTimeout(searchTimer);
     };
 }

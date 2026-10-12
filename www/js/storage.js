@@ -617,10 +617,9 @@ function calculateMonthlyTotals(transactions, selectedMonth) {
     let total = 0;
 
     transactions.forEach(expense => {
-        if (
+                if (
             selectedMonth &&
-            expense.date &&
-            !expense.date.startsWith(selectedMonth)
+            (!expense.date || !expense.date.startsWith(selectedMonth))
         ) {
             return;
         }
