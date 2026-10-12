@@ -126,7 +126,7 @@ function csvCell(value) {
     let s = value === null || value === undefined ? "" : String(value);
 
     // حماية من تفسير النص كمعادلة في Excel
-    if (/^[=+\-@]/.test(s)) s = "'" + s;
+if (/^[=+\-@]/.test(s) && !/^[+-]?\d+(\.\d+)?$/.test(s)) s = "'" + s;
 
     if (/[",\n\r]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
 

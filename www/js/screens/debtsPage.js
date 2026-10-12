@@ -261,7 +261,7 @@ account.textContent = getAccountNameById(payment.accountId, payment.account);
                 dueDate: dueDate,
                 notes: debtNotes.value.trim(),
                 status: "open",
-                createdAt: new Date().toLocaleDateString()
+createdAt: new Date().toISOString()
             };
 
             debts.push(debt);

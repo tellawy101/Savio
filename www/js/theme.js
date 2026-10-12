@@ -2,97 +2,12 @@
 // Theme (Dark / Light Mode)
 // ==============================
 
-const themeBtn = document.getElementById("themeBtn");
-const themeIconWrap = document.getElementById("themeIconWrap");
-const darkModeToggle = document.getElementById("darkModeToggle");
-
-
-// ==============================
-// Set Theme Icon
-// ==============================
-
-function setThemeIcon(iconName) {
-
-    if (!themeIconWrap) return;
-
-    themeIconWrap.innerHTML = `
-        <i data-lucide="${iconName}"></i>
-    `;
-
-    if (window.lucide) {
-        lucide.createIcons();
-    }
-}
-
-
-// ==============================
-// Apply Theme
-// ==============================
-
 function applyTheme(theme) {
-
-    if (theme === "dark") {
-
-        document.body.classList.add("dark");
-
-    } else {
-
-        document.body.classList.remove("dark");
-
-    }
-
-
-    // Update Settings Toggle
-
-    if (darkModeToggle) {
-        darkModeToggle.checked = theme === "dark";
-    }
-
-
-    // Update Header Theme Icon
-
-    if (themeIconWrap) {
-        setThemeIcon(theme === "dark" ? "sun" : "moon");
-    }
+    document.body.classList.toggle("dark", theme === "dark");
 }
 
+applyTheme(getTheme());
 
-// ==============================
-// Load Saved Theme
-// ==============================
-
-const savedTheme = getTheme();
-
-applyTheme(savedTheme);
-
-
-// ==============================
-// DOM Loaded
-// ==============================
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const currentTheme = getTheme();
-    applyTheme(currentTheme);
-
-
-    // ==========================
-    // Settings Dark Mode Toggle
-    // ==========================
-
-    if (darkModeToggle) {
-
-        darkModeToggle.addEventListener("change", function () {
-
-            const newTheme =
-                this.checked ? "dark" : "light";
-
-            saveTheme(newTheme);
-
-            applyTheme(newTheme);
-
-        });
-
-    }
-
+document.addEventListener("DOMContentLoaded", function() {
+    applyTheme(getTheme());
 });
