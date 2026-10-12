@@ -61,6 +61,7 @@ function initDebtsPage() {
     });
 
     let editingDebt = null;
+        let currentPayDebt = null;
         // بتقرا المبلغ وتحوّل الأرقام العربية والفواصل لرقم عادي
     function readAmount(input) {
         return Number(normalizeDigits(input.value).replace(/,/g, ""));
@@ -618,7 +619,7 @@ attachSwipeActions(card, { deleteEl: bgDelete, editEl: bgEdit, maxOffset: 60, th
 
         if (window.lucide) lucide.createIcons();
     }
-
+    renderDebts();
     window.cleanupDebtsPage = function() {
         if (window._debtsTouchHandler) {
             document.removeEventListener("touchstart", window._debtsTouchHandler);

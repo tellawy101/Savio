@@ -33,8 +33,9 @@ function calculateCategoryBreakdown(transactions) {
     transactions.forEach(transaction => {
         if (transaction.type !== "expense" || transaction.isTransfer === true) return;
         const knownName = transaction.categoryId && catNameById[transaction.categoryId];
-        const name = knownName || transaction.category || t("stats_category_other");
-        const key = knownName ? "id:" + transaction.categoryId : "name:" + name;
+        const legacyName = transaction.category === "Debt Payment" ? t("debts_category_payment") : transaction.category;
+        const name = knownName || legacyName || t("stats_category_other");
+                const key = "name:" + name;
         const amount = Number(transaction.amount) || 0;
         if (!categories[key]) categories[key] = { name, amount: 0 };
         categories[key].amount += amount;
@@ -170,7 +171,7 @@ function calculateDailyAverage(transactions, currentPeriod) {
     } else {
         transactions.forEach(transaction => {
             if (transaction.isTransfer === true || !transaction.date) return;
-            const parts = transaction.date.split("-").map(Number);
+            const parts = String(transaction.date).split("-").map(Number);
             if (parts.length !== 3 || parts.some(Number.isNaN)) return;
             const date = new Date(parts[0], parts[1] - 1, parts[2]);
             if (date < start) start = date;

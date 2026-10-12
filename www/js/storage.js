@@ -181,14 +181,15 @@ function formatCurrencyHTML(amount) {
     const currency = getCurrency();
 const value = formatAmountNumber(amount);
     
-    return `<span class="stat-currency">${currency}</span> <span class="stat-value">${value}</span>`;
+    return `<span class="stat-currency">${escapeHTML(currency)}</span> <span class="stat-value">${value}</span>`;
+    
 }
 
 function formatCurrencyHTMLStats(amount) {
     const currency = getCurrency();
 const value = formatAmountNumber(amount);
     
-    return `<span class="stats-stat-currency">${currency}</span> <span class="stats-stat-value">${value}</span>`;
+    return `<span class="stats-stat-currency">${escapeHTML(currency)}</span> <span class="stats-stat-value">${value}</span>`;
 }
 // ==============================
 // Accounts
@@ -285,6 +286,9 @@ function getTxAccountName(tx) {
 }
 
 function getTxCategoryName(tx) {
+    if (!tx.categoryId && tx.category === "Debt Payment") {
+        return t("debts_category_payment");
+    }
     return getCategoryNameById(tx.categoryId, tx.category);
 }
 // رصيد حساب واحد = الرصيد الافتتاحي + كل الدخل - كل المصروف (التحويلات داخلة في الرصيد)
@@ -338,12 +342,18 @@ function migrateDataToIds() {
 
     const accountIdByName = {};
     getAccounts().forEach(function (account) {
-        accountIdByName[account.name] = account.id;
+                if (!Object.prototype.hasOwnProperty.call(
+                accountIdByName, account.name)) {
+            accountIdByName[account.name] = account.id;
+        }
     });
 
     const categoryIdByName = {};
     getCategories().forEach(function (category) {
-        categoryIdByName[category.name] = category.id;
+                if (!Object.prototype.hasOwnProperty.call(
+                categoryIdByName, category.name)) {
+            categoryIdByName[category.name] = category.id;
+        }
     });
 
     const transactions = loadTransactions();
@@ -498,6 +508,8 @@ debt.paid = Math.round((debt.paid + removed.payment.amount) * 100) / 100;
     saveDebts(debts);
 }
 function updateDebtPayment(paymentId, newAmount, account, accountId, date) {
+        newAmount = Number(newAmount);
+    if (!Number.isFinite(newAmount) || newAmount <= 0) return false;
     const debts = getDebts();
     let found = false;
     let exceeds = false;
@@ -526,8 +538,8 @@ function updateDebtPayment(paymentId, newAmount, account, accountId, date) {
         debt.status = debt.remaining <= 0 ? "paid" : "open";
     });
 
-    if (exceeds) return false;
-    if (found) saveDebts(debts);
+        if (!found || exceeds) return false;
+    saveDebts(debts);
     return true;
 }
 // ==============================
@@ -552,11 +564,7 @@ const CATEGORY_BUDGETS_KEY = "savioCategoryBudgets";
 
 // شكل البيانات: { "اسم الفئة": مبلغ }
 function getCategoryBudgets() {
-    try {
-        return JSON.parse(localStorage.getItem(CATEGORY_BUDGETS_KEY)) || {};
-    } catch (e) {
-        return {};
-    }
+    return safeParse(CATEGORY_BUDGETS_KEY, {});
 }
 
 function saveCategoryBudgets(budgets) {
@@ -674,6 +682,10 @@ function validateBackupData(data) {
         }
 
         if (!Array.isArray(parsed)) return "not an array: " + key;
+                if (key === CATEGORIES_KEY &&
+            parsed.some(function (c) { return !c; })) {
+            return "invalid item in: " + key;
+        }
 
         if (objectArrayKeys.indexOf(key) !== -1) {
             for (const item of parsed) {
@@ -760,26 +772,34 @@ function createPreRestoreSnapshot() {
             if (value !== null) data[key] = value;
         });
 
-        // نمسح اللقطات القديمة الأول ونسيب (MAX_SNAPSHOTS - 1) بس
-        // عشان نفضّي مساحة قبل ما نكتب اللقطة الجديدة
-        const snapshotKeys = Object.keys(localStorage)
+             const snapshotKeys = Object.keys(localStorage)
             .filter(function(k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; })
             .sort();
+        const newKey = SNAPSHOT_PREFIX + Date.now();
+        const payload = JSON.stringify({
+            app: "Savio",
+            version: 1,
+            createdAt: new Date().toISOString(),
+            data: data
+        });
         
-        while (snapshotKeys.length > MAX_SNAPSHOTS - 1) {
-            localStorage.removeItem(snapshotKeys.shift());
+        // نكتب الجديدة الأول؛ لو المساحة خلصت نمسح أقدم لقطة ونعيد المحاولة
+        while (true) {
+            try {
+                localStorage.setItem(newKey, payload);
+                break;
+            } catch (writeError) {
+                if (!snapshotKeys.length) throw writeError;
+                localStorage.removeItem(snapshotKeys.shift());
+            }
         }
         
-        localStorage.setItem(
-            SNAPSHOT_PREFIX + Date.now(),
-            JSON.stringify({
-                app: "Savio",
-                version: 1,
-                createdAt: new Date().toISOString(),
-                data: data
-            })
-        );
-
+        // نسيب آخر MAX_SNAPSHOTS لقطات بس
+        Object.keys(localStorage)
+            .filter(function(k) { return k.indexOf(SNAPSHOT_PREFIX) === 0; })
+            .sort()
+            .slice(0, -MAX_SNAPSHOTS)
+            .forEach(function(k) { localStorage.removeItem(k); });
         return true;
     } catch (e) {
         console.error("Snapshot failed:", e);

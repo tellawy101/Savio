@@ -81,6 +81,17 @@ const ROUTES = {
         }
     },
 };
+const ROUTE_INIT_NAMES = {
+    settings: "initSettingsPage",
+    accounts: "initAccountsPage",
+    debts: "initDebtsPage",
+    goals: "initGoalsPage",
+    budgets: "initBudgetsPage",
+    statistics: "initStatisticsPage",
+    home: "initHomePage",
+    "add-transaction": "initAddTransactionPage",
+    "account-transactions": "initAccountTransactionsPage"
+};
 function renderSkeleton() {
     return `
     <div class="skeleton-page">
@@ -95,7 +106,6 @@ function renderSkeleton() {
 let navigationToken = 0;
 
 async function navigateTo(pageName, fromPopState = false) {
-        currentPageName = pageName;
         const navToken = ++navigationToken;
         const route = ROUTES[pageName];
         
@@ -121,7 +131,7 @@ async function navigateTo(pageName, fromPopState = false) {
             
             // لو حصل تنقل أحدث أثناء التحميل، نلغي التنقل ده
             if (navToken !== navigationToken) return;
-        
+                    currentPageName = pageName;
         app.style.visibility = "hidden";
         if (pageName !== "accounts") {
             const oldFab = document.getElementById("openAddAccountBtn");
@@ -139,6 +149,10 @@ async function navigateTo(pageName, fromPopState = false) {
         if (typeof window.cleanupHomePage === "function") {
             window.cleanupHomePage();
             window.cleanupHomePage = null;
+        }
+                if (typeof window.cleanupDebtsPage === "function") {
+            window.cleanupDebtsPage();
+            window.cleanupDebtsPage = null;
         }
         app.innerHTML = html;
         if (!document.getElementById("customConfirmModal")) {
@@ -191,11 +205,23 @@ async function navigateTo(pageName, fromPopState = false) {
                 }
             }
         }
-        route.init();
+                const initName = ROUTE_INIT_NAMES[pageName];
+        if (initName && typeof window[initName] !== "function") {
+            console.error("Missing init function:", initName);
+        }
+        try {
+            route.init();
+        } catch (initError) {
+            console.error("Page init failed:", pageName, initError);
+            if (typeof showToast === "function") {
+                showToast(t("page_load_failed_retry"));
+            }
+        }
         if (typeof applyLanguage === "function") applyLanguage();
         
         app.style.visibility = "visible";
-        if (fromPopState) {
+                if (fromPopState ||
+            (history.state && history.state.page === pageName)) {
             history.replaceState({ page: pageName }, "", "#" + pageName);
         } else {
             history.pushState({ page: pageName }, "", "#" + pageName);
@@ -319,6 +345,11 @@ window.addEventListener("popstate", function(e) {
         return;
     }
     
+    // نقطة وهمية قديمة فاضلة من مودال اتشال
+    if (e.state && e.state.overlay) {
+        history.back();
+        return;
+    }    
     const page = (e.state && e.state.page) || "home";
     if (page !== currentPageName) {
 navigateTo(page, true);
