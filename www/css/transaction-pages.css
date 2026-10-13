@@ -59,7 +59,7 @@ body.dark.expense-page {
     border: none;
     background: transparent;
 
-    color: #111;
+    color: var(--text);
     opacity: 1 !important;
     visibility: visible !important;
 }
@@ -181,7 +181,7 @@ body.dark.expense-page {
     gap: 4px;
     font-size: 15px !important;
     font-weight: 700;
-    color: #0F766E;
+    color: var(--brand-text);
     white-space: nowrap;
     line-height: 1.2;
 }
@@ -230,7 +230,7 @@ body.dark.expense-page {
     min-width: 0;
     box-sizing: border-box;
 
-    background: #FFFFFF !important;
+    background: var(--surface) !important;
     border: 1px solid #E5E7EB;
     border-radius: 16px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -285,7 +285,7 @@ body.dark.expense-page {
     margin: 0;
 
     background: transparent;
-    color: #111;
+    color: var(--text);
 
     display: flex;
     flex-direction: column;
@@ -350,11 +350,7 @@ body.dark .month-nav-btn {
     color: #F1F5F4 !important;
 }
 
-body.dark .month-label-btn {
-    color: #F1F5F4 !important;
-}
 body.dark .expense-main {
-    background: #1F2937 !important;
     border-color: transparent !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
 }
@@ -372,9 +368,6 @@ body.dark .expense-main .expense-amount {
 }
 body.dark .expense-icon-box {
     color: #7FE0C0 !important;
-}
-body.dark .search-btn {
-    color: #F1F5F4 !important;
 }
 
 body.dark .search-btn svg {
@@ -410,7 +403,7 @@ body.dark .search-btn svg {
     font-size: 18px;
     font-weight: 700;
     margin: 0;
-    color: #111;
+    color: var(--text);
 }
 .tx-tabs {
     display: flex;
@@ -507,18 +500,6 @@ body.add-transaction-page .transfer-header {
 
 .dark .tx-tab {
     color: #ccc;
-}
-
-.dark .tx-tab.active {
-    color: #fff;
-}
-
-.dark .tx-indicator {
-    background: #0F766E;
-}
-
-.dark .tx-title {
-    color: #fff;
 }
 
 .dark .tx-close {

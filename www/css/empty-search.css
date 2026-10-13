@@ -15,8 +15,8 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: rgba(15, 118, 110, 0.1);
-    color: #0F766E;
+    background: var(--brand-bg);
+    color: var(--brand-text);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,12 +38,6 @@
 .empty-state-sub {
     font-size: 13px;
     color: #9CA3AF;
-}
-
-/* Dark Mode */
-body.dark .empty-state-icon {
-    background: rgba(45, 212, 191, 0.15);
-    color: #2DD4BF;
 }
 
 body.dark .empty-state-title {
@@ -80,15 +74,12 @@ body.dark .empty-state-sub {
     min-width: 0;
     padding: 10px 12px;
     border-radius: 12px;
-    border: 1px solid #E5E7EB;
-    background: #FFFFFF;
-    color: #111827;
+    border: 1px solid var(--border);    background: #FFFFFF;
+    color: var(--text);
     font-family: "Supreme", sans-serif;
     font-size: 14px;
 }
 
 body.dark .filter-select {
     background: #17202B;
-    color: #F3F4F6;
-    border-color: #374151;
 }

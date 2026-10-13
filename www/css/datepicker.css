@@ -44,7 +44,7 @@
 /* أزرار Set و Cancel و Clear في الأسفل */
 .dudp__wrapper .dudp__btn,
 .dudp__wrapper[data-theme] .dudp__btn {
-    color: #0F766E !important;
+    color: var(--brand-text) !important;
     font-weight: 700 !important;
 }
 
@@ -72,8 +72,4 @@ body.dark .dudp__wrapper .dudp__date {
 body.dark .dudp__wrapper .dudp__calendar .dudp__date.selected {
     background-color: #14B8A6 !important;
     color: #0F172A !important;
-}
-
-body.dark .dudp__wrapper .dudp__btn {
-    color: #2DD4BF !important;
 }

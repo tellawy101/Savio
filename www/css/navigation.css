@@ -36,13 +36,13 @@ body.capacitor-app .bottom-nav {
     height:50px;
     margin:0;
     padding:0;
-    color:#777;
+    color:var(--text-muted);
     font-size:14px;
     cursor:pointer;
     position:relative;
 }
 .nav-item.active{
-    color:#0F766E;
+    color:var(--brand-text);
     font-weight:bold;
 }
 main{
@@ -58,13 +58,6 @@ body.capacitor-app main {
     border:1px solid rgba(255,255,255,.1);
 }
 
-.dark .nav-item{
-    color:#bbb;
-}
-
-.dark .nav-item.active{
-    color:#4fd1c5;
-}
 .fab-nav{
     position:absolute;
     top:-60px;

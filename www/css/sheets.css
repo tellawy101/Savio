@@ -74,9 +74,9 @@
     margin: 0;
     padding: 12px 14px;
     border-radius: 12px;
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--border);
     background: #fff;
-    color: #111827;
+    color: var(--text);
     font-family: inherit;
     font-size: 15px;
 }
@@ -102,8 +102,6 @@
 
 body.dark .select-sheet-trigger:not(.filter-select) {
     background: #17202B;
-    color: #F3F4F6;
-    border-color: #374151;
 }
 
 .select-sheet { align-items: flex-end; padding-top: 0; }
@@ -139,8 +137,8 @@ body.dark .select-sheet-trigger:not(.filter-select) {
     padding: 14px 16px;
     border-radius: 14px;
     border: 1.5px solid #E5E7EB;
-    background: #fff;
-    color: #111827;
+    background: var(--surface);
+    color: var(--text);
     font-family: inherit;
     font-size: 15px;
     font-weight: 600;
@@ -148,21 +146,13 @@ body.dark .select-sheet-trigger:not(.filter-select) {
 }
 
 .select-sheet-option.selected {
-    border-color: #0F766E;
-    background: rgba(15, 118, 110, 0.08);
-    color: #0F766E;
+    border-color: var(--brand-text);
+    background: var(--brand-bg);
+    color: var(--brand-text);
 }
 
 .select-sheet-option.selected::after { content: "✓"; }
 
 body.dark .select-sheet-option {
-    background: #1f2937;
     border-color: rgba(79, 209, 197, 0.15);
-    color: #fff;
-}
-
-body.dark .select-sheet-option.selected {
-    border-color: #4fd1c5;
-    background: rgba(79, 209, 197, 0.12);
-    color: #4fd1c5;
 }

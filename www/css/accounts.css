@@ -135,7 +135,7 @@ body {
 .account-avatar i {
     width: 22px;
     height: 22px;
-    color: var(--c-ink);
+    color: var(--text);
 }
 
 .account-card-info {
@@ -146,7 +146,7 @@ body {
 .account-card-info .account-name {
     font-size: 16px;
     font-weight: 700;
-    color: var(--c-ink);
+    color: var(--text);
 }
 
 .account-sub-name {
@@ -181,7 +181,7 @@ body {
 .account-card-balance-amount {
     font-size: 18px;
     font-weight: 800;
-    color: var(--c-ink);
+    color: var(--text);
     font-family: "Supreme", sans-serif;
 }
 
@@ -210,7 +210,7 @@ body {
     align-items: center;
     gap: var(--stats-gap);
     padding-right: 12px;
-    border-right: 1px solid #F1F1F1;
+    border-right: 1px solid var(--divider);
     position: relative;
 }
 .stat-texts {
@@ -311,13 +311,13 @@ body {
 
 .accounts-empty {
     text-align: center;
-    color: var(--c-muted);
+    color: var(--text-muted);
     font-size: 14px;
     padding: 40px 20px;
 }
 .accounts-empty {
     text-align: center;
-        color: var(--c-muted);
+        color: var(--text-muted);
     font-size: 14px;
     padding: 40px 20px;
 }
@@ -334,21 +334,14 @@ body {
     margin: 0;
     font-size: 20px;
     font-weight: 700;
-    color: var(--c-ink);
+    color: var(--text);
     flex: 1;
-}
-
-.dark .page-header h2 {
-    color: #ffffff;
 }
 
 .dark .account-balance-detail {
     color: #f9fafb;
 }
 
-.dark .accounts-empty {
-    color: #9ca3af;
-}
 /* Icon Dropdown */
 .icon-dropdown {
     position: relative;
@@ -505,27 +498,6 @@ body {
     background: #2c2c2c;
 }
 
-.dark .account-avatar i {
-    color: #fff;
-}
-
-.dark .account-card-info .account-name {
-    color: #f9fafb;
-}
-
-.dark .account-card-balance-amount {
-    color: #f9fafb;
-}
-
-.dark .account-divider,
-.dark .stat-item {
-    border-color: #2c2c2c;
-}
-
 .dark .account-corner-icon {
     background: #1e1e1e;
-}
-
-.dark .accounts-empty {
-    color: #9ca3af;
 }

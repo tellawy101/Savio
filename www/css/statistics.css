@@ -24,7 +24,7 @@
     margin-bottom: 20px;
 
     background: #FFFFFF;
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--border);
     border-radius: 12px;
 
     box-sizing: border-box;
@@ -54,7 +54,7 @@
     border-radius: 10px;
 
     background: transparent;
-    color: #6B7280;
+    color: var(--text-muted);
 
     font-size: 14px;
     font-weight: 600;
@@ -97,7 +97,7 @@
 
     background: #FFFFFF;
 
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--border);
     border-radius: 16px;
 
     box-sizing: border-box;
@@ -128,14 +128,14 @@
 
     margin-bottom: 5px;
 
-    color: #6B7280;
+    color: var(--text-muted);
     font-size: 13px;
 }
 
 .stat-content strong {
     display: block;
 
-    color: #111827;
+    color: var(--text);
 
     font-size: 20px;
     font-weight: 700;
@@ -157,7 +157,7 @@
 
     background: #FFFFFF;
 
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--border);
     border-radius: 18px;
 
     box-sizing: border-box;
@@ -174,7 +174,7 @@
 .section-header h2 {
     margin: 0;
 
-    color: #111827;
+    color: var(--text);
 
     font-size: 17px;
     font-weight: 700;
@@ -183,7 +183,7 @@
 .section-header p {
     margin: 5px 0 0;
 
-    color: #6B7280;
+    color: var(--text-muted);
 
     font-size: 13px;
 }
@@ -249,7 +249,7 @@
 }
 
 .category-amount {
-    color: #111827;
+    color: var(--text);
     font-size: 14px;
     font-weight: 700;
 }
@@ -260,7 +260,7 @@
 
     overflow: hidden;
 
-    background: #E5E7EB;
+    background: var(--border);
     border-radius: 99px;
 }
 
@@ -295,7 +295,7 @@
 
     background: #F9FAFB;
 
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--border);
     border-radius: 12px;
 }
 
@@ -374,7 +374,7 @@
 }
 
 .account-value {
-    color: #111827;
+    color: var(--text);
     font-size: 14px;
     font-weight: 700;
 }
@@ -429,26 +429,8 @@ body.dark .period-selector,
 body.dark .stat-card,
 body.dark .statistics-card {
     background: #111827;
-    border-color: #374151;
 }
 
-body.dark .period-btn {
-    color: #9CA3AF;
-}
-
-body.dark .period-btn.active {
-    color: #FFFFFF;
-}
-
-body.dark .stat-content strong,
-body.dark .section-header h2,
-body.dark .category-amount,
-body.dark .account-value {
-    color: #F9FAFB;
-}
-
-body.dark .stat-content span,
-body.dark .section-header p,
 body.dark .category-name,
 body.dark .account-name {
     color: #9CA3AF;
@@ -456,13 +438,7 @@ body.dark .account-name {
 
 body.dark .account-row {
     background: #1F2937;
-    border-color: #374151;
 }
-
-body.dark .category-progress {
-    background: #374151;
-}
-
 
 /* =========================================
    RESPONSIVE
@@ -618,24 +594,16 @@ body.dark .category-progress {
 }
 
 .compare-value span {
-    color: #6B7280;
+    color: var(--text-muted);
     font-size: 12px;
 }
 
 .compare-value strong {
-    color: #111827;
+    color: var(--text);
     font-size: 15px;
     font-weight: 700;
 }
 
 body.dark .compare-label {
     color: #9CA3AF;
-}
-
-body.dark .compare-value span {
-    color: #9CA3AF;
-}
-
-body.dark .compare-value strong {
-    color: #F9FAFB;
 }

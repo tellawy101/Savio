@@ -84,7 +84,7 @@
     margin: 0;
     flex: 1;
     font-size: 20px;
-    color: #111827;
+    color: var(--text);
 }
 
 .budget-modal-close {
@@ -112,12 +112,12 @@
     margin-bottom: 8px;
     font-size: 13px;
     font-weight: 600;
-    color: #6B7280;
+    color: var(--text-muted);
 }
 .budget-input-currency {
     font-size: 14px;
     font-weight: 700;
-    color: #0F766E;
+    color: var(--brand-text);
 }
 .budget-input-wrap {
     display: flex;

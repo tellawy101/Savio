@@ -33,7 +33,7 @@
 }
 
 .settings-item:active {
-    background: rgba(0, 0, 0, 0.04);
+    background: var(--press-bg);
 }
 
 .settings-icon {
@@ -80,7 +80,7 @@
 
 .settings-divider {
     height: 1px;
-    background: rgba(0, 0, 0, 0.07);
+        background: var(--divider);
     margin-left: 72px;
 }
 
@@ -183,28 +183,9 @@
 }
 
 
-/* Dark Theme */
-
-body.dark .settings-card {
-    background: #1f2937;
-}
-
-body.dark .settings-divider {
-    background: rgba(255, 255, 255, 0.08);
-}
-
-body.dark .settings-item:active {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-body.dark .settings-select {
-    color: white;
-    background: #1f2937;
-}
-
-body.dark .settings-select option {
-    background: #1f2937;
-    color: white;
+.settings-select option {
+    background: var(--surface);
+    color: var(--text);
 }
 
 /* Mobile */
@@ -252,7 +233,7 @@ body.dark .settings-select option {
     height: 62px;
     margin: 0 auto 14px;
     border-radius: 50%;
-    background: rgba(15, 118, 110, 0.1);
+        background: var(--brand-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -261,7 +242,7 @@ body.dark .settings-select option {
 .import-modal-icon i {
     width: 28px;
     height: 28px;
-    color: #0F766E;
+        color: var(--brand-text);
 }
 
 .import-modal-content h2 {
@@ -270,7 +251,7 @@ body.dark .settings-select option {
 }
 
 .import-modal-desc {
-    color: #6b7280;
+        color: var(--text-muted);
     font-size: 13.5px;
     line-height: 1.6;
     margin: 0 0 20px;
@@ -282,9 +263,9 @@ body.dark .settings-select option {
     align-items: center;
     gap: 8px;
     padding: 22px 16px;
-    border: 1.5px dashed #0F766E;
+        border: 1.5px dashed var(--brand-text);
     border-radius: 14px;
-    background: rgba(15, 118, 110, 0.04);
+    background: var(--brand-bg-soft);
     cursor: pointer;
     transition: background .2s ease, border-color .2s ease;
 }
@@ -296,13 +277,13 @@ body.dark .settings-select option {
 .import-file-drop i {
     width: 26px;
     height: 26px;
-    color: #0F766E;
+        color: var(--brand-text);
 }
 
 .import-file-drop span {
     font-size: 13.5px;
     font-weight: 600;
-    color: #0F766E;
+color: var(--brand-text);
 }
 
 .import-modal-actions {
@@ -319,25 +300,6 @@ body.dark .settings-select option {
     border-radius: 10px;
 }
 
-/* Dark mode */
-body.dark .import-modal-icon {
-    background: rgba(79, 209, 197, 0.12);
-}
-
-body.dark .import-modal-icon i,
-body.dark .import-file-drop i,
-body.dark .import-file-drop span {
-    color: #4fd1c5;
-}
-
-body.dark .import-modal-desc {
-    color: #9ca3af;
-}
-
-body.dark .import-file-drop {
-    border-color: #4fd1c5;
-    background: rgba(79, 209, 197, 0.06);
-}
 /* ==============================
    Select Trigger Button (Language / Currency)
 ============================== */
@@ -345,13 +307,13 @@ body.dark .import-file-drop {
     display: flex;
     align-items: center;
     gap: 6px;
-    background: rgba(15, 118, 110, 0.10);
+    background: var(--brand-bg);
     border: none;
     border-radius: 10px;
     padding: 8px 12px;
     font-size: 13.5px;
     font-weight: 600;
-    color: #0F766E;
+    color: var(--brand-text);
     cursor: pointer;
     width: auto;
     margin: 0;
@@ -361,16 +323,7 @@ body.dark .import-file-drop {
 .settings-select-trigger i {
     width: 16px;
     height: 16px;
-    color: #0F766E;
-}
-
-body.dark .settings-select-trigger {
-    background: rgba(79, 209, 197, 0.12);
-    color: #4fd1c5;
-}
-
-body.dark .settings-select-trigger i {
-    color: #4fd1c5;
+    color: var(--brand-text);
 }
 
 /* ==============================
@@ -394,12 +347,12 @@ body.dark .settings-select-trigger i {
     justify-content: space-between;
     width: 100%;
     padding: 14px 16px;
-    border: 1.5px solid rgba(15, 118, 110, 0.15);
+        border: 1.5px solid var(--brand-line);
     border-radius: 12px;
-    background: rgba(15, 118, 110, 0.04);
+    background: var(--option-bg);
     font-size: 14px;
     font-weight: 600;
-    color: #111827;
+        color: var(--text);
     cursor: pointer;
     text-align: start;
 }
@@ -407,41 +360,26 @@ body.dark .settings-select-trigger i {
 .picker-option .picker-check {
     width: 18px;
     height: 18px;
-    color: #0F766E;
+        color: var(--brand-text);
     opacity: 0;
     transition: opacity .15s ease;
 }
 
 .picker-option.selected {
-    border-color: #0F766E;
-    background: rgba(15, 118, 110, 0.1);
+    border-color: var(--brand-text);
+    background: var(--brand-bg);
 }
 
 .picker-option.selected .picker-check {
     opacity: 1;
 }
 
-body.dark .picker-option {
-    background: #1f2937;
-    border-color: rgba(79, 209, 197, 0.15);
-    color: #fff;
-}
-
-body.dark .picker-option.selected {
-    border-color: #4fd1c5;
-    background: rgba(79, 209, 197, 0.12);
-}
-
-body.dark .picker-option .picker-check {
-    color: #4fd1c5;
-}
-
 /* ==============================
    About Savio Modal
 ============================== */
 .about-info-list {
-    background: rgba(15, 118, 110, 0.04);
-    border: 1.5px solid rgba(15, 118, 110, 0.15);
+        background: var(--brand-bg-soft);
+    border: 1.5px solid var(--brand-line);
     border-radius: 14px;
     overflow: hidden;
     margin-top: 6px;
@@ -466,16 +404,16 @@ body.dark .picker-option .picker-check {
 .about-info-value {
     font-size: 13.5px;
     font-weight: 600;
-    color: #111827;
+        color: var(--text);
 }
 
 .about-info-link .about-info-value {
-    color: #0F766E;
+    color: var(--brand-text);
 }
 
 .about-info-divider {
     height: 1px;
-    background: rgba(15, 118, 110, 0.12);
+    background: var(--brand-divider);
     margin: 0 16px;
 }
 
@@ -485,22 +423,6 @@ body.dark .picker-option .picker-check {
     font-size: 12.5px;
 }
 
-body.dark .about-info-list {
-    background: rgba(79, 209, 197, 0.06);
-    border-color: rgba(79, 209, 197, 0.15);
-}
-
-body.dark .about-info-value {
-    color: #fff;
-}
-
-body.dark .about-info-link .about-info-value {
-    color: #4fd1c5;
-}
-
-body.dark .about-info-divider {
-    background: rgba(79, 209, 197, 0.12);
-}
 .about-whatsapp-value {
     display: flex;
     align-items: center;
@@ -525,8 +447,8 @@ body.dark .about-info-divider {
 .restore-stats {
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(15, 118, 110, 0.15);
-    background: rgba(15, 118, 110, 0.04);
+    border: 1px solid var(--brand-line);
+    background: var(--brand-bg-soft);
     border-radius: 14px;
     padding: 4px 14px;
     margin-bottom: 18px;
@@ -541,33 +463,33 @@ body.dark .about-info-divider {
 }
 
 .restore-stat + .restore-stat {
-    border-top: 1px solid rgba(15, 118, 110, 0.12);
+    border-top: 1px solid var(--brand-divider);
 }
 
 .restore-stat i {
     width: 18px;
     height: 18px;
-    color: #0F766E;
+    color: var(--brand-text);
     flex-shrink: 0;
 }
 
 .restore-stat-label {
     flex: 1;
     text-align: start;
-    color: #6b7280;
+    color: var(--text-muted);
     font-weight: 500;
 }
 
 .restore-stat-value {
     font-weight: 700;
-    color: #0F766E;
+    color: var(--brand-text);
 }
 
 .restore-section-label {
     text-align: start;
     font-size: 12.5px;
     font-weight: 700;
-    color: #6b7280;
+    color: var(--text-muted);
     margin-bottom: 8px;
 }
 
@@ -603,7 +525,7 @@ body.dark .about-info-divider {
 .restore-option-body > i {
     width: 22px;
     height: 22px;
-    color: #6b7280;
+    color: var(--text-muted);
     flex-shrink: 0;
 }
 
@@ -622,7 +544,7 @@ body.dark .about-info-divider {
 .restore-option-text small {
     font-size: 12px;
     line-height: 1.5;
-    color: #6b7280;
+    color: var(--text-muted);
 }
 
 .restore-option-check {
@@ -646,17 +568,17 @@ body.dark .about-info-divider {
 }
 
 .restore-option input:checked + .restore-option-body {
-    border-color: #0F766E;
-    background: rgba(15, 118, 110, 0.07);
+    border-color: var(--brand-text);
+    background: var(--brand-bg);
 }
 
 .restore-option input:checked + .restore-option-body > i {
-    color: #0F766E;
+    color: var(--brand-text);
 }
 
 .restore-option input:checked + .restore-option-body .restore-option-check {
-    border-color: #0F766E;
-    background: #0F766E;
+    border-color: var(--brand-text);
+background: var(--brand-text);
 }
 
 .restore-option input:checked + .restore-option-body .restore-option-check::after {
@@ -687,41 +609,6 @@ body.dark .about-info-divider {
 }
 
 /* Dark mode */
-body.dark .restore-stats {
-    border-color: rgba(79, 209, 197, 0.2);
-    background: rgba(79, 209, 197, 0.06);
-}
-
-body.dark .restore-stat + .restore-stat {
-    border-top-color: rgba(79, 209, 197, 0.15);
-}
-
-body.dark .restore-stat i,
-body.dark .restore-stat-value {
-    color: #4fd1c5;
-}
-
-body.dark .restore-stat-label,
-body.dark .restore-section-label,
-body.dark .restore-option-text small,
-body.dark .restore-option-body > i {
-    color: #9ca3af;
-}
-
-body.dark .restore-option input:checked + .restore-option-body {
-    border-color: #4fd1c5;
-    background: rgba(79, 209, 197, 0.1);
-}
-
-body.dark .restore-option input:checked + .restore-option-body > i {
-    color: #4fd1c5;
-}
-
-body.dark .restore-option input:checked + .restore-option-body .restore-option-check {
-    border-color: #4fd1c5;
-    background: #4fd1c5;
-}
-
 body.dark .restore-option-check::after {
     background: #0f1f1e;
 }

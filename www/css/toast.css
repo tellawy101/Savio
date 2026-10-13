@@ -16,7 +16,7 @@
     justify-content: center;
     gap: 14px;
     background: #FFFFFF;
-    color: #111827;
+    color: var(--text);
     border-radius: 13px;
     padding: 12px 20px;
     white-space: nowrap;
@@ -32,7 +32,7 @@
     flex-shrink: 0;
     background: none !important;
     border: none;
-    color: #0F766E;
+    color: var(--brand-text);
     font-family: "Supreme", sans-serif;
     font-size: 14px;
     font-weight: 700;
@@ -51,12 +51,8 @@
 /* الوضع الليلي: خلفية داكنة */
 body.dark .toast-inner {
     background: #17202B;
-    color: #FFFFFF;
 }
 
-body.dark #toast .toast-undo-btn {
-    color: #4fd1c5;
-}
 /* منع سكرول الصفحة اللي ورا لما أي بوب أب يكون مفتوح */
 body:has(.modal.show) {
     overflow: hidden;

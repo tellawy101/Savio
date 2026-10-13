@@ -324,9 +324,7 @@ body.has-scroll {
     color: #999;
     pointer-events: none;
 }
-.dark .account-arrow {
-    color: #999;
-}
+
 /* ==============================
    حقل الوصف والتاريخ (Description / Date)
 ============================== */
@@ -476,7 +474,8 @@ body.dark .modal-actions .account-save-btn {
     padding: 12px;
     margin-bottom: 8px;
     border-radius: 12px;
-    background: #f8f8f8;
+    background: var(--surface-alt);
+    color: var(--text);
     cursor: pointer;
     user-select: none;
 }
@@ -511,7 +510,7 @@ body.dark .modal-actions .account-save-btn {
 
 .account-balance {
     font-size: 13px;
-    color: #777;
+    color: var(--text-muted);
     text-align: left !important;
     width: 100%;
 }
@@ -676,17 +675,8 @@ body.dark .modal-actions .account-save-btn {
     color: #ffffff;
 }
 
-.dark .account-item {
-    background: #2c2c2c;
-    color: #fff;
-}
-
 .dark .account-item-icon {
     background: #3a3a3a;
-}
-
-.dark .account-balance {
-    color: #bbb;
 }
 
 .dark .account-select-box,
