@@ -37,8 +37,8 @@
 =========================== */
 
 .balance-card {
-    background: linear-gradient(180deg, #0f766e, #115e59);
-    color: #fff;
+    background: linear-gradient(180deg, var(--brand), #115e59);
+    color: var(--c-white);
     
     border-radius: 0 0 15px 15px;
     
@@ -99,9 +99,9 @@ transform: translateY(-10px);
     max-width: 400px;
     box-sizing: border-box;
 
-    background: #ffffff;
+        background: var(--surface);
 
-    border: 1px solid #e5e7eb;
+        border: 1px solid var(--border);
     border-radius: 12px;
 
     padding: 16px;
@@ -139,7 +139,7 @@ transform: translateY(-10px);
 .debt-person-name {
     margin: 0;
 
-    color: #111827;
+    color: var(--text);
 
     font-size: 1.1rem;
     font-weight: 700;
@@ -162,12 +162,12 @@ transform: translateY(-10px);
 }
 
 .debt-badge.receivable {
-    color: #16a34a;
+    color: var(--success);
     background: #dcfce7;
 }
 
 .debt-badge.payable {
-    color: #dc2626;
+    color: var(--danger);
     background: #fee2e2;
 }
 
@@ -179,7 +179,7 @@ transform: translateY(-10px);
 .debt-card-amount {
     order: 2;
     margin: 0 0 12px;
-    color: #6b7280;
+    color: var(--c-muted);
     font-size: 1.4rem;
     font-weight: 800;
     text-align: right;
@@ -205,7 +205,7 @@ transform: translateY(-10px);
 
     gap: 8px 14px;
 
-    color: #6b7280;
+    color: var(--text-muted);
 
     font-size: 0.8rem;
 }
@@ -218,7 +218,7 @@ transform: translateY(-10px);
 .debt-progress-info {
     margin-top: 12px;
 
-    color: #6b7280;
+    color: var(--text-muted);
 
     font-size: 0.8rem;
 }
@@ -231,7 +231,7 @@ transform: translateY(-10px);
 
     overflow: hidden;
 
-    background: #e5e7eb;
+    background: var(--border);
 
     border-radius: 999px;
 }
@@ -239,7 +239,7 @@ transform: translateY(-10px);
 .debt-progress-fill {
     height: 100%;
 
-    background: #16a34a;
+    background: var(--success);
 
     border-radius: 999px;
 
@@ -256,18 +256,8 @@ transform: translateY(-10px);
     border-color: #374151;
 }
 
-.dark .debt-person-name,
 .dark .debt-card-amount {
     color: #f9fafb;
-}
-
-.dark .debt-card-details,
-.dark .debt-progress-info {
-    color: #9ca3af;
-}
-
-.dark .debt-progress {
-    background: #374151;
 }
 
 .dark #debtNotes,
@@ -318,7 +308,7 @@ transform: translateY(-10px);
     margin: 0;
     font-size: 18px;
     font-weight: 700;
-    color: #fff;
+    color: var(--c-white);
 }
 
 .balance-grid .stat .stat-value {
@@ -346,17 +336,17 @@ transform: translateY(-10px);
 
 .edit-btn{
     background:#3B82F6;
-    color:#fff;
+    color: var(--c-white);
 }
 
 .pay-btn{
     background:#10B981;
-    color:#fff;
+    color: var(--c-white);
 }
 
 .delete-btn{
     background:#EF4444;
-    color:#fff;
+    color: var(--c-white);
 }
 
 .hidden{
@@ -383,7 +373,7 @@ transform: translateY(-10px);
 
     border-radius: 14px !important;
 
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 
     font-family: "Supreme", sans-serif !important;
     font-size: 14px !important;
@@ -394,7 +384,7 @@ transform: translateY(-10px);
 
     box-shadow: 0 8px 25px rgba(0, 0, 0, .18) !important;
 
-    z-index: 9999 !important;
+    z-index: var(--z-toast) !important;
 
     display: none;
 }
@@ -420,7 +410,7 @@ transform: translateY(-10px);
     margin: 0;
     padding: 14px 10px;
     
-    background: #E5E7EB;
+    background: var(--c-line);
     color: #555;
     
     border: 1px solid #D1D5DB;
@@ -432,15 +422,16 @@ transform: translateY(-10px);
 
 .debt-type-btn.active,
 .edit-debt-type-btn.active {
-    background: #0F766E;
-    color: #fff;
-    border-color: #0F766E;
+    background: var(--brand);
+    color: var(--c-white);
+    border-color: var(--brand);
 }
 
 .debt-type-btn.active {
-    background: #0F766E;
-    color: #fff;
-    border-color: #0F766E;
+    background: var(--brand);
+    color: var(--c-white);
+    border-color: var(--brand);
+    
 }
 /* ==============================
    Modal Actions
@@ -508,7 +499,7 @@ transform: translateY(-10px);
     border: 1px solid #ddd;
     border-radius: 12px;
 
-    background: #fff;
+    background: var(--c-white);
     color: #111;
 
     font-family: "Supreme", sans-serif;
@@ -517,7 +508,6 @@ transform: translateY(-10px);
 
     resize: vertical;
 }
-
 #debtNotes::placeholder {
     color: #777;
     font-size: 16px;
@@ -526,7 +516,7 @@ transform: translateY(-10px);
 #debtNotes:focus,
 #editDebtNotes:focus {
     outline: none;
-    border: 1px solid #0F766E;
+    border: 1px solid var(--brand);
     box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.25);
 }
 .debt-card-main-row {
@@ -538,7 +528,7 @@ transform: translateY(-10px);
 
 .debt-card-details {
     order: 1;
-    color: #6b7280;
+    color: var(--text-muted);
     font-size: 0.8rem;
     white-space: nowrap;
 }
@@ -554,14 +544,14 @@ body:not(.dark):has(.goals-header) {
 
 #cancelDebtBtn,
 #cancelEditDebtBtn {
-    background: #E5E7EB;
+    background: var(--c-line);
     color: #374151;
 }
 
 #saveDebtBtn,
 #saveEditDebtBtn {
-    background: #0F766E;
-    color: #fff;
+    background: var(--brand);
+    color: var(--c-white);
 }
 
 /* ==============================
@@ -579,7 +569,7 @@ body:not(.dark):has(.goals-header) {
     border: 1px solid #ddd;
     border-radius: 12px;
     
-    background: #fff;
+    background: var(--c-white);
     color: #111;
     
     font-family: "Supreme", sans-serif;
@@ -615,7 +605,7 @@ body:not(.dark):has(.goals-header) {
     gap: 8px;
     padding: 0 24px;
     justify-content: center;
-    color: #fff;
+    color: var(--c-white);
     font-weight: 700;
     font-size: 0.9rem;
     opacity: 0;
@@ -649,15 +639,15 @@ body:not(.dark):has(.goals-header) {
 }
 
 .debt-badge.settled {
-    color: #6b7280;
-    background: #f3f4f6;
+    color: var(--c-muted);
+    background: var(--c-bg-chip);
 }
 
 .debt-card-pay-btn {
     width: auto;
     margin: 0;
-    background: #0F766E;
-    color: #fff;
+    background: var(--brand);
+    color: var(--c-white);
     border: none;
     border-radius: 999px;
     padding: 10px 18px;
@@ -674,7 +664,7 @@ body:not(.dark):has(.goals-header) {
     display: inline-block;
     direction: ltr;
     background: #dcfce7;
-    color: #16a34a;
+    color: var(--success);
     border-radius: 8px;
     padding: 6px 14px;
     font-size: 0.75rem;
@@ -708,7 +698,7 @@ padding: 24px 20px 0;
 .goals-subtitle {
     display: block;
     font-size: 13px;
-    color: #6b7280;
+    color: var(--c-muted);
     margin-top: 2px;
 }
 
@@ -719,8 +709,8 @@ padding: 24px 20px 0;
     padding: 0;
     border: none;
     border-radius: 14px;
-    background: #0F766E;
-    color: #ffffff;
+    background: var(--brand);
+    color: var(--c-white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -737,7 +727,7 @@ padding: 24px 20px 0;
     padding: 14px 16px;
     border-radius: 18px;
     background: #e6f4f1;
-    color: #0F766E;
+    color: var(--brand);
 }
 
 .goals-summary-label {
@@ -752,7 +742,7 @@ padding: 24px 20px 0;
 }
 
 .goals-summary-card .goal-progress {
-    background: #ffffff;
+    background: var(--c-white);
 }
 
 .goals-summary-sub {
@@ -769,8 +759,8 @@ padding: 24px 20px 0;
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
+    background: var(--c-white);
+    border: 1px solid var(--c-line);
     border-radius: 18px;
     padding: 14px;
     margin: 0 auto 12px;
@@ -789,7 +779,7 @@ padding: 24px 20px 0;
     height: 44px;
     border-radius: 14px;
     background: #e6f4f1;
-    color: #0F766E;
+    color: var(--brand);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -812,18 +802,18 @@ padding: 24px 20px 0;
 .goal-name {
     font-size: 16px;
     font-weight: 600;
-    color: #111827;
+    color: var(--c-ink);
 }
 
 .goal-amounts-text {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--c-muted);
 }
 
 .goal-percent {
     font-size: 15px;
     font-weight: 700;
-    color: #0F766E;
+    color: var(--brand);
 }
 
 .goal-badge {
@@ -832,21 +822,21 @@ padding: 24px 20px 0;
     padding: 4px 10px;
     border-radius: 10px;
     background: #dcfce7;
-    color: #16a34a;
+    color: var(--success);
 }
 
 .goal-progress {
     width: 100%;
     height: 6px;
     border-radius: 999px;
-    background: #e5e7eb;
+    background: var(--c-line);
     overflow: hidden;
 }
 
 .goal-progress-fill {
     height: 100%;
     border-radius: 999px;
-    background: #0F766E;
+    background: var(--brand);
     transition: width 0.3s ease;
 }
 
@@ -858,7 +848,7 @@ padding: 24px 20px 0;
     flex-wrap: wrap;
     margin-top: 10px;
     font-size: 13px;
-    color: #6b7280;
+    color: var(--c-muted);
 }
 
 .goal-date {
@@ -867,7 +857,7 @@ padding: 24px 20px 0;
     gap: 6px;
     margin-top: 10px;
     font-size: 12px;
-    color: #6b7280;
+    color: var(--c-muted);
 }
 
 .goal-date svg {
@@ -890,8 +880,8 @@ padding: 24px 20px 0;
     border-radius: 12px;
     font-size: 14px;
     font-weight: 600;
-    color: #ffffff;
-    background: #0F766E;
+    color: var(--c-white);
+    background: var(--brand);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -929,11 +919,11 @@ padding: 24px 20px 0;
 
 .goal-done .goal-icon {
     background: #dcfce7;
-    color: #16a34a;
+    color: var(--success);
 }
 
 .goal-done .goal-progress-fill {
-    background: #16a34a;
+    background: var(--success);
 }
 
 /* Dark Mode */
@@ -1041,7 +1031,7 @@ body.dark .goal-done .goal-progress-fill {
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border);
 }
 
 .payment-row:last-child {
@@ -1061,7 +1051,7 @@ body.dark .goal-done .goal-progress-fill {
 
 .payment-row-date {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--text-muted);
 }
 
 .payment-row-amount {
@@ -1071,28 +1061,20 @@ body.dark .goal-done .goal-progress-fill {
 }
 
 .payment-row-amount.receivable {
-    color: #16a34a;
+    color: var(--success);
 }
 
 .payment-row-amount.payable {
-    color: #dc2626;
+color: var(--danger);
 }
 
 .payments-history-empty {
     text-align: center;
-    color: #6b7280;
+    color: var(--text-muted);
     padding: 20px 0;
     font-size: 14px;
 }
 
-body.dark .payment-row {
-    border-bottom-color: #374151;
-}
-
-body.dark .payment-row-date,
-body.dark .payments-history-empty {
-    color: #9ca3af;
-}
 .payment-row-end {
     display: flex;
     align-items: center;
@@ -1108,7 +1090,7 @@ body.dark .payments-history-empty {
     border: none;
     border-radius: 8px;
     background: #fee2e2;
-    color: #dc2626;
+    color: var(--danger);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1123,8 +1105,8 @@ body.dark .payments-history-empty {
 body.dark .payment-delete-btn {
     background: #3f1d1d;
 }
-.cb-over .goal-progress-fill { background: #dc2626; }
-.cb-over .goal-percent { color: #dc2626; 
+.cb-over .goal-progress-fill { background: var(--danger); }
+.cb-over .goal-percent { color: var(--danger); 
 }
 /* ==============================
    Goal Form Modal
@@ -1139,7 +1121,7 @@ body.dark .payment-delete-btn {
     margin-bottom: 8px;
     font-size: 13px;
     font-weight: 600;
-    color: #6B7280;
+    color: var(--text-muted);
 }
 
 .goal-field input {
@@ -1148,11 +1130,11 @@ body.dark .payment-delete-btn {
     margin: 0;
     padding: 0 14px;
     box-sizing: border-box;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--c-line);
     border-radius: 14px;
-    background: #f9fafb;
+    background: var(--surface-alt);
     font-size: 15px;
-    color: #111827;
+    color: var(--text);
 }
 html[dir="rtl"] .goal-field input[type="tel"] {
     direction: rtl;
@@ -1163,14 +1145,8 @@ html[dir="rtl"] .goal-field input[type="tel"] {
     margin-top: 6px;
 }
 
-body.dark .goal-field label {
-    color: #9CA3AF;
-}
-
 body.dark .goal-field input {
-    background: #2c2c2c;
     border-color: #3d3d3d;
-    color: #F9FAFB;
 }
 .goal-field input[type="date"] {
     -webkit-appearance: none;
@@ -1208,12 +1184,12 @@ body.dark .goal-field input {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--c-line);
     border-radius: 14px;
-    background: #f9fafb;
+    background: var(--surface-alt);
     font-size: 15px;
     font-family: inherit;
-    color: #111827;
+    color: var(--c-ink);
     cursor: pointer;
 }
 
@@ -1233,9 +1209,9 @@ body.dark .goal-field input {
     margin-top: 8px;
     max-height: 200px;
     overflow-y: auto;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--c-line);
     border-radius: 14px;
-    background: #f9fafb;
+    background: var(--surface-alt);
 }
 
 .cb-picker.open .cb-picker-list {
@@ -1245,8 +1221,8 @@ body.dark .goal-field input {
 .cb-picker-item {
     padding: 14px;
     font-size: 15px;
-    color: #111827;
-    border-bottom: 1px solid #e5e7eb;
+    color: var(--text);
+    border-bottom: 1px solid var(--c-line);
     cursor: pointer;
 }
 
@@ -1255,26 +1231,24 @@ body.dark .goal-field input {
 }
 
 .cb-picker-item.selected {
-    color: #0f766e;
+    color: var(--brand);
     font-weight: 600;
 }
 
 .cb-picker-empty {
     padding: 14px;
     font-size: 14px;
-    color: #6B7280;
+    color: var(--c-muted);
     text-align: center;
 }
 
 body.dark .cb-picker-btn,
 body.dark .cb-picker-list {
-    background: #2c2c2c;
     border-color: #3d3d3d;
     color: #F9FAFB;
 }
 
 body.dark .cb-picker-item {
-    color: #F9FAFB;
     border-bottom-color: #3d3d3d;
 }
 
@@ -1316,19 +1290,11 @@ body.dark .cb-picker-item.selected {
 
 .cb-used {
     font-weight: 700;
-    color: #111827;
+    color: var(--text);
 }
 
 .cb-limit {
-    color: #6b7280;
-}
-
-body.dark .cb-used {
-    color: #F9FAFB;
-}
-
-body.dark .cb-limit {
-    color: #9CA3AF;
+    color: var(--text-muted);
 }
 
 body.dark .cb-delete-btn {

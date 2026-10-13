@@ -697,7 +697,7 @@ function createTransactionElement(expense, options = {}) {
     // تحديد الأيقونة ولون الكارت
     let iconHTML = `<i data-lucide="receipt"></i>`;
     if (expense.categoryIcon) {
-    iconHTML = `<i data-lucide="${escapeHTML(expense.categoryIcon)}"></i>`;
+    iconHTML = `<i data-lucide="${escapeHTML(getTxCategoryIcon(expense))}"></i>`;
     } else if (isTransfer) {
         iconHTML = `<i data-lucide="repeat"></i>`;
     }

@@ -79,12 +79,18 @@ accountEl.textContent = getTxAccountName(entry);
 }
 
 categoryEl.textContent = getTxCategoryName(entry) || t("select_category");
-categoryEl.dataset.icon = entry.categoryIcon || "tag";
+categoryEl.dataset.icon = getTxCategoryIcon(entry);
+const entryCategoryId = getTxCategoryId(entry);
+if (entryCategoryId) {
+    categoryEl.dataset.id = entryCategoryId;
+} else {
+    delete categoryEl.dataset.id;
+}
 if (entry.category) {
     categoryEl.removeAttribute("data-i18n");
     const categoryIconEl = document.getElementById(type + "CategoryIcon");
     if (categoryIconEl && entry.categoryIcon) {
-        categoryIconEl.innerHTML = `<i data-lucide="${escapeHTML(entry.categoryIcon)}"></i>`;
+        categoryIconEl.innerHTML = `<i data-lucide="${escapeHTML(getTxCategoryIcon(entry))}"></i>`;
     }
 }
 if (window.lucide) lucide.createIcons();

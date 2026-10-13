@@ -30,13 +30,54 @@
     font-style: normal;
     font-display: swap;
 }
+:root {
+    --brand: #0F766E;
+    --brand-text: #0F766E;
+    --text: #111827;
+    --text-muted: #6B7280;
+    --surface: #FFFFFF;
+    --surface-alt: #F9FAFB;
+    --border: #E5E7EB;
+    --danger: #DC2626;
+    --success: #16A34A;
+        --z-sticky: 100;
+    --z-nav: 1000;
+    --z-fab: 1002;
+    --z-modal: 2000;
+    --z-dropdown: 3000;
+    --z-status: 9999;
+    --z-toast: 9999;
+        --c-ink: #111827;
+    --c-muted: #6B7280;
+    --c-faint: #9CA3AF;
+    --c-line: #E5E7EB;
+    --c-bg-soft: #F9FAFB;
+    --c-bg-chip: #F3F4F6;
+        --c-white: #FFFFFF;
+    --brand-bg-soft: rgba(15, 118, 110, 0.04);
+    --brand-bg: rgba(15, 118, 110, 0.10);
+    --brand-line: rgba(15, 118, 110, 0.15);
+    --brand-divider: rgba(15, 118, 110, 0.12);
+    }
 
+body.dark {
+    --brand-text: #4FD1C5;
+    --text: #F9FAFB;
+    --text-muted: #9CA3AF;
+    --surface: #1F2937;
+    --surface-alt: #2C2C2C;
+    --border: #374151;
+    --brand-bg-soft: rgba(79, 209, 197, 0.06);
+    --brand-bg: rgba(79, 209, 197, 0.12);
+    --brand-line: rgba(79, 209, 197, 0.15);
+    --brand-divider: rgba(79, 209, 197, 0.12);
+    }
 body {
     margin: 0;
     font-family: "Supreme", sans-serif;
     font-weight: 400;
-    background: #ffffff;
-    color: #111111;
+    background: var(--surface);
+    color: var(--text);
 }
 body.capacitor-app {
     padding-top: env(safe-area-inset-top, 0px);
@@ -48,8 +89,8 @@ body.capacitor-app::before {
     left: 0;
     right: 0;
     height: env(safe-area-inset-top, 0px);
-    background: #ffffff;
-    z-index: 9999;
+        background: var(--surface);
+    z-index: var(--z-status);
 }
 body.dark.capacitor-app::before {
     background: #101817;
@@ -59,8 +100,8 @@ main {
 }
 
 .card {
-    background: #FAFAFA;
-    border: 1px solid #E5E7EB;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
@@ -76,7 +117,7 @@ main {
 }
 .card h2 {
     margin: 0;
-    color: #0F766E;
+    color: var(--brand-text);
 }
 
 .card p {
@@ -85,18 +126,18 @@ main {
     font-weight: bold;
 }
 
-button {
+:where(button) {
     width: 100%;
     padding: 15px;
     margin: 10px 0;
     border: none;
     border-radius: 12px;
-    background: #0F766E;
+    background: var(--brand);
     color: white;
     font-size: 18px;
     cursor: pointer;
     font-family: "Supreme", sans-serif;
-font-weight: 600;
+    font-weight: 600;
 }
 
 button:hover {
@@ -113,7 +154,7 @@ button:hover {
     justify-content: center;
     align-items: flex-start;
     padding-top: 6vh;
-    z-index: 2000;
+    z-index: var(--z-modal);
     visibility: hidden;
     opacity: 0;
     backdrop-filter: blur(0px);
@@ -179,19 +220,7 @@ button:hover {
 
 .dark .card {
     background: #1F2937;
-    border: 1px solid #374151;
     color: #FFFFFF;
-}
-
-.dark .card h2 {
-    color: #4fd1c5;
-}
-
-.dark #saveBtn,
-.dark #closeBtn,
-.dark #closeIncomeBtn,
-.dark #themeBtn{
-    background:#0b5d56;
 }
 
 .dark .modal-content {
@@ -282,9 +311,6 @@ button:hover {
     border: 1px solid #555;
 }
 
-.dark #expenseList li {
-    border-bottom: 1px solid #444;
-}
 
 #searchInput {
     width: 100%;

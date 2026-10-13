@@ -157,9 +157,9 @@
 
 /* خط فاصل أنيق بين العنوان والمبلغ */
 .total-row::after {
-    content: "" !important;
-    display: block !important;
-    position: static !important;
+    content: "";
+    display: block;
+    position: static;
     width: 1px;
     height: 30px;
     background: rgba(255, 255, 255, 0.35);
@@ -413,10 +413,10 @@ body.dark #transactionsList li {
         padding: 16px 16px 20px;
     }
     .account-header {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        width: 100% !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
     }
     .total-card .back-btn {
         width: 36px;
@@ -426,11 +426,11 @@ body.dark #transactionsList li {
         font-size: 16px;
     }
     .transaction-title {
-        display: flex !important;
-        align-items: center !important;
+        display: flex;
+        align-items: center;
         gap: 8px;
-        margin-inline-start: 10px !important;
-        margin-inline-end: auto !important;
+        margin-inline-start: 10px;
+        margin-inline-end: auto;
     }
     .transaction-title h1 {
         font-size: 18px;
@@ -454,7 +454,7 @@ body.dark #transactionsList li {
         white-space: nowrap;
     }
     .account-info .account-divider {
-        display: none !important;
+        display: none;
     }
     .acc-header-icon {
         width: 18px;
@@ -469,7 +469,7 @@ body.dark #transactionsList li {
         gap: 8px;
     }
     .total-row::after {
-        display: block !important;
+        display: block;
         height: 24px;
         margin: 0 6px;
     }

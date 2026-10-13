@@ -284,7 +284,11 @@ function getCategoryNameById(id, fallback) {
 function getTxAccountName(tx) {
     return getAccountNameById(tx.accountId, tx.account);
 }
-
+function getTxCategoryIcon(tx) {
+    const id = getTxCategoryId(tx);
+    const cat = id ? getLookup(CATEGORIES_KEY, getCategories).byId.get(id) : null;
+    return (cat && cat.icon) || tx.categoryIcon || "tag";
+}
 function getTxCategoryName(tx) {
     if (!tx.categoryId && tx.category === "Debt Payment") {
         return t("debts_category_payment");

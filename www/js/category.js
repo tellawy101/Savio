@@ -355,7 +355,9 @@ const isEditing = editingCategory !== null;
 
             const field = getCategoryFieldEl();
             if (field && field.dataset.id === editingCategory.id) {
-field.innerHTML = `<i data-lucide="${escapeHTML(icon)}"></i> ${escapeHTML(name)}`;
+field.textContent = name;
+const boxIcon = window.activeCategoryBox ? window.activeCategoryBox.querySelector(".category-icon") : null;
+if (boxIcon) boxIcon.innerHTML = `<i data-lucide="${escapeHTML(icon)}"></i>`;
 field.dataset.icon = icon;
 field.dataset.id = editingCategory.id;
 field.removeAttribute("data-i18n");

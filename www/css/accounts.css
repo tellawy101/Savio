@@ -17,7 +17,9 @@ body {
 
     padding: 16px 20px;
 
-    background: #fff;
+    background: var(--c-white);
+        width: 100%;
+    box-sizing: border-box;
 }
 
 .back-btn {
@@ -30,11 +32,12 @@ body {
 
     border: none;
     border-radius: 50%;
-    background: #F3F4F6;
+    background: var(--c-bg-chip);
 
     font-size: 18px;
-    color: #111827;
-
+    color: var(--c-ink);
+    flex: 0 0 48px;
+    box-shadow: none;
     cursor: pointer;
 }
 
@@ -43,8 +46,8 @@ body {
 ============================== */
 
 .balance-card {
-    background: linear-gradient(180deg, #0f766e, #115e59);
-    color: #fff;
+    background: linear-gradient(180deg, var(--brand), #115e59);
+        color: var(--c-white);
     border-radius: 18px;
     margin: 20px 20px 0;
     padding: 16px 20px;
@@ -102,7 +105,7 @@ body {
     --section-gap: 10px;
     --stats-gap: 4px;
 
-    background: #fff;
+    background: var(--c-white);
     border-radius: 18px;
     padding: var(--card-padding);
     box-shadow: 0 4px 14px rgba(0,0,0,0.06);
@@ -132,7 +135,7 @@ body {
 .account-avatar i {
     width: 22px;
     height: 22px;
-    color: #111827;
+    color: var(--c-ink);
 }
 
 .account-card-info {
@@ -143,12 +146,12 @@ body {
 .account-card-info .account-name {
     font-size: 16px;
     font-weight: 700;
-    color: #111827;
+    color: var(--c-ink);
 }
 
 .account-sub-name {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--c-muted);
     margin-top: 2px;
 }
 
@@ -178,13 +181,13 @@ body {
 .account-card-balance-amount {
     font-size: 18px;
     font-weight: 800;
-    color: #111827;
+    color: var(--c-ink);
     font-family: "Supreme", sans-serif;
 }
 
 .account-card-balance-currency {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--c-muted);
 }
 
 .account-card .account-divider {
@@ -247,12 +250,12 @@ body {
 
 .stat-icon-income {
     background: #DCFCE7;
-    color: #16a34a;
+    color: var(--success);
 }
 
 .stat-icon-expense {
     background: #FEE2E2;
-    color: #dc2626;
+    color: var(--danger);
 }
 
 .stat-icon-balance {
@@ -262,7 +265,7 @@ body {
 
 .stat-label {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--c-muted);
 }
 
 .stat-value {
@@ -271,13 +274,13 @@ body {
     font-family: "Supreme", sans-serif;
 }
 
-.stat-value-income { color: #16a34a; }
-.stat-value-expense { color: #dc2626; }
+.stat-value-income { color: var(--success); }
+.stat-value-expense { color: var(--danger); }
 .stat-value-balance { color: #4f46e5; }
 
 .stat-currency {
     font-size: 10px;
-    color: #9ca3af;
+    color: var(--c-faint);
 }
 
 .stat-sparkline {
@@ -292,8 +295,8 @@ body {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: #fff;
-    border: 1.5px solid #0f766e;
+        background: var(--c-white);
+        border: 1.5px solid var(--brand);
     display: none;
     align-items: center;
     justify-content: center;
@@ -303,18 +306,18 @@ body {
 .account-corner-icon i {
     width: 13px;
     height: 13px;
-    color: #0f766e;
+    color: var(--brand);
 }
 
 .accounts-empty {
     text-align: center;
-    color: #6b7280;
+    color: var(--c-muted);
     font-size: 14px;
     padding: 40px 20px;
 }
 .accounts-empty {
     text-align: center;
-    color: #6b7280;
+        color: var(--c-muted);
     font-size: 14px;
     padding: 40px 20px;
 }
@@ -331,17 +334,12 @@ body {
     margin: 0;
     font-size: 20px;
     font-weight: 700;
-    color: #111827;
+    color: var(--c-ink);
     flex: 1;
 }
 
 .dark .page-header h2 {
     color: #ffffff;
-}
-
-.dark .back-btn {
-    background: #2c2c2c;
-    color: #22c55e;
 }
 
 .dark .account-balance-detail {
@@ -365,7 +363,7 @@ body {
     padding: 12px 14px;
     border-radius: 12px;
     border: 1px solid var(--border-color, #e0e0e0);
-    background: var(--input-bg, #fff);
+    background: var(--input-bg, var(--c-white));
     cursor: pointer;
     font-size: 15px;
     color: #333;
@@ -414,12 +412,12 @@ body {
 
     overflow-y: auto;
     overscroll-behavior: contain;
-    z-index: 3000;
+    z-index: var(--z-dropdown);
 
     box-sizing: border-box;
     padding-bottom: env(safe-area-inset-bottom, 0px);
 
-    background: var(--input-bg, #fff);
+    background: var(--input-bg, var(--c-white));
 
     border: none;
     border-radius: 20px 20px 0 0;

@@ -24,9 +24,12 @@ body.dark.expense-page {
    تنسيق قائمة المصروفات في الداشبورد (index.html)
 ================================================================== */
 #expenseList {
+    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 1px;
+    padding: 0;
+    margin: 0;
 }
 
 .expenses-header {
@@ -44,35 +47,35 @@ body.dark.expense-page {
 }
 
 .search-btn {
-    width: 48px !important;
-    height: 48px !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    margin: 0;
 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border: none !important;
-    background: transparent !important;
+    border: none;
+    background: transparent;
 
-    color: #111 !important;
+    color: #111;
     opacity: 1 !important;
     visibility: visible !important;
 }
 
 .search-btn i {
-    display: block !important;
-    width: 30px !important;
-    height: 30px !important;
+    display: block;
+    width: 30px;
+    height: 30px;
 }
 
 .search-btn svg {
-    display: block !important;
-    width: 30px !important;
-    height: 30px !important;
-    stroke: currentColor !important;
-    stroke-width: 2.5 !important;
+    display: block;
+    width: 30px;
+    height: 30px;
+    stroke: currentColor;
+    stroke-width: 2.5;
 }
 
 #searchInput {
@@ -111,6 +114,7 @@ body.dark.expense-page {
 }
 
 .expense-info {
+    gap: 2px;
     flex: 1 1 auto;
     min-width: 0;
 
@@ -122,6 +126,8 @@ body.dark.expense-page {
 }
 
 .expense-desc {
+    overflow: hidden; 
+    text-overflow: ellipsis;
     font-size: 18px !important;
     font-weight: 700;
     line-height: 1.25;
@@ -144,6 +150,7 @@ body.dark.expense-page {
 }
 
 .expense-account {
+    color: #aaa;
     font-size: 14px !important;
     font-weight: 600;
     line-height: 1.2;
@@ -153,6 +160,7 @@ body.dark.expense-page {
 }
 
 .expense-right {
+    gap: 2px;
     flex: 0 0 auto;
     width: auto;
     min-width: 90px;
@@ -166,6 +174,11 @@ body.dark.expense-page {
 }
 
 .expense-amount {
+    display: inline-flex;
+    direction: ltr;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4px;
     font-size: 15px !important;
     font-weight: 700;
     color: #0F766E;
@@ -238,20 +251,20 @@ body.dark.expense-page {
 }
 
 .month-nav-btn {
-    width: 20px !important;
-    height: 20px !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border: none !important;
-    border-radius: 50% !important;
-    background: #F4F5F7 !important;
+    border: none;
+    border-radius: 50%;
+    background: #F4F5F7;
 
-    color: #111 !important;
+    color: #111;
     cursor: pointer;
     flex-shrink: 0;
 }
@@ -261,26 +274,26 @@ body.dark.expense-page {
 }
 
 .month-nav-btn svg {
-    width: 11px !important;
-    height: 11px !important;
-    stroke-width: 3 !important;
+    width: 11px;
+    height: 11px;
+    stroke-width: 3;
 }
 
 .month-label-btn {
-    width: auto !important;
-    padding: 2px 4px !important;
-    margin: 0 !important;
+    width: auto;
+    padding: 2px 4px;
+    margin: 0;
 
-    background: transparent !important;
-    color: #111 !important;
+    background: transparent;
+    color: #111;
 
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     line-height: 1.1;
 
-    border: none !important;
+    border: none;
     cursor: pointer;
 }
 

@@ -18,7 +18,7 @@
     align-items: center;
     border-radius: 25px;
     box-shadow: 0 8px 30px rgba(0,0,0,.12);
-    z-index: 1000;
+    z-index: var(--z-nav);
 }
 /* APK ONLY */
 body.capacitor-app .bottom-nav {
@@ -115,7 +115,7 @@ color: #0F766E;
 
     transition:.3s;
 
-    z-index:1002;
+    z-index: var(--z-fab);
 }
 .fab-menu.show{
     opacity:1;

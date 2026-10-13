@@ -93,7 +93,7 @@ if (totalAmountEl) {
 
         li.innerHTML = `
             <div class="transaction-icon-box">
-                <i data-lucide="${escapeHTML(transaction.categoryIcon || "tag")}"></i>
+                <i data-lucide="${escapeHTML(getTxCategoryIcon(transaction))}"></i>
             </div>
 
             <div class="transaction-info">

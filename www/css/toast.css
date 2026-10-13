@@ -38,7 +38,7 @@
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 2px;
-    padding: 2px 0 !important;
+    padding: 2px 0;
     margin: 0 !important;
     width: auto !important;
     cursor: pointer;
