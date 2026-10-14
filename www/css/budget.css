@@ -33,7 +33,7 @@
     font-weight: 900;
 
     cursor: pointer;
-    z-index: 20;
+        z-index: var(--z-float);
 }
 
 .budget-btn svg {

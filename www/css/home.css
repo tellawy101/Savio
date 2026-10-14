@@ -42,7 +42,7 @@ header p{
     position: absolute !important;
     top: 18px !important;
     left: 18px !important;
-    z-index: 10 !important;
+    z-index: var(--z-over) !important;
     width: auto;
     margin: 0;
 

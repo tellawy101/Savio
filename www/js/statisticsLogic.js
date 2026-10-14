@@ -35,7 +35,7 @@ function calculateCategoryBreakdown(transactions) {
         const knownName = transaction.categoryId && catNameById[transaction.categoryId];
         const legacyName = transaction.category === "Debt Payment" ? t("debts_category_payment") : transaction.category;
         const name = knownName || legacyName || t("stats_category_other");
-                const key = "name:" + name;
+                const key = knownName ? "id:" + transaction.categoryId : "name:" + name;
         const amount = Number(transaction.amount) || 0;
         if (!categories[key]) categories[key] = { name, amount: 0 };
         categories[key].amount += amount;

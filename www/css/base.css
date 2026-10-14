@@ -40,6 +40,12 @@
     --border: #E5E7EB;
     --danger: #DC2626;
     --success: #16A34A;
+        --z-bg: 0;
+    --z-content: 1;
+    --z-raised: 2;
+    --z-swipe-under: 5;
+    --z-over: 10;
+    --z-float: 20;
         --z-sticky: 100;
     --z-nav: 1000;
     --z-fab: 1002;

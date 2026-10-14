@@ -633,7 +633,7 @@ body:not(.dark):has(.goals-header) {
 }
 .debt-card-wrapper .debt-card {
     position: relative;
-    z-index: 1;
+        z-index: var(--z-content);
     margin: 0;
     touch-action: pan-y;
 }

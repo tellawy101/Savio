@@ -6,7 +6,7 @@
 
 function initAccountTransactionsPage() {
 
-    const accountName = window.pendingAccountTransactionsAccount ||
+    const accountId = window.pendingAccountTransactionsAccount ||
         new URLSearchParams(window.location.search).get("account");
 
     const type = window.pendingAccountTransactionsType ||
@@ -35,7 +35,7 @@ const transactionsListEl = document.getElementById("transactionsList");
 const emptyStateEl = document.getElementById("emptyState");
 const transactions = loadTransactions();
 const accountTransactions = transactions.filter(transaction => {
-    const sameAccount = getTxAccountId(transaction) === accountName;
+    const sameAccount = getTxAccountId(transaction) === accountId;
     const sameType = transaction.type === type;
     return sameAccount && sameType && !transaction.isTransfer;
 });
@@ -43,9 +43,9 @@ const accountTransactions = transactions.filter(transaction => {
 if (accountNameEl) {
     accountNameEl.textContent = t("account_label");
 }
-if (accountName && accountIconEl) {
+if (accountId && accountIconEl) {
     const accounts = getAccounts();
-const account = accounts.find(a => a.id === accountName);
+const account = accounts.find(a => a.id === accountId);
     if (account) {
         accountNameEl.textContent = account.name;
   accountIconEl.innerHTML = `<i data-lucide="${escapeHTML(account.icon)}"></i>`;

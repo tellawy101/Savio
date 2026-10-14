@@ -23,7 +23,7 @@
     opacity: 0;
     transition: opacity .2s ease;
     pointer-events: none;
-    z-index: 5;
+    z-index: var(--z-swipe-under);
     border-radius: 18px;
     direction: ltr;
 }

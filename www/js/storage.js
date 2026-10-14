@@ -266,11 +266,15 @@ function getCategoryIdByName(name) {
     return cat ? cat.id : null;
 }
 function getTxAccountId(tx) {
-    return tx.accountId || getAccountIdByName(tx.account);
+    const byId = getLookup(ACCOUNTS_KEY, getAccounts).byId;
+    if (tx.accountId && byId.has(tx.accountId)) return tx.accountId;
+    return getAccountIdByName(tx.account) || tx.accountId || null;
 }
 
 function getTxCategoryId(tx) {
-    return tx.categoryId || getCategoryIdByName(tx.category);
+    const byId = getLookup(CATEGORIES_KEY, getCategories).byId;
+    if (tx.categoryId && byId.has(tx.categoryId)) return tx.categoryId;
+    return getCategoryIdByName(tx.category) || tx.categoryId || null;
 }
 function getAccountNameById(id, fallback) {
     const acc = id ? getLookup(ACCOUNTS_KEY, getAccounts).byId.get(id) : null;

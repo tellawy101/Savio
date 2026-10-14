@@ -649,6 +649,12 @@ showToast(t("backup_take_failed_replace"), "error");
                             });
                             
                             const curAccIds = new Set(getAccounts().map(a => a.id));
+const curAccNames = new Set(getAccounts().map(a => a.name));
+if (data.accounts) {
+    JSON.parse(data.accounts).forEach(function(a) {
+        if (a.id && !curAccNames.has(a.name)) curAccIds.add(a.id);
+    });
+}
 const curCatIds = new Set((writes[CATEGORIES_KEY] || getCategories()).map(c => c.id));
                             
                             JSON.parse(data.transactions).forEach(function(x) {
@@ -681,8 +687,13 @@ const curCatIds = new Set((writes[CATEGORIES_KEY] || getCategories()).map(c => c
                                 if (x.id !== undefined && x.id !== null) knownIds.add(x.id);
                                 knownSignatures.add(debtSignature(x));
                             });
-
-                            const curDebtAccIds = new Set(getAccounts().map(a => a.id));
+                const curDebtAccIds = new Set(getAccounts().map(a => a.id));
+const curDebtAccNames = new Set(getAccounts().map(a => a.name));
+if (data.accounts) {
+    JSON.parse(data.accounts).forEach(function(a) {
+        if (a.id && !curDebtAccNames.has(a.name)) curDebtAccIds.add(a.id);
+    });
+}
                             
                             JSON.parse(data.debts).forEach(function(x) {
                                         if (Array.isArray(x.payments)) {

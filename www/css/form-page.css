@@ -353,7 +353,7 @@ html[dir="rtl"] .date-wrap .date-visible {
     border-bottom: 2px solid var(--c-muted);
     transform: translateY(-75%) rotate(45deg);
     pointer-events: none;
-    z-index: 3;
+        z-index: var(--z-raised);
 }
 
 html[dir="rtl"] .date-wrap::after {
@@ -376,7 +376,7 @@ html[dir="rtl"] .date-wrap::after {
     padding: 0;
     border: 0;
     box-sizing: border-box;
-    z-index: 2;
+    z-index: var(--z-raised);
 }
 .description-input {
     width: 100%;
@@ -802,7 +802,7 @@ text-align: right;
 .icon-search-wrap {
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: var(--z-raised);
     padding: 8px;
         background: var(--input-bg, var(--c-white));
     border-bottom: 1px solid var(--border-color, #eee);
