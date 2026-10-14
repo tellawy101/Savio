@@ -35,21 +35,19 @@ editTransferId = editTransferId || new URLSearchParams(window.location.search).g
 
 // بيقول لـ accounts.js إن الحساب المختار في الخانة التانية (From أو To)
 // المفروض يبقى باهت ومش قابل للاختيار تاني في القائمة
-window.getDisabledAccountName = function () {
+window.getDisabledAccountId = function() {
     if (!activeAccountBox) return null;
-
+    
     const fromBox = transferFromAccount.closest(".account-select-box");
     const toBox = transferToAccount.closest(".account-select-box");
-
+    
     if (activeAccountBox === toBox) {
-    const from = transferFromAccount.textContent.trim();
-    return from === t("select_account") ? null : from;
-}
-
-if (activeAccountBox === fromBox) {
-    const to = transferToAccount.textContent.trim();
-    return to === t("select_account") ? null : to;
-}
+        return transferFromAccount.dataset.id || null;
+    }
+    
+    if (activeAccountBox === fromBox) {
+        return transferToAccount.dataset.id || null;
+    }
     return null;
 };
 
@@ -58,11 +56,16 @@ if (activeAccountBox === fromBox) {
 // ==============================
 
 swapAccountsBtn.onclick = function () {
-    const fromText = transferFromAccount.textContent.trim();
+        const fromText = transferFromAccount.textContent.trim();
     const toText = transferToAccount.textContent.trim();
-
+    const fromId = transferFromAccount.dataset.id;
+    const toId = transferToAccount.dataset.id;
+    
     transferFromAccount.textContent = toText;
     transferToAccount.textContent = fromText;
+    
+    if (toId) { transferFromAccount.dataset.id = toId; } else { delete transferFromAccount.dataset.id; }
+    if (fromId) { transferToAccount.dataset.id = fromId; } else { delete transferToAccount.dataset.id; }
 
     checkTransferForm();
 };
@@ -119,9 +122,13 @@ function loadEditingTransfer() {
     transferAmount.value = formatted;
     resizeAmountInput(transferAmount, formatted);
 
-        transferFromAccount.textContent = getTxAccountName(fromSide);
+            transferFromAccount.textContent = getTxAccountName(fromSide);
     transferToAccount.textContent = getTxAccountName(toSide);
-
+    
+    const fromSideId = getTxAccountId(fromSide);
+    const toSideId = getTxAccountId(toSide);
+    if (fromSideId) transferFromAccount.dataset.id = fromSideId;
+    if (toSideId) transferToAccount.dataset.id = toSideId;
     transferDescription.value = fromSide.note || "";
     transferDate.value = fromSide.date;
 
@@ -143,6 +150,8 @@ showToast(t("missing_prefix") + missing);
     const amount = Number(transferAmount.value.replace(/,/g, ""));
     const fromAccount = transferFromAccount.textContent.trim();
     const toAccount = transferToAccount.textContent.trim();
+        const fromAccountId = transferFromAccount.dataset.id || getAccountIdByName(fromAccount);
+    const toAccountId = transferToAccount.dataset.id || getAccountIdByName(toAccount);
     const note = transferDescription.value.trim();
     const date = transferDate.value;
     const time = getCurrentTimeString();
@@ -169,8 +178,8 @@ showToast(t("missing_prefix") + missing);
         isTransfer: true,
               transferId,
         transferTo: toAccount,
-            accountId: getAccountIdByName(fromAccount),
-            transferToId: getAccountIdByName(toAccount)
+                        accountId: fromAccountId,
+                transferToId: toAccountId
     };
 
     const toEntry = {
@@ -186,8 +195,8 @@ showToast(t("missing_prefix") + missing);
         isTransfer: true,
                transferId,
         transferFrom: fromAccount,
-            accountId: getAccountIdByName(toAccount),
-            transferFromId: getAccountIdByName(fromAccount)
+                        accountId: toAccountId,
+                transferFromId: fromAccountId
     };
 
     transactions.push(fromEntry, toEntry);

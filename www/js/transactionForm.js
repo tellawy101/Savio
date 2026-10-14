@@ -69,7 +69,13 @@ attachThousandsFormatter(document.getElementById("newAccountBalance"), true);
 const matchedAccount = getAccounts().find(acc => acc.id === getTxAccountId(entry));
     const accIcon = matchedAccount ? matchedAccount.icon : "credit-card";
 accountEl.textContent = getTxAccountName(entry);
-    accountEl.removeAttribute("data-i18n");
+     const entryAccountId = getTxAccountId(entry);
+    if (entryAccountId) {
+        accountEl.dataset.id = entryAccountId;
+    } else {
+        delete accountEl.dataset.id;
+    }
+   accountEl.removeAttribute("data-i18n");
     const accountIconEl = document.getElementById(type + "AccountIcon");
     if (accountIconEl) {
         accountIconEl.innerHTML = `<i data-lucide="${escapeHTML(accIcon)}"></i>`;
@@ -110,7 +116,7 @@ showToast(t("missing_prefix") + missing);
         const entryData = {
             amount: Number(amountEl.value.replace(/,/g, "")),
                         account: accountEl.textContent.trim(),
-                accountId: getAccountIdByName(accountEl.textContent.trim()),
+                accountId: accountEl.dataset.id || getAccountIdByName(accountEl.textContent.trim()),
                 description: descriptionEl.value.trim(),
                 category: categoryEl.textContent.trim(),
                 categoryId: categoryEl.dataset.id || getCategoryIdByName(categoryEl.textContent.trim()),

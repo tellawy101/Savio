@@ -102,7 +102,7 @@ if (totalAmountEl) {
             </div>
 
             <strong class="transaction-amount">
-${getCurrency()} ${amount.toLocaleString("en-US")}
+${escapeHTML(getCurrency())} ${amount.toLocaleString("en-US")}
             </strong>
         `;
 

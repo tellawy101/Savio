@@ -467,11 +467,11 @@ budgetValue.textContent = t("budget");
     
     if (remaining >= 0) {
 const val = formatAmountNumber(remaining);
-        budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span>`;
+        budgetValue.innerHTML = `<span class="budget-currency">${escapeHTML(curr)}</span> <span class="budget-number">${val}</span>`;
     } else {
 const val = formatAmountNumber(Math.abs(remaining));
 const overText = t("budget_over");
-    budgetValue.innerHTML = `<span class="budget-currency">${curr}</span> <span class="budget-number">${val}</span> <span class="budget-over">${overText}</span>`;
+    budgetValue.innerHTML = `<span class="budget-currency">${escapeHTML(curr)}</span> <span class="budget-number">${val}</span> <span class="budget-over">${overText}</span>`;
 }
 }
 

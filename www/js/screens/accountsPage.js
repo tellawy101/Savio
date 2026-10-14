@@ -309,7 +309,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
         summary.innerHTML = `
 <h3>${t("total_balance")}</h3>
 <h1>
-<span class="currency">${getCurrency()}</span>
+<span class="currency">${escapeHTML(getCurrency())}</span>
                 <span class="amount">${Math.round(totalBalance).toLocaleString("en-US")}</span>
             </h1>
         `;
@@ -349,7 +349,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
                             `}
                         </div>
 <div class="account-card-balance">
-                            <span class="account-card-balance-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
+                            <span class="account-card-balance-currency">${escapeHTML(typeof getCurrency === "function" ? getCurrency() : "EGP")}</span>
                             <span class="account-card-balance-amount">${Math.round(account.currentBalance).toLocaleString("en-US")}</span>
                         </div>
                     </div>
@@ -362,7 +362,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
                             <div class="stat-texts">
 <div class="stat-label">${t("stats_income")}</div>
                                 <div class="stat-amount-row">
-                                    <span class="stat-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
+                                    <span class="stat-currency">${escapeHTML(typeof getCurrency === "function" ? getCurrency() : "EGP")}</span>
                                     <span class="stat-value stat-value-income">${Math.round(account.income).toLocaleString("en-US")}</span>
                                 </div>
                             </div>
@@ -376,7 +376,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
                             <div class="stat-texts">
 <div class="stat-label">${t("stats_expense")}</div>
                                 <div class="stat-amount-row">
-                                    <span class="stat-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
+                                    <span class="stat-currency">${escapeHTML(typeof getCurrency === "function" ? getCurrency() : "EGP")}</span>
                                     <span class="stat-value stat-value-expense">${Math.round(account.expense).toLocaleString("en-US")}</span>
                                 </div>
                             </div>
@@ -391,7 +391,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
                             <div class="stat-texts">
 <div class="stat-label">${t("stats_net_balance")}</div>
                                 <div class="stat-amount-row">
-                                    <span class="stat-currency">${typeof getCurrency === "function" ? getCurrency() : "EGP"}</span>
+                                    <span class="stat-currency">${escapeHTML(typeof getCurrency === "function" ? getCurrency() : "EGP")}</span>
                                     <span class="stat-value stat-value-balance">${Math.round(netBalance).toLocaleString("en-US")}</span>
                                 </div>
                             </div>

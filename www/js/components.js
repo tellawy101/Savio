@@ -461,7 +461,7 @@ ${renderFormHeader(type, capitalize(type), '<i data-lucide="check"></i>')}
 
 <div class="amount-section">
     <div class="amount-display">
-<span class="currency">${getCurrency()}</span>
+<span class="currency">${escapeHTML(getCurrency())}</span>
         <input type="tel" id="${type}Amount" inputmode="numeric" value="0">
     </div>
 </div>
@@ -522,7 +522,7 @@ ${renderFormHeader("transfer", "Transfer", '<i data-lucide="check"></i>')}
 <main class="transfer-content">
 <div class="amount-section">
     <div class="amount-display">
-<span class="currency">${getCurrency()}</span>
+<span class="currency">${escapeHTML(getCurrency())}</span>
         <input type="tel" id="transferAmount" inputmode="numeric" value="0">
     </div>
 </div>
@@ -537,7 +537,7 @@ function renderStatBox({ statClass = "", icon, labelKey, labelText, valueId, cur
 <div class="stat ${statClass}">
     <span>${icon}</span>
     <h4 data-i18n="${labelKey}">${labelText}</h4>
-    <p id="${valueId}"><span class="stat-currency">${currency}</span> <span class="stat-value">0</span></p>
+    <p id="${valueId}"><span class="stat-currency">${escapeHTML(currency)}</span> <span class="stat-value">0</span></p>
 </div>
     `;
 }
@@ -739,7 +739,7 @@ subtitle = `${getTxAccountName(expense)} ➔ ${getAccountNameById(expense.transf
                 ${(!isTransfer && expense.description) ? `<span class="expense-note">${escapeHTML(expense.description)}</span>` : ""}
             </div>
             <div class="expense-right">
-                <span class="expense-amount ${amountClass}">${sign}${formattedAmount} <small class="expense-currency">${curr}</small></span>
+                <span class="expense-amount ${amountClass}">${sign}${formattedAmount} <small class="expense-currency">${escapeHTML(curr)}</small></span>
                 <span class="expense-date">${formatDisplayDate(expense.date)}</span>
 ${expense.time ? `<span class="expense-date">${escapeHTML(expense.time)}</span>` : ""}
             </div>

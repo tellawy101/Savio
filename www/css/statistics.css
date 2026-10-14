@@ -412,19 +412,6 @@ body.dark .statistics-container {
     color: #F9FAFB;
 }
 
-body.dark .page-header h1 {
-    color: #F9FAFB;
-}
-
-body.dark .page-header p {
-    color: #9CA3AF;
-}
-
-body.dark .back-btn {
-    background: #1F2937;
-    color: #F9FAFB;
-}
-
 body.dark .period-selector,
 body.dark .stat-card,
 body.dark .statistics-card {
@@ -521,11 +508,6 @@ body.dark .account-row {
     font-weight: 600;
 }
 
-.back-btn svg {
-    width: 21px;
-    height: 21px;
-    stroke-width: 2.2;
-}
 .stat-content strong span {
     display: inline;
 }

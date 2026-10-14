@@ -87,14 +87,14 @@
    ACCOUNT INFO
 ========================================= */
 .account-info {
-    margin-inline-start: auto !important;
-    margin-inline-end: 0 !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 6px;
-    flex: none !important;
-    justify-content: flex-end !important;
+    margin-inline-start: auto;
+margin-inline-end: 0;
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 6px;
+flex: none;
+justify-content: flex-end;
     white-space: nowrap;
 }
 
@@ -438,11 +438,11 @@ body.dark #transactionsList li {
         margin: 0;
     }
     .account-info {
-        margin-inline-start: auto !important;
-        margin-inline-end: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 6px !important;
+margin-inline-start: auto;
+margin-inline-end: 0;
+display: flex;
+align-items: center;
+gap: 6px;
         white-space: nowrap;
     }
     #accountName {

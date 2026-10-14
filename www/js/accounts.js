@@ -82,10 +82,9 @@ let accounts = getAccounts();
 
     // لو الصفحة الحالية (زي Transfer) محددة دالة getDisabledAccountName
     // هنستخدمها عشان نعرف الحساب اللي المفروض يبقى باهت ومش قابل للاختيار
-    const disabledAccountName = (typeof window.getDisabledAccountName === "function")
-        ? window.getDisabledAccountName()
-        : null;
-    
+        const disabledAccountId = (typeof window.getDisabledAccountId === "function") ?
+        window.getDisabledAccountId() :
+        null;
     accounts.forEach(account => {
         
         let income = 0;
@@ -103,14 +102,14 @@ if (getTxAccountId(t) !== account.id) return;
         
         item.dataset.name = account.name;
         
-        const isDisabled = disabledAccountName && account.name === disabledAccountName;
+        const isDisabled = disabledAccountId && account.id === disabledAccountId;
 
 item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
         
         item.innerHTML = renderListItemHTML(
     account.icon,
     account.name,
-`<div class="account-balance">${currentBalance.toLocaleString()} ${getCurrency()}</div>`
+`<div class="account-balance">${currentBalance.toLocaleString()} ${escapeHTML(getCurrency())}</div>`
 );
         let pressTimer;
         
@@ -133,6 +132,7 @@ item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
     const field = getAccountFieldEl();
     if (field) {
         field.textContent = account.name;
+        field.dataset.id = account.id;
         field.removeAttribute("data-i18n");
     }
     
@@ -173,7 +173,8 @@ customAlert(t("enter_account_name_alert"));
 }
         
         let accounts = getAccounts();
-        
+                const wasEditing = !!editingAccount;
+        const savedAccountId = wasEditing ? editingAccount.id : generateId("acc");
         let sameAccount = accounts.find(account =>
             account.name.toLowerCase() === name.toLowerCase()
         );
@@ -200,7 +201,7 @@ customAlert(t("enter_account_name_alert"));
         } else {
             
             accounts.push({
-                    id: generateId("acc"),
+                    id: savedAccountId,
     name,
     description,
     icon,
@@ -211,14 +212,14 @@ customAlert(t("enter_account_name_alert"));
 saveAccounts(accounts);
         
       const field = getAccountFieldEl();
-if (field) {
-    field.textContent = name;
-    
-    field.removeAttribute("data-i18n");
-}
-
-const iconEl = window.activeAccountBox ? window.activeAccountBox.querySelector(".account-icon") : null;
-if (iconEl) iconEl.innerHTML = `<i data-lucide="${escapeHTML(icon)}"></i>`;
+      if (field && (!wasEditing || field.dataset.id === savedAccountId)) {
+          field.textContent = name;
+          field.dataset.id = savedAccountId;
+          field.removeAttribute("data-i18n");
+          
+          const iconEl = window.activeAccountBox ? window.activeAccountBox.querySelector(".account-icon") : null;
+          if (iconEl) iconEl.innerHTML = `<i data-lucide="${escapeHTML(icon)}"></i>`;
+      }
 
 if (window.lucide) lucide.createIcons();
 renderAccounts();
@@ -283,7 +284,11 @@ if (deleteAccountBtn) {
         saveAccounts(accounts);
         
         renderAccounts();
-        
+                const deletedField = getAccountFieldEl();
+        if (deletedField && deletedField.dataset.id === selectedAccount) {
+            deletedField.textContent = t("select_account");
+            delete deletedField.dataset.id;
+        }
         accountMenu.classList.remove("show");
         notifyFormFieldChanged();
         

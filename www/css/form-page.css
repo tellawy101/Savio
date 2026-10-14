@@ -493,12 +493,12 @@ body.dark .modal-actions .account-save-btn {
 }
 
 .account-info {
-    flex: 1 !important;
-    min-width: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    text-align: left !important;
+flex: 1;
+min-width: 0;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+text-align: left;
 }
 
 .account-name {
@@ -517,8 +517,8 @@ body.dark .modal-actions .account-save-btn {
 
 /* في وضع العربي (RTL) نقلبها لليمين بشكل صريح */
 [dir="rtl"] .account-info {
-    align-items: flex-end !important;
-    text-align: right !important;
+    align-items: flex-end;
+text-align: right;
 }
 
 [dir="rtl"] .account-name,

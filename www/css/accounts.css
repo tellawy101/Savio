@@ -40,6 +40,16 @@ body {
     box-shadow: none;
     cursor: pointer;
 }
+.back-btn svg {
+    width: 21px;
+    height: 21px;
+    stroke-width: 2.2;
+}
+
+body.dark .back-btn {
+    background: #1F2937;
+    color: #F9FAFB;
+}
 
 /* ==============================
    بطاقة الرصيد الإجمالي (بنفس روح debts.css)
