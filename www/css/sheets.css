@@ -141,7 +141,7 @@ body.dark .select-sheet-trigger:not(.filter-select) {
     color: var(--text);
     font-family: inherit;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     text-align: start;
 }
 

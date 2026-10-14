@@ -93,68 +93,7 @@ color: #0F766E;
 .dark .fab-nav{
     border:4px solid #121212;
 }
-.fab-menu{
-    position:absolute;
-    bottom:150px;
-    left:50%;
-    transform:translateX(-50%) translateY(20px);
 
-    display:flex;
-    flex-direction:row;
-    gap:12px;
-
-    opacity:0;
-    visibility:hidden;
-
-    transition:.3s;
-
-    z-index: var(--z-fab);
-}
-.fab-menu.show{
-    opacity:1;
-    visibility:visible;
-    transform:translateX(-50%) translateY(0);
-}
-.fab-menu button{
-    width:90px;
-    height:90px;
-
-    display:flex;
-    flex-direction:column;
-
-    justify-content:center;
-    align-items:center;
-
-    border:none;
-    border-radius:18px;
-
-    background:#0F766E;
-    color:#fff;
-
-    font-size:15px;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.2);
-    overflow:hidden;
-    position:relative;
-}
-.fab-menu button i{
-    font-size:30px;
-    transition:.3s;
-}
-
-.fab-menu button span{
-    position:absolute;
-    bottom:12px;
-
-    opacity:1;
-    transform:none;
-
-    font-size:13px;
-}
-
-.dark .fab-menu button{
-    background:#0b5d56;
-}
 .fab-nav.open{
     transform:translateX(-50%) rotate(45deg);
 }

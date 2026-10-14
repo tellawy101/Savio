@@ -57,7 +57,7 @@
     color: var(--text-muted);
 
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
 
     display: flex;
     align-items: center;
@@ -238,7 +238,7 @@
     gap: 8px;
     color: #374151;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .category-dot {
@@ -312,7 +312,7 @@
 
 /* اسم الحساب */
 .account-name {
-    font-weight: 600;
+    font-weight: 700;
     color: #111827;
 }
 
@@ -370,7 +370,7 @@
 .account-name {
     color: #374151;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .account-value {
@@ -471,41 +471,9 @@ body.dark .account-row {
         font-size: 12px;
     }
 
-    .header-left h1 {
-        font-size: 21px;
-    }
-
     .chart-wrapper {
         height: 220px;
     }
-}
-/* =========================================
-   STATISTICS HEADER
-========================================= */
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.header-left h1 {
-    margin: 0;
-
-    color: #111827;
-
-    font-size: 28px;
-    font-weight: 800;
-    line-height: 1.1;
-}
-
-.header-left p {
-    margin: 5px 0 0;
-
-    color: #6B7280;
-
-    font-size: 14px;
-    font-weight: 600;
 }
 
 .stat-content strong span {
@@ -543,7 +511,7 @@ body.dark .account-row {
 .compare-label {
     color: #374151;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .compare-change {

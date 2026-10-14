@@ -60,7 +60,7 @@ box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
 /* العملة (EGP) بحجم أصغر وهادئ */
 .budget-currency {
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     opacity: 0.85;
 }
 
@@ -73,6 +73,6 @@ box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
 
 .budget-over {
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     opacity: 0.85;
 }

@@ -66,10 +66,6 @@ body.has-scroll {
     color: #111;
 }
 
-[dir="rtl"] .back-btn {
-    transform: scaleX(-1);
-}
-
 .save-btn {
     width: 40px;
     height: 40px;
@@ -146,46 +142,6 @@ body.has-scroll {
     font-weight: 700;
     color: #777;
     line-height: 1;
-}
-
-/* ==============================
-   Select Box
-============================== */
-.select-box {
-    position: relative;
-}
-
-.select-box select {
-    width: 100%;
-    height: 56px;
-
-    padding: 0 50px 0 16px;
-
-    border: 1px solid #e5e5e5;
-    border-radius: 14px;
-
-    background: var(--c-white);
-
-    font-size: 16px;
-    color: #111;
-
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-}
-
-.select-box .arrow {
-    position: absolute;
-
-    right: 18px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    font-size: 18px;
-    color: #777;
-
-    pointer-events: none;
 }
 
 /* ==============================
@@ -287,7 +243,7 @@ body.has-scroll {
 
 .account-select-box p, .account-select-box div {
     color: var(--c-ink);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .account-icon {
@@ -339,13 +295,10 @@ body.has-scroll {
     text-align: left;
     direction: ltr;
 }
-html[dir="rtl"] .date-wrap .date-visible {
-    text-align: right;
-}
 .date-wrap::after {
     content: "";
     position: absolute;
-    right: 18px;
+    inset-inline-end: 18px;
     top: 50%;
     width: 8px;
     height: 8px;
@@ -356,11 +309,6 @@ html[dir="rtl"] .date-wrap .date-visible {
         z-index: var(--z-raised);
 }
 
-html[dir="rtl"] .date-wrap::after {
-    right: auto;
-    left: 18px;
-}
-
 .dark .date-wrap::after {
     border-color: #ffffff;
 }
@@ -368,7 +316,7 @@ html[dir="rtl"] .date-wrap::after {
 .date-wrap .date-native {
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100%;
     height: 100%;
     opacity: 0;
@@ -498,33 +446,24 @@ min-width: 0;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
-text-align: left;
+text-align: start;
 }
 
 .account-name {
     font-weight: 700;
     font-size: 15px;
-    text-align: left !important;
+    text-align: start !important;
     width: 100%;
 }
 
 .account-balance {
     font-size: 13px;
     color: var(--text-muted);
-    text-align: left !important;
+    text-align: start !important;
     width: 100%;
 }
 
-/* في وضع العربي (RTL) نقلبها لليمين بشكل صريح */
-[dir="rtl"] .account-info {
-    align-items: flex-end;
-text-align: right;
-}
 
-[dir="rtl"] .account-name,
-[dir="rtl"] .account-balance {
-    text-align: right !important;
-}
 .account-item-disabled {
     opacity: 0.35;
     pointer-events: none;
@@ -578,7 +517,7 @@ text-align: right;
     background: transparent;
     color: var(--c-ink);
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     text-align: start;
     border-radius: 10px;
     display: flex;
@@ -681,8 +620,7 @@ text-align: right;
 
 .dark .account-select-box,
 .dark .category-select-box,
-.dark .description-input,
-.dark .date-input {
+.dark .description-input {
     background: #232323;
     border: 1px solid #333;
     color: #fff;
@@ -720,14 +658,8 @@ text-align: right;
 
 .balance-amount .currency {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
         color: var(--c-white);
-}
-
-.balance-currency {
-    font-size: 20px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, .85);
 }
 
 #balanceValue {
@@ -763,7 +695,7 @@ text-align: right;
     background: var(--input-bg, var(--c-white));
 
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
 
     cursor: pointer;
 }
@@ -788,7 +720,7 @@ text-align: right;
 
 #selectedCategoryIconLabel {
     flex: 1;
-    text-align: left;
+    text-align: start;
 }
 
 #categoryIconDropdownList {

@@ -149,7 +149,7 @@ main {
     font-size: 18px;
     cursor: pointer;
     font-family: "Supreme", sans-serif;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 button:hover {
@@ -269,7 +269,7 @@ button:hover {
 
 .custom-confirm-message {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     color: #111;
     line-height: 1.5;
     margin: 0 0 20px;
@@ -339,10 +339,18 @@ button:hover {
 
     background: #fff;
 }
-
-
 .dark #searchInput {
     background: #2c2c2c;
     color: white;
     border: 1px solid #555;
+}
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

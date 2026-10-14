@@ -5,21 +5,6 @@
     وده بيجمع بس الأجزاء الخاصة بكل صفحة + قائمة المصروفات بالداشبورد)
 ================================================================== */
 
-/* خلفية الصفحة حسب نوعها */
-body.income-page,
-body.transfer-page {
-    background: #F8F8F7;
-}
-
-body.expense-page {
-    background: #F4F5F7;
-}
-body.dark.income-page,
-body.dark.transfer-page,
-body.dark.expense-page {
-    background: #101817;
-}
-
 /* ==============================================================
    تنسيق قائمة المصروفات في الداشبورد (index.html)
 ================================================================== */
@@ -125,35 +110,12 @@ body.dark.expense-page {
     overflow: hidden;
 }
 
-.expense-desc {
-    overflow: hidden; 
-    text-overflow: ellipsis;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.25;
-    margin: 0 0 4px 0;
-    max-width: 100%;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-break: break-word;
-}
-
 .expense-category {
     font-size: 15px;
     font-weight: 600;
     color: #9CA3AF;
     line-height: 1.2;
     margin: 0 0 3px 0;
-    max-width: 100%;
-    white-space: normal;
-    overflow-wrap: break-word;
-}
-
-.expense-account {
-    color: #aaa;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.2;
     max-width: 100%;
     white-space: normal;
     overflow-wrap: break-word;
@@ -198,15 +160,6 @@ body.dark.expense-page {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.expense-meta {
-    font-size: 10px;
-    font-weight: 600;
-    color: #999;
-    white-space: nowrap;
-    margin-top: 4px;
-    line-height: 1.2;
 }
 
 #expenseList li {
@@ -358,7 +311,6 @@ body.dark .expense-main .expense-title {
     color: #F1F5F4;
 }
 
-body.dark .expense-main .expense-account,
 body.dark .expense-main .expense-date {
     color: #AAB8B5;
 }

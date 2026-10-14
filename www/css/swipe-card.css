@@ -37,18 +37,3 @@
     justify-content: flex-end;
     background: #1976D2;
 }
-.dark .expense-desc {
-    color: #fff;
-}
-
-.dark .expense-category-text {
-    color: #cbd5e1;
-}
-
-.dark .expense-account {
-    color: #94a3b8;
-}
-
-.dark .expense-meta {
-    color: #94a3b8;
-}

@@ -41,7 +41,7 @@ header p{
 .eye-btn{
     position: absolute !important;
     top: 18px !important;
-    left: 18px !important;
+        inset-inline-start: 18px;
     z-index: var(--z-over) !important;
     width: auto;
     margin: 0;
@@ -117,7 +117,7 @@ body.amounts-hidden .stat p{
 .stat h4 {
     margin: 6px 0 4px;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .stat p {
@@ -132,7 +132,7 @@ body.amounts-hidden .stat p{
 }
 .stat .stat-currency {
     font-size: 9px;
-    font-weight: 600;
+    font-weight: 700;
     opacity: .85;
 }
 

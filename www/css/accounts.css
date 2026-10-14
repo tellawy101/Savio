@@ -112,7 +112,6 @@ body.dark .back-btn {
 
 .account-card {
     --card-padding: 14px;
-    --section-gap: 10px;
     --stats-gap: 4px;
 
     background: var(--c-white);
@@ -171,7 +170,7 @@ body.dark .back-btn {
     gap: 4px;
     margin-top: 3px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: #2563eb;
 }
 
@@ -219,8 +218,8 @@ body.dark .back-btn {
     flex-direction: column;
     align-items: center;
     gap: var(--stats-gap);
-    padding-right: 12px;
-    border-right: 1px solid var(--divider);
+        padding-inline-end: 12px;
+    border-inline-end: 1px solid var(--divider);
     position: relative;
 }
 .stat-texts {
@@ -238,9 +237,9 @@ body.dark .back-btn {
 }
 
 .stat-item-last {
-    border-right: none;
-    padding-right: 0;
-    padding-left: 0;
+    border-inline-end: none;
+    padding-inline-end: 0;
+    padding-inline-start: 0;
 }
 
 .account-stats-row .stat-icon {
@@ -301,7 +300,7 @@ body.dark .back-btn {
 .account-corner-icon {
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 26px;
     height: 26px;
     border-radius: 50%;
@@ -348,10 +347,6 @@ body.dark .back-btn {
     flex: 1;
 }
 
-.dark .account-balance-detail {
-    color: #f9fafb;
-}
-
 /* Icon Dropdown */
 .icon-dropdown {
     position: relative;
@@ -373,7 +368,7 @@ body.dark .back-btn {
 }
 
 .icon-dropdown-trigger span {
-    text-align: left;
+    text-align: start;
 }
 
 #selectedIconPreviewWrap {
@@ -388,7 +383,7 @@ body.dark .back-btn {
 
 #selectedIconLabel {
     flex: 1;
-    text-align: left;
+        text-align: start;
 }
 
 .icon-dropdown-trigger i {
@@ -404,8 +399,7 @@ body.dark .back-btn {
     display: block;
 
     position: fixed;
-    left: 0;
-    right: 0;
+    inset-inline: 0;
     bottom: 0;
     top: auto;
 
@@ -495,7 +489,7 @@ body.dark .back-btn {
     border-radius: 12px;
     border: 1px solid var(--border-color, #ccc);
     background: #f0f0f0;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     color: #333;
 }

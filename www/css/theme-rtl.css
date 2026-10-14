@@ -24,16 +24,6 @@ body.dark .stat {
     text-align: right;
 }
 
-[dir="rtl"] .eye-btn {
-    left: auto !important;
-    right: 18px !important;
-}
-
-[dir="rtl"] .budget-btn {
-    right: auto !important;
-    left: 18px !important;
-}
-
 [dir="rtl"] .expense-icon-box {
     margin-right: 0;
     margin-left: 12px;
@@ -67,4 +57,16 @@ body.dark .stat {
 }
 [dir="rtl"] .switch input:checked + .slider::before {
     transform: translateX(-20px);
+}
+[dir="rtl"] .back-btn {
+    transform: scaleX(-1);
+}
+
+html[dir="rtl"] .date-wrap .date-visible {
+    text-align: right;
+}
+
+html[dir="rtl"] .goal-field input[type="tel"] {
+    direction: rtl;
+    text-align: right;
 }
