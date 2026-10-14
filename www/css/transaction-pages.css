@@ -128,7 +128,7 @@ body.dark.expense-page {
 .expense-desc {
     overflow: hidden; 
     text-overflow: ellipsis;
-    font-size: 18px !important;
+    font-size: 18px;
     font-weight: 700;
     line-height: 1.25;
     margin: 0 0 4px 0;
@@ -139,7 +139,7 @@ body.dark.expense-page {
 }
 
 .expense-category {
-    font-size: 15px !important;
+    font-size: 15px;
     font-weight: 600;
     color: #9CA3AF;
     line-height: 1.2;
@@ -151,7 +151,7 @@ body.dark.expense-page {
 
 .expense-account {
     color: #aaa;
-    font-size: 14px !important;
+    font-size: 14px;
     font-weight: 600;
     line-height: 1.2;
     max-width: 100%;
@@ -179,7 +179,7 @@ body.dark.expense-page {
     flex-direction: row;
     align-items: baseline;
     gap: 4px;
-    font-size: 15px !important;
+    font-size: 15px;
     font-weight: 700;
     color: var(--brand-text);
     white-space: nowrap;
@@ -201,7 +201,7 @@ body.dark.expense-page {
 }
 
 .expense-meta {
-    font-size: 10px !important;
+    font-size: 10px;
     font-weight: 600;
     color: #999;
     white-space: nowrap;
@@ -210,15 +210,15 @@ body.dark.expense-page {
 }
 
 #expenseList li {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin-bottom: 12px !important;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 12px;
 }
 
 .expense-swipe {
-    background: transparent !important;
+    background: transparent;
 }
 
 .expense-main {
@@ -230,7 +230,7 @@ body.dark.expense-page {
     min-width: 0;
     box-sizing: border-box;
 
-    background: var(--surface) !important;
+    background: var(--surface);
     border: 1px solid #E5E7EB;
     border-radius: 16px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -346,13 +346,13 @@ body.dark.expense-page {
    الوضع الليلي (Dark Mode)
 ============================== */
 body.dark .month-nav-btn {
-    background: #1E2B2A !important;
-    color: #F1F5F4 !important;
+    background: #1E2B2A;
+    color: #F1F5F4;
 }
 
 body.dark .expense-main {
-    border-color: transparent !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+border-color: transparent;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 body.dark .expense-main .expense-title {
     color: #F1F5F4;
@@ -367,11 +367,11 @@ body.dark .expense-main .expense-amount {
     color: #7FE0C0;
 }
 body.dark .expense-icon-box {
-    color: #7FE0C0 !important;
+    color: #7FE0C0;
 }
 
 body.dark .search-btn svg {
-    stroke: currentColor !important;
+    stroke: currentColor;
 }
 
 .dark .swap-accounts-btn {
