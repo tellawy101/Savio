@@ -1,0 +1,70 @@
+<div class="goals-header">
+    <div>
+        <h3 data-i18n="recurring_title">Recurring Transactions</h3>
+        <span id="recurringSubtitle" class="goals-subtitle"></span>
+    </div>
+    <button id="addRecurringBtn" class="goals-add-btn" aria-label="Add recurring transaction">
+        <i data-lucide="plus"></i>
+    </button>
+</div>
+
+<div id="recurringList" class="goals-list"></div>
+
+<!-- Recurring Modal -->
+<div id="recurringModal" class="modal">
+
+    <div class="modal-content budget-modal-content">
+
+        <div class="budget-modal-header">
+            <div class="budget-modal-icon">
+                <i data-lucide="repeat"></i>
+            </div>
+            <h2 id="recurringModalTitle" data-i18n="recurring_add_title">New Recurring Transaction</h2>
+            <button id="cancelRecurringBtn" class="budget-modal-close" aria-label="Close">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+
+        <div class="goal-field">
+            <label data-i18n="recurring_type">Type</label>
+            <select id="recType" class="rec-select"></select>
+        </div>
+
+        <div class="goal-field">
+            <label for="recAmount" data-i18n="debts_amount_placeholder">Amount</label>
+            <input type="tel" id="recAmount" placeholder="0">
+        </div>
+
+        <div class="goal-field">
+            <label data-i18n="field_account">Account</label>
+            <select id="recAccount" class="rec-select"></select>
+        </div>
+
+        <div class="goal-field">
+            <label data-i18n="field_category">Category</label>
+            <select id="recCategory" class="rec-select"></select>
+        </div>
+
+        <div class="goal-field">
+            <label data-i18n="recurring_frequency">Repeat</label>
+            <select id="recFrequency" class="rec-select"></select>
+        </div>
+
+        <div class="goal-field">
+            <label id="recDateLabel" for="recDate"></label>
+            <div class="date-wrap">
+                <input type="text" id="recDateText" class="date-visible" readonly>
+                <input type="date" id="recDate" class="date-native">
+            </div>
+        </div>
+
+        <div class="goal-field">
+            <label for="recDescription" data-i18n="recurring_description_label">Description (optional)</label>
+            <input type="text" id="recDescription" dir="auto">
+        </div>
+
+        <button id="saveRecurringBtn" class="budget-save-btn" data-i18n="save">Save</button>
+
+    </div>
+
+</div>

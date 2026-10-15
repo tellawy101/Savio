@@ -38,6 +38,14 @@ const ROUTES = {
             }
         }
     },
+        recurring: {
+        template: "templates/recurring.html",
+        init: function() {
+            if (typeof initRecurringPage === "function") {
+                initRecurringPage();
+            }
+        }
+    },
         budgets: {
         template: "templates/budgets.html",
         init: function() {
@@ -86,6 +94,7 @@ const ROUTE_INIT_NAMES = {
     accounts: "initAccountsPage",
     debts: "initDebtsPage",
     goals: "initGoalsPage",
+        recurring: "initRecurringPage",
     budgets: "initBudgetsPage",
     statistics: "initStatisticsPage",
     home: "initHomePage",

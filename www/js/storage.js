@@ -5,6 +5,7 @@
 const APP_VERSION = "2.5.0";
 const STORAGE_KEY = "transactions";
 const CURRENCY_KEY = "currency";
+const RECURRING_KEY = "savioRecurring";
 // بتبقى true لو معاملات المستخدم تالفة، عشان نمنع الكتابة فوقها
 let transactionsCorrupted = false;
 // عدّاد فشل الكتابة في التخزين (بنستخدمه عشان نعرف لو عملية كتابة فشلت)
@@ -585,6 +586,18 @@ safeSetItem(GOALS_KEY, JSON.stringify(goals));
 
 }
 // ==============================
+// Recurring Transactions
+// ==============================
+
+function getRecurring() {
+    return safeParse(RECURRING_KEY, []);
+}
+
+function saveRecurring(items) {
+    safeSetItem(RECURRING_KEY, JSON.stringify(items));
+}
+
+// ==============================
 // Category Budgets
 // ==============================
 
@@ -677,7 +690,7 @@ income += Number(expense.amount) || 0;
 
 const BACKUP_KEYS = [
     STORAGE_KEY, ACCOUNTS_KEY, CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY,
-DEBTS_KEY, GOALS_KEY, BUDGET_KEY, CATEGORY_BUDGETS_KEY, THEME_KEY, "language", CURRENCY_KEY, BALANCE_HIDDEN_KEY
+DEBTS_KEY, GOALS_KEY, RECURRING_KEY, BUDGET_KEY, CATEGORY_BUDGETS_KEY, THEME_KEY, "language", CURRENCY_KEY, BALANCE_HIDDEN_KEY
 ];
 // ==============================
 // فحص بيانات ملف الاستعادة قبل ما تتكتب
@@ -696,7 +709,7 @@ function validateBackupData(data) {
     }
 
     // مفاتيح لازم تكون array، وعناصرها object (ماعدا الفئات والأيقونات)
-    const objectArrayKeys = [STORAGE_KEY, ACCOUNTS_KEY, DEBTS_KEY, GOALS_KEY];
+const objectArrayKeys = [STORAGE_KEY, ACCOUNTS_KEY, DEBTS_KEY, GOALS_KEY, RECURRING_KEY];
     const plainArrayKeys = [CATEGORIES_KEY, CUSTOM_CATEGORY_ICONS_KEY];
 
     for (const key of objectArrayKeys.concat(plainArrayKeys)) {
@@ -734,7 +747,10 @@ function validateBackupData(data) {
                     if (!Number.isFinite(Number(item.target))) return "invalid target in goals";
                     if (item.current !== undefined && !Number.isFinite(Number(item.current))) return "invalid current in goals";
                 }
-
+                // المعاملة المتكررة: المبلغ لازم يكون رقم
+                if (key === RECURRING_KEY && !Number.isFinite(Number(item.amount))) {
+                    return "invalid amount in recurring";
+                }
                 // الدين: المبلغ والمدفوع والدفعات لازم تكون أرقام
                 if (key === DEBTS_KEY) {
                     if (!Number.isFinite(Number(item.amount))) return "invalid amount in debts";

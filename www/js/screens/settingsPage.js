@@ -138,6 +138,16 @@ if (languageSelectBtn && languagePickerModal) {
             navigateTo("goals");
         };
     }
+        // ------------------------------
+    // Recurring Transactions
+    // ------------------------------
+    const recurringBtn = document.getElementById("recurringBtn");
+    
+    if (recurringBtn) {
+        recurringBtn.onclick = function() {
+            navigateTo("recurring");
+        };
+    }
         const catBudgetsBtn = document.getElementById("catBudgetsBtn");
 
     if (catBudgetsBtn) {

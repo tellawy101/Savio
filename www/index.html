@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="css/accounts.css">
     <link rel="stylesheet" href="css/debts.css">
     <link rel="stylesheet" href="css/account-transactions.css">
+        <link rel="stylesheet" href="css/recurring.css">
 </head>
 <body>
     <script>
@@ -75,12 +76,14 @@
 <script src="js/accounts.js"></script>
 <script src="js/transactionForm.js"></script>
 <script src="js/transfer.js"></script>
+<script src="js/recurring.js"></script>
 <script src="js/screens/homePage.js"></script>
 <script src="js/router.js"></script>
 <script src="js/screens/settingsPage.js"></script>
 <script src="js/screens/accountsPage.js"></script>
 <script src="js/screens/debtsPage.js"></script>
 <script src="js/screens/goalsPage.js"></script>
+<script src="js/screens/recurringPage.js"></script>
 <script src="js/screens/budgetsPage.js"></script>
 <script src="js/vendor/chart.js"></script>
 <script src="js/statisticsLogic.js"></script>
@@ -91,8 +94,17 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
                 migrateDataToIds();
+                        let recurringAdded = 0;
+        try {
+            recurringAdded = processRecurringTransactions();
+        } catch (error) {
+            console.error("Recurring transactions failed:", error);
+        }
         initIcons();
         navigateTo("home");
+                if (recurringAdded > 0) {
+            showToast(t("recurring_auto_added_toast") + " " + recurringAdded, "success");
+        }
         if (typeof runAutoBackupIfNeeded === "function") {
             runAutoBackupIfNeeded();
         }
