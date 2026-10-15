@@ -304,6 +304,14 @@ const monthName = date.toLocaleDateString(getLanguage() === "ar" ? "ar-EG" : "en
             searchTimer = setTimeout(renderExpenses, 250);
         };
     }
+        if (searchInput) {
+        searchInput.addEventListener("focus", function() {
+            setTimeout(function() {
+                searchInput.style.scrollMarginTop = "20px";
+                searchInput.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 400);
+        });
+    }
         function fillAccountFilter() {
         if (!accountFilter) return;
 const allLabel = t("filter_all_accounts");
@@ -401,9 +409,9 @@ makeSelectSheet(sortFilter, t("sort_by"));
             
             searchPanel.style.display = "block";
             
-            document.body.style.paddingBottom = "300px"; // مساحة إضافية عشان الاسكرول يشتغل
+document.body.style.paddingBottom = "70vh"; // مساحة إضافية عشان الاسكرول يشتغل
             
-            searchInput.focus();
+            //searchInput.focus();
             
             setTimeout(() => {
                 searchInput.scrollIntoView({
