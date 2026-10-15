@@ -125,12 +125,17 @@ showToast(t("missing_prefix") + missing);
             date: dateEl.value,
             time: getCurrentTimeString()
         };
-
+        let debtsBackup = null;
         if (editId) {
             const entryIndex = transactions.findIndex(tx => tx.id === editId);
             if (entryIndex !== -1) {
                                 const oldTx = transactions[entryIndex];
                 if (oldTx.debtPaymentId) {
+                                    if (entryData.type !== oldTx.type) {
+                        await customAlert(t("debts_payment_type_change_blocked_alert"));
+                        return;
+                    }
+                    debtsBackup = JSON.stringify(getDebts());
                     const debtOk = updateDebtPayment(
                         oldTx.debtPaymentId,
                         entryData.amount,
@@ -155,7 +160,10 @@ showToast(t("missing_prefix") + missing);
             transactions.push(entryData);
         }
 
-if (!saveTransactions(transactions)) return;
+if (!saveTransactions(transactions)) {
+    if (debtsBackup !== null) saveDebts(JSON.parse(debtsBackup));
+    return;
+};
         
                 if (type === "expense" && !editId) {
             const alertType = getBudgetAlertType(entryData.categoryId, entryData.amount, entryData.date);

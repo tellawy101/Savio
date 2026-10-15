@@ -44,6 +44,22 @@ function initDebtsPage() {
     const cancelPayBtn = document.getElementById("cancelPayBtn");
     const confirmPayBtn = document.getElementById("confirmPayBtn");
 
+    const payDate = document.getElementById("payDate");
+    const payDateText = document.getElementById("payDateText");
+    if (payDate) {
+        payDate.onchange = function () {
+            syncDateText(payDate, payDateText);
+        };
+    }
+       const payDebtInfo = document.getElementById("payDebtInfo");
+    const payFullBtn = document.getElementById("payFullBtn");
+    if (payFullBtn) {
+        payFullBtn.onclick = function() {
+            if (!currentPayDebt) return;
+            payAmount.value = Number(currentPayDebt.remaining).toLocaleString("en-US");
+        };
+    } 
+
     const editDebtModal = document.getElementById("editDebtModal");
     const editDebtPerson = document.getElementById("editDebtPerson");
     const editDebtAmount = document.getElementById("editDebtAmount");
@@ -86,7 +102,9 @@ function initDebtsPage() {
         const confirmed = await customConfirm(t("debts_payment_delete_confirm"), { danger: true });
 
         if (!confirmed) return;
-
+        const removedPaymentTxs = loadTransactions().filter(function(tx) {
+            return tx.debtPaymentId === payment.id;
+        });
                 const transactions = loadTransactions().filter(function(tx) {
             return tx.debtPaymentId !== payment.id;
         });
@@ -107,7 +125,20 @@ function initDebtsPage() {
         renderDebts();
         openPaymentsHistory(debt);
 
-        showToast(t("debts_payment_deleted_toast"), "success");
+                showUndoToast(
+            t("debts_payment_deleted_toast"),
+            function() {
+                if (!getDebts().some(function(d) { return d.id === debt.id; })) return;
+                if (!saveTransactions(loadTransactions().concat(removedPaymentTxs))) return;
+                restoreDebtPayment({ debtId: debt.id, payment: payment });
+                debts = getDebts();
+                renderDebts();
+                const freshDebt = debts.find(function(d) { return d.id === debt.id; });
+                if (freshDebt && paymentsHistoryModal && paymentsHistoryModal.classList.contains("show")) {
+                    openPaymentsHistory(freshDebt);
+                }
+            }
+        );
     }
 
     function openPaymentsHistory(debt) {
@@ -318,7 +349,7 @@ const account = accountObj ? accountObj.name : "";
             }
 
             const paymentId = generateTransactionId("pay");
-            const dateText = getTodayDateString();
+            const dateText = payDate.value || getTodayDateString();
             const timeText = getCurrentTimeString();
 
             const transactions = loadTransactions();
@@ -517,7 +548,9 @@ const card = wrapper.querySelector(".debt-card");
                     e.stopPropagation();
                     currentPayDebt = debt;
                     payAmount.value = "";
-
+                    payDate.value = getTodayDateString();
+                    syncDateText(payDate, payDateText);
+                                        payDebtInfo.textContent = debt.person + " - " + t("debts_pay_remaining_label") + ": " + getCurrency() + " " + formatAmountNumber(debt.remaining);
                     const accounts = getAccounts();
 
                                         payAccount.innerHTML = "";

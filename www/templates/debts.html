@@ -104,12 +104,20 @@
     <div class="modal-content">
 
        <h2 data-i18n="debts_pay_title">Pay Debt</h2>
-
+       <div id="payDebtInfo" class="pay-debt-info"></div>
        <select id="payAccount">
     <option value="" data-i18n="select_account">Select Account</option>
 </select>
 
     <input type="tel" id="payAmount" placeholder="Amount" data-i18n-placeholder="debts_amount_placeholder">
+        <button type="button" id="payFullBtn" class="pay-full-btn" data-i18n="debts_pay_full_btn">Pay full remaining</button>
+            <div class="goal-field">
+            <label for="payDate" data-i18n="date_label">Date</label>
+            <div class="date-wrap">
+                <input type="text" id="payDateText" class="date-visible" readonly>
+                <input type="date" id="payDate" class="date-native">
+            </div>
+        </div>
 
         <div class="modal-actions">
 
