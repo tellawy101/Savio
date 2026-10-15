@@ -84,33 +84,85 @@ if (totalAmountEl) {
     emptyStateEl.style.display =
         accountTransactions.length === 0 ? "block" : "none";
 
-    transactionsListEl.innerHTML = "";
-
-    accountTransactions.forEach(transaction => {
-
-        const li = document.createElement("li");
-        const amount = Number(transaction.amount || 0);
-
-        li.innerHTML = `
-            <div class="transaction-icon-box">
-                <i data-lucide="${escapeHTML(getTxCategoryIcon(transaction))}"></i>
-            </div>
-
-            <div class="transaction-info">
-                                <strong>${escapeHTML(getTxCategoryName(transaction) || "Transaction")}</strong>
-                <small>${escapeHTML(transaction.description || "")}</small>
-            </div>
-
-            <strong class="transaction-amount">
-${escapeHTML(getCurrency())} ${amount.toLocaleString("en-US")}
-            </strong>
-        `;
-
-        transactionsListEl.appendChild(li);
-
-    });
-
-    if (window.lucide) {
-        lucide.createIcons();
+    const sortEl = document.getElementById("accSortFilter");
+    
+    // ترتيب المعاملات من غير ما نغيّر الأصل
+    function getSortedTransactions() {
+        const mode = sortEl ? sortEl.value : "date_desc";
+        return accountTransactions
+            .map((transaction, index) => ({ transaction, index }))
+            .sort((a, b) => {
+                const amountA = Math.abs(Number(a.transaction.amount || 0));
+                const amountB = Math.abs(Number(b.transaction.amount || 0));
+                if (mode === "amount_desc" && amountA !== amountB) return amountB - amountA;
+                if (mode === "amount_asc" && amountA !== amountB) return amountA - amountB;
+                const dateA = a.transaction.date || "";
+                const dateB = b.transaction.date || "";
+                if (dateA !== dateB) {
+                    return mode === "date_asc" ?
+                        dateA.localeCompare(dateB) :
+                        dateB.localeCompare(dateA);
+                }
+                return mode === "date_asc" ? a.index - b.index : b.index - a.index;
+            })
+            .map(entry => entry.transaction);
     }
-}
+    
+    function renderTransactionsList() {
+        
+        transactionsListEl.innerHTML = "";
+        
+        getSortedTransactions().forEach(transaction => {
+            
+            const li = document.createElement("li");
+            const amount = Number(transaction.amount || 0);
+            const subtitle = [formatDisplayDate(transaction.date), transaction.description]
+                .filter(Boolean)
+                .join(" · ");
+            
+            li.innerHTML = `
+                <div class="transaction-icon-box">
+                    <i data-lucide="${escapeHTML(getTxCategoryIcon(transaction))}"></i>
+                </div>
+
+                <div class="transaction-info">
+                    <strong>${escapeHTML(getTxCategoryName(transaction) || "Transaction")}</strong>
+                    <small>${escapeHTML(subtitle)}</small>
+                </div>
+
+                <strong class="transaction-amount">
+                    ${escapeHTML(getCurrency())} ${amount.toLocaleString("en-US")}
+                </strong>
+            `;
+            
+            transactionsListEl.appendChild(li);
+            
+        });
+        
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    }
+    
+    if (sortEl) {
+        const sortOptions = [
+            ["date_desc", t("sort_newest")],
+            ["date_asc", t("sort_oldest")],
+            ["amount_desc", t("sort_highest")],
+            ["amount_asc", t("sort_lowest")]
+        ];
+        sortEl.innerHTML = "";
+        sortOptions.forEach(function(o) {
+            const opt = document.createElement("option");
+            opt.value = o[0];
+            opt.textContent = o[1];
+            sortEl.appendChild(opt);
+        });
+        sortEl.onchange = renderTransactionsList;
+        makeSelectSheet(sortEl, t("sort_by"));
+        // مفيش لازمة للترتيب لو فيه معاملة واحدة أو مفيش
+        sortEl.parentElement.style.display = accountTransactions.length > 1 ? "" : "none";
+    }
+    
+    renderTransactionsList();
+    }

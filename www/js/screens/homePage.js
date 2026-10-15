@@ -36,13 +36,34 @@ function initHomePage() {
     const accountFilter = document.getElementById("accountFilter");
         const categoryFilter = document.getElementById("categoryFilter");
     const sortFilter = document.getElementById("sortFilter");
+        const typeFilter = document.getElementById("typeFilter");
+    const filterSummary = document.getElementById("filterSummary");
+    const filterCount = document.getElementById("filterCount");
+    const clearFiltersBtn = document.getElementById("clearFiltersBtn");
     const nowLocal = new Date();
         window.selectedMonth = window.selectedMonth || (nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0"));
     // تحميل البيانات
     let expenses = loadTransactions();
     let income = 0;
     let total = 0;
-    
+        // هل فيه بحث أو فلتر شغّال؟ (الترتيب بيتحسب لو اتغير عن الافتراضي)
+    function hasAnyFilter() {
+        return (searchInput && searchInput.value.trim() !== "") ||
+            (accountFilter && accountFilter.value !== "") ||
+            (categoryFilter && categoryFilter.value !== "") ||
+            (typeFilter && typeFilter.value !== "") ||
+            (sortFilter && sortFilter.value !== "date_desc");
+    }
+
+    // صف عدد النتائج + زرار مسح الفلاتر
+    function updateFilterSummary(count) {
+        if (!filterSummary) return;
+        const active = hasAnyFilter();
+        filterSummary.style.display = active ? "flex" : "none";
+        if (active && filterCount) {
+            filterCount.textContent = count + " " + t("filter_results");
+        }
+    }
     // عرض البيانات
     function renderExpenses() {
 
@@ -56,6 +77,7 @@ if (expenses.length === 0) {
         if (window.lucide) lucide.createIcons();
                 totalExpense.innerHTML = formatCurrencyHTML(0);
         totalIncome.innerHTML = formatCurrencyHTML(0);
+                updateFilterSummary(0);
         balanceCurrency.innerText = getCurrency();
        balance.innerText = formatAmountNumber(getTotalBalance(expenses));
         return;
@@ -90,7 +112,10 @@ if (expenses.length === 0) {
             if (accountValue && getTxAccountId(expense) !== accountValue && (expense.transferToId || getAccountIdByName(expense.transferTo)) !== accountValue) return;
                         const categoryValue = categoryFilter ? categoryFilter.value : "";
             if (categoryValue && getTxCategoryId(expense) !== categoryValue) return;
-
+            const typeValue = typeFilter ? typeFilter.value : "";
+            if (typeValue === "transfer" && !expense.isTransfer) return;
+            if (typeValue === "income" && (expense.isTransfer || expense.type !== "income")) return;
+            if (typeValue === "expense" && (expense.isTransfer || expense.type !== "expense")) return;
             const searchableText = [
                                 expense.description,
                     getTxCategoryName(expense),
@@ -179,6 +204,7 @@ t("item_deleted_toast"),
             attachSwipeActions(card, { deleteEl: deleteBtn, editEl: editBtn });
 
         });
+                updateFilterSummary(expenseList.children.length);
         if (!expenseList.children.length) {
             expenseList.innerHTML = renderEmptyState(
                 "search",
@@ -326,6 +352,36 @@ const allLabel = t("filter_all_categories");
     fillSortFilter();
     if (sortFilter) sortFilter.onchange = renderExpenses;
 makeSelectSheet(sortFilter, t("sort_by"));
+    function fillTypeFilter() {
+        if (!typeFilter) return;
+        const options = [
+            ["", t("filter_all_types")],
+            ["income", t("tab_income")],
+            ["expense", t("tab_expense")],
+            ["transfer", t("tab_transfer")]
+        ];
+        typeFilter.innerHTML = "";
+        options.forEach(function(o) {
+            const opt = document.createElement("option");
+            opt.value = o[0];
+            opt.textContent = o[1];
+            typeFilter.appendChild(opt);
+        });
+    }
+    fillTypeFilter();
+    if (typeFilter) typeFilter.onchange = renderExpenses;
+    makeSelectSheet(typeFilter, t("filter_type"));
+
+    if (clearFiltersBtn) {
+        clearFiltersBtn.onclick = function() {
+            searchInput.value = "";
+            if (accountFilter) accountFilter.value = "";
+            if (categoryFilter) categoryFilter.value = "";
+            if (typeFilter) typeFilter.value = "";
+            if (sortFilter) sortFilter.value = "date_desc";
+            renderExpenses();
+        };
+    }
     if (addMenuBtn) {
     addMenuBtn.onclick = function() {
         window.pendingAddTransactionTab = "expense";
@@ -367,12 +423,7 @@ makeSelectSheet(sortFilter, t("sort_by"));
         // لو لوحة البحث مش ظاهرة، متعملش حاجة
         if (searchPanel.style.display !== "block") return;
                 // لو فيه فلتر شغّال، سيب اللوحة مفتوحة والفلتر زي ما هو
-        const hasActiveFilter =
-            searchInput.value.trim() !== "" ||
-            (accountFilter && accountFilter.value !== "") ||
-            (categoryFilter && categoryFilter.value !== "") ||
-            (sortFilter && sortFilter.value !== "date_desc");
-        if (hasActiveFilter) return;
+if (hasAnyFilter()) return;
         // لو اللي اتدوس عليه مش اللوحة نفسها ولا زرار البحث
         if (!searchPanel.contains(e.target) && !searchBtn.contains(e.target)) {
             
