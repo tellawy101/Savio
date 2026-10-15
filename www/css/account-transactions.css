@@ -20,7 +20,7 @@
     padding: 20px 20px 24px;
     box-sizing: border-box;
     margin: 0;
-    background: #0F8F92;
+background: var(--brand-gradient);
     color: #ffffff;
     border-radius: 0 0 30px 30px;
     overflow: hidden;
@@ -486,4 +486,8 @@ gap: 6px;
     #totalAmount {
         font-size: 26px;
     }
+}
+body.dark .total-card .back-btn {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
 }

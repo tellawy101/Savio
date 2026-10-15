@@ -37,7 +37,7 @@
 =========================== */
 
 .balance-card {
-    background: linear-gradient(180deg, var(--brand), #115e59);
+    background: var(--brand-gradient);
     color: var(--c-white);
     
     border-radius: 0 0 15px 15px;

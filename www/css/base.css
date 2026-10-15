@@ -33,6 +33,7 @@
 :root {
     --brand: #0F766E;
     --brand-text: #0F766E;
+    --brand-gradient: linear-gradient(180deg, var(--brand), #115e59);
     --text: #111827;
     --text-muted: #6B7280;
     --surface: #FFFFFF;

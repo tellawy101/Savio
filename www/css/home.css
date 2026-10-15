@@ -4,7 +4,7 @@
 ============================== */
 header{
     position: relative;
-    background:#0F766E;
+    background: var(--brand-gradient);
     color:white;
     padding:30px 20px;
     border-bottom-left-radius: 15px;
