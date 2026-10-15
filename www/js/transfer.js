@@ -154,7 +154,10 @@ showToast(t("missing_prefix") + missing);
     const toAccountId = transferToAccount.dataset.id || getAccountIdByName(toAccount);
     const note = transferDescription.value.trim();
     const date = transferDate.value;
-    const time = getCurrentTimeString();
+        const oldTransferEntry = editTransferId ?
+        loadTransactions().find(function(tx) { return tx.transferId === editTransferId; }) :
+        null;
+    const time = (oldTransferEntry && oldTransferEntry.time) || getCurrentTimeString();
 
     let transactions = loadTransactions();
 

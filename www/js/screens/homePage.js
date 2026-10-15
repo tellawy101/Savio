@@ -37,8 +37,7 @@ function initHomePage() {
         const categoryFilter = document.getElementById("categoryFilter");
     const sortFilter = document.getElementById("sortFilter");
     const nowLocal = new Date();
-    window.selectedMonth = nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0");
-
+        window.selectedMonth = window.selectedMonth || (nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0"));
     // تحميل البيانات
     let expenses = loadTransactions();
     let income = 0;
@@ -58,7 +57,7 @@ if (expenses.length === 0) {
                 totalExpense.innerHTML = formatCurrencyHTML(0);
         totalIncome.innerHTML = formatCurrencyHTML(0);
         balanceCurrency.innerText = getCurrency();
-        balance.innerText = "0";
+       balance.innerText = formatAmountNumber(getTotalBalance(expenses));
         return;
     }
         // بنرتب المعاملات حسب التاريخ (الأحدث فوق)، ولو نفس التاريخ الأحدث إضافة الأول
@@ -466,10 +465,10 @@ budgetValue.textContent = t("budget");
     const curr = getCurrency();
     
     if (remaining >= 0) {
-const val = formatAmountNumber(remaining);
+const val = formatCompactAmount(remaining);
         budgetValue.innerHTML = `<span class="budget-currency">${escapeHTML(curr)}</span> <span class="budget-number">${val}</span>`;
     } else {
-const val = formatAmountNumber(Math.abs(remaining));
+const val = formatCompactAmount(Math.abs(remaining));
 const overText = t("budget_over");
     budgetValue.innerHTML = `<span class="budget-currency">${escapeHTML(curr)}</span> <span class="budget-number">${val}</span> <span class="budget-over">${overText}</span>`;
 }

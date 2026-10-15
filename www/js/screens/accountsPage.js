@@ -114,12 +114,16 @@ if (iconSearchInput) {
         e.stopPropagation();
     });
 }
-document.addEventListener("click", function(e) {
+if (window._accountsPageIconCloseHandler) {
+    document.removeEventListener("click", window._accountsPageIconCloseHandler);
+}
+window._accountsPageIconCloseHandler = function(e) {
     if (iconDropdownList.classList.contains("show") && !iconDropdownList.contains(e.target) && e.target !== iconDropdownTrigger) {
         iconDropdownList.classList.remove("show");
         if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
     }
-});
+};
+document.addEventListener("click", window._accountsPageIconCloseHandler);
     document.querySelectorAll(".icon-option").forEach(function (option) {
         option.onclick = function () {
             const icon = this.dataset.icon;
@@ -225,7 +229,11 @@ if (window.lucide) lucide.createIcons();
     }
     if (deleteAccountBtn) {
         deleteAccountBtn.onclick = async function() {
-                    if (!(await customConfirm(t("delete_confirm"), { danger: true }))) return;
+                                const linkedTxCount = loadTransactions().filter(function(tx) {
+                return getTxAccountId(tx) === selectedAccount;
+            }).length;
+            const deleteMessage = linkedTxCount > 0 ? t("account_delete_has_tx_confirm") : t("delete_confirm");
+            if (!(await customConfirm(deleteMessage, { danger: true }))) return;
             let accounts = getAccounts();
 const deletedAccount = accounts.find(a => a.id === selectedAccount);
 const deletedPosition = accounts.indexOf(deletedAccount);
@@ -310,7 +318,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
 <h3>${t("total_balance")}</h3>
 <h1>
 <span class="currency">${escapeHTML(getCurrency())}</span>
-                <span class="amount">${Math.round(totalBalance).toLocaleString("en-US")}</span>
+                                <span class="amount">${formatAmountNumber(totalBalance)}</span>
             </h1>
         `;
         container.appendChild(summary);
@@ -350,7 +358,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
                         </div>
 <div class="account-card-balance">
                             <span class="account-card-balance-currency">${escapeHTML(typeof getCurrency === "function" ? getCurrency() : "EGP")}</span>
-                            <span class="account-card-balance-amount">${Math.round(account.currentBalance).toLocaleString("en-US")}</span>
+                            <span class="account-card-balance-amount">${formatAmountNumber(account.currentBalance)}</span>
                         </div>
                     </div>
                     <div class="account-divider"></div>

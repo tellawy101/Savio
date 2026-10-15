@@ -76,3 +76,12 @@ box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
     font-weight: 700;
     opacity: 0.85;
 }
+/* حد أقصى لعرض زرار الميزانية عشان ميغطيش على كلمة Balance */
+.budget-btn {
+    max-width: 42vw;
+}
+
+#budgetValue {
+    max-width: calc(42vw - 50px);
+    overflow: hidden;
+}

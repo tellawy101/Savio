@@ -66,6 +66,10 @@ function initDebtsPage() {
     function readAmount(input) {
         return Number(normalizeDigits(input.value).replace(/,/g, ""));
     }
+        // فواصل الآلاف تلقائي (1,000) في خانات المبلغ
+    attachThousandsFormatter(debtAmount);
+    attachThousandsFormatter(editDebtAmount);
+    attachThousandsFormatter(payAmount);
     // ------------------------------
     // Storage
     // ------------------------------
@@ -183,13 +187,21 @@ formatAmountNumber(payment.amount);
     // ------------------------------
     // Modals
     // ------------------------------
+        const debtDueDateText = document.getElementById("debtDueDateText");
+    
+    if (debtDueDate) {
+        debtDueDate.onchange = function() {
+            syncDateText(debtDueDate, debtDueDateText);
+        };
+    }
+    
     if (addDebtBtn) {
-        addDebtBtn.onclick = function () {
+        addDebtBtn.onclick = function() {
             debtDueDate.value = getTodayDateString();
+            syncDateText(debtDueDate, debtDueDateText);
             debtModal.classList.add("show");
         };
     }
-
     if (cancelDebtBtn) {
         cancelDebtBtn.onclick = function () {
             debtModal.classList.remove("show");
@@ -580,8 +592,14 @@ makeSelectSheet(payAccount, t("select_account"));
                 editingDebt = debt;
 
                 editDebtPerson.value = debt.person;
-                editDebtAmount.value = debt.amount;
+                editDebtAmount.value = Number(debt.amount).toLocaleString("en-US");
+                
+                const editDebtDueDateText = document.getElementById("editDebtDueDateText");
                 editDebtDueDate.value = debt.dueDate || "";
+                syncDateText(editDebtDueDate, editDebtDueDateText);
+                editDebtDueDate.onchange = function() {
+                    syncDateText(editDebtDueDate, editDebtDueDateText);
+                };
                 editDebtNotes.value = debt.notes || "";
 
                 editDebtTypeButtons.forEach(btn => {

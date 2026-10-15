@@ -1067,6 +1067,35 @@ body.dark .payment-delete-btn {
 body.dark .goal-field input {
     border-color: #3d3d3d;
 }
+.goal-field textarea,
+.goal-field #debtNotes,
+.goal-field #editDebtNotes {
+    width: 100%;
+    min-height: 90px;
+    margin: 0;
+    padding: 12px 14px;
+    box-sizing: border-box;
+    border: 1px solid var(--c-line);
+    border-radius: 14px;
+    background: var(--surface-alt);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    resize: none;
+}
+
+.goal-field #debtNotes::placeholder,
+.goal-field #editDebtNotes::placeholder {
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+body.dark .goal-field #debtNotes,
+body.dark .goal-field #editDebtNotes {
+    border-color: #3d3d3d;
+    background: var(--surface-alt);
+    color: var(--text);
+}
 .goal-field input[type="date"] {
     -webkit-appearance: none;
     appearance: none;

@@ -226,7 +226,10 @@ if (categoryIconSearchInput) {
     });
 }
 
-document.addEventListener("click", function (e) {
+if (window._categoryIconCloseHandler) {
+    document.removeEventListener("click", window._categoryIconCloseHandler);
+}
+window._categoryIconCloseHandler = function(e) {
     if (
         categoryIconDropdownList &&
         !categoryIconDropdownList.contains(e.target) &&
@@ -235,7 +238,8 @@ document.addEventListener("click", function (e) {
         categoryIconDropdownList.classList.remove("show");
         if (categoryIconDropdownHome) categoryIconDropdownHome.appendChild(categoryIconDropdownList);
     }
-});
+};
+document.addEventListener("click", window._categoryIconCloseHandler);
 
 window.activeCategoryBox = null;
 
@@ -377,7 +381,7 @@ if (window.lucide) lucide.createIcons();
         field.removeAttribute("data-i18n");
     }
     const iconEl = window.activeCategoryBox ? window.activeCategoryBox.querySelector(".category-icon") : null;
-    if (iconEl) iconEl.innerHTML = `<i data-lucide="${icon}"></i>`;
+    if (iconEl) iconEl.innerHTML = `<i data-lucide="${escapeHTML(icon)}"></i>`;
     if (window.lucide) lucide.createIcons();
 }
         saveCategories(categories);

@@ -96,7 +96,7 @@ if (getTxAccountId(t) !== account.id) return;
             else if (t.type === "expense") expense += Number(t.amount) || 0;
         });
         
-        const currentBalance = Number(account.balance) + income - expense;
+                const currentBalance = (Number(account.balance) || 0) + income - expense;
         
         const item = document.createElement("div");
         
@@ -109,7 +109,7 @@ item.className = "account-item" + (isDisabled ? " account-item-disabled" : "");
         item.innerHTML = renderListItemHTML(
     account.icon,
     account.name,
-`<div class="account-balance">${currentBalance.toLocaleString()} ${escapeHTML(getCurrency())}</div>`
+`<div class="account-balance">${formatAmountNumber(currentBalance)} ${escapeHTML(getCurrency())}</div>`
 );
         let pressTimer;
         
@@ -273,7 +273,11 @@ if (window.lucide) lucide.createIcons();
 
 if (deleteAccountBtn) {
     deleteAccountBtn.onclick = async function() {
-        if (!(await customConfirm(t("delete_confirm"), { danger: true }))) return;
+                const linkedTxCount = loadTransactions().filter(function(tx) {
+            return getTxAccountId(tx) === selectedAccount;
+        }).length;
+        const deleteMessage = linkedTxCount > 0 ? t("account_delete_has_tx_confirm") : t("delete_confirm");
+        if (!(await customConfirm(deleteMessage, { danger: true }))) return;
         let accounts = getAccounts();
         
         const deletedAccount = accounts.find(account => account.id === selectedAccount);
@@ -371,12 +375,16 @@ if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
     };
 });
 
-document.addEventListener("click", function(e) {
+if (window._accountsIconCloseHandler) {
+    document.removeEventListener("click", window._accountsIconCloseHandler);
+}
+window._accountsIconCloseHandler = function(e) {
     if (iconDropdownList && !iconDropdownList.contains(e.target) && e.target !== iconDropdownTrigger) {
         iconDropdownList.classList.remove("show");
-if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
+        if (iconDropdownHome) iconDropdownHome.appendChild(iconDropdownList);
     }
-});
+};
+document.addEventListener("click", window._accountsIconCloseHandler);
 const cancelAddAccountBtn = document.getElementById("cancelAddAccountBtn");
 if (cancelAddAccountBtn) {
     cancelAddAccountBtn.onclick = function() {

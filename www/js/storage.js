@@ -171,6 +171,25 @@ function formatAmountNumber(amount) {
         maximumFractionDigits: 2
     });
 }
+// بتختصر الأرقام الكبيرة (للأماكن الضيقة زي زرار الميزانية): 1,250,000 → 1.25M
+function formatCompactAmount(amount) {
+    const n = Number(amount) || 0;
+    const abs = Math.abs(n);
+    if (abs < 1000000) return formatAmountNumber(n);
+
+    const units = [
+        { value: 1e12, suffix: "T" },
+        { value: 1e9, suffix: "B" },
+        { value: 1e6, suffix: "M" }
+    ];
+    for (const unit of units) {
+        if (abs >= unit.value) {
+            const short = Math.round((n / unit.value) * 100) / 100;
+            return short.toLocaleString("en-US", { maximumFractionDigits: 2 }) + unit.suffix;
+        }
+    }
+    return formatAmountNumber(n);
+}
 // بتنسق المبلغ مع العملة
 function formatCurrency(amount) {
     const currency = getCurrency();
@@ -546,7 +565,8 @@ function updateDebtPayment(paymentId, newAmount, account, accountId, date) {
         debt.status = debt.remaining <= 0 ? "paid" : "open";
     });
 
-        if (!found || exceeds) return false;
+                if (!found) return true;
+        if (exceeds) return false;
     saveDebts(debts);
     return true;
 }
@@ -595,7 +615,7 @@ function getBudgetAlertType(categoryId, amount, date) {
     let after = 0;
     loadTransactions().forEach(function(tx) {
         if (tx.type !== "expense" || tx.isTransfer === true) return;
-        if (tx.categoryId !== categoryId || !tx.date) return;
+        if (getTxCategoryId(tx) !== categoryId || !tx.date) return;
         
         if (isDateInCurrentMonth(tx.date)) {
             after += Number(tx.amount) || 0;

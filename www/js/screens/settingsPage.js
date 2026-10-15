@@ -568,13 +568,30 @@ showToast(t("backup_take_failed_replace"), "error");
                     // الميزانيات منمسحهاش لو النسخة القديمة مفيهاش (النسخ القديمة قبل الميزة دي)
                     const KEEP_IF_MISSING = [BUDGET_KEY, CATEGORY_BUDGETS_KEY];
                     
+                                        const previousValues = {};
                     BACKUP_KEYS.forEach(function(key) {
-                        if (Object.prototype.hasOwnProperty.call(pendingBackupPayload.data, key)) {
-                            localStorage.setItem(key, pendingBackupPayload.data[key]);
-                        } else if (KEEP_IF_MISSING.indexOf(key) === -1) {
-                            localStorage.removeItem(key);
-                        }
+                        previousValues[key] = localStorage.getItem(key);
                     });
+                    
+                    try {
+                        BACKUP_KEYS.forEach(function(key) {
+                            if (Object.prototype.hasOwnProperty.call(pendingBackupPayload.data, key)) {
+                                localStorage.setItem(key, pendingBackupPayload.data[key]);
+                            } else if (KEEP_IF_MISSING.indexOf(key) === -1) {
+                                localStorage.removeItem(key);
+                            }
+                        });
+                    } catch (writeError) {
+                        console.error("Restore write failed:", writeError);
+                        BACKUP_KEYS.forEach(function(key) {
+                            try {
+                                if (previousValues[key] === null) localStorage.removeItem(key);
+                                else localStorage.setItem(key, previousValues[key]);
+                            } catch (e) {}
+                        });
+                        showToast(t("storage_full"), "error");
+                        return;
+                    }
                 } else {
                     // دمج ذكي (Smart Merge)
                                         try {
@@ -725,9 +742,25 @@ if (data.accounts) {
                         }
 
                         // الكتابة بعد ما كله نجح
-                        Object.keys(writes).forEach(function (key) {
-                            localStorage.setItem(key, JSON.stringify(writes[key]));
+                                                const previousValues = {};
+                        Object.keys(writes).forEach(function(key) {
+                            previousValues[key] = localStorage.getItem(key);
                         });
+                        try {
+                            Object.keys(writes).forEach(function(key) {
+                                localStorage.setItem(key, JSON.stringify(writes[key]));
+                            });
+                        } catch (writeError) {
+                            console.error("Merge write failed:", writeError);
+                            Object.keys(previousValues).forEach(function(key) {
+                                try {
+                                    if (previousValues[key] === null) localStorage.removeItem(key);
+                                    else localStorage.setItem(key, previousValues[key]);
+                                } catch (e) {}
+                            });
+                            showToast(t("storage_full"), "error");
+                            return;
+                        }
                     } catch (e) {
                         console.error("Merge aborted:", e);
 showToast(t("merge_cancelled_corrupt"), "error");
