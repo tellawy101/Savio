@@ -347,6 +347,13 @@ const account = accountObj ? accountObj.name : "";
                 await customAlert(t("debts_payment_exceeds_alert"));
                 return;
             }
+                        if (currentPayDebt.type === "payable") {
+                const currentBalance = calculateAccountBalance(accountObj, loadTransactions());
+                if (payment > currentBalance) {
+                    const proceed = await customConfirm(t("debts_pay_low_balance_confirm"));
+                    if (!proceed) return;
+                }
+            }
 
             const paymentId = generateTransactionId("pay");
             const dateText = payDate.value || getTodayDateString();
