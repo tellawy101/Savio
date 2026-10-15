@@ -114,26 +114,35 @@ if (totalAmountEl) {
         
         getSortedTransactions().forEach(transaction => {
             
-            const li = document.createElement("li");
-            const amount = Number(transaction.amount || 0);
-            const subtitle = [formatDisplayDate(transaction.date), transaction.description]
-                .filter(Boolean)
-                .join(" · ");
-            
-            li.innerHTML = `
-                <div class="transaction-icon-box">
-                    <i data-lucide="${escapeHTML(getTxCategoryIcon(transaction))}"></i>
-                </div>
+const li = document.createElement("li");
+li.className = isIncome ? "is-income" : "is-expense";
+const amount = Number(transaction.amount || 0);
 
-                <div class="transaction-info">
-                    <strong>${escapeHTML(getTxCategoryName(transaction) || "Transaction")}</strong>
-                    <small>${escapeHTML(subtitle)}</small>
-                </div>
+const categoryName = getTxCategoryName(transaction) || "Transaction";
 
-                <strong class="transaction-amount">
-                    ${escapeHTML(getCurrency())} ${amount.toLocaleString("en-US")}
-                </strong>
-            `;
+let note = String(transaction.description || "").trim();
+if (note === categoryName) {
+    note = "";
+} else if (note.startsWith(categoryName)) {
+    note = note.slice(categoryName.length).trim() || note;
+}
+
+li.innerHTML = `
+    <div class="transaction-icon-box">
+        <i data-lucide="${escapeHTML(getTxCategoryIcon(transaction))}"></i>
+    </div>
+
+    <div class="tx-main">
+        <div class="tx-top">
+            <strong class="tx-title">${escapeHTML(categoryName)}</strong>
+            <strong class="transaction-amount">${escapeHTML(getCurrency())} ${amount.toLocaleString("en-US")}</strong>
+        </div>
+        <div class="tx-bottom">
+            <span class="tx-note">${escapeHTML(note)}</span>
+            <span class="tx-date">${escapeHTML(formatDisplayDate(transaction.date) || "")}</span>
+        </div>
+    </div>
+`;
             
             transactionsListEl.appendChild(li);
             
