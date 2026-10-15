@@ -1245,3 +1245,9 @@ body.dark .cb-delete-btn {
 body.dark .cb-over .goal-progress-fill {
     background: #dc2626;
 }
+
+#debtModal .modal-content,
+#editDebtModal .modal-content {
+    box-sizing: border-box;
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+}
