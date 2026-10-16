@@ -763,3 +763,15 @@ function renderEmptyState(icon = "inbox", title = "No data found", subtitle = ""
         </div>
     `;
 }
+// ==========================================
+// Reusable Component: Progress Bar (DRY)
+// شريط التقدم الموحد (الأهداف + الميزانيات)
+// ==========================================
+function renderProgressBar(percent) {
+    const safePercent = Math.max(0, Math.min(100, Number(percent) || 0));
+    return `
+        <div class="goal-progress">
+            <div class="goal-progress-fill" style="width: ${safePercent}%"></div>
+        </div>
+    `;
+}

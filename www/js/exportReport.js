@@ -312,14 +312,6 @@ document.addEventListener("click", function (e) {
 });
 // ---------- PDF ----------
 
-function exportEscapeHtml(value) {
-    return String(value === null || value === undefined ? "" : value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-}
-
 // عدد المعاملات في الجزء الواحد من الـ PDF (عشان الذاكرة متخلصش مع الداتا الكبيرة)
 const PDF_ROWS_PER_CHUNK = 100;
 
@@ -343,20 +335,20 @@ function buildTransactionsPdfElement(rows, totals) {
         }
         
         return "<tr style='page-break-inside:avoid;'>" +
-            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.date) + "</td>" +
-            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.time) + "</td>" +
-            "<td style='" + cellStyle + "color:" + color + ";'>" + exportEscapeHtml(getExportTypeLabel(tx.type, tx.isTransfer)) + "</td>" +
-            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.category) + "</td>" +
-            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.account) + "</td>" +
-            "<td style='" + cellStyle + "'>" + exportEscapeHtml(tx.description) + "</td>" +
+            "<td style='" + cellStyle + "'>" + escapeHTML(tx.date) + "</td>" +
+            "<td style='" + cellStyle + "'>" + escapeHTML(tx.time) + "</td>" +
+            "<td style='" + cellStyle + "color:" + color + ";'>" + escapeHTML(getExportTypeLabel(tx.type, tx.isTransfer)) + "</td>" +
+            "<td style='" + cellStyle + "'>" + escapeHTML(tx.category) + "</td>" +
+            "<td style='" + cellStyle + "'>" + escapeHTML(tx.account) + "</td>" +
+            "<td style='" + cellStyle + "'>" + escapeHTML(tx.description) + "</td>" +
             "<td style='" + cellStyle + "color:" + color + ";font-weight:bold;'>" +
-            amount.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " " + exportEscapeHtml(currency) +
+            amount.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " " + escapeHTML(currency) +
             "</td>" +
             "</tr>";
     }).join("");
     
     const fmt = function(n) {
-        return n.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " " + exportEscapeHtml(currency);
+        return n.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " " + escapeHTML(currency);
     };
     
     const headStyle = "padding:8px 4px;background:#1976D2;color:#fff;text-align:center;font-size:11px;";

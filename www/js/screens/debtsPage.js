@@ -208,13 +208,7 @@ formatAmountNumber(payment.amount);
         };
     }
 
-    if (paymentsHistoryModal) {
-        paymentsHistoryModal.onclick = function (e) {
-            if (e.target === paymentsHistoryModal) {
-                paymentsHistoryModal.classList.remove("show");
-            }
-        };
-    }
+    closeModalOnBackdropClick(paymentsHistoryModal);
     // ------------------------------
     // Modals
     // ------------------------------
@@ -239,11 +233,7 @@ formatAmountNumber(payment.amount);
         };
     }
 
-    if (debtModal) {
-        debtModal.onclick = function (e) {
-            if (e.target === debtModal) debtModal.classList.remove("show");
-        };
-    }
+    closeModalOnBackdropClick(debtModal);
 
     if (cancelPayBtn) {
         cancelPayBtn.onclick = function () {
@@ -252,15 +242,9 @@ formatAmountNumber(payment.amount);
         };
     }
 
-    if (payDebtModal) {
-        payDebtModal.onclick = function (e) {
-            if (e.target === payDebtModal) {
-                payDebtModal.classList.remove("show");
-                currentPayDebt = null;
-            }
-        };
-    }
-
+    closeModalOnBackdropClick(payDebtModal, function() {
+    currentPayDebt = null;
+});
     if (cancelEditDebtBtn) {
         cancelEditDebtBtn.onclick = function () {
             editDebtModal.classList.remove("show");
@@ -268,14 +252,9 @@ formatAmountNumber(payment.amount);
         };
     }
 
-    if (editDebtModal) {
-        editDebtModal.onclick = function (e) {
-            if (e.target === editDebtModal) {
-                editDebtModal.classList.remove("show");
-                editingDebt = null;
-            }
-        };
-    }
+    closeModalOnBackdropClick(editDebtModal, function () {
+    editingDebt = null;
+});
 
     // ------------------------------
     // Save Debt

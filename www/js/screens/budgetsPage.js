@@ -89,9 +89,7 @@ const category = tx.categoryId || getCategoryIdByName(tx.category) || tx.categor
                     </div>
                 </div>
 
-                <div class="goal-progress">
-                    <div class="goal-progress-fill" style="width: ${percent}%"></div>
-                </div>
+                                ${renderProgressBar(percent)}
 
                 <div class="cb-amounts">
                     <span class="cb-used">${formatCurrency(used)}</span>
@@ -190,11 +188,7 @@ pickerText.textContent = item.textContent;
         };
     }
 
-    if (catBudgetModal) {
-        catBudgetModal.onclick = function (e) {
-            if (e.target === catBudgetModal) catBudgetModal.classList.remove("show");
-        };
-    }
+    closeModalOnBackdropClick(catBudgetModal);
         if (saveCatBudgetBtn) {
         saveCatBudgetBtn.onclick = async function () {
 

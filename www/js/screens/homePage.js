@@ -489,13 +489,7 @@ if (budgetBtn && budgetModal) {
     };
 }
 
-if (budgetModal) {
-    budgetModal.onclick = function(e) {
-        if (e.target === budgetModal) {
-            budgetModal.classList.remove("show");
-        }
-    };
-}
+closeModalOnBackdropClick(budgetModal);
 
     function updateBudgetButton() {
     const budgetValue = document.getElementById("budgetValue");

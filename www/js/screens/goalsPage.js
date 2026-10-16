@@ -57,7 +57,7 @@ function initGoalsPage() {
             <div class="goals-summary-card">
                 <span class="goals-summary-label">${t("goals_total_saved")}</span>
                 <div class="goals-summary-value">${formatCurrency(totalSaved)}</div>
-                <div class="goal-progress"><div class="goal-progress-fill" style="width: ${totalPercent}%"></div></div>
+                               ${renderProgressBar(totalPercent)}
                 <span class="goals-summary-sub">${totalPercent}% ${t("goals_total_progress")}</span>
             </div>` : "";
         }
@@ -113,9 +113,7 @@ function initGoalsPage() {
                         : `<span class="goal-percent">${percent}%</span>`}
                 </div>
 
-                <div class="goal-progress">
-                    <div class="goal-progress-fill" style="width: ${percent}%"></div>
-                </div>
+                               ${renderProgressBar(percent)}
 
                 ${dateText ? `<div class="goal-date"><i data-lucide="calendar"></i><span>${dateText}</span></div>` : ""}
 
@@ -205,11 +203,7 @@ if (saveGoalBtn) {
         };
     }
 
-    if (goalModal) {
-        goalModal.onclick = function (e) {
-            if (e.target === goalModal) goalModal.classList.remove("show");
-        };
-    }
+    closeModalOnBackdropClick(goalModal);
     // ------------------------------
     // ADD MONEY TO GOAL
     // ------------------------------
@@ -252,11 +246,7 @@ const deleteBtn = e.target.closest(".goal-delete-btn");
         };
     }
 
-    if (goalMoneyModal) {
-        goalMoneyModal.onclick = function (e) {
-            if (e.target === goalMoneyModal) goalMoneyModal.classList.remove("show");
-        };
-    }
+    closeModalOnBackdropClick(goalMoneyModal);
 
     if (confirmGoalMoneyBtn) {
         confirmGoalMoneyBtn.onclick = async function () {

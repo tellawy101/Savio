@@ -77,9 +77,7 @@ if (currencySelectBtn && currencyPickerModal) {
         });
     }
     
-    currencyPickerModal.addEventListener("click", function(e) {
-        if (e.target === currencyPickerModal) currencyPickerModal.classList.remove("show");
-    });
+    closeModalOnBackdropClick(currencyPickerModal);
 }
 
 // ------------------------------
@@ -123,9 +121,7 @@ if (languageSelectBtn && languagePickerModal) {
         });
     }
     
-    languagePickerModal.addEventListener("click", function(e) {
-        if (e.target === languagePickerModal) languagePickerModal.classList.remove("show");
-    });
+    closeModalOnBackdropClick(languagePickerModal);
 }
 
 // ------------------------------
@@ -200,13 +196,7 @@ if (languageSelectBtn && languagePickerModal) {
         });
     }
 
-    if (aboutModal) {
-        aboutModal.addEventListener("click", function (e) {
-            if (e.target === aboutModal) {
-                aboutModal.classList.remove("show");
-            }
-        });
-    }
+    closeModalOnBackdropClick(aboutModal);
 // ------------------------------
     // Privacy Modal
     // ------------------------------
@@ -226,13 +216,7 @@ if (languageSelectBtn && languagePickerModal) {
         });
     }
 
-    if (privacyModal) {
-        privacyModal.addEventListener("click", function (e) {
-            if (e.target === privacyModal) {
-                privacyModal.classList.remove("show");
-            }
-        });
-    }
+    closeModalOnBackdropClick(privacyModal);
     // ------------------------------
     // Restore Last Snapshot
     // ------------------------------
@@ -319,11 +303,7 @@ window.location.href = "index.html";
             });
         }
 
-        if (fallbackModal) {
-            fallbackModal.addEventListener("click", function (e) {
-                if (e.target === fallbackModal) fallbackModal.classList.remove("show");
-            });
-        }
+        closeModalOnBackdropClick(fallbackModal);
 
         if (copyFallbackBtn) {
             copyFallbackBtn.addEventListener("click", async function () {
@@ -536,9 +516,7 @@ badge.textContent = t("backup_last_prefix") + d.toLocaleDateString() + " " + d.t
             closeImportManualBtn.onclick = function () { importManualModal.classList.remove("show"); };
         }
 
-        importManualModal.addEventListener("click", function (e) {
-            if (e.target === importManualModal) importManualModal.classList.remove("show");
-        });
+        closeModalOnBackdropClick(importManualModal);
 
         if (importFileInput) {
     importFileInput.addEventListener("change", function() {
