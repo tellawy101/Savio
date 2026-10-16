@@ -185,11 +185,7 @@ function initRecurringPage() {
     };
   }
   
-  if (modal) {
-    modal.onclick = function(e) {
-      if (e.target === modal) modal.classList.remove("show");
-    };
-  }
+  closeModalOnBackdropClick(modal);
   
   // ------------------------------
   // الحفظ
