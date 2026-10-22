@@ -283,97 +283,8 @@ saveAccounts(accounts);
     let reportFrom = "";
     let reportTo = "";
 
-    function pad2(n) { return String(n).padStart(2, "0"); }
-    function toISO(d) {
-        return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
-    }
-
-    function getPeriodRange(period) {
-        const now = new Date();
-        const y = now.getFullYear(), m = now.getMonth();
-        if (period === "this_month") return { from: toISO(new Date(y, m, 1)), to: toISO(new Date(y, m + 1, 0)) };
-        if (period === "last_month") return { from: toISO(new Date(y, m - 1, 1)), to: toISO(new Date(y, m, 0)) };
-        if (period === "this_year") return { from: y + "-01-01", to: y + "-12-31" };
-        if (period === "last_year") return { from: (y - 1) + "-01-01", to: (y - 1) + "-12-31" };
-        if (period === "all") return { from: "0000-01-01", to: "9999-12-31" };
-return { from: reportFrom, to: reportTo };
-        return { from: reportFrom, to: reportTo };
-    }
-
-    function getPeriodTotals(transactions, from, to) {
-        let income = 0, expense = 0;
-        if (!from || !to) return { income, expense };
-        transactions.forEach(function (tr) {
-            if (!tr.date || tr.isTransfer) return;
-            const d = tr.date.slice(0, 10);
-            if (d < from || d > to) return;
-            if (tr.type === "income") income += Number(tr.amount) || 0;
-            else if (tr.type === "expense") expense += Number(tr.amount) || 0;
-        });
-        return { income, expense };
-    }
-
-    function renderPeriodReport(container, transactions) {
-        const periods = [
-    ["all", "report_all"],  
-            ["this_month", "report_this_month"],
-            ["last_month", "report_last_month"],
-            ["this_year", "report_this_year"],
-            ["last_year", "report_last_year"],
-            ["custom", "report_custom"]
-        ];
-        const range = getPeriodRange(reportPeriod);
-        const totals = getPeriodTotals(transactions, range.from, range.to);
-        const net = totals.income - totals.expense;
-        const cur = escapeHTML(getCurrency());
-        const fmt = function (v) { return Math.round(v).toLocaleString("en-US"); };
-const total = totals.income + totals.expense;
-const incPct = total > 0 ? Math.round((totals.income / total) * 100) : 0;
-const netCls = net < 0 ? "period-expense" : "period-income";
-const rangeLabel = (reportPeriod !== "all" && range.from && range.to) ? range.from + "  →  " + range.to : "";
-        const card = document.createElement("div");
-        card.className = "period-report";
-        card.innerHTML = `
-            <div class="period-chips">
-                ${periods.map(function (p) {
-                    return `<button type="button" class="period-chip ${reportPeriod === p[0] ? "active" : ""}" data-period="${p[0]}">${t(p[1])}</button>`;
-                }).join("")}
-            </div>
-            ${reportPeriod === "custom" ? `
-                <div class="period-custom">
-                    <label>${t("report_from")}<input type="date" id="reportFrom" value="${reportFrom}"></label>
-                    <label>${t("report_to")}<input type="date" id="reportTo" value="${reportTo}"></label>
-                </div>` : ""}
-            <div class="period-range">${rangeLabel}</div>
-<div class="period-net">
-    <span class="period-label">${t("stats_net_balance")}</span>
-    <span class="period-net-value ${netCls}">${cur} ${fmt(net)}</span>
-</div>
-<div class="period-bar ${total === 0 ? "empty" : ""}"><span style="width:${incPct}%"></span></div>
-<div class="period-totals">
-    <div class="period-item">
-        <span class="period-label">${t("stats_income")}</span>
-        <span class="period-value period-income">${cur} ${fmt(totals.income)}</span>
-    </div>
-    <div class="period-item">
-        <span class="period-label">${t("stats_expense")}</span>
-        <span class="period-value period-expense">${cur} ${fmt(totals.expense)}</span>
-    </div>
-</div>
-        `;
-
-        card.querySelectorAll(".period-chip").forEach(function (btn) {
-            btn.onclick = function () {
-                reportPeriod = btn.dataset.period;
-                renderAccountsPage();
-            };
-        });
-        const fromInput = card.querySelector("#reportFrom");
-        const toInput = card.querySelector("#reportTo");
-        if (fromInput) fromInput.onchange = function () { reportFrom = fromInput.value; renderAccountsPage(); };
-        if (toInput) toInput.onchange = function () { reportTo = toInput.value; renderAccountsPage(); };
-
-        container.appendChild(card);
+        function getPeriodRange(period) {
+        return getPeriodRangeFor(period, reportFrom, reportTo);
     }
     function getSparklinePoints(accountKey, type, transactions) {
         const MONTHS = 5;
@@ -410,21 +321,11 @@ const currentBalance = calculateAccountBalance(account, transactions);
             return Object.assign({}, account, activity, { currentBalance });
         });
 
-        const totalBalance = accountsWithBalance.reduce((sum, a) => sum + a.currentBalance, 0);
+        
 
         container.innerHTML = "";
 
-        const summary = document.createElement("div");
-        summary.className = "balance-card";
-        summary.innerHTML = `
-<h3>${t("total_balance")}</h3>
-<h1>
-<span class="currency">${escapeHTML(getCurrency())}</span>
-                                <span class="amount">${formatAmountNumber(totalBalance)}</span>
-            </h1>
-        `;
-        container.appendChild(summary);
-        renderPeriodReport(container, transactions);
+
         const list = document.createElement("div");
         list.className = "accounts-list";
 

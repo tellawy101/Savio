@@ -33,18 +33,7 @@ function initRecurringPage() {
   // ------------------------------
   // تعبئة القوائم
   // ------------------------------
-  function fillSelect(select, options, selectedValue) {
-    if (!select) return;
-    select.innerHTML = "";
-    options.forEach(function(option) {
-      const opt = document.createElement("option");
-      opt.value = option.value;
-      opt.textContent = option.label;
-      select.appendChild(opt);
-    });
-    select.value = selectedValue || "";
-    if (select.selectedIndex === -1) select.value = "";
-  }
+ 
   
   function fillStaticSelects(typeValue, frequencyValue) {
     fillSelect(typeSelect, [

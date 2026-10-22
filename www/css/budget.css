@@ -2,10 +2,7 @@
    BUDGET BUTTON
 ========================= */
 
-.dashboard {
-    position: relative;
-    padding-bottom: 10px;
-}
+
 .budget-btn {
     position: absolute;
     top: 18px;

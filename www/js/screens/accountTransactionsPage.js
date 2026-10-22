@@ -154,19 +154,7 @@ li.innerHTML = `
     }
     
     if (sortEl) {
-        const sortOptions = [
-            ["date_desc", t("sort_newest")],
-            ["date_asc", t("sort_oldest")],
-            ["amount_desc", t("sort_highest")],
-            ["amount_asc", t("sort_lowest")]
-        ];
-        sortEl.innerHTML = "";
-        sortOptions.forEach(function(o) {
-            const opt = document.createElement("option");
-            opt.value = o[0];
-            opt.textContent = o[1];
-            sortEl.appendChild(opt);
-        });
+                fillSelect(sortEl, getSortOptions(), "date_desc");
         sortEl.onchange = renderTransactionsList;
         makeSelectSheet(sortEl, t("sort_by"));
         // مفيش لازمة للترتيب لو فيه معاملة واحدة أو مفيش

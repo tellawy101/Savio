@@ -539,17 +539,9 @@ const card = wrapper.querySelector(".debt-card");
                                         payDebtInfo.textContent = debt.person + " - " + t("debts_pay_remaining_label") + ": " + getCurrency() + " " + formatAmountNumber(debt.remaining);
                     const accounts = getAccounts();
 
-                                        payAccount.innerHTML = "";
-                    const defaultOpt = document.createElement("option");
-                    defaultOpt.value = "";
-                    defaultOpt.textContent = t("select_account");
-                    payAccount.appendChild(defaultOpt);
-                    accounts.forEach(function (acc) {
-                        const opt = document.createElement("option");
-                        opt.value = acc.id;
-                        opt.textContent = acc.name;
-                        payAccount.appendChild(opt);
-                    });
+                                                            fillSelect(payAccount, [{ value: "", label: t("select_account") }].concat(
+                        accounts.map(function(acc) { return { value: acc.id, label: acc.name }; })
+                    ));
 makeSelectSheet(payAccount, t("select_account"));
                     payDebtModal.classList.add("show");
                 };

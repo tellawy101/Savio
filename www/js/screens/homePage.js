@@ -11,41 +11,40 @@ function initHomePage() {
         modalsPlaceholder.innerHTML = renderSharedModals();
     }
     
-    document.getElementById("statsPlaceholder").innerHTML =
-        renderStatBox({ icon: '<i data-lucide="trending-up"></i>', labelKey: "income", labelText: "Income", valueId: "totalIncome" }) +
-        renderStatBox({ icon: '<i data-lucide="trending-down"></i>', labelKey: "expenses", labelText: "Expenses", valueId: "totalExpense" });
-
-    // ------------------------------
+        // ------------------------------
     // العناصر
     // ------------------------------
     
-
+    
     const expenseList = document.getElementById("expenseList");
     const searchInput = document.getElementById("searchInput");
-    const totalExpense = document.getElementById("totalExpense");
-    const totalIncome = document.getElementById("totalIncome");
-    const balance = document.getElementById("balanceValue");
+    const homeReport = document.getElementById("homeReport");
     const addMenuBtn = document.getElementById("addMenuBtn");
-    const balanceCurrency = document.getElementById("balanceCurrency");
     const toggleBalanceBtn = document.getElementById("toggleBalanceBtn");
-
+    
     const prevMonthBtn = document.getElementById("prevMonthBtn");
     const nextMonthBtn = document.getElementById("nextMonthBtn");
     const monthLabelBtn = document.getElementById("monthLabelBtn");
     const monthPicker = document.getElementById("monthPicker");
     const accountFilter = document.getElementById("accountFilter");
-        const categoryFilter = document.getElementById("categoryFilter");
+    const categoryFilter = document.getElementById("categoryFilter");
     const sortFilter = document.getElementById("sortFilter");
-        const typeFilter = document.getElementById("typeFilter");
+    const typeFilter = document.getElementById("typeFilter");
     const filterSummary = document.getElementById("filterSummary");
     const filterCount = document.getElementById("filterCount");
     const clearFiltersBtn = document.getElementById("clearFiltersBtn");
     const nowLocal = new Date();
-        window.selectedMonth = window.selectedMonth || (nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0"));
+    window.selectedMonth = window.selectedMonth || (nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0"));
     // تحميل البيانات
     let expenses = loadTransactions();
-    let income = 0;
-    let total = 0;
+    const reportState = window.homeReportState || (window.homeReportState = { period: "all", from: "", to: "" });
+    
+    // كارت التقرير اللي فوق (الرصيد الصافي / الدخل / المصروفات)
+    function renderHomeReport() {
+        if (!homeReport) return;
+        homeReport.innerHTML = "";
+        homeReport.appendChild(buildPeriodReportCard(reportState, expenses, renderHomeReport));
+    }
         // هل فيه بحث أو فلتر شغّال؟ (الترتيب بيتحسب لو اتغير عن الافتراضي)
     function hasAnyFilter() {
         return (searchInput && searchInput.value.trim() !== "") ||
@@ -75,11 +74,8 @@ if (expenses.length === 0) {
                 t("add_first_transaction")
         );
         if (window.lucide) lucide.createIcons();
-                totalExpense.innerHTML = formatCurrencyHTML(0);
-        totalIncome.innerHTML = formatCurrencyHTML(0);
-                updateFilterSummary(0);
-        balanceCurrency.innerText = getCurrency();
-       balance.innerText = formatAmountNumber(getTotalBalance(expenses));
+                                updateFilterSummary(0);
+        renderHomeReport();
         return;
     }
         // بنرتب المعاملات حسب التاريخ (الأحدث فوق)، ولو نفس التاريخ الأحدث إضافة الأول
@@ -102,7 +98,7 @@ if (expenses.length === 0) {
                 return mode === "date_asc" ? a.index - b.index : b.index - a.index;
             });
 
-({ income, total } = calculateMonthlyTotals(sortedEntries.map(e => e.expense), window.selectedMonth));
+
         // نص البحث بعد تنضيفه من المسافات الزيادة وتحويله لحروف صغيرة
         const searchTerm = searchInput.value.trim().toLowerCase();
 
@@ -212,11 +208,7 @@ t("item_deleted_toast"),
                 ""
             );
         }
-                totalExpense.innerHTML = formatCurrencyHTML(total);
-        totalIncome.innerHTML = formatCurrencyHTML(income);
-
-        balanceCurrency.innerText = getCurrency();
-balance.innerText = formatAmountNumber(getTotalBalance(expenses));
+                renderHomeReport();
 
         if (window.lucide) {
             lucide.createIcons();
@@ -312,71 +304,28 @@ const monthName = date.toLocaleDateString(getLanguage() === "ar" ? "ar-EG" : "en
             }, 400);
         });
     }
-        function fillAccountFilter() {
-        if (!accountFilter) return;
-const allLabel = t("filter_all_accounts");
-        accountFilter.innerHTML = `<option value="">${allLabel}</option>`;
-        getAccounts().forEach(function (a) {
-            const opt = document.createElement("option");
-           opt.value = a.id;
-            opt.textContent = a.name;
-            accountFilter.appendChild(opt);
-        });
-    }
-        fillAccountFilter();
+            fillSelect(accountFilter, [{ value: "", label: t("filter_all_accounts") }].concat(
+        getAccounts().map(function(a) { return { value: a.id, label: a.name }; })
+    ));
     if (accountFilter) accountFilter.onchange = renderExpenses;
-makeSelectSheet(accountFilter, t("filter_account"));
-makeSelectSheet(categoryFilter, t("filter_category"));
-        function fillCategoryFilter() {
-        if (!categoryFilter) return;
-const allLabel = t("filter_all_categories");
-        categoryFilter.innerHTML = `<option value="">${allLabel}</option>`;
-        getCategories().forEach(function(c) {
-            const opt = document.createElement("option");
-           opt.value = c.id;
-            opt.textContent = c.name;
-            categoryFilter.appendChild(opt);
-        });
-    }
-    fillCategoryFilter();
-    if (categoryFilter) categoryFilter.onchange = renderExpenses;
+    makeSelectSheet(accountFilter, t("filter_account"));
     
-        function fillSortFilter() {
-        if (!sortFilter) return;
-        const options = [
-                        ["date_desc", t("sort_newest")],
-            ["date_asc", t("sort_oldest")],
-            ["amount_desc", t("sort_highest")],
-            ["amount_asc", t("sort_lowest")]
-        ];
-        sortFilter.innerHTML = "";
-        options.forEach(function(o) {
-            const opt = document.createElement("option");
-            opt.value = o[0];
-            opt.textContent = o[1];
-            sortFilter.appendChild(opt);
-        });
-    }
-    fillSortFilter();
+    fillSelect(categoryFilter, [{ value: "", label: t("filter_all_categories") }].concat(
+        getCategories().map(function(c) { return { value: c.id, label: c.name }; })
+    ));
+    if (categoryFilter) categoryFilter.onchange = renderExpenses;
+    makeSelectSheet(categoryFilter, t("filter_category"));
+    
+    fillSelect(sortFilter, getSortOptions(), "date_desc");
     if (sortFilter) sortFilter.onchange = renderExpenses;
-makeSelectSheet(sortFilter, t("sort_by"));
-    function fillTypeFilter() {
-        if (!typeFilter) return;
-        const options = [
-            ["", t("filter_all_types")],
-            ["income", t("tab_income")],
-            ["expense", t("tab_expense")],
-            ["transfer", t("tab_transfer")]
-        ];
-        typeFilter.innerHTML = "";
-        options.forEach(function(o) {
-            const opt = document.createElement("option");
-            opt.value = o[0];
-            opt.textContent = o[1];
-            typeFilter.appendChild(opt);
-        });
-    }
-    fillTypeFilter();
+    makeSelectSheet(sortFilter, t("sort_by"));
+    
+    fillSelect(typeFilter, [
+        { value: "", label: t("filter_all_types") },
+        { value: "income", label: t("tab_income") },
+        { value: "expense", label: t("tab_expense") },
+        { value: "transfer", label: t("tab_transfer") }
+    ]);
     if (typeFilter) typeFilter.onchange = renderExpenses;
     makeSelectSheet(typeFilter, t("filter_type"));
 

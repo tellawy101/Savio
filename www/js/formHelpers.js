@@ -152,3 +152,25 @@ function filterAccountIcons(term) {
         opt.style.display = match ? "flex" : "none";
     });
 }
+// تعبئة قايمة <select> من مصفوفة { value, label } - بتستبدل كل بناء <option> اليدوي
+function fillSelect(select, options, selectedValue) {
+    if (!select) return;
+    select.innerHTML = "";
+    options.forEach(function (option) {
+        const opt = document.createElement("option");
+        opt.value = option.value;
+        opt.textContent = option.label;
+        select.appendChild(opt);
+    });
+    select.value = selectedValue || "";
+    if (select.selectedIndex === -1) select.value = "";
+}
+// خيارات الترتيب المشتركة (الرئيسية + سجل الحساب)
+function getSortOptions() {
+    return [
+        { value: "date_desc", label: t("sort_newest") },
+        { value: "date_asc", label: t("sort_oldest") },
+        { value: "amount_desc", label: t("sort_highest") },
+        { value: "amount_asc", label: t("sort_lowest") }
+    ];
+}
