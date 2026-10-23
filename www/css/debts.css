@@ -633,7 +633,7 @@ padding: 24px 20px 0;
 .goals-subtitle {
     display: block;
     font-size: 13px;
-    color: var(--c-muted);
+        color: var(--goal-muted);
     margin-top: 2px;
 }
 
@@ -644,8 +644,8 @@ padding: 24px 20px 0;
     padding: 0;
     border: none;
     border-radius: 14px;
-    background: var(--brand);
-    color: var(--c-white);
+        background: var(--goal-btn-bg);
+    color: var(--goal-btn-text);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -661,8 +661,8 @@ padding: 24px 20px 0;
     margin: 0 20px 12px;
     padding: 14px 16px;
     border-radius: 18px;
-    background: #e6f4f1;
-    color: var(--brand);
+        background: var(--goal-soft-bg);
+    color: var(--goal-summary-text);
 }
 
 .goals-summary-label {
@@ -673,11 +673,11 @@ padding: 24px 20px 0;
     font-size: 26px;
     font-weight: 700;
     margin: 4px 0 10px;
-    color: #0b4f49;
+    color: var(--goal-summary-value);
 }
 
 .goals-summary-card .goal-progress {
-    background: var(--c-white);
+    background: var(--goal-track-summary);
 }
 
 .goals-summary-sub {
@@ -694,8 +694,8 @@ padding: 24px 20px 0;
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
-    background: var(--c-white);
-    border: 1px solid var(--c-line);
+        background: var(--goal-card-bg);
+    border: 1px solid var(--goal-card-border);
     border-radius: 18px;
     padding: 14px;
     margin: 0 auto 12px;
@@ -713,8 +713,8 @@ padding: 24px 20px 0;
     width: 44px;
     height: 44px;
     border-radius: 14px;
-    background: #e6f4f1;
-    color: var(--brand);
+        background: var(--goal-soft-bg);
+    color: var(--goal-accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -737,12 +737,12 @@ padding: 24px 20px 0;
 .goal-name {
     font-size: 16px;
     font-weight: 700;
-    color: var(--c-ink);
+        color: var(--goal-name);
 }
 
 .goal-amounts-text {
     font-size: 12px;
-    color: var(--c-muted);
+color: var(--goal-muted);
 }
 
 .goal-percent {
@@ -764,7 +764,7 @@ padding: 24px 20px 0;
     width: 100%;
     height: 6px;
     border-radius: 999px;
-    background: var(--c-line);
+background: var(--goal-track);
     overflow: hidden;
 }
 
@@ -781,7 +781,7 @@ padding: 24px 20px 0;
     gap: 6px;
     margin-top: 10px;
     font-size: 12px;
-    color: var(--c-muted);
+color: var(--goal-muted);
 }
 
 .goal-date svg {
@@ -816,6 +816,8 @@ padding: 24px 20px 0;
     flex: 1;
     height: 40px;
     padding: 0;
+        background: var(--goal-btn-bg);
+    color: var(--goal-btn-text);
 }
 
 .goal-add-btn svg {
@@ -852,45 +854,6 @@ padding: 24px 20px 0;
 
 /* Dark Mode */
 
-body.dark .goals-subtitle,
-body.dark .goal-amounts-text,
-body.dark .goal-date {
-    color: #8aa09b;
-}
-
-body.dark .goals-add-btn,
-body.dark .goal-add-btn {
-    background: #14b8a6;
-    color: #04201c;
-}
-
-body.dark .goals-summary-card {
-    background: #14312d;
-    color: #8fd5ca;
-}
-
-body.dark .goals-summary-value {
-    color: #ffffff;
-}
-
-body.dark .goals-summary-card .goal-progress,
-body.dark .goal-progress {
-    background: #0e1514;
-}
-
-body.dark .goal-card {
-    background: #151e1d;
-    border-color: #24332f;
-}
-
-body.dark .goal-name {
-    color: #e8f0ee;
-}
-
-body.dark .goal-icon {
-    background: #14312d;
-    color: #2dd4bf;
-}
 
 body.dark .goal-card:not(.cb-over) .goal-percent {
     color: #2dd4bf;

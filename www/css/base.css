@@ -68,6 +68,18 @@
     --divider: rgba(0, 0, 0, 0.07);
         --press-bg: rgba(0, 0, 0, 0.04);
     --option-bg: rgba(15, 118, 110, 0.04);
+        --goal-muted: var(--c-muted);
+    --goal-btn-bg: var(--brand);
+    --goal-btn-text: var(--c-white);
+    --goal-soft-bg: #e6f4f1;
+    --goal-summary-text: var(--brand);
+    --goal-summary-value: #0b4f49;
+    --goal-track: var(--c-line);
+    --goal-track-summary: var(--c-white);
+    --goal-card-bg: var(--c-white);
+    --goal-card-border: var(--c-line);
+    --goal-name: var(--c-ink);
+    --goal-accent: var(--brand);
     }
 
 body.dark {
@@ -84,6 +96,18 @@ body.dark {
     --divider: rgba(255, 255, 255, 0.08);
     --press-bg: rgba(255, 255, 255, 0.05);
     --option-bg: #1f2937;
+        --goal-muted: #8aa09b;
+            --goal-btn-bg: #14b8a6;
+    --goal-btn-text: #04201c;
+    --goal-soft-bg: #14312d;
+    --goal-summary-text: #8fd5ca;
+    --goal-summary-value: #ffffff;
+    --goal-track: #0e1514;
+    --goal-track-summary: #0e1514;
+    --goal-card-bg: #151e1d;
+    --goal-card-border: #24332f;
+    --goal-name: #e8f0ee;
+    --goal-accent: #2dd4bf;
     }
 body {
     margin: 0;
