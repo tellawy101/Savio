@@ -575,7 +575,7 @@ function buildPeriodReportCard(state, transactions, onChange) {
     const totals = getPeriodTotalsFor(transactions, range.from, range.to);
     const net = totals.income - totals.expense;
     const cur = escapeHTML(getCurrency());
-    const fmt = function (v) { return Math.round(v).toLocaleString("en-US"); };
+const fmt = formatWholeAmount;
     const total = totals.income + totals.expense;
     const incPct = total > 0 ? Math.round((totals.income / total) * 100) : 0;
     const netCls = net < 0 ? "period-expense" : "period-income";

@@ -234,27 +234,8 @@ if (window.lucide) lucide.createIcons();
             }).length;
             const deleteMessage = linkedTxCount > 0 ? t("account_delete_has_tx_confirm") : t("delete_confirm");
             if (!(await customConfirm(deleteMessage, { danger: true }))) return;
-            let accounts = getAccounts();
-const deletedAccount = accounts.find(a => a.id === selectedAccount);
-const deletedPosition = accounts.indexOf(deletedAccount);
-
-accounts = accounts.filter(a => a.id !== selectedAccount);
-saveAccounts(accounts);
-            renderAccountsPage();
+            deleteAccountWithUndo(selectedAccount, renderAccountsPage);
             accountMenu.classList.remove("show");
-
-            if (deletedAccount) {
-                showUndoToast(
-    typeof t === "function" ? t("account_deleted_toast") : "Account Deleted",
-    function () {
-        let currentAccounts = getAccounts();
-        const insertAt = Math.min(deletedPosition, currentAccounts.length);
-        currentAccounts.splice(insertAt, 0, deletedAccount);
-        saveAccounts(currentAccounts);
-        renderAccountsPage();
-    }
-);
-            }
         };
     }
 
@@ -374,7 +355,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
 <div class="stat-label">${t("stats_income")}</div>
                                 <div class="stat-amount-row">
                                     <span class="stat-currency">${escapeHTML(typeof getCurrency === "function" ? getCurrency() : "EGP")}</span>
-                                    <span class="stat-value stat-value-income">${Math.round(account.income).toLocaleString("en-US")}</span>
+<span class="stat-value stat-value-income">${formatWholeAmount(account.income)}</span>
                                 </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
@@ -388,7 +369,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
 <div class="stat-label">${t("stats_expense")}</div>
                                 <div class="stat-amount-row">
                                     <span class="stat-currency">${escapeHTML(typeof getCurrency === "function" ? getCurrency() : "EGP")}</span>
-                                    <span class="stat-value stat-value-expense">${Math.round(account.expense).toLocaleString("en-US")}</span>
+<span class="stat-value stat-value-expense">${formatWholeAmount(account.expense)}</span>
                                 </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
@@ -403,7 +384,7 @@ const currentBalance = calculateAccountBalance(account, transactions);
 <div class="stat-label">${t("stats_net_balance")}</div>
                                 <div class="stat-amount-row">
                                     <span class="stat-currency">${escapeHTML(typeof getCurrency === "function" ? getCurrency() : "EGP")}</span>
-                                    <span class="stat-value stat-value-balance">${Math.round(netBalance).toLocaleString("en-US")}</span>
+<span class="stat-value stat-value-balance">${formatWholeAmount(netBalance)}</span>
                                 </div>
                             </div>
                         </div>

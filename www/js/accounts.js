@@ -278,37 +278,17 @@ if (deleteAccountBtn) {
         }).length;
         const deleteMessage = linkedTxCount > 0 ? t("account_delete_has_tx_confirm") : t("delete_confirm");
         if (!(await customConfirm(deleteMessage, { danger: true }))) return;
-        let accounts = getAccounts();
-        
-        const deletedAccount = accounts.find(account => account.id === selectedAccount);
-        const deletedPosition = accounts.indexOf(deletedAccount);
-        
-        accounts = accounts.filter(account => account.id !== selectedAccount);
-        
-        saveAccounts(accounts);
-        
-        renderAccounts();
-                const deletedField = getAccountFieldEl();
+         deleteAccountWithUndo(selectedAccount, function() {
+            renderAccounts();
+            notifyFormFieldChanged();
+        });
+        const deletedField = getAccountFieldEl();
         if (deletedField && deletedField.dataset.id === selectedAccount) {
             deletedField.textContent = t("select_account");
             delete deletedField.dataset.id;
         }
         accountMenu.classList.remove("show");
         notifyFormFieldChanged();
-        
-        if (deletedAccount) {
-            showUndoToast(
-                typeof t === "function" ? t("account_deleted_toast") : "Account Deleted",
-                function() {
-                    let currentAccounts = getAccounts();
-                    const insertAt = Math.min(deletedPosition, currentAccounts.length);
-                    currentAccounts.splice(insertAt, 0, deletedAccount);
-                    saveAccounts(currentAccounts);
-                    renderAccounts();
-                    notifyFormFieldChanged();
-                }
-            );
-        }
     };
 }
 

@@ -174,3 +174,23 @@ function getSortOptions() {
         { value: "amount_asc", label: t("sort_lowest") }
     ];
 }
+// تنسيق مبلغ كرقم صحيح بفواصل آلاف (بديل Math.round(...).toLocaleString)
+function formatWholeAmount(v) {
+    return Math.round(Number(v) || 0).toLocaleString("en-US");
+}
+
+// بتحذف حساب وتظهر Toast تراجع - onChange بتتنده بعد الحذف وبعد التراجع
+function deleteAccountWithUndo(accountId, onChange) {
+    const accounts = getAccounts();
+    const deletedAccount = accounts.find(function (a) { return a.id === accountId; });
+    if (!deletedAccount) return;
+    const deletedPosition = accounts.indexOf(deletedAccount);
+    saveAccounts(accounts.filter(function (a) { return a.id !== accountId; }));
+    onChange();
+    showUndoToast(t("account_deleted_toast"), function () {
+        const current = getAccounts();
+        current.splice(Math.min(deletedPosition, current.length), 0, deletedAccount);
+        saveAccounts(current);
+        onChange();
+    });
+}
