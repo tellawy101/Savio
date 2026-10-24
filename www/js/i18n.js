@@ -20,10 +20,9 @@ const translations = {
         nav_settings: "Settings",
 
         // Home
-        balance: "Balance",
         budget: "Budget",
         income: "Income",
-        expenses: "Expenses",
+
         expenses_title: "Expenses",
         search_placeholder: "Search by category, description, or account...",
         monthly_budget: "Monthly Budget",
@@ -333,7 +332,7 @@ restore_preview_title: "Backup preview",
     restore_merge_title: "Smart merge",
     restore_merge_desc: "Adds only new items and keeps your current data as it is",
     restore_btn: "Restore",
-    total_balance: "Total Balance",
+
     report_all: "All",
         report_this_month: "This month",
     report_last_month: "Last month",
@@ -360,10 +359,10 @@ unspecified: "Unspecified",
         nav_settings: "الإعدادات",
 
         // Home
-        balance: "الرصيد",
+
         budget: "الميزانية",
         income: "الدخل",
-        expenses: "المصروفات",
+
         expenses_title: "المصروفات",
         search_placeholder: "دور بالوصف أو التصنيف أو الحساب...",
         monthly_budget: "الميزانية الشهرية",
@@ -673,7 +672,7 @@ stats_week: "أسبوع",
         restore_merge_title: "دمج ذكي",
         restore_merge_desc: "يضيف الجديد بس ويسيب بياناتك الحالية زي ما هي",
         restore_btn: "استعادة",
-            total_balance: "إجمالي الرصيد",
+
              report_all: "الكل",           report_this_month: "الشهر ده",
             report_last_month: "الشهر اللي فات",
             report_this_year: "السنة دي",
