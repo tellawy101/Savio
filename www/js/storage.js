@@ -197,13 +197,6 @@ function formatCurrency(amount) {
 
 return `${currency} ${formatAmountNumber(amount)}`;
 }
-function formatCurrencyHTML(amount) {
-    const currency = getCurrency();
-const value = formatAmountNumber(amount);
-    
-    return `<span class="stat-currency">${escapeHTML(currency)}</span> <span class="stat-value">${value}</span>`;
-    
-}
 
 function formatCurrencyHTMLStats(amount) {
     const currency = getCurrency();
@@ -334,14 +327,6 @@ function calculateAccountBalance(account, transactions) {
     return balance;
 }
 
-// إجمالي رصيد كل الحسابات (نفس الرقم اللي في صفحة الحسابات)
-function getTotalBalance(transactions) {
-    const list = transactions || loadTransactions();
-
-    return getAccounts().reduce(function (sum, account) {
-        return sum + calculateAccountBalance(account, list);
-    }, 0);
-}
 function ensureAccountAndCategoryIds() {
     const accounts = getAccounts();
     let accountsChanged = false;
@@ -658,32 +643,7 @@ function calculateDebtTotals(debts) {
 
     return { receivable, payable, net: receivable - payable };
 }
-// ==============================
-// حساب إجمالي الدخل/المصروف لشهر معيّن (منطق بيزنس منفصل عن العرض)
-// ==============================
-function calculateMonthlyTotals(transactions, selectedMonth) {
-    let income = 0;
-    let total = 0;
 
-    transactions.forEach(expense => {
-                if (
-            selectedMonth &&
-            (!expense.date || !expense.date.startsWith(selectedMonth))
-        ) {
-            return;
-        }
-
-        if (!expense.isTransfer) {
-            if (expense.type === "expense") {
-total += Number(expense.amount) || 0;
-            } else if (expense.type === "income") {
-income += Number(expense.amount) || 0;
-            }
-        }
-    });
-
-    return { income, total };
-}
 // ==============================
 // Backup (Export / Import)
 // ==============================

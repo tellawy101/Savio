@@ -646,28 +646,6 @@ text-align: start;
 }
 
 /* ==============================
-   Balance Amount (لو استُخدمت داخل الصفحة)
-============================== */
-.balance-amount {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 8px;
-    margin: 0;
-}
-
-.balance-amount .currency {
-    font-size: 18px;
-    font-weight: 700;
-        color: var(--c-white);
-}
-
-#balanceValue {
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1;
-}
-/* ==============================
    CATEGORY ICON PICKER
 ============================== */
 

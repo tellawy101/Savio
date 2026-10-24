@@ -51,50 +51,7 @@ body.dark .back-btn {
     color: #F9FAFB;
 }
 
-/* ==============================
-   بطاقة الرصيد الإجمالي (بنفس روح debts.css)
-============================== */
 
-.balance-card {
-    background: var(--brand-gradient);
-        color: var(--c-white);
-    border-radius: 18px;
-    margin: 20px 20px 0;
-    padding: 16px 20px;
-    box-sizing: border-box;
-    text-align: center;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-.balance-card h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: normal;
-    opacity: .8;
-    text-align: center;
-}
-.balance-card h1 {
-    margin: 5px 0 0;
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    direction: ltr;
-    gap: 6px;
-    width: 100%;
-}
-
-.balance-card .currency {
-    font-size: 20px;
-    font-weight: 500;
-}
-
-.balance-card .amount {
-    font-size: 40px;
-    font-weight: 800;
-    font-family: "Supreme", sans-serif;
-}
 
 /* ==============================
    قائمة الحسابات

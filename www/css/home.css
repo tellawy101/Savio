@@ -2,9 +2,13 @@
    Home
    هيدر الرئيسية (الرصيد) + قايمة المصروفات + أزرار التعديل والحذف
 ============================== */
-/* الجزء اللي فوق: العين (يمين) + الميزانية (شمال) وتحتهم كارت التقرير */
+/* الرئيسية: الجزء اللي فوق (العين + الميزانية + كارت التقرير) جوه الأخضر */
 .home-top{
-    padding: 14px 0 0;
+    background: var(--brand-gradient);
+    color: #fff;
+    padding: 14px 0 16px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .home-top-actions{
@@ -15,14 +19,14 @@
     padding: 0 20px;
 }
 
-.eye-btn{
+.home-top-actions .eye-btn{
     width:auto;
     margin:0;
     padding:8px 10px;
     border:none;
     border-radius:14px;
-    background: var(--c-bg-chip);
-    color: var(--c-ink);
+    background: rgba(255,255,255,.12);
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -36,148 +40,80 @@
     transform: scale(0.95);
 }
 
-.home-top .budget-btn{
+.home-top-actions .budget-btn{
     position: static;
     inset-inline-end: auto;
     top: auto;
-    background: var(--c-bg-chip);
-    color: var(--c-ink);
+    background: rgba(255,255,255,.12);
+    color: #fff;
     padding: 8px 12px;
     max-width: 55vw;
 }
-.home-top #budgetValue{
+.home-top-actions #budgetValue{
     max-width: calc(55vw - 50px);
 }
-.home-top .budget-number{
-    color: var(--c-ink);
-}
-body.dark .eye-btn,
-body.dark .home-top .budget-btn{
-    background:#2c2c2c;
-    color:#F9FAFB;
-}
-body.dark .home-top .budget-number{
-    color:#F9FAFB;
-}
-
-/* إخفاء الأرقام */
-body.amounts-hidden .home-top .period-net-value,
-body.amounts-hidden .home-top .period-value{
-    filter:blur(7px);
-    -webkit-filter:blur(7px);
-    user-select:none;
-    transition:filter .2s ease;
-}
-.editBtn,
-.deleteBtn{
-    border:none;
-    background:none;
-    font-size:22px;
-    cursor:pointer;
-    margin-left:8px;
-}
-
-.editBtn:hover{
-    transform:scale(1.2);
-}
-
-.deleteBtn:hover{
-    transform:scale(1.2);
-}
-/* الرئيسية: كل اللي فوق جوه الأخضر بتاع الداش القديم */
-.home-top{
-    background: var(--brand-gradient);
-    color: #fff;
-    padding: 14px 0 16px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-}
-
-.home-top .eye-btn,
-.home-top .budget-btn,
-body.dark .home-top .eye-btn,
-body.dark .home-top .budget-btn{
-    background: rgba(255,255,255,.12);
-    color: #fff;
-}
-.home-top .budget-number,
-body.dark .home-top .budget-number{
+.home-top-actions .budget-number{
     color: #fff;
 }
 
-.home-top .period-report,
-body.dark .home-top .period-report{
+/* كارت التقرير جوه الأخضر (#homeReport بيكسب على قواعد الدارك مود بتاعة الحسابات) */
+#homeReport .period-report{
     background: transparent;
     box-shadow: none;
     margin: 6px 20px 0;
     padding: 8px 0 0;
 }
-
-.home-top .period-chip,
-body.dark .home-top .period-chip{
+#homeReport .period-chip{
     background: rgba(255,255,255,.15);
     color: #fff;
 }
-.home-top .period-chip.active,
-body.dark .home-top .period-chip.active{
+#homeReport .period-chip.active{
     background: #fff;
     color: var(--brand);
 }
-
-.home-top .period-label,
-.home-top .period-range,
-.home-top .period-custom label{
+#homeReport .period-label,
+#homeReport .period-custom label{
     color: rgba(255,255,255,.8);
 }
-
-.home-top .period-net-value,
-.home-top .period-value,
-.home-top .period-income,
-.home-top .period-expense{
-    color: #fff;
-}
-
-.home-top .period-bar,
-.home-top .period-bar.empty,
-body.dark .home-top .period-bar.empty{
-    background: rgba(255,255,255,.28);
-}
-.home-top .period-bar span{
-    background: #fff;
-}
-
-.home-top .period-totals,
-body.dark .home-top .period-totals{
-    border-top-color: rgba(255,255,255,.3);
-}
-/* إخفاء سطر التاريخ (من - إلى) في الرئيسية */
-.home-top .period-range{
+#homeReport .period-range{
     display: none;
 }
-/* خانات التاريخ (مخصص) بنفس ألوان الأخضر */
-.home-top .period-custom input,
-body.dark .home-top .period-custom input{
+#homeReport .period-net-value,
+#homeReport .period-value{
+    color: #fff;
+}
+#homeReport .period-value.period-income,
+#homeReport .period-net-value.period-income{
+    color: #4ade80;
+}
+#homeReport .period-value.period-expense,
+#homeReport .period-net-value.period-expense{
+    color: #ff7b7b;
+}
+#homeReport .period-bar{
+    background: #ff7b7b;
+}
+#homeReport .period-bar.empty{
+    background: rgba(255,255,255,.28);
+}
+#homeReport .period-bar span{
+    background: #4ade80;
+}
+#homeReport .period-totals{
+    border-top-color: rgba(255,255,255,.3);
+}
+#homeReport .period-custom input{
     background: rgba(255,255,255,.15);
     color: #fff;
     border: 1px solid rgba(255,255,255,.3);
     color-scheme: dark;
 }
-/* ألوان الأرقام والشريط */
-.home-top .period-value.period-income,
-.home-top .period-net-value.period-income{
-    color: #4ade80;
-}
-.home-top .period-value.period-expense,
-.home-top .period-net-value.period-expense{
-    color: #ff7b7b;
-}
-.home-top .period-bar{
-    background: #ff7b7b;
-}
-.home-top .period-bar.empty,
-body.dark .home-top .period-bar.empty{
-    background: rgba(255,255,255,.28);
-}
-.home-top .period-bar span{
-    background: #4ade80;
+
+/* إخفاء الأرقام */
+body.amounts-hidden #homeReport .period-net-value,
+body.amounts-hidden #homeReport .period-value{
+    filter:blur(7px);
+    -webkit-filter:blur(7px);
+    user-select:none;
+    transition:filter .2s ease;
 }

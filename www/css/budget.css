@@ -168,12 +168,3 @@
 .budget-save-btn:active {
     opacity: .85;
 }
-#balanceCurrency {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-#balanceValue {
-    font-size: 36px;
-    font-weight: 800;
-}

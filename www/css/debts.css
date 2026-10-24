@@ -50,17 +50,40 @@
     
     box-shadow: none;
     text-align:center;
-    display: flex;
-flex-direction: column;
-justify-content: flex-start;
-transform: translateY(-10px);
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-10px);
 }
 
-.balance-box h3 {
+.balance-card h3 {
     margin: 0;
     font-size: 18px;
     font-weight: normal;
     opacity: .8;
+    text-align: center;
+}
+
+.balance-card h1 {
+    margin: 5px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    direction: ltr;
+    gap: 6px;
+    width: 100%;
+}
+
+.balance-card .currency {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.balance-card .amount {
+    font-size: 40px;
+    font-weight: 800;
+    font-family: "Supreme", sans-serif;
 }
 
 #netBalance{
