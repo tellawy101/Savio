@@ -248,7 +248,7 @@
 
 .dark #debtNotes,
 .dark #editDebtNotes {
-    background: #2c2c2c;
+background: var(--dk-field);
     color: #ffffff;
     border: 1px solid #555;
 }

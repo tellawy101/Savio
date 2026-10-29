@@ -406,18 +406,18 @@ body.dark .back-btn {
     height: 18px;
 }
 .dark .icon-dropdown-trigger {
-    background: #2c2c2c;
+background: var(--dk-field);
     border-color: #555;
     color: #f9fafb;
 }
 
 .dark .icon-dropdown-list {
-    background: #2c2c2c;
+background: var(--dk-field);
     border-color: #555;
 }
 
 .dark .icon-option:hover {
-    background: #3a3a3a;
+    background: var(--dk-hover);
 }
 
 .dark .icon-option {
@@ -428,7 +428,7 @@ body.dark .back-btn {
     color: #f9fafb;
 }
 .dark #selectedIconPreviewWrap {
-    background: #3a3a3a;
+    background: var(--dk-hover);
 }
 .modal-actions {
     display: flex;
@@ -451,16 +451,16 @@ body.dark .back-btn {
     color: #333;
 }
 .dark .account-card {
-    background: #1e1e1e;
+    background: var(--dk-pop);
     box-shadow: none;
 }
 
 .dark .account-avatar {
-    background: #2c2c2c;
+background: var(--dk-field);
 }
 
 .dark .account-corner-icon {
-    background: #1e1e1e;
+background: var(--dk-pop);
 }
 /* ===== تقرير الفترة ===== */
 .period-report {
@@ -552,6 +552,6 @@ body.dark .period-report {
 .period-totals { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--c-line); }
 body.dark .period-chip { background: #2c2c2c; color: #F9FAFB; }
 body.dark .period-chip.active { background: var(--brand); color: #fff; }
-body.dark .period-bar.empty { background: #2c2c2c; }
+body.dark .period-bar.empty { background: var(--dk-field); }
 body.dark .period-totals { border-top-color: rgba(255,255,255,0.08); }
 body.dark .period-custom input { background: #2c2c2c; color: #F9FAFB; border-color: rgba(255,255,255,0.08); }

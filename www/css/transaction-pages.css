@@ -327,7 +327,7 @@ body.dark .search-btn svg {
 }
 
 .dark .swap-accounts-btn {
-    background: #232323;
+background: var(--dk-field-deep);
     border-color: #333;
     color: #22c55e;
 }

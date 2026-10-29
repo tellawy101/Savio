@@ -108,6 +108,11 @@ body.dark {
     --goal-card-border: #24332f;
     --goal-name: #e8f0ee;
     --goal-accent: #2dd4bf;
+        /* ألوان الدارك الموحدة */
+    --dk-field: #2c2c2c;
+    --dk-field-deep: #232323;
+    --dk-pop: #1e1e1e;
+    --dk-hover: #3a3a3a;
     }
 body {
     margin: 0;
@@ -261,7 +266,7 @@ button:hover {
 }
 
 .dark .modal-content {
-    background: #1e1e1e;
+background: var(--dk-pop);
     color: #ffffff;
 }
 
@@ -337,13 +342,13 @@ button:hover {
 }
 
 .dark .custom-confirm-cancel-btn {
-    background: #2c2c2c;
+    background: var(--dk-field);
     color: #fff;
 }
 
 .dark input,
 .dark select {
-    background: #2c2c2c;
+    background: var(--dk-field);
     color: white;
     border: 1px solid #555;
 }
@@ -365,7 +370,7 @@ button:hover {
     background: #fff;
 }
 .dark #searchInput {
-    background: #2c2c2c;
+    background: var(--dk-field);
     color: white;
     border: 1px solid #555;
 }

@@ -375,7 +375,7 @@ body.has-scroll {
 }
 
 body.dark .modal-actions .account-cancel-btn {
-    background: #2C2C2C !important;
+background: var(--dk-field) !important;
     color: #F1F5F4 !important;
     border: 1px solid #3E3E3E !important;
 }
@@ -587,7 +587,7 @@ text-align: start;
 
 .dark #accountMenu .modal-content button:hover,
 .dark #categoryMenu .modal-content button:hover {
-    background: #2A2A2A;
+background: var(--dk-field);
 }
 
 .dark #editAccountBtn,
@@ -604,7 +604,7 @@ text-align: start;
 .dark .expense-header,
 .dark .transfer-header,
 .dark .description-input {
-    background: #1e1e1e;
+        background: var(--dk-pop);
     color: #ffffff;
     border-color: #444;
 }
@@ -615,19 +615,19 @@ text-align: start;
 }
 
 .dark .account-item-icon {
-    background: #3a3a3a;
+        background: var(--dk-hover);
 }
 
 .dark .account-select-box,
 .dark .category-select-box,
 .dark .description-input {
-    background: #232323;
+        background: var(--dk-field-deep);
     border: 1px solid #333;
     color: #fff;
 }
 
 .dark .account-icon, .dark .category-icon {
-    background: #2F2F2F;
+background: var(--dk-field);
     color: #ffffff;
 }
 
@@ -740,7 +740,7 @@ text-align: start;
 }
 
 .dark .icon-search-wrap {
-    background: #232323;
+        background: var(--dk-field-deep);
     border-bottom-color: #333;
 }
 
@@ -751,7 +751,7 @@ text-align: start;
 }
 
 .dark #categoryIconDropdown .icon-dropdown-trigger {
-    background: #232323;
+    background: var(--dk-field-deep);
     border-color: #333;
     color: #fff;
 }
