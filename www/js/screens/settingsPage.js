@@ -50,95 +50,72 @@ setupDarkMode();
 // ------------------------------
 // العملة (Currency)
 // ------------------------------
-function setupCurrency() {
-const currencySelectBtn = document.getElementById("currencySelectBtn");
-const currencySelectedLabel = document.getElementById("currencySelectedLabel");
-const currencyPickerModal = document.getElementById("currencyPickerModal");
-const closeCurrencyPickerBtn = document.getElementById("closeCurrencyPickerBtn");
-
-function refreshCurrencyPicker() {
-    const current = getCurrency();
-    if (currencySelectedLabel) currencySelectedLabel.textContent = current;
-    if (currencyPickerModal) {
-        currencyPickerModal.querySelectorAll(".picker-option").forEach(function(opt) {
-            opt.classList.toggle("selected", opt.dataset.value === current);
+function setupPicker(config) {
+    const selectBtn = document.getElementById(config.selectBtnId);
+    const selectedLabel = document.getElementById(config.labelId);
+    const modal = document.getElementById(config.modalId);
+    const closeBtn = document.getElementById(config.closeBtnId);
+    
+    function refresh() {
+        const current = config.getValue();
+        if (selectedLabel) selectedLabel.textContent = config.getLabelText(current);
+        if (modal) {
+            modal.querySelectorAll(".picker-option").forEach(function(opt) {
+                opt.classList.toggle("selected", opt.dataset.value === current);
+            });
+        }
+    }
+    refresh();
+    
+    if (selectBtn && modal) {
+        selectBtn.addEventListener("click", function() {
+            refresh();
+            modal.classList.add("show");
         });
+        
+        modal.querySelectorAll(".picker-option").forEach(function(opt) {
+            opt.addEventListener("click", function() {
+                config.setValue(opt.dataset.value);
+                refresh();
+                modal.classList.remove("show");
+            });
+        });
+        
+        if (closeBtn) {
+            closeBtn.addEventListener("click", function() {
+                modal.classList.remove("show");
+            });
+        }
+        
+        closeModalOnBackdropClick(modal);
     }
 }
-refreshCurrencyPicker();
 
-if (currencySelectBtn && currencyPickerModal) {
-    currencySelectBtn.addEventListener("click", function() {
-        refreshCurrencyPicker();
-        currencyPickerModal.classList.add("show");
-    });
-    
-    currencyPickerModal.querySelectorAll(".picker-option").forEach(function(opt) {
-        opt.addEventListener("click", function() {
-            setCurrency(opt.dataset.value);
-            refreshCurrencyPicker();
-            currencyPickerModal.classList.remove("show");
-        });
-    });
-    
-    if (closeCurrencyPickerBtn) {
-        closeCurrencyPickerBtn.addEventListener("click", function() {
-            currencyPickerModal.classList.remove("show");
-        });
+setupPicker({
+    selectBtnId: "currencySelectBtn",
+    labelId: "currencySelectedLabel",
+    modalId: "currencyPickerModal",
+    closeBtnId: "closeCurrencyPickerBtn",
+    getValue: getCurrency,
+    setValue: setCurrency,
+    getLabelText: function(value) {
+        return value;
     }
-    
-    closeModalOnBackdropClick(currencyPickerModal);
-}
-}
-
-setupCurrency();
+});
 // ------------------------------
 // اللغة (Language)
 // ------------------------------
-function setupLanguage() {
-const languageSelectBtn = document.getElementById("languageSelectBtn");
-const languageSelectedLabel = document.getElementById("languageSelectedLabel");
-const languagePickerModal = document.getElementById("languagePickerModal");
-const closeLanguagePickerBtn = document.getElementById("closeLanguagePickerBtn");
-
-function refreshLanguagePicker() {
-    const current = getLanguage();
-    if (languageSelectedLabel) {
-        languageSelectedLabel.textContent = current === "ar" ? "العربية" : "English";
+setupPicker({
+    selectBtnId: "languageSelectBtn",
+    labelId: "languageSelectedLabel",
+    modalId: "languagePickerModal",
+    closeBtnId: "closeLanguagePickerBtn",
+    getValue: getLanguage,
+    setValue: setLanguage,
+    getLabelText: function(value) {
+        return value === "ar" ? "العربية" : "English";
     }
-    if (languagePickerModal) {
-        languagePickerModal.querySelectorAll(".picker-option").forEach(function(opt) {
-            opt.classList.toggle("selected", opt.dataset.value === current);
-        });
-    }
-}
-refreshLanguagePicker();
-
-if (languageSelectBtn && languagePickerModal) {
-    languageSelectBtn.addEventListener("click", function() {
-        refreshLanguagePicker();
-        languagePickerModal.classList.add("show");
-    });
-    
-    languagePickerModal.querySelectorAll(".picker-option").forEach(function(opt) {
-        opt.addEventListener("click", function() {
-            setLanguage(opt.dataset.value);
-            refreshLanguagePicker();
-            languagePickerModal.classList.remove("show");
-        });
-    });
-    
-    if (closeLanguagePickerBtn) {
-        closeLanguagePickerBtn.addEventListener("click", function() {
-            languagePickerModal.classList.remove("show");
-        });
-    }
-    
-    closeModalOnBackdropClick(languagePickerModal);
-}
-}
-
-setupLanguage();
+});
 // ------------------------------
     // Savings Goals
     // ------------------------------
@@ -199,50 +176,34 @@ setupNavButtons();
 
 setupAutoBackup();
     // ------------------------------
-    // About Savio Modal
+// نافذة عامة (فتح وقفل) بتستخدمها نافذة عن التطبيق ونافذة الخصوصية
     // ------------------------------
-    function setupAbout() {
-    const aboutBtn = document.getElementById("aboutSavioBtn");
-    const aboutModal = document.getElementById("aboutModal");
-    const closeAboutBtn = document.getElementById("closeAboutBtn");
-
-    if (aboutBtn && aboutModal) {
-        aboutBtn.addEventListener("click", function () {
-            aboutModal.classList.add("show");
+    function setupInfoModal(openBtnId, modalId, closeBtnId) {
+    const openBtn = document.getElementById(openBtnId);
+    const modal = document.getElementById(modalId);
+    const closeBtn = document.getElementById(closeBtnId);
+    
+    if (openBtn && modal) {
+        openBtn.addEventListener("click", function() {
+            modal.classList.add("show");
         });
     }
-
-    if (closeAboutBtn && aboutModal) {
-        closeAboutBtn.addEventListener("click", function () {
-            aboutModal.classList.remove("show");
+    
+    if (closeBtn && modal) {
+        closeBtn.addEventListener("click", function() {
+            modal.classList.remove("show");
         });
     }
-
-    closeModalOnBackdropClick(aboutModal);
+    
+    closeModalOnBackdropClick(modal);
 }
 
-setupAbout();
+setupInfoModal("aboutSavioBtn", "aboutModal", "closeAboutBtn");
 // ------------------------------
     // Privacy Modal
     // ------------------------------
     function setupPrivacy() {
-    const privacyBtn = document.getElementById("privacyBtn");
-    const privacyModal = document.getElementById("privacyModal");
-    const closePrivacyBtn = document.getElementById("closePrivacyBtn");
-
-    if (privacyBtn && privacyModal) {
-        privacyBtn.addEventListener("click", function () {
-            privacyModal.classList.add("show");
-        });
-    }
-
-    if (closePrivacyBtn && privacyModal) {
-        closePrivacyBtn.addEventListener("click", function () {
-            privacyModal.classList.remove("show");
-        });
-    }
-
-    closeModalOnBackdropClick(privacyModal);
+    setupInfoModal("privacyBtn", "privacyModal", "closePrivacyBtn");
 }
 
 setupPrivacy();
