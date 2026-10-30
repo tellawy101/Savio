@@ -182,3 +182,107 @@ function calculateDailyAverage(transactions, currentPeriod) {
 
     return expense / days;
 }
+// ==============================================================
+// منطق التواريخ والفلترة (اتنقل من statisticsPage.js)
+// ==============================================================
+
+// مدخلات: معاملة ← مخرجات: تاريخها كـ Date، أو null لو التاريخ ناقص أو غلط
+function getTransactionDate(transaction) {
+    if (!transaction.date) {
+        return null;
+    }
+
+    const parts = String(transaction.date).split("-").map(Number);
+    const date = parts.length === 3 && !parts.some(Number.isNaN) ?
+        new Date(parts[0], parts[1] - 1, parts[2]) :
+        new Date(transaction.date);
+
+    if (Number.isNaN(date.getTime())) {
+        return null;
+    }
+
+    return date;
+}
+
+// مدخلات: المعاملات + الفترة (week أو month أو year أو all)
+// مخرجات: المعاملات اللي تاريخها داخل الفترة دي بس
+function filterTransactionsByPeriod(transactions, period) {
+    if (period === "all") {
+        return transactions.filter(transaction => getTransactionDate(transaction));
+    }
+
+    const now = new Date();
+
+    return transactions.filter(transaction => {
+        const date = getTransactionDate(transaction);
+
+        if (!date) {
+            return false;
+        }
+
+        if (period === "week") {
+            // الأسبوع يبدأ من السبت
+            const start = getWeekStart(now);
+            const end = new Date(start);
+            end.setDate(start.getDate() + 7);
+            return date >= start && date < end;
+        }
+
+        if (period === "month") {
+            return (
+                date.getFullYear() === now.getFullYear() &&
+                date.getMonth() === now.getMonth()
+            );
+        }
+
+        if (period === "year") {
+            return date.getFullYear() === now.getFullYear();
+        }
+
+        return true;
+    });
+}
+
+// مخرجات: أكتر حساب نشاطًا { account, share } أو null لو مفيش بيانات
+function calculateTopAccount(transactions) {
+    const activity = calculateAccountBreakdown(transactions)
+        .map(item => ({
+            account: item.account,
+            volume: item.income + item.expense
+        }))
+        .sort((a, b) => b.volume - a.volume);
+
+    const totalVolume = activity.reduce((sum, item) => sum + item.volume, 0);
+    const top = activity[0];
+
+    if (!top || totalVolume <= 0) {
+        return null;
+    }
+
+    return {
+        account: top.account,
+        share: Math.round((top.volume / totalVolume) * 100)
+    };
+}
+
+// مخرجات: ملخص الشهر الحالي والشهر اللي قبله { current, previous }
+function calculateMonthComparison(transactions) {
+    const now = new Date();
+    const thisYear = now.getFullYear();
+    const thisMonth = now.getMonth();
+    const lastDate = new Date(thisYear, thisMonth - 1, 1);
+
+    function inMonth(transaction, year, month) {
+        const date = getTransactionDate(transaction);
+        return date && date.getFullYear() === year && date.getMonth() === month;
+    }
+
+    return {
+        current: calculateSummary(
+            transactions.filter(item => inMonth(item, thisYear, thisMonth))
+        ),
+        previous: calculateSummary(
+            transactions.filter(item => inMonth(item, lastDate.getFullYear(), lastDate.getMonth()))
+        )
+    };
+}
