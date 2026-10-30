@@ -58,6 +58,34 @@ function removeDebtPayment(paymentId) {
     if (removed) saveDebts(debts);
     return removed;
 }
+function restoreDebtPayment(removed) {
+    if (!removed) return;
+    
+    const debts = getDebts();
+    const debt = debts.find(function(d) {
+        return d.id === removed.debtId;
+    });
+    if (!debt) return;
+    
+    if (!Array.isArray(debt.payments)) debt.payments = [];
+    debt.payments.push(removed.payment);
+    // المعرّفات القديمة أرقام (Date.now) والجديدة نصوص "pay_<وقت>_<عشوائي>"
+    // فبنستخرج الوقت من النوعين عشان الترتيب يفضل صح
+    function idTime(id) {
+        if (typeof id === "number") return id;
+        const m = /_(\d{10,})_/.exec(String(id));
+        return m ? Number(m[1]) : 0;
+    }
+    debt.payments.sort(function(a, b) {
+        return idTime(a.id) - idTime(b.id);
+    });
+    
+    debt.paid = Math.round((debt.paid + removed.payment.amount) * 100) / 100;
+    debt.remaining = Math.max(0, Math.round((debt.amount - debt.paid) * 100) / 100);
+    debt.status = debt.remaining <= 0 ? "paid" : "open";
+    
+    saveDebts(debts);
+}
 function updateDebtPayment(paymentId, newAmount, account, accountId, date) {
         newAmount = Number(newAmount);
     if (!Number.isFinite(newAmount) || newAmount <= 0) return false;
