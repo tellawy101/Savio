@@ -8,18 +8,25 @@
 function initSettingsPage() {
     
     // تحديث رقم الإصدار في كل الأماكن من مصدر واحد (APP_VERSION)
+    function setupVersionTexts() {
     const aboutVersionText = document.getElementById("aboutVersionText");
     if (aboutVersionText) aboutVersionText.textContent = "Version " + APP_VERSION;
     
     const appVersionText = document.getElementById("appVersionText");
     if (appVersionText) appVersionText.textContent = "Version " + APP_VERSION;
+}
+
+setupVersionTexts();
     
+    function setupSharedModals() {
     const modalsPlaceholder = document.getElementById("modals-placeholder");
 if (modalsPlaceholder) {
     modalsPlaceholder.innerHTML = renderSharedModals();
     if (window.lucide) lucide.createIcons({ root: modalsPlaceholder });
 }
-    
+}
+
+setupSharedModals();
   // ------------------------------
 // الوضع الليلي (Dark Mode)
 // ------------------------------
@@ -167,6 +174,7 @@ setupNavButtons();
     // ------------------------------
     // Auto Backup
     // ------------------------------
+    function setupAutoBackup() {
     const autoBackupToggle = document.getElementById("autoBackupToggle");
 
     if (autoBackupToggle) {
@@ -187,10 +195,13 @@ setupNavButtons();
             }
         };
     }
-    
+}
+
+setupAutoBackup();
     // ------------------------------
     // About Savio Modal
     // ------------------------------
+    function setupAbout() {
     const aboutBtn = document.getElementById("aboutSavioBtn");
     const aboutModal = document.getElementById("aboutModal");
     const closeAboutBtn = document.getElementById("closeAboutBtn");
@@ -208,9 +219,13 @@ setupNavButtons();
     }
 
     closeModalOnBackdropClick(aboutModal);
+}
+
+setupAbout();
 // ------------------------------
     // Privacy Modal
     // ------------------------------
+    function setupPrivacy() {
     const privacyBtn = document.getElementById("privacyBtn");
     const privacyModal = document.getElementById("privacyModal");
     const closePrivacyBtn = document.getElementById("closePrivacyBtn");
@@ -228,9 +243,13 @@ setupNavButtons();
     }
 
     closeModalOnBackdropClick(privacyModal);
+}
+
+setupPrivacy();
     // ------------------------------
     // Restore Last Snapshot
     // ------------------------------
+    function setupRestoreSnapshot() {
     const restoreSnapshotBtn = document.getElementById("restoreSnapshotBtn");
 
     if (restoreSnapshotBtn) {
@@ -273,10 +292,13 @@ setupNavButtons();
             window.location.href = "index.html";
         };
     }
+}
 
+setupRestoreSnapshot();
     // ------------------------------
     // Clear All Data
     // ------------------------------
+    function setupClearData() {
     const clearDataBtn = document.getElementById("clearData");
 
     if (clearDataBtn) {
@@ -296,10 +318,14 @@ showToast(t("backup_take_failed_clear"), "error");
 window.location.href = "index.html";
 });
 }
+}
+
+setupClearData();
 
     // ------------------------------
     // Export Data
     // ------------------------------
+    function setupExport() {
     const exportBtn = document.getElementById("exportData");
 
     if (exportBtn) {
@@ -455,11 +481,27 @@ showToast(t("download_started"), "success");
 
 
     }
+}
 
+setupExport();
 // ------------------------------
     // Import Data الذكي مع المعاينة (مثل التطبيقات الكبيرة)
     // ------------------------------
-    
+    // دالة تحديث شارة تاريخ آخر نسخة فوق كلمة Data
+function updateLastBackupBadge() {
+    const badge = document.getElementById("lastBackupBadge");
+    if (!badge) return;
+    const lastTime = localStorage.getItem("savio_last_backup_time");
+    if (!lastTime) {
+        badge.textContent = t("backup_none_yet");
+    } else {
+        const d = new Date(lastTime);
+        badge.textContent = t("backup_last_prefix") + d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+}
+updateLastBackupBadge();
+
+function setupImport() {
     const importBtn = document.getElementById("importData");
 const importManualModal = document.getElementById("importManualModal");
 const closeImportManualBtn = document.getElementById("closeImportManualBtn");
@@ -467,21 +509,7 @@ const importFileInput = document.getElementById("importFileInput");    const res
     const cancelRestorePreviewBtn = document.getElementById("cancelRestorePreviewBtn");
     const confirmRestoreBtn = document.getElementById("confirmRestoreBtn");
     let pendingBackupPayload = null;
-
-    // دالة تحديث شارة تاريخ آخر نسخة فوق كلمة Data
-    function updateLastBackupBadge() {
-        const badge = document.getElementById("lastBackupBadge");
-        if (!badge) return;
-        const lastTime = localStorage.getItem("savio_last_backup_time");
-        if (!lastTime) {
-badge.textContent = t("backup_none_yet");
-        } else {
-            const d = new Date(lastTime);
-badge.textContent = t("backup_last_prefix") + d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        }
-    }
-    updateLastBackupBadge();
-
+    
     // دالة فحص وتجهيز شاشة المعاينة
     function processBackupJson(rawText) {
         try {
@@ -775,4 +803,7 @@ showToast(t("merge_cancelled_corrupt"), "error");
             };
         }
     }
+}
+
+setupImport();
 }
