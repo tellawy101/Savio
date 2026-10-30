@@ -23,6 +23,7 @@ if (modalsPlaceholder) {
   // ------------------------------
 // الوضع الليلي (Dark Mode)
 // ------------------------------
+function setupDarkMode() {
 const darkModeToggle = document.getElementById("darkModeToggle");
 
     if (darkModeToggle) {
@@ -37,10 +38,12 @@ const darkModeToggle = document.getElementById("darkModeToggle");
             }
         });
     }
-
+   }
+setupDarkMode();
 // ------------------------------
 // العملة (Currency)
 // ------------------------------
+function setupCurrency() {
 const currencySelectBtn = document.getElementById("currencySelectBtn");
 const currencySelectedLabel = document.getElementById("currencySelectedLabel");
 const currencyPickerModal = document.getElementById("currencyPickerModal");
@@ -79,10 +82,13 @@ if (currencySelectBtn && currencyPickerModal) {
     
     closeModalOnBackdropClick(currencyPickerModal);
 }
+}
 
+setupCurrency();
 // ------------------------------
 // اللغة (Language)
 // ------------------------------
+function setupLanguage() {
 const languageSelectBtn = document.getElementById("languageSelectBtn");
 const languageSelectedLabel = document.getElementById("languageSelectedLabel");
 const languagePickerModal = document.getElementById("languagePickerModal");
@@ -123,10 +129,13 @@ if (languageSelectBtn && languagePickerModal) {
     
     closeModalOnBackdropClick(languagePickerModal);
 }
+}
 
+setupLanguage();
 // ------------------------------
     // Savings Goals
     // ------------------------------
+    function setupNavButtons() {
     const goalsBtn = document.getElementById("goalsBtn");
 
     if (goalsBtn) {
@@ -152,7 +161,9 @@ if (languageSelectBtn && languagePickerModal) {
         };
     }
     
-    
+}
+
+setupNavButtons();
     // ------------------------------
     // Auto Backup
     // ------------------------------
