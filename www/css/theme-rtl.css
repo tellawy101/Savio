@@ -46,6 +46,10 @@ body.dark .stat {
 [dir="rtl"] .month-nav-btn svg {
     transform: scaleX(-1);
 }
+
+[dir="rtl"] .icon-dropdown-trigger>svg:last-child {
+    transform: scaleX(-1);
+}
 [dir="rtl"] .settings-divider {
     margin-left: 0;
     margin-right: 72px;
