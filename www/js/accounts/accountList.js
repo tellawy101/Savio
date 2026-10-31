@@ -147,4 +147,19 @@ if (deleteAccountBtn) {
         notifyFormFieldChanged();
     };
 }
+const setMainAccountBtn = document.getElementById("setMainAccountBtn");
+if (setMainAccountBtn) {
+    setMainAccountBtn.onclick = function() {
+        let accounts = getAccounts();
+        const index = accounts.findIndex(a => a.id === selectedAccount);
+        if (index > 0) {
+            const mainAccount = accounts.splice(index, 1)[0];
+            accounts.unshift(mainAccount);
+            saveAccounts(accounts);
+            renderAccounts();
+            notifyFormFieldChanged();
+        }
+        accountMenu.classList.remove("show");
+    };
+}
 }
