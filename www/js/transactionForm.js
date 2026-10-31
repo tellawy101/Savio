@@ -175,11 +175,41 @@ if (!saveTransactions(transactions)) {
                 );
             }
         }
-        
+                if (!editId) {
+            safeSetItem("lastAccountId_" + type, entryData.accountId || "");
+            safeSetItem("lastCategoryId_" + type, entryData.categoryId || "");
+        }
         navigateTo("home");
 };
+        function prefillLastChoices() {
+        const lastAccId = localStorage.getItem("lastAccountId_" + type);
+        const lastCatId = localStorage.getItem("lastCategoryId_" + type);
+        
+        const acc = lastAccId && getAccounts().find(a => a.id === lastAccId);
+        if (acc) {
+            accountEl.textContent = acc.name;
+            accountEl.dataset.id = acc.id;
+            accountEl.removeAttribute("data-i18n");
+            const accIconEl = document.getElementById(type + "AccountIcon");
+            if (accIconEl) accIconEl.innerHTML = `<i data-lucide="${escapeHTML(acc.icon)}"></i>`;
+        }
+        
+        const cat = lastCatId && getCategories().find(c => c.id === lastCatId);
+        if (cat) {
+            categoryEl.textContent = cat.name;
+            categoryEl.dataset.icon = cat.icon;
+            categoryEl.dataset.id = cat.id;
+            categoryEl.removeAttribute("data-i18n");
+            const catIconEl = document.getElementById(type + "CategoryIcon");
+            if (catIconEl) catIconEl.innerHTML = `<i data-lucide="${escapeHTML(cat.icon)}"></i>`;
+        }
+        
+        if (window.lucide) lucide.createIcons();
+    }
+    
     renderAccounts();
     renderCategories();
     loadEditingEntry();
+    if (!editId) prefillLastChoices();
     checkForm();
 }
