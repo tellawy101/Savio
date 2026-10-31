@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="css/account-transactions.css">
         <link rel="stylesheet" href="css/recurring.css">
             <link rel="stylesheet" href="css/animations.css">
+                <link rel="stylesheet" href="css/onboarding.css">
 </head>
 <body>
     <script>
@@ -87,6 +88,7 @@
 <script src="js/backup.js"></script>
 <script src="js/notifications.js"></script>
 <script src="js/haptics.js"></script>
+<script src="js/onboarding.js"></script>
 <script src="js/autoBackup.js"></script>
 <script src="js/export/exportShared.js"></script>
 <script src="js/export/exportCsv.js"></script>
@@ -157,8 +159,9 @@
             console.error("Recurring transactions failed:", error);
         }
         initIcons();
-        navigateTo("home");
-                if (recurringAdded > 0) {
+                navigateTo("home");
+        showOnboardingIfNeeded();
+        if (recurringAdded > 0) {
             showToast(t("recurring_auto_added_toast") + " " + recurringAdded, "success");
         }
         if (typeof runAutoBackupIfNeeded === "function") {

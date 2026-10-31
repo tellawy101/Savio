@@ -1,0 +1,121 @@
+.ob-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: calc(env(safe-area-inset-top, 0px) + 24px) 24px calc(env(safe-area-inset-bottom, 0px) + 24px);
+    background: #fff;
+    color: #111827;
+    animation: obFade .25s ease;
+}
+body.dark .ob-overlay {
+    background: #0f1716;
+    color: #f1f5f9;
+}
+@keyframes obFade {
+    from { opacity: 0; }
+}
+.ob-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ob-dots {
+    display: flex;
+    gap: 6px;
+}
+.ob-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d1d5db;
+    transition: all .2s ease;
+}
+.ob-dot.active {
+    width: 24px;
+    border-radius: 999px;
+    background: var(--brand);
+}
+.ob-skip {
+    width: auto;
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+.ob-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 14px;
+}
+.ob-body h2 {
+    margin: 0;
+    font-size: 26px;
+}
+.ob-body p {
+    margin: 0 0 10px;
+    color: #6b7280;
+    font-size: 15px;
+}
+.ob-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.ob-chip {
+    width: auto;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 999px;
+    background: #f3f4f6;
+    color: inherit;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+body.dark .ob-chip {
+    background: #1c2625;
+}
+.ob-chip.active,
+body.dark .ob-chip.active {
+    background: var(--brand);
+    color: #fff;
+}
+.ob-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #f9fafb;
+    color: #111827;
+    font-family: inherit;
+    font-size: 16px;
+    text-align: center;
+}
+body.dark .ob-input {
+    background: #1c2625;
+    border-color: rgba(255,255,255,.08);
+    color: #f1f5f9;
+}
+.ob-next {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 16px;
+    background: var(--brand-gradient);
+    color: #fff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
