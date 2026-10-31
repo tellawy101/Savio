@@ -23,7 +23,7 @@ function initHomeBalanceVisibility() {
     }
 
     applyBalanceVisibility(getBalanceHidden());
-
+    initFlipToHide();
     if (toggleBalanceBtn) {
         toggleBalanceBtn.onclick = function () {
             const newHidden = !document.body.classList.contains("amounts-hidden");
@@ -31,4 +31,25 @@ function initHomeBalanceVisibility() {
             applyBalanceVisibility(newHidden);
         };
     }
+}
+let flipListenerAdded = false;
+
+function initFlipToHide() {
+    if (flipListenerAdded) return;
+    flipListenerAdded = true;
+
+    let faceDown = false;
+
+    window.addEventListener("devicemotion", function (e) {
+        const g = e.accelerationIncludingGravity;
+        if (!g || g.z == null) return;
+
+        if (!faceDown && g.z < -7) {
+            faceDown = true;
+            const btn = document.getElementById("toggleBalanceBtn");
+            if (btn) btn.click();
+        } else if (faceDown && g.z > -3) {
+            faceDown = false;
+        }
+    });
 }
