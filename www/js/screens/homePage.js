@@ -10,29 +10,16 @@ function initHomePage() {
     if (modalsPlaceholder) {
         modalsPlaceholder.innerHTML = renderSharedModals();
     }
-    
-        // ------------------------------
-    // العناصر
-    // ------------------------------
-    
-    
     const expenseList = document.getElementById("expenseList");
     const searchInput = document.getElementById("searchInput");
     const homeReport = document.getElementById("homeReport");
     const addMenuBtn = document.getElementById("addMenuBtn");
-    const toggleBalanceBtn = document.getElementById("toggleBalanceBtn");
-    
-    const prevMonthBtn = document.getElementById("prevMonthBtn");
-    const nextMonthBtn = document.getElementById("nextMonthBtn");
-    const monthLabelBtn = document.getElementById("monthLabelBtn");
-    const monthPicker = document.getElementById("monthPicker");
     const accountFilter = document.getElementById("accountFilter");
     const categoryFilter = document.getElementById("categoryFilter");
     const sortFilter = document.getElementById("sortFilter");
     const typeFilter = document.getElementById("typeFilter");
     const filterSummary = document.getElementById("filterSummary");
     const filterCount = document.getElementById("filterCount");
-    const clearFiltersBtn = document.getElementById("clearFiltersBtn");
     const nowLocal = new Date();
     window.selectedMonth = window.selectedMonth || (nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0"));
     // تحميل البيانات
@@ -215,130 +202,13 @@ t("item_deleted_toast"),
         }
     }
 
-    // ------------------------------
-    // Balance Visibility
-    // ------------------------------
-    function setEyeIcon(iconName) {
-        if (!toggleBalanceBtn) return;
-        toggleBalanceBtn.innerHTML = `<i data-lucide="${iconName}"></i>`;
-        if (window.lucide) lucide.createIcons();
-    }
-
-    function applyBalanceVisibility(hidden) {
-        if (hidden) {
-            document.body.classList.add("amounts-hidden");
-            setEyeIcon("eye-off");
-        } else {
-            document.body.classList.remove("amounts-hidden");
-            setEyeIcon("eye");
-        }
-    }
-
-    // ------------------------------
-    // Month Filter
-    // ------------------------------
-    function renderMonthLabel() {
-        if (!monthLabelBtn) return;
-        const [year, month] = window.selectedMonth.split("-");
-        const date = new Date(Number(year), Number(month) - 1);
-const monthName = date.toLocaleDateString(getLanguage() === "ar" ? "ar-EG" : "en-US", { month: "long" });
-        monthLabelBtn.innerHTML = `
-            <span class="month-label-month">${monthName}</span>
-            <span class="month-label-year">${year}</span>
-        `;
-    }
-
-    function changeMonth(diff) {
-        const [year, month] = window.selectedMonth.split("-").map(Number);
-        const date = new Date(year, month - 1 + diff, 1);
-        window.selectedMonth = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0");
-        renderMonthLabel();
-        renderExpenses();
-        expenseList.classList.remove("month-slide-next", "month-slide-prev");
-        void expenseList.offsetWidth;
-        expenseList.classList.add(diff > 0 ? "month-slide-next" : "month-slide-prev");
-    }
-    // ------------------------------
-    // تشغيل التطبيق
-    // ------------------------------
-    applyBalanceVisibility(getBalanceHidden());
-    renderMonthLabel();
+    // الأجزاء المنقولة (js/home/)
+    const { updateBudgetButton } = initHomeBudget();
+    initHomeBalanceVisibility();
+    initHomeMonthFilter(expenseList, renderExpenses);
     renderExpenses();
+    const searchFilters = initHomeSearchFilters(renderExpenses, hasAnyFilter);
 
-    if (toggleBalanceBtn) {
-        toggleBalanceBtn.onclick = function () {
-            const newHidden = !document.body.classList.contains("amounts-hidden");
-            saveBalanceHidden(newHidden);
-            applyBalanceVisibility(newHidden);
-        };
-    }
-
-    if (prevMonthBtn) prevMonthBtn.onclick = () => changeMonth(-1);
-    if (nextMonthBtn) nextMonthBtn.onclick = () => changeMonth(1);
-
-    if (monthLabelBtn && monthPicker) {
-        monthLabelBtn.onclick = () => {
-            monthPicker.value = window.selectedMonth;
-            monthPicker.showPicker ? monthPicker.showPicker() : monthPicker.click();
-        };
-        monthPicker.onchange = () => {
-            if (!monthPicker.value) return;
-            window.selectedMonth = monthPicker.value;
-            renderMonthLabel();
-            renderExpenses();
-        };
-    }
-
-    let searchTimer = null;
-    if (searchInput) {
-        searchInput.oninput = function() {
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(renderExpenses, 250);
-        };
-    }
-        if (searchInput) {
-        searchInput.addEventListener("focus", function() {
-            setTimeout(function() {
-                searchInput.style.scrollMarginTop = "20px";
-                searchInput.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 400);
-        });
-    }
-            fillSelect(accountFilter, [{ value: "", label: t("filter_all_accounts") }].concat(
-        getAccounts().map(function(a) { return { value: a.id, label: a.name }; })
-    ));
-    if (accountFilter) accountFilter.onchange = renderExpenses;
-    makeSelectSheet(accountFilter, t("filter_account"));
-    
-    fillSelect(categoryFilter, [{ value: "", label: t("filter_all_categories") }].concat(
-        getCategories().map(function(c) { return { value: c.id, label: c.name }; })
-    ));
-    if (categoryFilter) categoryFilter.onchange = renderExpenses;
-    makeSelectSheet(categoryFilter, t("filter_category"));
-    
-    fillSelect(sortFilter, getSortOptions(), "date_desc");
-    if (sortFilter) sortFilter.onchange = renderExpenses;
-    makeSelectSheet(sortFilter, t("sort_by"));
-    
-    fillSelect(typeFilter, [
-        { value: "", label: t("filter_all_types") },
-        { value: "income", label: t("tab_income") },
-        { value: "expense", label: t("tab_expense") },
-        { value: "transfer", label: t("tab_transfer") }
-    ]);
-    if (typeFilter) typeFilter.onchange = renderExpenses;
-    makeSelectSheet(typeFilter, t("filter_type"));
-
-    if (clearFiltersBtn) {
-        clearFiltersBtn.onclick = function() {
-            searchInput.value = "";
-            if (accountFilter) accountFilter.value = "";
-            if (categoryFilter) categoryFilter.value = "";
-            if (typeFilter) typeFilter.value = "";
-            if (sortFilter) sortFilter.value = "date_desc";
-            renderExpenses();
-        };
-    }
     if (addMenuBtn) {
     addMenuBtn.onclick = function() {
         window.pendingAddTransactionTab = "expense";
@@ -346,162 +216,8 @@ const monthName = date.toLocaleDateString(getLanguage() === "ar" ? "ar-EG" : "en
     };
 }
 
-    const searchBtn = document.getElementById("searchBtn");
-    const searchPanel = document.getElementById("searchPanel");
-    const expensesTitle = document.querySelector(".expenses-header h2");
-    
-    if (searchBtn) {
-        searchBtn.onclick = function() {
-            
-            expensesTitle.style.display = "none";
-            searchBtn.style.display = "none";
-            
-            searchPanel.style.display = "block";
-            
-document.body.style.paddingBottom = "70vh"; // مساحة إضافية عشان الاسكرول يشتغل
-            
-            //searchInput.focus();
-            
-            setTimeout(() => {
-                searchInput.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center"
-                });
-            }, 400);
-            
-        };
-    }
-    
-        if (window._homeClickHandler) {
-        document.removeEventListener("click", window._homeClickHandler);
-    }
-    window._homeClickHandler = function(e) {
-        
-        // لو لوحة البحث مش ظاهرة، متعملش حاجة
-        if (searchPanel.style.display !== "block") return;
-                // لو فيه فلتر شغّال، سيب اللوحة مفتوحة والفلتر زي ما هو
-if (hasAnyFilter()) return;
-        // لو اللي اتدوس عليه مش اللوحة نفسها ولا زرار البحث
-        if (!searchPanel.contains(e.target) && !searchBtn.contains(e.target)) {
-            
-            searchPanel.style.display = "none";
-            searchInput.value = "";
-            if (accountFilter) accountFilter.value = "";
-            if (categoryFilter) categoryFilter.value = "";
-            
-            if (sortFilter) sortFilter.value = "date_desc";
-            
-            expensesTitle.style.display = "block";
-            searchBtn.style.display = "flex";
-            
-            document.body.style.paddingBottom = "";
-            
-            renderExpenses();
-        }
-        
-    };
-    document.addEventListener("click", window._homeClickHandler);
-
-    // ------------------------------
-    // Budget Modal
-    // ------------------------------
-    const budgetBtn = document.getElementById("budgetBtn");
-    const budgetModal = document.getElementById("budgetModal");
-    const closeBudgetBtn = document.getElementById("closeBudgetBtn");
-    const saveBudgetBtn = document.getElementById("saveBudgetBtn");
-    const budgetAmountInput = document.getElementById("budgetAmount");
-
-if (budgetAmountInput) {
-    budgetAmountInput.addEventListener("input", function() {
-                // نحوّل الأرقام العربية لإنجليزي، ونسمح بعلامة عشرية واحدة ورقمين بعدها
-        const raw = budgetAmountInput.value
-            .replace(/[٠-٩]/g, function(d) { return "٠١٢٣٤٥٦٧٨٩".indexOf(d); })
-            .replace(/[^0-9.]/g, "");
-        const dotIndex = raw.indexOf(".");
-        const intPart = dotIndex === -1 ? raw : raw.slice(0, dotIndex);
-        const decPart = dotIndex === -1 ? "" : raw.slice(dotIndex + 1).replace(/\./g, "").slice(0, 2);
-        const intText = intPart ? Number(intPart).toLocaleString("en-US") : (dotIndex === -1 ? "" : "0");
-        budgetAmountInput.value = dotIndex === -1 ? intText : intText + "." + decPart;    });
-}
-
-if (budgetBtn && budgetModal) {
-        budgetBtn.onclick = function () {
-                        const currencyLabel = budgetModal.querySelector(".budget-input-currency");
-            if (currencyLabel) currencyLabel.textContent = getCurrency();
-            budgetModal.classList.add("show");
-        };
-    }
-
-    if (closeBudgetBtn && budgetModal) {
-    closeBudgetBtn.onclick = function() {
-        budgetModal.classList.remove("show");
-    };
-}
-
-closeModalOnBackdropClick(budgetModal);
-
-    function updateBudgetButton() {
-    const budgetValue = document.getElementById("budgetValue");
-    if (!budgetValue) return;
-    const budget = getBudget();
-    if (budget <= 0) {
-budgetValue.textContent = t("budget");
-        return;
-    }
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth();
-    const totalExpenses = loadTransactions()
-        .filter(transaction => {
-            if (transaction.type !== "expense") return false;
-            if (transaction.isTransfer) return false;
-            if (!transaction.date) return false;
-            const parts = transaction.date.split("-");
-            if (parts.length !== 3) return false;
-            const year = Number(parts[0]);
-            const month = Number(parts[1]) - 1;
-            return year === currentYear && month === currentMonth;
-        })
-        .reduce((sum, transaction) => sum + (Number(transaction.amount) || 0), 0);
-    const remaining = budget - totalExpenses;
-    const curr = getCurrency();
-    
-    if (remaining >= 0) {
-const val = formatCompactAmount(remaining);
-        budgetValue.innerHTML = `<span class="budget-currency">${escapeHTML(curr)}</span> <span class="budget-number">${val}</span>`;
-    } else {
-const val = formatCompactAmount(Math.abs(remaining));
-const overText = t("budget_over");
-    budgetValue.innerHTML = `<span class="budget-currency">${escapeHTML(curr)}</span> <span class="budget-number">${val}</span> <span class="budget-over">${overText}</span>`;
-}
-}
-
-    if (saveBudgetBtn && budgetAmountInput) {
-    saveBudgetBtn.onclick = async function() {
-                const amt = Number(budgetAmountInput.value.replace(/,/g, ""));
-                
-                if (!amt || amt <= 0) {
-                                        await customAlert(t("enter_valid_amount_alert"));
-                return;
-            }
-
-            saveBudget(amt);
-            budgetAmountInput.value = "";
-
-            if (budgetModal) budgetModal.classList.remove("show");
-
-            updateBudgetButton();
-        };
-    }
-
-    updateBudgetButton();
-        // تنظيف لما نسيب الصفحة الرئيسية
+    // تنظيف لما نسيب الصفحة الرئيسية
     window.cleanupHomePage = function() {
-        if (window._homeClickHandler) {
-            document.removeEventListener("click", window._homeClickHandler);
-            window._homeClickHandler = null;
-        }
-        document.body.style.paddingBottom = "";
-                clearTimeout(searchTimer);
+        searchFilters.cleanup();
     };
 }
