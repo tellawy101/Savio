@@ -187,7 +187,7 @@ function renderSharedModals() {
     <div id="accountMenu" class="modal">
         <div class="modal-content">
             <button id="editAccountBtn"><i data-lucide="pencil"></i> <span data-i18n="menu_edit">Edit</span></button>
-            <button id="setMainAccountBtn" data-i18n="set_main_account_btn"><i data-lucide="badge-check"></i> Set as Main</button>
+           <button id="setMainAccountBtn"><i data-lucide="badge-check"></i> <span data-i18n="set_main_account_btn">Set as Main</span></button>
             <button id="deleteAccountBtn"><i data-lucide="trash-2"></i> <span data-i18n="menu_delete">Delete</span></button>
         </div>
     </div>
