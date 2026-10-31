@@ -179,6 +179,7 @@ if (!saveTransactions(transactions)) {
             safeSetItem("lastAccountId_" + type, entryData.accountId || "");
             safeSetItem("lastCategoryId_" + type, entryData.categoryId || "");
         }
+                hapticSuccess();
         navigateTo("home");
 };
         function prefillLastChoices() {

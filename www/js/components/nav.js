@@ -65,7 +65,7 @@ function setupBottomNav(basePath = '') {
     document.querySelectorAll('.nav-item[data-page]').forEach(btn => {
         btn.addEventListener('click', function() {
             const page = this.dataset.page;
-
+            hapticTap();
             // أي صفحة اتسجلت في الراوتر (SPA) - تفتح من غير Reload
             if (typeof ROUTES !== 'undefined' && ROUTES[page] && typeof navigateTo === 'function' && document.getElementById('app')) {
                                 if (typeof currentPageName !== 'undefined' && page === currentPageName) return;

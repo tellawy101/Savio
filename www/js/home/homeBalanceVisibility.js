@@ -26,6 +26,7 @@ function initHomeBalanceVisibility() {
     initFlipToHide();
     if (toggleBalanceBtn) {
         toggleBalanceBtn.onclick = function () {
+                        hapticTap();
             const newHidden = !document.body.classList.contains("amounts-hidden");
             saveBalanceHidden(newHidden);
             applyBalanceVisibility(newHidden);

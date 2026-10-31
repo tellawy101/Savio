@@ -4,7 +4,7 @@ function showToast(message, type = "error") {
     
     const toast = document.getElementById("toast");
     if (!toast) return;
-    
+        if (type === "success") hapticSuccess(); else hapticWarning();
     // نلغي أي مؤقتات قديمة (توست عادي أو تراجع) عشان متقفلش التوست الجديد بدري
     if (toastTimer) {
         clearTimeout(toastTimer);
@@ -45,7 +45,7 @@ let undoToastTimer = null;
 let undoToastFrame = null;
 
 function showUndoToast(message, onUndo, duration = 5000) {
-    
+    hapticWarning();    
     const toast = document.getElementById("toast");
     
     if (!toast) return;
