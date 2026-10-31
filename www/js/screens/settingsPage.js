@@ -199,6 +199,7 @@ setupAutoBackup();
 }
 
 setupInfoModal("aboutSavioBtn", "aboutModal", "closeAboutBtn");
+setupInfoModal("dataBtn", "dataModal", "closeDataBtn");
 // ------------------------------
     // Privacy Modal
     // ------------------------------

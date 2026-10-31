@@ -147,7 +147,25 @@
     </div>
 
   </section>
-  
+  <!-- Data entry -->
+  <section class="settings-section">
+    <div class="settings-card">
+      <div class="settings-item" id="dataBtn">
+        <div class="settings-icon">
+          <i data-lucide="database"></i>
+        </div>
+        <div class="settings-info">
+          <span data-i18n="settings_data">Data</span>
+          <small data-i18n="settings_data_desc">Backup, export, import and restore</small>
+        </div>
+        <i class="settings-arrow" data-lucide="chevron-right"></i>
+      </div>
+    </div>
+  </section>
+
+  <div id="dataModal" class="modal">
+    <div class="modal-content data-sheet-content">
+      <div class="data-sheet-handle"></div>
 <!-- Auto Backup -->
   <section class="settings-section">
 
@@ -303,7 +321,9 @@
     
   </section>
   
-  
+        <button id="closeDataBtn" class="import-close-btn" data-i18n="settings_close">Close</button>
+    </div>
+  </div>
   <!-- About -->
   <section class="settings-section">
     

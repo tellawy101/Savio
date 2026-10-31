@@ -587,3 +587,30 @@ background: var(--brand-text);
 body.dark .restore-option-check::after {
     background: #0f1f1e;
 }
+/* بوبب البيانات يطلع من تحت */
+#dataModal {
+    align-items: flex-end;
+    padding-top: 0;
+}
+#dataModal .modal-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    max-height: 85vh;
+    overflow-y: auto;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 24px 24px 0 0;
+    padding: 14px 16px calc(20px + env(safe-area-inset-bottom, 16px));
+    animation: slideUpSheet .25s ease;
+}
+.data-sheet-handle {
+    width: 40px;
+    height: 4px;
+    border-radius: 999px;
+    background: #d1d5db;
+    margin: 0 auto 12px;
+}
+#dataModal .settings-section {
+    margin-bottom: 12px;
+}
