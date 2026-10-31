@@ -186,6 +186,15 @@ attachSwipeActions(card, { deleteEl: bgDelete, editEl: bgEdit, maxOffset: 60, th
         totalPayable.querySelector(".stat-currency").innerText = getCurrency();
         netBalance.querySelector(".currency").innerText = getCurrency();
         netBalance.querySelector(".amount").innerText = formatAmountNumber(net);
+                const debtsTotal = receivable + payable;
+        const debtsBar = document.getElementById("debtsBar");
+        if (debtsBar) {
+            debtsBar.classList.toggle("empty", debtsTotal === 0);
+            debtsBar.firstElementChild.style.width =
+                (debtsTotal > 0 ? Math.round((receivable / debtsTotal) * 100) : 0) + "%";
+        }
+        netBalance.classList.toggle("period-expense", net < 0);
+        netBalance.classList.toggle("period-income", net >= 0);
 
         if (window.lucide) lucide.createIcons();
     }

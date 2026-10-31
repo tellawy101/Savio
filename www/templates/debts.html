@@ -1,36 +1,30 @@
-<div class="balance-card">
-
-   <h3 data-i18n="debts_net_balance">Net Balance</h3>
-
-    <h1 id="netBalance">
-    <span class="currency">EGP</span>
-    <span class="amount">0</span>
-</h1>
-
-    <div class="balance-grid">
+<div class="balance-card debts-top">
     
-    <div class="stat receivable">
-        
-        <i data-lucide="trending-up"></i>
-        
-        <h4 data-i18n="debts_receivable">Receivable</h4>
-        
-        <p id="totalReceivable"><span class="stat-currency">EGP</span> <span class="stat-value">0</span></p>
-        
+    <div class="period-net">
+        <span class="period-label" data-i18n="debts_net_balance">Net Balance</span>
+        <div id="netBalance" class="period-net-value period-income">
+            <span class="currency">EGP</span>
+            <span class="amount">0</span>
+        </div>
     </div>
     
-    <div class="stat payable">
-        
-        <i data-lucide="trending-down"></i>
-        
-        <h4 data-i18n="debts_payable">Payable</h4>
-        
-        <p id="totalPayable"><span class="stat-currency">EGP</span> <span class="stat-value">0</span></p>
-        
+    <div class="period-bar empty" id="debtsBar"><span style="width:0%"></span></div>
+    
+    <div class="period-totals">
+        <div class="period-item">
+            <span class="period-label" data-i18n="debts_receivable">Receivable</span>
+            <span id="totalReceivable" class="period-value period-income">
+                <span class="stat-currency">EGP</span> <span class="stat-value">0</span>
+            </span>
+        </div>
+        <div class="period-item">
+            <span class="period-label" data-i18n="debts_payable">Payable</span>
+            <span id="totalPayable" class="period-value period-expense">
+                <span class="stat-currency">EGP</span> <span class="stat-value">0</span>
+            </span>
+        </div>
     </div>
     
-</div>
-
 </div>
 
 <div class="debts-header">

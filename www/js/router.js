@@ -72,6 +72,9 @@ async function navigateTo(pageName, fromPopState = false) {
         if (typeof applyLanguage === "function") applyLanguage();
         
         app.style.visibility = "visible";
+                app.classList.remove("page-enter");
+        void app.offsetWidth;
+        app.classList.add("page-enter");
                 if (fromPopState ||
             (history.state && history.state.page === pageName)) {
             history.replaceState({ page: pageName }, "", "#" + pageName);

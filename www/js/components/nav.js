@@ -68,6 +68,7 @@ function setupBottomNav(basePath = '') {
 
             // أي صفحة اتسجلت في الراوتر (SPA) - تفتح من غير Reload
             if (typeof ROUTES !== 'undefined' && ROUTES[page] && typeof navigateTo === 'function' && document.getElementById('app')) {
+                                if (typeof currentPageName !== 'undefined' && page === currentPageName) return;
                 const nav = this.closest('.bottom-nav');
                 const current = nav ? nav.querySelector('.nav-item.active') : null;
                 if (current && current !== this) current.classList.remove('active');

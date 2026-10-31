@@ -1,0 +1,44 @@
+.page-enter {
+    animation: pageEnter .3s ease backwards;
+}
+@keyframes pageEnter {
+    from { opacity: 0; transform: translateY(14px); }
+}
+
+.page-enter .settings-card,
+.page-enter .stat-card,
+.page-enter .statistics-card,
+.page-enter .goal-card,
+.page-enter .rec-card,
+.page-enter .total-card {
+    animation: cardIn .35s ease backwards;
+}
+.page-enter .settings-card:nth-child(2),
+.page-enter .stat-card:nth-child(2),
+.page-enter .statistics-card:nth-child(2),
+.page-enter .goal-card:nth-child(2),
+.page-enter .rec-card:nth-child(2) { animation-delay: .05s; }
+.page-enter .settings-card:nth-child(3),
+.page-enter .stat-card:nth-child(3),
+.page-enter .statistics-card:nth-child(3),
+.page-enter .goal-card:nth-child(3),
+.page-enter .rec-card:nth-child(3) { animation-delay: .1s; }
+.page-enter .settings-card:nth-child(n+4),
+.page-enter .stat-card:nth-child(n+4),
+.page-enter .statistics-card:nth-child(n+4),
+.page-enter .goal-card:nth-child(n+4),
+.page-enter .rec-card:nth-child(n+4) { animation-delay: .15s; }
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(10px); }
+}
+
+button,
+.nav-item,
+.settings-item {
+    transition: scale .12s ease;
+}
+button:not(:disabled):active,
+.nav-item:active,
+.settings-item:active {
+    scale: .96;
+}
