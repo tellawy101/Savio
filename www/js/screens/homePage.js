@@ -55,11 +55,14 @@ function initHomePage() {
 
         expenseList.innerHTML = "";
 if (expenses.length === 0) {
-        expenseList.innerHTML = renderEmptyState(
-            "receipt-text", 
-                        t("no_transactions"),
-                t("add_first_transaction")
+                expenseList.innerHTML = renderEmptyState(
+            "receipt-text",
+            t("no_transactions"),
+            "",
+            t("empty_add_transaction_btn")
         );
+        const emptyBtn = expenseList.querySelector("[data-empty-action]");
+        if (emptyBtn) emptyBtn.onclick = function() { navigateTo("add-transaction"); };
         if (window.lucide) lucide.createIcons();
                                 updateFilterSummary(0);
         renderHomeReport();

@@ -43,7 +43,17 @@ function initDebtsPage() {
     debtsList.innerHTML = "";
     
     const { receivable, payable, net } = calculateDebtTotals(debts);
-
+    if (debts.length === 0) {
+        debtsList.innerHTML = renderEmptyState(
+            "handshake",
+            t("debts_empty_title"),
+            "",
+            t("debts_add_btn")
+        );
+        const emptyDebtBtn = debtsList.querySelector("[data-empty-action]");
+        const addDebtBtnEl = document.getElementById("addDebtBtn");
+        if (emptyDebtBtn && addDebtBtnEl) emptyDebtBtn.onclick = function () { addDebtBtnEl.click(); };
+    }
         [...debts].reverse().forEach(debt => {
             const isSettled = debt.remaining <= 0;
 

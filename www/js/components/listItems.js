@@ -80,7 +80,7 @@ ${expense.time ? `<span class="expense-date">${escapeHTML(expense.time)}</span>`
 }
 
 // قالب حالة الفراغ الموحد (عند عدم وجود بيانات)
-function renderEmptyState(icon = "inbox", title = "No data found", subtitle = "") {
+function renderEmptyState(icon = "inbox", title = "No data found", subtitle = "", actionLabel = "") {
     return `
         <div class="empty-state">
             <div class="empty-state-icon">
@@ -88,6 +88,7 @@ function renderEmptyState(icon = "inbox", title = "No data found", subtitle = ""
             </div>
             <p class="empty-state-title">${title}</p>
             ${subtitle ? `<span class="empty-state-sub">${subtitle}</span>` : ""}
+                    ${actionLabel ? `<button type="button" class="empty-state-btn" data-empty-action>${actionLabel}</button>` : ""}
         </div>
     `;
 }

@@ -340,5 +340,7 @@ stats_week: "أسبوع",
     ok: "موافق",
         no_transactions: "لا توجد معاملات",
     add_first_transaction: "اضغط على + لإضافة معاملة جديدة",
+        empty_add_transaction_btn: "أضف أول معاملة",
+        debts_empty_title: "مفيش ديون مسجلة",
     unspecified: "غير محدد",
 };

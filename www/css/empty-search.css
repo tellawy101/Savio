@@ -126,3 +126,16 @@ body.dark .filter-select {
 .account-sort-row {
     padding: 0 2px 12px;
 }
+.empty-state-btn {
+    margin-top: 16px;
+    padding: 11px 22px;
+    border: none;
+    border-radius: 14px;
+    background: var(--brand);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    width: auto;
+    cursor: pointer;
+}

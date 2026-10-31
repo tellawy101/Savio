@@ -340,5 +340,7 @@ restore_preview_title: "Backup preview",
 ok: "OK",
 no_transactions: "No transactions",
 add_first_transaction: "Tap + to add a new transaction",
+empty_add_transaction_btn: "Add your first transaction",
+debts_empty_title: "No debts yet",
 unspecified: "Unspecified",
 };
