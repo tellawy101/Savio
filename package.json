@@ -1,6 +1,6 @@
 {
   "name": "savio",
-"version": "2.5.0",
+"version": "2.5.1",
   "description": "Savio expense and debt manager",
   "private": true,
   "scripts": {
