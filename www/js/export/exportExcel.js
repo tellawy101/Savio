@@ -16,9 +16,8 @@ function buildTransactionsWorkbook() {
             tx.date || "",
             tx.time || "",
             getExportTypeLabel(tx.type, tx.isTransfer),
-            tx.category || "",
-            tx.account || "",
-            tx.description || "",
+                        getTxCategoryName(tx) || "",
+                getTxAccountName(tx) || "",            tx.description || "",
             Number(tx.amount) || 0,
             currency
         ]);

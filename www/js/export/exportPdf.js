@@ -29,8 +29,8 @@ function buildTransactionsPdfElement(rows, totals) {
             "<td style='" + cellStyle + "'>" + escapeHTML(tx.date) + "</td>" +
             "<td style='" + cellStyle + "'>" + escapeHTML(tx.time) + "</td>" +
             "<td style='" + cellStyle + "color:" + color + ";'>" + escapeHTML(getExportTypeLabel(tx.type, tx.isTransfer)) + "</td>" +
-            "<td style='" + cellStyle + "'>" + escapeHTML(tx.category) + "</td>" +
-            "<td style='" + cellStyle + "'>" + escapeHTML(tx.account) + "</td>" +
+                        "<td style='" + cellStyle + "'>" + escapeHTML(getTxCategoryName(tx)) + "</td>" +
+                "<td style='" + cellStyle + "'>" + escapeHTML(getTxAccountName(tx)) + "</td>" +
             "<td style='" + cellStyle + "'>" + escapeHTML(tx.description) + "</td>" +
             "<td style='" + cellStyle + "color:" + color + ";font-weight:bold;'>" +
             amount.toLocaleString("en-US", { maximumFractionDigits: 2 }) + " " + escapeHTML(currency) +
