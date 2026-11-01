@@ -53,8 +53,11 @@ async function navigateTo(pageName, fromPopState = false) {
             window.cleanupDebtsPage();
             window.cleanupDebtsPage = null;
         }
-        app.innerHTML = html;
-        ensureCustomConfirmModal();
+                app.innerHTML = html;
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        ensureCustomConfirmModal();        ensureCustomConfirmModal();
         if (window.lucide) lucide.createIcons({ root: app });
         updateBottomNavForPage(pageName);
                 const initName = ROUTE_INIT_NAMES[pageName];
