@@ -66,7 +66,11 @@ function initDebtsPaymentsHistory(debts, renderDebts) {
             empty.textContent = t("debts_history_empty");
             paymentsHistoryList.appendChild(empty);
         } else {
-            [...payments].reverse().forEach(function (payment) {
+            [...payments].reverse().sort(function (a, b) {
+    const ka = (a.date || "") + " " + (a.time || "");
+    const kb = (b.date || "") + " " + (b.time || "");
+    return ka < kb ? 1 : ka > kb ? -1 : 0;
+}).forEach(function (payment) {
                 const row = document.createElement("div");
                 row.className = "payment-row";
 
