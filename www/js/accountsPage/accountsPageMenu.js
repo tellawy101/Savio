@@ -51,6 +51,16 @@ function initAccountsPageMenu(form, renderAccountsPage) {
             accountMenu.classList.remove("show");
         };
     }
+        const accountTransfersBtn = document.getElementById("accountTransfersBtn");
+    
+    if (accountTransfersBtn) {
+        accountTransfersBtn.onclick = function() {
+            accountMenu.classList.remove("show");
+            window.pendingAccountTransactionsAccount = selectedAccount;
+            window.pendingAccountTransactionsType = "transfer";
+            navigateTo("account-transactions");
+        };
+    }
     if (deleteAccountBtn) {
         deleteAccountBtn.onclick = async function() {
                                 const linkedTxCount = loadTransactions().filter(function(tx) {

@@ -36,8 +36,8 @@ const emptyStateEl = document.getElementById("emptyState");
 const transactions = loadTransactions();
 const accountTransactions = transactions.filter(transaction => {
     const sameAccount = getTxAccountId(transaction) === accountId;
-    const sameType = transaction.type === type;
-    return sameAccount && sameType && !transaction.isTransfer;
+        const sameType = type === "transfer" ? !!transaction.isTransfer : transaction.type === type;
+    return sameAccount && sameType && (type === "transfer" || !transaction.isTransfer);
 });
 
 if (accountNameEl) {
@@ -55,16 +55,21 @@ const account = accounts.find(a => a.id === accountId);
     }
 }
 const isIncome = type === "income";
+const isTransferView = type === "transfer";
 if (transactionTypeEl) {
-    transactionTypeEl.textContent = isIncome ? t("income_title") : t("expense_title");
+    transactionTypeEl.textContent = isTransferView ? t("transfer_title") : (isIncome ? t("income_title") : t("expense_title"));
 }
 if (totalLabelEl) {
-    totalLabelEl.textContent = isIncome ? t("stats_total_income") : t("stats_total_expense");
+    totalLabelEl.textContent = isTransferView ? t("account_transfers_net") : (isIncome ? t("stats_total_income") : t("stats_total_expense"));
 }
 if (listTitleEl) {
-    listTitleEl.textContent = isIncome ? t("income_title") : t("expense_title");
+    listTitleEl.textContent = isTransferView ? t("transfer_title") : (isIncome ? t("income_title") : t("expense_title"));
 }
-const total = calculateTransactionsTotal(accountTransactions);
+const total = isTransferView ?
+    accountTransactions.reduce(function(sum, tx) {
+        return sum + (tx.type === "income" ? 1 : -1) * (Number(tx.amount) || 0);
+    }, 0) :
+    calculateTransactionsTotal(accountTransactions);
 if (totalAmountEl) {
     totalAmountEl.textContent = total.toLocaleString("en-US");
     const totalCurrencyEl = totalAmountEl.parentElement.querySelector(".currency");
@@ -115,18 +120,22 @@ if (totalAmountEl) {
         getSortedTransactions().forEach(transaction => {
             
 const li = document.createElement("li");
-li.className = isIncome ? "is-income" : "is-expense";
+const rowIsIncome = isTransferView ? transaction.type === "income" : isIncome;
+li.className = rowIsIncome ? "is-income" : "is-expense";
 const amount = Number(transaction.amount || 0);
 
-const categoryName = getTxCategoryName(transaction) || "Transaction";
+const categoryName = isTransferView ? t("transfer_title") : (getTxCategoryName(transaction) || "Transaction");
 
 let note = String(transaction.description || "").trim();
-if (note === categoryName) {
+if (isTransferView) {
+    note = transaction.type === "income" ?
+        getAccountNameById(transaction.transferFromId, transaction.transferFrom) + " ➔ " + getTxAccountName(transaction) :
+        getTxAccountName(transaction) + " ➔ " + getAccountNameById(transaction.transferToId, transaction.transferTo);
+} else if (note === categoryName) {
     note = "";
 } else if (note.startsWith(categoryName)) {
     note = note.slice(categoryName.length).trim() || note;
 }
-
 li.innerHTML = `
     <div class="transaction-icon-box">
         <i data-lucide="${escapeHTML(getTxCategoryIcon(transaction))}"></i>
