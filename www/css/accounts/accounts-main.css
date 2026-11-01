@@ -1,0 +1,290 @@
+/* ===========================
+   Accounts Page
+=========================== */
+
+body {
+    background-color: #F4F5F7;
+}
+
+/* ==============================
+   الهيدر (مشترك بصريًا مع باقي صفحات التفاصيل)
+============================== */
+
+.page-header {
+    display: none;
+    align-items: center;
+    gap: 12px;
+
+    padding: 16px 20px;
+
+    background: var(--c-white);
+        width: 100%;
+    box-sizing: border-box;
+}
+
+.back-btn {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background: var(--c-bg-chip);
+
+    font-size: 18px;
+    color: var(--c-ink);
+    flex: 0 0 48px;
+    box-shadow: none;
+    cursor: pointer;
+}
+.back-btn svg {
+    width: 21px;
+    height: 21px;
+    stroke-width: 2.2;
+}
+
+body.dark .back-btn {
+    background: #1F2937;
+    color: #F9FAFB;
+}
+
+
+
+/* ==============================
+   قائمة الحسابات
+============================== */
+
+.accounts-list {
+    padding: 16px 20px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+/* ==============================
+   Account Card (الشكل الجديد)
+============================== */
+
+.account-card {
+    --card-padding: 14px;
+    --stats-gap: 4px;
+
+    background: var(--c-white);
+    border-radius: 18px;
+    padding: var(--card-padding);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+}
+
+.account-card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.account-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #EEF2F8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.account-avatar i {
+    width: 22px;
+    height: 22px;
+    color: var(--text);
+}
+
+.account-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.account-card-info .account-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.account-sub-name {
+    font-size: 12px;
+    color: var(--c-muted);
+    margin-top: 2px;
+}
+
+.account-main-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 3px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.account-main-badge i {
+    width: 14px;
+    height: 14px;
+}
+
+.account-card-balance {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    direction: ltr;
+    flex-shrink: 0;
+}
+
+.account-card-balance-amount {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    font-family: "Supreme", sans-serif;
+}
+
+.account-card-balance-currency {
+    font-size: 12px;
+    color: var(--c-muted);
+}
+
+.account-card .account-divider {
+    display: block !important;
+    width: 100%;
+    height: 1px;
+    background: #2a2e33;
+    margin: 18px 0 16px !important;
+}
+.account-stats-row {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+}
+
+.stat-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--stats-gap);
+        padding-inline-end: 12px;
+    border-inline-end: 1px solid var(--divider);
+    position: relative;
+}
+.stat-texts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-amount-row {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3px;
+    direction: ltr;
+}
+
+.stat-item-last {
+    border-inline-end: none;
+    padding-inline-end: 0;
+    padding-inline-start: 0;
+}
+
+.account-stats-row .stat-icon {
+    width: 30px;
+    height: 30px;
+    flex: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-stats-row .stat-icon i {
+    width: 15px;
+    height: 15px;
+}
+
+.stat-icon-income {
+    background: #DCFCE7;
+    color: var(--success);
+}
+
+.stat-icon-expense {
+    background: #FEE2E2;
+    color: var(--danger);
+}
+
+.stat-icon-balance {
+    background: #E0E7FF;
+    color: #4f46e5;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--c-muted);
+}
+
+.stat-value {
+    font-size: 14px;
+    font-weight: 700;
+    font-family: "Supreme", sans-serif;
+}
+
+.stat-value-income { color: var(--success); }
+.stat-value-expense { color: var(--danger); }
+.stat-value-balance { color: #4f46e5; }
+
+.stat-currency {
+    font-size: 10px;
+    color: var(--c-faint);
+}
+
+.stat-sparkline {
+    width: 100%;
+    height: 12px;
+    margin-top: 2px;
+}
+.account-corner-icon {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+        background: var(--c-white);
+        border: 1.5px solid var(--brand);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.account-corner-icon i {
+    width: 13px;
+    height: 13px;
+    color: var(--brand);
+}
+
+.accounts-empty {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    padding: 40px 20px;
+}
+.accounts-empty {
+    text-align: center;
+        color: var(--text-muted);
+    font-size: 14px;
+    padding: 40px 20px;
+}
+
