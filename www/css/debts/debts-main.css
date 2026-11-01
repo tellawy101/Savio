@@ -1,0 +1,235 @@
+/* ===========================
+   Debts Page
+=========================== */
+.debts-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 0 20px;
+    }
+    
+    .cb-header {
+        padding-top: 24px;
+    }
+
+.debts-header h3{
+    font-size:20px;
+    margin-inline-start: 15px;
+}
+
+.add-debt-btn {
+    width: auto;
+    padding: 9px 16px;
+    margin: 0;
+    
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.debts-list{
+    padding:0 20px 120px;
+}
+
+/* ===========================
+   Balance Card
+=========================== */
+
+.balance-card {
+    background: var(--brand-gradient);
+    color: var(--c-white);
+    
+    border-radius: 0 0 15px 15px;
+    
+    padding: 30px 20px;
+    
+    margin: 0;
+    
+    box-sizing: border-box;
+    
+    box-shadow: none;
+    text-align:center;
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-10px);
+}
+
+.balance-card h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: normal;
+    opacity: .8;
+    text-align: center;
+}
+
+.balance-card h1 {
+    margin: 5px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    direction: ltr;
+    gap: 6px;
+    width: 100%;
+}
+
+.balance-card .currency {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.balance-card .amount {
+    font-size: 40px;
+    font-weight: 800;
+    font-family: "Supreme", sans-serif;
+}
+
+#netBalance{
+    font-size:40px;
+    font-weight:700;
+    margin-top:5px;
+    margin-bottom:20px;
+}
+#netBalance .currency{
+    font-size:20px;
+    font-weight:500;
+}
+
+#netBalance .amount{
+    font-size:40px;
+    font-weight:800;
+    font-family:"Supreme", sans-serif;
+}
+.balance-grid {
+    display: flex;
+    
+    justify-content: center;
+    
+    align-items: center;
+    
+    gap: 15px;
+}
+
+/* ==============================
+   Person Debt Card
+============================== */
+
+.debt-card {
+    
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 16px;
+
+    margin: 0 auto 15px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.debt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==============================
+   Card Header
+============================== */
+
+.debt-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 0px;
+}
+
+.debt-person-name {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+
+/* ==============================
+   Status Badge
+============================== */
+
+.debt-badge {
+    flex-shrink: 0;
+
+    padding: 6px 10px;
+
+    border-radius: 8px;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.debt-badge.receivable {
+    color: var(--success);
+    background: #dcfce7;
+}
+
+.debt-badge.payable {
+    color: var(--danger);
+    background: #fee2e2;
+}
+
+
+/* ==============================
+   Amount
+============================== */
+
+.debt-card-amount {
+    order: 2;
+    margin: 0 0 12px;
+    color: var(--c-muted);
+    font-size: 1.4rem;
+    font-weight: 800;
+        text-align: end;
+}
+.debt-currency {
+    font-size: 0.75rem;
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+.debt-amount-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+/* ==============================
+   Quick Details
+============================== */
+
+.debt-card-details {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px 14px;
+
+    color: var(--text-muted);
+
+    font-size: 0.8rem;
+}
+

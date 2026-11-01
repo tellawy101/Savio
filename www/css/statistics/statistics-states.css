@@ -1,0 +1,177 @@
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-stat {
+    min-height: 120px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    color: #9CA3AF;
+
+    text-align: center;
+}
+
+.empty-stat svg {
+    width: 30px;
+    height: 30px;
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+body.dark .statistics-container {
+    color: #F9FAFB;
+}
+
+body.dark .period-selector,
+body.dark .stat-card,
+body.dark .statistics-card {
+    background: #111827;
+}
+
+body.dark .category-name,
+body.dark .account-name {
+    color: #9CA3AF;
+}
+
+body.dark .account-row {
+    background: #1F2937;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .statistics-container {
+        padding: 14px 14px 105px;
+    }
+
+    .stats-summary {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.stat-card {
+    min-height: 88px;
+    padding: 14px 16px;
+
+    box-sizing: border-box;
+}
+
+    .stat-content strong {
+        font-size: 19px;
+    }
+
+    .statistics-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .chart-wrapper {
+        height: 210px;
+    }
+}
+
+
+@media (max-width: 380px) {
+
+    .period-btn {
+        font-size: 12px;
+    }
+
+    .chart-wrapper {
+        height: 220px;
+    }
+}
+
+.stat-content strong span {
+    display: inline;
+}
+
+.stat-content strong .stats-stat-currency {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.stat-content strong .stats-stat-value {
+    font-size: 22px;
+    font-weight: 800;
+}
+/* =========================================
+   MONTH COMPARISON
+========================================= */
+
+.compare-row {
+    padding: 12px 0;
+}
+
+.compare-row + .compare-row {
+    border-top: 1px solid rgba(156, 163, 175, 0.25);
+}
+
+.compare-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.compare-label {
+    color: #374151;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.compare-change {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.compare-good {
+    color: #16a34a;
+}
+
+.compare-bad {
+    color: #dc2626;
+}
+
+.compare-neutral {
+    color: #9CA3AF;
+}
+
+.compare-values {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.compare-value {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.compare-value span {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.compare-value strong {
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+body.dark .compare-label {
+    color: #9CA3AF;
+}

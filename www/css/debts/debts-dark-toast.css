@@ -1,0 +1,118 @@
+/* ==============================
+   Dark Mode
+============================== */
+
+.dark .debt-card {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+.dark .debt-card-amount {
+    color: #f9fafb;
+}
+
+.dark #debtNotes,
+.dark #editDebtNotes {
+background: var(--dk-field);
+    color: #ffffff;
+    border: 1px solid #555;
+}
+
+.dark #debtNotes::placeholder,
+.dark #editDebtNotes::placeholder {
+    color: #9ca3af;
+}
+
+.balance-grid .stat {
+    background: transparent;
+    border-radius: 0;
+    padding: 10px;
+    text-align: center;
+    flex: 1;
+    position: relative;
+    min-width: 0;
+}
+
+.balance-grid .stat+.stat::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 85%;
+    background: rgba(255, 255, 255, .35);
+}
+
+.balance-grid .stat svg {
+    width: 18px;
+    height: 18px;
+}
+
+.balance-grid .stat h4{
+    margin: 6px 0 4px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.balance-grid .stat p{
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--c-white);
+}
+
+.balance-grid .stat .stat-value {
+    font-size: 18px;
+}
+
+.balance-grid .stat .stat-currency {
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.hidden{
+    display:none;
+}
+
+/* ==============================
+   Toast
+============================== */
+
+#toast {
+    position: fixed !important;
+
+    left: 50% !important;
+    bottom: 90px !important;
+
+    transform: translateX(-50%) !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 40px) !important;
+
+    padding: 12px 20px !important;
+
+    border-radius: 14px !important;
+
+    color: var(--c-white) !important;
+
+    font-family: "Supreme", sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+
+    text-align: center !important;
+    white-space: nowrap !important;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .18) !important;
+
+    z-index: var(--z-toast) !important;
+
+    display: none;
+}
+
+#toast.show {
+    display: block !important;
+}
+
