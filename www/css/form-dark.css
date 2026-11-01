@@ -1,0 +1,73 @@
+/* ==============================
+   الوضع الليلي (Dark Mode)
+============================== */
+.dark #accountMenu .modal-content::before,
+.dark #categoryMenu .modal-content::before {
+    background: #4B5563;
+}
+
+.dark #accountMenu .modal-content button,
+.dark #categoryMenu .modal-content button {
+    color: #F3F4F6;
+}
+
+.dark #accountMenu .modal-content button:hover,
+.dark #categoryMenu .modal-content button:hover {
+background: var(--dk-field);
+}
+
+.dark #editAccountBtn,
+.dark #editCategoryBtn {
+    border-bottom: 1px solid #333;
+}
+
+.dark #deleteAccountBtn,
+.dark #deleteCategoryBtn {
+    color: #F87171;
+}
+
+.dark .income-header,
+.dark .expense-header,
+.dark .transfer-header,
+.dark .description-input {
+        background: var(--dk-pop);
+    color: #ffffff;
+    border-color: #444;
+}
+.dark .income-header h1,
+.dark .expense-header h1,
+.dark .transfer-header h1 {
+    color: #ffffff;
+}
+
+.dark .account-item-icon {
+        background: var(--dk-hover);
+}
+
+.dark .account-select-box,
+.dark .category-select-box,
+.dark .description-input {
+        background: var(--dk-field-deep);
+    border: 1px solid #333;
+    color: #fff;
+}
+
+.dark .account-icon, .dark .category-icon {
+background: var(--dk-field);
+    color: #ffffff;
+}
+
+.dark .account-select,
+.dark .category-select {
+    color: #fff !important;
+}
+
+.dark #incomeAccount,
+.dark #incomeCategory,
+.dark #expenseAccount,
+.dark #expenseCategory,
+.dark #transferFromAccount,
+.dark #transferToAccount {
+    color: #fff !important;
+}
+

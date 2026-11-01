@@ -2,17 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">    <script>
-        (function () {
-            var lang = localStorage.getItem("language") || "en";
-            var dir = lang === "ar" ? "rtl" : "ltr";
-            document.documentElement.setAttribute("lang", lang);
-            document.documentElement.setAttribute("dir", dir);
-                        if (localStorage.getItem("theme") === "dark") {
-                document.documentElement.style.background = "#101817";
-            }
-        })();
-    </script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<script src="js/bootstrap/earlyHead.js"></script>
    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Savio</title>
     
@@ -32,6 +23,10 @@
     <link rel="stylesheet" href="css/sheets.css">
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/form-page.css">
+<link rel="stylesheet" href="css/form-modals.css">
+<link rel="stylesheet" href="css/form-dark.css">
+<link rel="stylesheet" href="css/category-icon-picker.css">
+<link rel="stylesheet" href="css/form-save-mark.css">
     <link rel="stylesheet" href="css/transaction-pages.css">
     <link rel="stylesheet" href="css/settings.css">
     <link rel="stylesheet" href="css/statistics.css">
@@ -48,9 +43,7 @@
                 <link rel="stylesheet" href="css/onboarding.css">
 </head>
 <body>
-    <script>
-    if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
-</script>
+<script src="js/bootstrap/earlyBody.js"></script>
 <div id="app">
     <div class="skeleton-page">
         <div class="sk sk-title"></div>
@@ -65,10 +58,7 @@
 <div id="nav-placeholder"></div>
 <script src="js/components/nav.js"></script>
 <script src="js/components/backNav.js"></script>
-<script>
-    document.getElementById("nav-placeholder").innerHTML = renderBottomNav('home');
-    setupBottomNav('');
-</script>
+<script src="js/bootstrap/navInit.js"></script>
 <script src="js/components/sharedModals.js"></script>
 <script src="js/components/dialogs.js"></script>
 <script src="js/components/transactionForms.js"></script>
@@ -154,25 +144,6 @@
 <script src="js/screens/addTransactionPage.js"></script>
 <script src="js/screens/accountTransactionsPage.js"></script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-                migrateDataToIds();
-                        let recurringAdded = 0;
-        try {
-            recurringAdded = processRecurringTransactions();
-        } catch (error) {
-            console.error("Recurring transactions failed:", error);
-        }
-        initIcons();
-                navigateTo("home");
-        showOnboardingIfNeeded();
-        if (recurringAdded > 0) {
-            showToast(t("recurring_auto_added_toast") + " " + recurringAdded, "success");
-        }
-        if (typeof runAutoBackupIfNeeded === "function") {
-            runAutoBackupIfNeeded();
-        }
-    });
-</script>
+<script src="js/bootstrap/appStart.js"></script>
 </body>
 </html> 

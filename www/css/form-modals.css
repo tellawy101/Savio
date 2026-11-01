@@ -1,0 +1,234 @@
+/* ==============================
+   مودالات اختيار/إضافة الحساب والتصنيف
+============================== */
+.modal.show {
+    display: flex;
+}
+
+#categoryModal,
+#addCategoryModal,
+#addAccountModal,
+#accountModal {
+    align-items: flex-end;
+    padding-top: 0;
+}
+
+#categoryModal .modal-content, #addCategoryModal .modal-content, #accountModal .modal-content, #addAccountModal .modal-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: 24px 24px 0 0;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom, 16px));
+    animation: slideUpSheet .25s ease;
+}
+/* تنسيق أزرار الحفظ والإلغاء في شيت إضافة الحساب */
+.modal-actions .account-cancel-btn {
+    background: var(--c-line);
+    color: #374151;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+body.dark .modal-actions .account-cancel-btn {
+background: var(--dk-field) !important;
+    color: #F1F5F4 !important;
+    border: 1px solid #3E3E3E !important;
+}
+
+body.dark .modal-actions .account-save-btn {
+    background: #0F766E !important;
+    color: #ffffff !important;
+}
+.form-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.account-save-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 12px;
+    background: var(--brand);
+        color: var(--c-white);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* ==============================
+   عناصر ليستة الحسابات/التصنيفات (accountsList / categoriesList)
+============================== */
+#accountsList, #categoriesList {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.account-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    background: var(--surface-alt);
+    color: var(--text);
+    cursor: pointer;
+    user-select: none;
+}
+
+.account-item-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eee;
+    border-radius: 50%;
+    font-size: 16px;
+}
+
+.account-info {
+flex: 1;
+min-width: 0;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+text-align: start;
+}
+
+.account-name {
+    font-weight: 700;
+    font-size: 15px;
+    text-align: start !important;
+    width: 100%;
+}
+
+.account-balance {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: start !important;
+    width: 100%;
+}
+
+
+.account-item-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* ==============================
+   قائمة تعديل/حذف الحساب أو التصنيف (accountMenu / categoryMenu)
+============================== */
+#accountMenu,
+#categoryMenu {
+    align-items: flex-end;
+    padding-top: 0;
+}
+
+#accountMenu .modal-content,
+#categoryMenu .modal-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: 20px 20px 0 0;
+    padding: 10px 8px calc(env(safe-area-inset-bottom, 0px) + 16px);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    animation: slideUpSheet .25s ease;
+}
+
+#accountMenu .modal-content::before,
+#categoryMenu .modal-content::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: #D1D5DB;
+    border-radius: 999px;
+    margin: 0 auto 10px;
+}
+
+@keyframes slideUpSheet {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+#accountMenu .modal-content button,
+#categoryMenu .modal-content button {
+    width: 100%;
+    margin: 0;
+    padding: 14px 16px;
+    background: transparent;
+    color: var(--c-ink);
+    font-size: 16px;
+    font-weight: 700;
+    text-align: start;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#accountMenu .modal-content button:hover,
+#categoryMenu .modal-content button:hover {
+    background: var(--c-bg-chip);
+    opacity: 1;
+}
+
+#editAccountBtn,
+#editCategoryBtn {
+    border-bottom: 1px solid var(--c-line);
+    border-radius: 10px 10px 0 0;
+}
+
+#deleteAccountBtn,
+#deleteCategoryBtn {
+    color: var(--danger);
+    border-radius: 0 0 10px 10px;
+}
+
+/* ==============================
+   Toast (رسالة التنبيه العائمة)
+============================== */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%) translateY(20px);
+    background: #E53935;
+    color: var(--c-white);
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(0,0,0,.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    z-index: var(--z-toast);
+    max-width: 85%;
+    text-align: center;
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+

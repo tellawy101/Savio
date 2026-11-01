@@ -1,0 +1,19 @@
+/* علامة الحفظ - صفحة الدخل والصرف */
+#saveIncomeBtn,
+#saveExpenseBtn {
+    background: transparent !important;
+    border: none !important;
+        color: var(--brand) !important;
+}
+
+#saveIncomeBtn svg,
+#saveExpenseBtn svg,
+#saveTransferBtn svg {
+    width: 24px !important;
+    height: 24px !important;
+    display: block !important;
+    stroke: var(--brand) !important;
+    fill: none !important;
+    stroke-width: 4.5 !important;
+    opacity: 1 !important;
+}
