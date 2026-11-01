@@ -1,0 +1,281 @@
+/* ==============================
+   Restore Preview Modal
+============================== */
+.restore-modal-content {
+    text-align: center;
+    padding: 28px 20px 20px;
+    max-width: 360px;
+}
+
+.restore-stats {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--brand-line);
+    background: var(--brand-bg-soft);
+    border-radius: 14px;
+    padding: 4px 14px;
+    margin-bottom: 18px;
+}
+
+.restore-stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 0;
+    font-size: 13.5px;
+}
+
+.restore-stat + .restore-stat {
+    border-top: 1px solid var(--brand-divider);
+}
+
+.restore-stat i {
+    width: 18px;
+    height: 18px;
+    color: var(--brand-text);
+    flex-shrink: 0;
+}
+
+.restore-stat-label {
+    flex: 1;
+    text-align: start;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.restore-stat-value {
+    font-weight: 700;
+    color: var(--brand-text);
+}
+
+.restore-section-label {
+    text-align: start;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.restore-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.restore-option {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.restore-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.restore-option-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1.5px solid rgba(107, 114, 128, 0.25);
+    border-radius: 14px;
+    transition: border-color .2s ease, background .2s ease;
+}
+
+.restore-option-body > i {
+    width: 22px;
+    height: 22px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.restore-option-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: start;
+}
+
+.restore-option-text strong {
+    font-size: 14px;
+}
+
+.restore-option-text small {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.restore-option-check {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(107, 114, 128, 0.4);
+    flex-shrink: 0;
+    transition: border-color .2s ease, background .2s ease;
+}
+
+.restore-option-check::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: #fff;
+    transform: scale(0);
+    transition: transform .15s ease;
+}
+
+.restore-option input:checked + .restore-option-body {
+    border-color: var(--brand-text);
+    background: var(--brand-bg);
+}
+
+.restore-option input:checked + .restore-option-body > i {
+    color: var(--brand-text);
+}
+
+.restore-option input:checked + .restore-option-body .restore-option-check {
+    border-color: var(--brand-text);
+background: var(--brand-text);
+}
+
+.restore-option input:checked + .restore-option-body .restore-option-check::after {
+    transform: scale(1);
+}
+
+.restore-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 0 !important;
+}
+
+.restore-actions .import-close-btn {
+    flex: 1.4;
+    width: auto;
+    cursor: pointer;
+}
+
+.restore-cancel-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(107, 114, 128, 0.3);
+    background: transparent;
+    color: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Dark mode */
+body.dark .restore-option-check::after {
+    background: #0f1f1e;
+}
+/* بوبب البيانات يطلع من تحت */
+#dataModal {
+    align-items: flex-end;
+    padding-top: 0;
+}
+#dataModal .modal-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    max-height: 85vh;
+    overflow-y: auto;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 24px 24px 0 0;
+    padding: 14px 16px calc(20px + env(safe-area-inset-bottom, 16px));
+    animation: slideUpSheet .25s ease;
+}
+.data-sheet-handle {
+    width: 40px;
+    height: 4px;
+    border-radius: 999px;
+    background: #d1d5db;
+    margin: 0 auto 12px;
+}
+#dataModal .settings-section {
+    margin-bottom: 12px;
+}
+/* هيدر الصفحات الفرعية (رجوع + عنوان) */
+.sub-page-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0 14px;
+}
+.sub-page-header h3 {
+    margin: 0;
+    font-size: 20px;
+}
+.sub-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+/* عناوين الصفحات الفرعية في النص */
+.sub-page-header {
+    position: relative;
+    justify-content: center;
+    min-height: 36px;
+}
+.sub-page-header .back-btn {
+    position: absolute;
+    inset-inline-start: 0;
+}
+.sub-page-header h3 {
+    text-align: center;
+}
+
+.goals-header,
+.cb-header {
+    position: relative;
+    min-height: 44px;
+}
+.goals-header .sub-title-row > :not(.back-btn),
+.cb-header .sub-title-row > :not(.back-btn) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+}
+/* سهم الرجوع واضح في الوضع الفاتح */
+body:not(.dark) .sub-page-header .back-btn,
+body:not(.dark) .sub-title-row .back-btn {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+}
+/* سهم الرجوع دايرة كاملة */
+.sub-title-row .back-btn,
+.sub-page-header .back-btn {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+}
+/* هيدر ثابت في الصفحات اللي فيها قايمة */
+body .goals-header,
+body .cb-header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: var(--z-sticky);
+    padding-bottom: 12px;
+    margin-bottom: 0;
+}
+body .goals-header {
+    background: #F4F5F7;
+}
+body .cb-header {
+    background: var(--surface);
+}
+body.dark .goals-header,
+body.dark .cb-header {
+    background: #101817;
+}

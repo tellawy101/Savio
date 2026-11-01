@@ -1,0 +1,135 @@
+/* ==============================
+   Select Trigger Button (Language / Currency)
+============================== */
+.settings-select-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--brand-bg);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--brand-text);
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.settings-select-trigger i {
+    width: 16px;
+    height: 16px;
+    color: var(--brand-text);
+}
+
+/* ==============================
+   Picker Modal (Language / Currency)
+============================== */
+.picker-modal-content {
+    text-align: center;
+    padding: 28px 22px 22px;
+}
+
+.picker-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.picker-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 16px;
+        border: 1.5px solid var(--brand-line);
+    border-radius: 12px;
+    background: var(--option-bg);
+    font-size: 14px;
+    font-weight: 700;
+        color: var(--text);
+    cursor: pointer;
+    text-align: start;
+}
+
+.picker-option .picker-check {
+    width: 18px;
+    height: 18px;
+        color: var(--brand-text);
+    opacity: 0;
+    transition: opacity .15s ease;
+}
+
+.picker-option.selected {
+    border-color: var(--brand-text);
+    background: var(--brand-bg);
+}
+
+.picker-option.selected .picker-check {
+    opacity: 1;
+}
+
+/* ==============================
+   About Savio Modal
+============================== */
+.about-info-list {
+        background: var(--brand-bg-soft);
+    border: 1.5px solid var(--brand-line);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-top: 6px;
+    text-align: start;
+}
+
+.about-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.about-info-label {
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0.6;
+}
+
+.about-info-value {
+    font-size: 13.5px;
+    font-weight: 700;
+        color: var(--text);
+}
+
+.about-info-link .about-info-value {
+    color: var(--brand-text);
+}
+
+.about-info-divider {
+    height: 1px;
+    background: var(--brand-divider);
+    margin: 0 16px;
+}
+
+.about-version {
+    margin: 16px 0 0;
+    opacity: .5;
+    font-size: 12.5px;
+}
+
+.about-whatsapp-value {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.about-whatsapp-icon {
+    width: 25px;
+    height: 25px;
+    color: #128C7E;
+    flex-shrink: 0;
+}

@@ -71,7 +71,7 @@ const category = tx.categoryId || getCategoryIdByName(tx.category) || tx.categor
                 catBudgetsList.innerHTML = ids.map(function(id) {
                     
                     const cat = getCategories().find(function(c) { return c.id === id; });
-                    const name = cat ? cat.name : id;
+                    const name = cat ? cat.name : t("cb_deleted_category");
                     const limit = Number(budgets[id]) || 0;
                     const used = spent[id] || 0;
 

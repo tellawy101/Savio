@@ -74,7 +74,14 @@ function setupPicker(config) {
         });
         
         modal.querySelectorAll(".picker-option").forEach(function(opt) {
-            opt.addEventListener("click", function() {
+                        opt.addEventListener("click", async function() {
+                if (config.confirmMessage && opt.dataset.value !== config.getValue()) {
+                    const ok = await customConfirm(config.confirmMessage());
+                    if (!ok) {
+                        modal.classList.remove("show");
+                        return;
+                    }
+                }
                 config.setValue(opt.dataset.value);
                 refresh();
                 modal.classList.remove("show");
@@ -98,6 +105,9 @@ setupPicker({
     closeBtnId: "closeCurrencyPickerBtn",
     getValue: getCurrency,
     setValue: setCurrency,
+        confirmMessage: function() {
+        return t("currency_change_confirm");
+    },
     getLabelText: function(value) {
         return value;
     }
