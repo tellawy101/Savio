@@ -1,0 +1,191 @@
+/* =========================================
+   ACCOUNT TRANSACTIONS PAGE
+   تنسيق صفحة عمليات الحساب
+   ========================================= */
+
+
+
+
+/* =========================================
+   ACCOUNT TOTAL HEADER
+   Header + Total
+   ========================================= */
+/* =========================================
+   ACCOUNT TRANSACTIONS HEADER
+========================================= */
+
+.total-card {
+    width: 100%;
+    min-height: auto;
+    padding: 20px 20px 24px;
+    box-sizing: border-box;
+    margin: 0;
+background: var(--brand-gradient);
+    color: #ffffff;
+    border-radius: 0 0 30px 30px;
+    overflow: hidden;
+}
+
+/* =========================================
+   HEADER TOP
+========================================= */
+.account-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    min-height: 44px;
+}
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+.total-card .back-btn {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+[dir="rtl"] .total-card .back-btn {
+    transform: scaleX(-1);
+}
+
+/* =========================================
+   TITLE
+========================================= */
+.transaction-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-inline-start: 10px;
+    margin-inline-end: auto;
+}
+
+.transaction-title h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+/* =========================================
+   ACCOUNT INFO
+========================================= */
+.account-info {
+    margin-inline-start: auto;
+margin-inline-end: 0;
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 6px;
+flex: none;
+justify-content: flex-end;
+    white-space: nowrap;
+}
+
+#accountName {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.account-divider {
+    display: none;
+}
+
+.acc-header-icon {
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================================
+   HEADER DIVIDER
+========================================= */
+.header-divider {
+    width: 100%;
+    height: 1px;
+    margin-top: 16px;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* =========================================
+   TOTAL ROW
+========================================= */
+/* =========================================
+   TOTAL ROW
+========================================= */
+.total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 22px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.total-label {
+    order: 1;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    flex-shrink: 1;
+}
+
+/* خط فاصل أنيق بين العنوان والمبلغ */
+.total-row::after {
+    content: "";
+    display: block;
+    position: static;
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.35);
+    order: 2;
+    flex-shrink: 0;
+    margin: 0 10px;
+}
+
+.total-value {
+    order: 3;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    direction: ltr;
+    flex-shrink: 0;
+}
+
+.total-value .currency {
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+#totalAmount {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    color: #ffffff;
+}
