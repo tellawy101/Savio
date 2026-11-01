@@ -672,3 +672,22 @@ body:not(.dark) .sub-title-row .back-btn {
     width: 36px;
     height: 36px;
 }
+/* هيدر ثابت في الصفحات اللي فيها قايمة */
+body .goals-header,
+body .cb-header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: var(--z-sticky);
+    padding-bottom: 12px;
+    margin-bottom: 0;
+}
+body .goals-header {
+    background: #F4F5F7;
+}
+body .cb-header {
+    background: var(--surface);
+}
+body.dark .goals-header,
+body.dark .cb-header {
+    background: #101817;
+}
