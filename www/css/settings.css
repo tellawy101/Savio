@@ -614,3 +614,61 @@ body.dark .restore-option-check::after {
 #dataModal .settings-section {
     margin-bottom: 12px;
 }
+/* هيدر الصفحات الفرعية (رجوع + عنوان) */
+.sub-page-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0 14px;
+}
+.sub-page-header h3 {
+    margin: 0;
+    font-size: 20px;
+}
+.sub-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+/* عناوين الصفحات الفرعية في النص */
+.sub-page-header {
+    position: relative;
+    justify-content: center;
+    min-height: 36px;
+}
+.sub-page-header .back-btn {
+    position: absolute;
+    inset-inline-start: 0;
+}
+.sub-page-header h3 {
+    text-align: center;
+}
+
+.goals-header,
+.cb-header {
+    position: relative;
+    min-height: 44px;
+}
+.goals-header .sub-title-row > :not(.back-btn),
+.cb-header .sub-title-row > :not(.back-btn) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+}
+/* سهم الرجوع واضح في الوضع الفاتح */
+body:not(.dark) .sub-page-header .back-btn,
+body:not(.dark) .sub-title-row .back-btn {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+}
+/* سهم الرجوع دايرة كاملة */
+.sub-title-row .back-btn,
+.sub-page-header .back-btn {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+}

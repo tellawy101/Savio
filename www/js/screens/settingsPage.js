@@ -154,6 +154,12 @@ setupPicker({
             navigateTo("recurring");
         };
     }
+        const planningBtn = document.getElementById("planningBtn");
+    if (planningBtn) {
+        planningBtn.onclick = function () {
+            navigateTo("planning");
+        };
+    }
         const catBudgetsBtn = document.getElementById("catBudgetsBtn");
 
     if (catBudgetsBtn) {

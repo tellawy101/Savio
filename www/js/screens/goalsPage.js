@@ -48,7 +48,7 @@ function initGoalsPage() {
 
         if (subtitleEl) {
             subtitleEl.textContent = goals.length
-                ? `${goals.length} ${t("goals_count_label")} · ${doneCount} ${t("goals_done_label")}`
+? `${goals.length} ${t(goals.length === 1 ? "goals_count_one" : "goals_count_label")} · ${doneCount} ${t("goals_done_label")}`
                 : "";
         }
 

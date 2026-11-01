@@ -81,6 +81,14 @@ const ROUTES = {
             }
         }
     },
+        planning: {
+        template: "templates/planning.html",
+        init: function() {
+            if (typeof initSettingsPage === "function") {
+                initSettingsPage();
+            }
+        }
+    },
         data: {
         template: "templates/data.html",
         init: function() {
@@ -102,7 +110,7 @@ const ROUTE_INIT_NAMES = {
     settings: "initSettingsPage",
     accounts: "initAccountsPage",
     debts: "initDebtsPage",
-    data: "initSettingsPage",
+planning: "initSettingsPage",
     goals: "initGoalsPage",
         recurring: "initRecurringPage",
     budgets: "initBudgetsPage",
