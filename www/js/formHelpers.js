@@ -112,9 +112,7 @@ function fixScrollOnFocusOut() {
 }
 // بتفعّل الوضع الليلي المحفوظ فور تحميل الصفحة (لأي صفحة معندهاش زرار تبديل ثيم بنفسها)
 function applyStoredTheme() {
-    if (getTheme() === "dark") {
-        document.body.classList.add("dark");
-    }
+    applyTheme(getTheme());
 }
 
 // بترجع خانة "الحساب" الظاهرة في الصفحة الحالية (Income أو Expense)

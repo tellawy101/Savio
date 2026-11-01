@@ -24,13 +24,13 @@ function initHomePage() {
     window.selectedMonth = window.selectedMonth || (nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0"));
     // تحميل البيانات
     let expenses = loadTransactions();
-    const reportState = window.homeReportState || (window.homeReportState = { period: "all", from: "", to: "" });
+    const reportState = window.homeReportState || (window.homeReportState = { period: "this_month", from: "", to: "" });
     
     // كارت التقرير اللي فوق (الرصيد الصافي / الدخل / المصروفات)
     function renderHomeReport() {
         if (!homeReport) return;
         homeReport.innerHTML = "";
-        homeReport.appendChild(buildPeriodReportCard(reportState, expenses, renderHomeReport));
+homeReport.appendChild(buildPeriodReportCard(reportState, expenses, renderHomeReport));
     }
         // هل فيه بحث أو فلتر شغّال؟ (الترتيب بيتحسب لو اتغير عن الافتراضي)
     function hasAnyFilter() {
@@ -115,7 +115,7 @@ if (expenses.length === 0) {
                 return;
             }
 
-                        if (
+            if (
                 window.selectedMonth &&
                 (!expense.date || !expense.date.startsWith(window.selectedMonth))
             ) {

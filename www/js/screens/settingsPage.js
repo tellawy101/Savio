@@ -117,6 +117,23 @@ setupPicker({
     }
 });
 // ------------------------------
+// المظهر (فاتح / داكن / حسب النظام)
+// ------------------------------
+setupPicker({
+    selectBtnId: "themeSelectBtn",
+    labelId: "themeSelectedLabel",
+    modalId: "themePickerModal",
+    closeBtnId: "closeThemePickerBtn",
+    getValue: getTheme,
+    setValue: function (value) {
+        saveTheme(value);
+        applyTheme(value);
+    },
+    getLabelText: function (value) {
+        return t("theme_" + value);
+    }
+});
+// ------------------------------
     // Savings Goals
     // ------------------------------
     function setupNavButtons() {
@@ -199,7 +216,8 @@ setupAutoBackup();
 }
 
 setupInfoModal("aboutSavioBtn", "aboutModal", "closeAboutBtn");
-setupInfoModal("dataBtn", "dataModal", "closeDataBtn");
+const dataBtn = document.getElementById("dataBtn");
+if (dataBtn) dataBtn.onclick = function() { navigateTo("data"); };
 // ------------------------------
     // Privacy Modal
     // ------------------------------

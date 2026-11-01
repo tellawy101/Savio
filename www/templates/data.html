@@ -1,0 +1,269 @@
+<main class="settings-page">
+
+<!-- Auto Backup -->
+  <section class="settings-section">
+
+    <div class="settings-card">
+
+      <div class="settings-item">
+
+        <div class="settings-icon">
+          <i data-lucide="cloud-upload"></i>
+        </div>
+
+        <div class="settings-info">
+          <span data-i18n="autobackup_title">Auto Backup</span>
+          <small data-i18n="autobackup_desc">Save a backup to Downloads every 7 days</small>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="autoBackupToggle">
+          <span class="slider"></span>
+        </label>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Data -->
+  <section class="settings-section">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+  <h3 data-i18n="settings_data" style="margin: 0;">Data</h3>
+  <span id="lastBackupBadge" style="font-size: 11px; color: #0F766E; font-weight: 700; background: rgba(15,118,110,0.1); padding: 3px 8px; border-radius: 8px;">
+    لم يتم إنشاء نسخة بعد
+  </span>
+</div>
+    
+    <div class="settings-card">
+      
+      <div class="settings-item" id="exportData">
+        
+        <div class="settings-icon">
+          <i data-lucide="download"></i>
+        </div>
+        
+        <div class="settings-info">
+          <span data-i18n="settings_export">Export Data</span>
+          <small data-i18n="settings_export_desc">Save a backup of your data</small>
+        </div>
+        
+        <i class="settings-arrow" data-lucide="chevron-right"></i>
+        
+      </div>
+      
+      
+      <div class="settings-divider"></div>
+      
+            <div class="settings-item" id="exportCsvBtn">
+
+        <div class="settings-icon">
+          <i data-lucide="file-text"></i>
+        </div>
+
+        <div class="settings-info">
+          <span data-i18n="export_csv_title">Export as CSV</span>
+          <small data-i18n="export_csv_desc">Save all transactions as a spreadsheet file</small>
+        </div>
+
+        <i class="settings-arrow" data-lucide="chevron-right"></i>
+
+      </div>
+
+      <div class="settings-divider"></div>
+            <div class="settings-item" id="exportExcelBtn">
+
+        <div class="settings-icon">
+          <i data-lucide="file-spreadsheet"></i>
+        </div>
+
+        <div class="settings-info">
+          <span data-i18n="export_excel_title">Export as Excel</span>
+          <small data-i18n="export_excel_desc">Save all transactions as an Excel file</small>
+        </div>
+
+        <i class="settings-arrow" data-lucide="chevron-right"></i>
+
+      </div>
+            <div class="settings-divider"></div>
+
+      <div class="settings-item" id="exportPdfBtn">
+
+        <div class="settings-icon">
+          <i data-lucide="file-text"></i>
+        </div>
+
+        <div class="settings-info">
+          <span data-i18n="export_pdf_title">Export as PDF</span>
+          <small data-i18n="export_pdf_desc">Save all transactions as a PDF report</small>
+        </div>
+
+        <i class="settings-arrow" data-lucide="chevron-right"></i>
+
+      </div>
+
+      <div class="settings-divider"></div>
+      
+      <div class="settings-item" id="importData">
+        
+        <div class="settings-icon">
+          <i data-lucide="upload"></i>
+        </div>
+        
+        <div class="settings-info">
+          <span data-i18n="settings_import">Import Data</span>
+          <small data-i18n="settings_import_desc">Restore your saved data</small>
+        </div>
+        
+        <i class="settings-arrow" data-lucide="chevron-right"></i>
+        
+      </div>
+      
+      
+      <div class="settings-divider"></div>
+      
+            <div class="settings-item" id="restoreSnapshotBtn">
+        <div class="settings-icon">
+          <i data-lucide="history"></i>
+        </div>
+        <div class="settings-info">
+          <span data-i18n="snapshot_restore_title">Restore last snapshot</span>
+          <small data-i18n="snapshot_restore_desc">Bring back your data from before the last restore or delete</small>
+        </div>
+        <i class="settings-arrow" data-lucide="chevron-right"></i>
+      </div>
+
+      <div class="settings-divider"></div>
+      <div class="settings-item danger" id="clearData">
+        
+        <div class="settings-icon">
+          <i data-lucide="trash-2"></i>
+        </div>
+        
+        <div class="settings-info">
+          <span data-i18n="settings_clear">Clear All Data</span>
+          <small data-i18n="settings_clear_desc">Delete all your saved data</small>
+        </div>
+        
+        <i class="settings-arrow" data-lucide="chevron-right"></i>
+        
+      </div>
+      
+    </div>
+    
+  </section>
+  
+  
+
+  <!-- Export Fallback Modal -->
+  <div id="exportFallbackModal" class="modal">
+    <div class="modal-content">
+      
+      <h2 data-i18n="settings_export_fallback_title">Backup Data</h2>
+      
+      <p style="margin: 10px 0 15px; line-height: 1.6;" data-i18n="settings_export_fallback_desc">Copy the text below and save it as a .json file.</p>
+      
+      <textarea id="exportFallbackText" readonly rows="8" style="width:100%; box-sizing:border-box; resize:vertical; font-family:monospace; font-size:12px;"></textarea>
+      
+      <div class="modal-actions" style="margin-top:15px; display:flex; gap:10px;">
+        <button id="copyExportFallbackBtn" data-i18n="settings_export_copy">Copy</button>
+        <button id="closeExportFallbackBtn" data-i18n="settings_close">Close</button>
+      </div>
+      
+    </div>
+  </div>
+  
+<!-- Import Manual Modal -->
+  <div id="importManualModal" class="modal">
+    <div class="modal-content import-modal-content">
+
+      <div class="import-modal-icon">
+        <i data-lucide="upload-cloud"></i>
+      </div>
+
+      <h2 data-i18n="settings_import">Import Data</h2>
+
+      <p class="import-modal-desc" data-i18n="settings_import_manual_desc">Choose the backup file you saved earlier.</p>
+
+      <label class="import-file-drop" for="importFileInput">
+        <i data-lucide="file-json-2"></i>
+        <span id="importFileLabel" data-i18n="settings_import_choose_file">Tap to choose your backup file</span>
+      </label>
+      <input type="file" id="importFileInput" accept="application/json,.json" hidden>
+
+      <div class="modal-actions import-modal-actions">
+        <button id="closeImportManualBtn" class="import-close-btn" data-i18n="settings_close">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- نافذة المعاينة الذكية قبل الاستعادة -->
+    <div id="restorePreviewModal" class="modal">
+    <div class="modal-content restore-modal-content">
+      
+      <div class="import-modal-icon">
+        <i data-lucide="history"></i>
+      </div>
+      
+           <h2 data-i18n="restore_preview_title">معاينة النسخة الاحتياطية</h2>
+      <p class="import-modal-desc" data-i18n="restore_preview_desc">محتويات الملف الذي اخترته</p>
+      
+      <div class="restore-stats">
+        <div class="restore-stat">
+          <i data-lucide="calendar"></i>
+          <span class="restore-stat-label" data-i18n="restore_stat_date">التاريخ</span>          <span class="restore-stat-value" id="previewBackupDate">-</span>
+        </div>
+        <div class="restore-stat">
+          <i data-lucide="receipt"></i>
+          <span class="restore-stat-label" data-i18n="restore_stat_transactions">المعاملات</span>          <span class="restore-stat-value" id="previewTxCount">0</span>
+        </div>
+        <div class="restore-stat">
+          <i data-lucide="hand-coins"></i>
+          <span class="restore-stat-label" data-i18n="restore_stat_debts">الديون</span>          <span class="restore-stat-value" id="previewDebtsCount">0</span>
+        </div>
+        <div class="restore-stat">
+          <i data-lucide="landmark"></i>
+          <span class="restore-stat-label" data-i18n="restore_stat_accounts">الحسابات</span>          <span class="restore-stat-value" id="previewAccountsCount">0</span>
+        </div>
+      </div>
+      
+      <div class="restore-section-label" data-i18n="restore_method_label">طريقة الاستعادة</div>      
+      <div class="restore-options">
+        <label class="restore-option">
+          <input type="radio" name="restoreMode" value="replace" checked>
+          <div class="restore-option-body">
+            <i data-lucide="replace"></i>
+            <div class="restore-option-text">
+                           <strong data-i18n="restore_replace_title">استبدال كامل</strong>
+              <small data-i18n="restore_replace_desc">يمسح بياناتك الحالية ويحط اللي في الملف مكانها</small>
+            </div>
+            <span class="restore-option-check"></span>
+          </div>
+        </label>
+        
+        <label class="restore-option">
+          <input type="radio" name="restoreMode" value="merge">
+          <div class="restore-option-body">
+            <i data-lucide="git-merge"></i>
+            <div class="restore-option-text">
+                            <strong data-i18n="restore_merge_title">دمج ذكي</strong>
+              <small data-i18n="restore_merge_desc">يضيف الجديد بس ويسيب بياناتك الحالية زي ما هي</small>
+            </div>
+            <span class="restore-option-check"></span>
+          </div>
+        </label>
+      </div>
+      
+      <div class="modal-actions restore-actions">
+                <button id="confirmRestoreBtn" class="import-close-btn" data-i18n="restore_btn">استعادة</button>
+        <button id="cancelRestorePreviewBtn" class="restore-cancel-btn" data-i18n="cancel">إلغاء</button>
+      </div>
+      
+    </div>
+  </div>
+</main>
+
+<div id="modals-placeholder"></div>
