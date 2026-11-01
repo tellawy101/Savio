@@ -39,7 +39,9 @@ const accountTransactions = transactions.filter(transaction => {
         const sameType = type === "transfer" ? !!transaction.isTransfer : transaction.type === type;
     return sameAccount && sameType && (type === "transfer" || !transaction.isTransfer);
 });
-
+const openingAccount = getAccounts().find(a => a.id === accountId);
+const openingBalance = openingAccount ? (Number(openingAccount.balance) || 0) : 0;
+const showOpening = type !== "transfer" && openingBalance !== 0 && ((type === "income") === (openingBalance > 0));
 if (accountNameEl) {
     accountNameEl.textContent = t("account_label");
 }
@@ -86,8 +88,8 @@ if (totalAmountEl) {
 
     transactionCountEl.textContent = accountTransactions.length;
 
-    emptyStateEl.style.display =
-        accountTransactions.length === 0 ? "block" : "none";
+        emptyStateEl.style.display =
+        accountTransactions.length === 0 && !showOpening ? "block" : "none";
 
     const sortEl = document.getElementById("accSortFilter");
     
@@ -156,7 +158,23 @@ li.innerHTML = `
             transactionsListEl.appendChild(li);
             
         });
-        
+                if (showOpening) {
+            const openingLi = document.createElement("li");
+            openingLi.className = openingBalance > 0 ? "is-income" : "is-expense";
+            openingLi.innerHTML = `
+                <div class="transaction-icon-box">
+                    <i data-lucide="wallet"></i>
+                </div>
+                <div class="tx-main">
+                    <div class="tx-top">
+                        <strong class="tx-title">${escapeHTML(t("opening_balance_label"))}</strong>
+                        <strong class="transaction-amount">${escapeHTML(getCurrency())} ${Math.abs(openingBalance).toLocaleString("en-US")}</strong>
+                    </div>
+                </div>
+            `;
+            if (sortEl && sortEl.value === "date_asc") transactionsListEl.prepend(openingLi);
+            else transactionsListEl.appendChild(openingLi);
+        }
         if (window.lucide) {
             lucide.createIcons();
         }
