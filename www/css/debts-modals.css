@@ -1,0 +1,21 @@
+#debtModal .modal-content,
+#editDebtModal .modal-content {
+    box-sizing: border-box;
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+}
+#payDebtModal .pay-debt-info {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 4px 0 12px;
+}
+
+#payDebtModal .pay-full-btn {
+    background: transparent;
+    color: var(--brand);
+    border: 1px solid var(--brand);
+    border-radius: 12px;
+    padding: 10px;
+    margin: 8px 0 12px;
+    font-weight: 600;
+}

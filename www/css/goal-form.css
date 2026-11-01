@@ -1,0 +1,215 @@
+/* ==============================
+   Goal Form Modal
+============================== */
+
+.goal-field {
+    margin-bottom: 16px;
+}
+
+.goal-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.goal-field input {
+    width: 100%;
+    height: 48px;
+    margin: 0;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border: 1px solid var(--c-line);
+    border-radius: 14px;
+    background: var(--surface-alt);
+    font-size: 15px;
+    color: var(--text);
+}
+
+#goalModal .budget-save-btn {
+    margin-top: 6px;
+}
+
+body.dark .goal-field input {
+    border-color: #3d3d3d;
+}
+.goal-field textarea,
+.goal-field #debtNotes,
+.goal-field #editDebtNotes {
+    width: 100%;
+    min-height: 90px;
+    margin: 0;
+    padding: 12px 14px;
+    box-sizing: border-box;
+    border: 1px solid var(--c-line);
+    border-radius: 14px;
+    background: var(--surface-alt);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    resize: none;
+}
+
+.goal-field #debtNotes::placeholder,
+.goal-field #editDebtNotes::placeholder {
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+body.dark .goal-field #debtNotes,
+body.dark .goal-field #editDebtNotes {
+    border-color: #3d3d3d;
+    background: var(--surface-alt);
+    color: var(--text);
+}
+.goal-field input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+.goal-field input[type="date"]::-webkit-datetime-edit {
+    display: flex !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+    text-align: left !important;
+}
+
+.goal-field input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    padding: 0 !important;
+    text-align: left !important;
+}
+
+.goal-field input[type="date"]::-webkit-date-and-time-value {
+    text-align: left !important;
+    margin: 0 !important;
+}
+.cb-picker {
+    position: relative;
+}
+
+.cb-picker-btn {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border: 1px solid var(--c-line);
+    border-radius: 14px;
+    background: var(--surface-alt);
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--c-ink);
+    cursor: pointer;
+}
+
+.cb-picker-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.cb-picker.open .cb-picker-btn svg {
+    transform: rotate(180deg);
+}
+
+.cb-picker-list {
+    display: none;
+    margin-top: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--c-line);
+    border-radius: 14px;
+    background: var(--surface-alt);
+}
+
+.cb-picker.open .cb-picker-list {
+    display: block;
+}
+
+.cb-picker-item {
+    padding: 14px;
+    font-size: 15px;
+    color: var(--text);
+    border-bottom: 1px solid var(--c-line);
+    cursor: pointer;
+}
+
+.cb-picker-item:last-child {
+    border-bottom: none;
+}
+
+.cb-picker-item.selected {
+    color: var(--brand);
+    font-weight: 700;
+}
+
+body.dark .cb-picker-btn,
+body.dark .cb-picker-list {
+    border-color: #3d3d3d;
+    color: #F9FAFB;
+}
+
+body.dark .cb-picker-item {
+    border-bottom-color: #3d3d3d;
+}
+
+body.dark .cb-picker-item.selected {
+    color: #14b8a6;
+}
+.cb-top-end {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cb-delete-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    color: #ef4444;
+}
+
+.cb-delete-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.cb-amounts {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.cb-used {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.cb-limit {
+    color: var(--text-muted);
+}
+
+body.dark .cb-delete-btn {
+    border-color: #5b2a2a;
+}
+
+body.dark .cb-over .goal-progress-fill {
+    background: #dc2626;
+}
+
