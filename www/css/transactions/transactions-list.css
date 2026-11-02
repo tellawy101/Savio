@@ -69,7 +69,7 @@
     height: 48px;
     box-sizing: border-box;
 
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--border);
     border-radius: 14px;
 
     padding: 0 14px;
@@ -78,8 +78,8 @@
     font-weight: 600;
 
     outline: none;
-    background: #FFFFFF;
-    color: #111827;
+        background: var(--surface);
+    color: var(--text);
 }
 
 .expense-icon-box {
@@ -113,7 +113,7 @@
 .expense-category {
     font-size: 15px;
     font-weight: 600;
-    color: #9CA3AF;
+        color: var(--text-faint);
     line-height: 1.2;
     margin: 0 0 3px 0;
     max-width: 100%;
@@ -184,7 +184,7 @@
     box-sizing: border-box;
 
     background: var(--surface);
-    border: 1px solid #E5E7EB;
+        border: 1px solid var(--border);
     border-radius: 16px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     padding: 10px 16px;
@@ -215,9 +215,9 @@
 
     border: none;
     border-radius: 50%;
-    background: #F4F5F7;
-
-    color: #111;
+    background: var(--surface-alt);
+    
+    color: var(--text);
     cursor: pointer;
     flex-shrink: 0;
 }

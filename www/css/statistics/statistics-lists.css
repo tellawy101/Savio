@@ -81,7 +81,7 @@
 
     padding: 14px;
 
-    background: #F9FAFB;
+background: var(--surface-alt);
 
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -101,7 +101,7 @@
 /* اسم الحساب */
 .account-name {
     font-weight: 700;
-    color: #111827;
+    color: var(--text);
 }
 
 
@@ -114,18 +114,15 @@
     font-size: 12px;
 }
 
-
 /* الدخل */
 .account-income {
-    color: #0F766E;
+    color: var(--income);
 }
-
 
 /* المصروف */
 .account-expense {
-    color: #EF4444;
+    color: var(--expense);
 }
-
 
 /* صافي الحساب */
 .account-value {

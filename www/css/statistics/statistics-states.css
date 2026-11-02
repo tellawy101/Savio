@@ -138,11 +138,11 @@ body.dark .account-row {
 }
 
 .compare-good {
-    color: #16a34a;
+    color: var(--income);
 }
 
 .compare-bad {
-    color: #dc2626;
+    color: var(--expense);
 }
 
 .compare-neutral {

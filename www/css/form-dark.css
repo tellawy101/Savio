@@ -23,7 +23,7 @@ background: var(--dk-field);
 
 .dark #deleteAccountBtn,
 .dark #deleteCategoryBtn {
-    color: #F87171;
+    color: var(--expense);
 }
 
 .dark .income-header,

@@ -45,14 +45,14 @@ body.dark .empty-state-title {
 }
 
 body.dark .empty-state-sub {
-    color: #64748B;
+     color: var(--text-faint);
 }
 .expense-icon-box.transfer {
-    background: rgba(59, 130, 246, 0.12);
-    color: #3B82F6;
+    background: var(--transfer-bg);
+    color: var(--transfer);
 }
 .expense-amount-transfer {
-    color: #3B82F6 !important;
+    color: var(--transfer) !important;
 }
 .search-panel {
     display: none;

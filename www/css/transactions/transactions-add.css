@@ -59,7 +59,7 @@ body.dark .search-btn svg {
 .dark .swap-accounts-btn {
 background: var(--dk-field-deep);
     border-color: #333;
-    color: #22c55e;
+    color: var(--income);
 }
 /* ==============================================================
    صفحة إضافة معاملة موحّدة (Tabs: Income / Expense / Transfer)
@@ -189,7 +189,7 @@ body.add-transaction-page .transfer-header {
 }
 
 .dark .tx-confirm {
-    color: #22c55e;
+    color: var(--income);
 }
 @keyframes monthSlideNext {
     from { opacity: 0; transform: translateX(24px); }

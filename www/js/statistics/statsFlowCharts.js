@@ -3,8 +3,9 @@
 // رسمة الدخل/المصروف (Line) والأعمدة (Bar) — نفس الداتا ونفس الكود
 // ==============================================================
 
-const STATS_INCOME_COLOR = "#0F766E";
-const STATS_EXPENSE_COLOR = "#EF4444";
+function statsCssVar(name, fallback) {
+    return getComputedStyle(document.body).getPropertyValue(name).trim() || fallback;
+}
 
 // الفرق الوحيد بين الرسمتين
 const FLOW_CHART_TYPES = {
@@ -61,8 +62,8 @@ function renderFlowChart(type, transactions, period, oldChart) {
         data: {
             labels,
             datasets: [
-                buildDataset(t("stats_income"), incomeData, STATS_INCOME_COLOR),
-                buildDataset(t("stats_expense"), expenseData, STATS_EXPENSE_COLOR)
+                buildDataset(t("stats_income"), incomeData, statsCssVar("--income", "#16A34A")),
+                    buildDataset(t("stats_expense"), expenseData, statsCssVar("--expense", "#DC2626"))
             ]
         },
         options: {

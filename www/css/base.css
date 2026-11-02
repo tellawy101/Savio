@@ -359,7 +359,7 @@ background: var(--dk-pop);
 }
 
 .custom-confirm-ok-btn.danger {
-    background: #DC2626;
+background: var(--expense);
 }
 
 .dark .custom-confirm-message {
