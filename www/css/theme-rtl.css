@@ -5,10 +5,10 @@
 body.dark {
     background: #101817;
     color: #F1F5F4;
-        --border-color: #3d3d3d;
+    --border-color: #2B3935;
     --input-bg: #2c2c2c;
-    --hover-bg: #374151;
-    --card-bg: #1F2937;
+    --hover-bg: #2B3935;
+    --card-bg: #192522;
     --brand-color: #4fd1c5;
 }
 

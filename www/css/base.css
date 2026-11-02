@@ -34,11 +34,14 @@
     --brand: #0F766E;
     --brand-text: #0F766E;
     --brand-gradient: linear-gradient(180deg, var(--brand), #115e59);
-    --text: #111827;
-    --text-muted: #6B7280;
+        --bg: #F8FAFC;
+    --text: #17202B;
+    --text-muted: #64748B;
+    --text-faint: #94A3B8;
     --surface: #FFFFFF;
-    --surface-alt: #F9FAFB;
-    --border: #E5E7EB;
+    --surface-alt: #F8FAFC;
+    --border: #E8EEEB;
+    --brand-soft: #E8F5F2;
     --danger: #DC2626;
     --success: #16A34A;
         --z-bg: 0;
@@ -54,11 +57,11 @@
     --z-dropdown: 3000;
     --z-status: 9999;
     --z-toast: 9999;
-        --c-ink: #111827;
-    --c-muted: #6B7280;
-    --c-faint: #9CA3AF;
-    --c-line: #E5E7EB;
-    --c-bg-soft: #F9FAFB;
+    --c-ink: #17202B;
+    --c-muted: #64748B;
+    --c-faint: #94A3B8;
+    --c-line: #E8EEEB;
+    --c-bg-soft: #F8FAFC;
     --c-bg-chip: #F3F4F6;
         --c-white: #FFFFFF;
     --brand-bg-soft: rgba(15, 118, 110, 0.04);
@@ -71,7 +74,7 @@
         --goal-muted: var(--c-muted);
     --goal-btn-bg: var(--brand);
     --goal-btn-text: var(--c-white);
-    --goal-soft-bg: #e6f4f1;
+    --goal-soft-bg: #E8F5F2;
     --goal-summary-text: var(--brand);
     --goal-summary-value: #0b4f49;
     --goal-track: var(--c-line);
@@ -84,28 +87,32 @@
 
 body.dark {
     --brand-text: #4FD1C5;
-    --text: #F9FAFB;
-    --text-muted: #9CA3AF;
-    --surface: #1F2937;
-    --surface-alt: #2C2C2C;
-    --border: #374151;
+        --bg: #101817;
+    --text: #F1F5F4;
+    --text-muted: #A3B3AE;
+    --text-faint: #82938D;
+    --surface: #192522;
+    --surface-alt: #101817;
+    --border: #2B3935;
+    --brand-soft: #1D3530;
     --brand-bg-soft: rgba(79, 209, 197, 0.06);
     --brand-bg: rgba(79, 209, 197, 0.12);
     --brand-line: rgba(79, 209, 197, 0.15);
         --brand-divider: rgba(79, 209, 197, 0.12);
     --divider: rgba(255, 255, 255, 0.08);
     --press-bg: rgba(255, 255, 255, 0.05);
-    --option-bg: #1f2937;
+    --option-bg: #192522;
         --goal-muted: #8aa09b;
             --goal-btn-bg: #14b8a6;
     --goal-btn-text: #04201c;
-    --goal-soft-bg: #14312d;
+    --goal-soft-bg: #1D3530;
     --goal-summary-text: #8fd5ca;
     --goal-summary-value: #ffffff;
     --goal-track: #0e1514;
     --goal-track-summary: #0e1514;
-    --goal-card-bg: #151e1d;
-    --goal-card-border: #24332f;
+    --goal-card-bg: #192522;
+    
+    --goal-card-border: #2B3935;
     --goal-name: #e8f0ee;
     --goal-accent: #2dd4bf;
         /* ألوان الدارك الموحدة */
@@ -118,7 +125,7 @@ body {
     margin: 0;
     font-family: "Supreme", sans-serif;
     font-weight: 400;
-    background: var(--surface);
+background: var(--bg);
     color: var(--text);
 }
 body.capacitor-app {
@@ -131,7 +138,7 @@ body.capacitor-app::before {
     left: 0;
     right: 0;
     height: env(safe-area-inset-top, 0px);
-        background: var(--surface);
+        background: var(--bg);
     z-index: var(--z-status);
 }
 body.dark.capacitor-app::before {
@@ -261,7 +268,7 @@ button:hover {
 }
 
 .dark .card {
-    background: #1F2937;
+background: #192522;
     color: #FFFFFF;
 }
 

@@ -2,9 +2,9 @@
    تنسيقات نافذة الميزانية في الوضع الليلي (Dark Mode)
 ========================================= */
 body.dark #budgetModal .budget-modal-content {
-    background: #1F2937;
-    border: 1px solid #374151;
-    color: #F9FAFB;
+    background: #192522;
+    border: 1px solid #2B3935;
+    color: #F1F5F4;
 }
 
 /* أيقونة المحفظة */
