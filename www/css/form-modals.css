@@ -234,7 +234,7 @@ text-align: start;
 .modal-page-back { display: none; }
 
 body.add-transaction-page #accountModal,
-body.add-transaction-page #addAccountModal,
+
 body.add-transaction-page #categoryModal,
 body.add-transaction-page #addCategoryModal {
     padding: 0;
@@ -244,7 +244,7 @@ body.add-transaction-page #addCategoryModal {
     -webkit-backdrop-filter: none;
 }
 body.add-transaction-page #accountModal .modal-content,
-body.add-transaction-page #addAccountModal .modal-content,
+
 body.add-transaction-page #categoryModal .modal-content,
 body.add-transaction-page #addCategoryModal .modal-content {
     position: relative;
@@ -269,7 +269,7 @@ body.add-transaction-page .modal-page-back {
     z-index: 2;
 }
 body.add-transaction-page #accountModal .modal-content > h2,
-body.add-transaction-page #addAccountModal .modal-content > h2,
+
 body.add-transaction-page #categoryModal .modal-content > h2,
 body.add-transaction-page #addCategoryModal .modal-content > h2 {
     min-height: 36px;
@@ -338,4 +338,10 @@ body.add-transaction-page #addCategoryBtn::before {
     width: auto;
     white-space: nowrap;
     text-align: end !important;
+}
+/* مودال إضافة حساب: بدون هيدر، ويطلع من تحت */
+#addAccountModal .modal-content > h2,
+#addAccountModal .modal-page-back,
+body.add-transaction-page #addAccountModal .modal-page-back {
+    display: none !important;
 }

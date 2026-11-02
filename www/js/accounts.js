@@ -42,11 +42,8 @@ if (addAccountBtn) {
     addAccountBtn.onclick = function(e) {
         e.stopPropagation();
                 form.resetAddAccountForm();
-        if (document.body.classList.contains("add-transaction-page")) {
+                if (document.body.classList.contains("add-transaction-page")) {
             addAccountModal.classList.add("show");
-            setTimeout(function() {
-                accountModal.classList.remove("show");
-            }, 300);
         } else {
             accountModal.classList.remove("show");
             setTimeout(function() {
