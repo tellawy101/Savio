@@ -267,4 +267,16 @@
     height: 1px;
     pointer-events: none;
 }
+.opening-card .expense-main {
+    border: 1.5px dashed var(--brand);
+    background: var(--brand-bg-soft);
+}
 
+.expense-icon-box.opening {
+    background: var(--brand-bg);
+    color: var(--brand);
+}
+
+body.dark .expense-icon-box.opening {
+    color: #7FE0C0;
+}

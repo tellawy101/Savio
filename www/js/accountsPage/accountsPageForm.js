@@ -55,10 +55,10 @@ attachThousandsFormatter(document.getElementById("newAccountBalance"), true);
 
                         if (editingAccount) {
                 let index = accounts.findIndex(a => a.id === editingAccount.id);
-                accounts[index] = { id: editingAccount.id, name, description, icon, balance: Number(balance.replace(/,/g, "")) };
+accounts[index] = { id: editingAccount.id, name, description, icon, balance: Number(balance.replace(/,/g, "")), createdAt: editingAccount.createdAt };
                 editingAccount = null;
             } else {
-                accounts.push({ id: generateId("acc"), name, description, icon, balance: Number(balance.replace(/,/g, "")) });
+accounts.push({ id: generateId("acc"), name, description, icon, balance: Number(balance.replace(/,/g, "")), createdAt: getTodayDateString() });
             }
 
             saveAccounts(accounts);

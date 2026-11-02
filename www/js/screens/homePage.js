@@ -190,7 +190,47 @@ t("item_deleted_toast"),
             attachSwipeActions(card, { deleteEl: deleteBtn, editEl: editBtn });
 
         });
-                updateFilterSummary(expenseList.children.length);
+                       const openingTypeValue = typeFilter ? typeFilter.value : "";
+        const openingAccountValue = accountFilter ? accountFilter.value : "";
+        const openingCategoryValue = categoryFilter ? categoryFilter.value : "";
+        if (!searchTerm && !openingCategoryValue && openingTypeValue !== "transfer") {
+            const openingSortMode = sortFilter ? sortFilter.value : "date_desc";
+            getAccounts().forEach(function (acc) {
+                const bal = Number(acc.balance) || 0;
+                if (bal === 0) return;
+                if (openingAccountValue && acc.id !== openingAccountValue) return;
+                if (openingTypeValue === "income" && bal < 0) return;
+                if (openingTypeValue === "expense" && bal > 0) return;
+                let openingDate = acc.createdAt;
+                if (!openingDate) {
+                    expenses.forEach(function (tx) {
+                        if (getTxAccountId(tx) === acc.id && tx.date && (!openingDate || tx.date < openingDate)) openingDate = tx.date;
+                    });
+                }
+                if (!openingDate || !openingDate.startsWith(window.selectedMonth)) return;
+                const positive = bal > 0;
+                const openingLi = document.createElement("li");
+                openingLi.className = "expense-item opening-card";
+                openingLi.innerHTML = `
+                    <div class="expense-main">
+                        <div class="expense-icon-box opening">
+                            <i data-lucide="wallet"></i>
+                        </div>
+                        <div class="expense-info">
+                            <span class="expense-title">${escapeHTML(t("opening_balance_label"))}</span>
+                            <span class="expense-category">${escapeHTML(acc.name)}</span>
+                        </div>
+                        <div class="expense-right">
+                            <span class="expense-amount ${positive ? "expense-amount-positive" : "expense-amount-negative"}">${positive ? "+" : "-"}${formatAmountNumber(Math.abs(bal))} <small class="expense-currency">${escapeHTML(getCurrency())}</small></span>
+                            <span class="expense-date">${formatDisplayDate(openingDate)}</span>
+                        </div>
+                    </div>
+                `;
+                if (openingSortMode === "date_asc") expenseList.prepend(openingLi);
+                else expenseList.appendChild(openingLi);
+            });
+            if (window.lucide) lucide.createIcons();
+        } updateFilterSummary(expenseList.children.length);
         if (!expenseList.children.length) {
             expenseList.innerHTML = renderEmptyState(
                 "search",

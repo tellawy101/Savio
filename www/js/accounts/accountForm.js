@@ -61,7 +61,8 @@ customAlert(t("enter_account_name_alert"));
                 name,
                 description,
                 icon,
-                balance: Number(balance.replace(/,/g, ""))
+                balance: Number(balance.replace(/,/g, "")),
+                    createdAt: editingAccount.createdAt
             };
 
             editingAccount = null;
@@ -73,7 +74,8 @@ customAlert(t("enter_account_name_alert"));
     name,
     description,
     icon,
-    balance: Number(balance.replace(/,/g, ""))
+    balance: Number(balance.replace(/,/g, "")),
+        createdAt: getTodayDateString()
 });
 }
 
