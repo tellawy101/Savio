@@ -42,11 +42,17 @@ if (addAccountBtn) {
     addAccountBtn.onclick = function(e) {
         e.stopPropagation();
                 form.resetAddAccountForm();
-        accountModal.classList.remove("show");
-        
-        setTimeout(function() {
+        if (document.body.classList.contains("add-transaction-page")) {
             addAccountModal.classList.add("show");
-        }, 250);
+            setTimeout(function() {
+                accountModal.classList.remove("show");
+            }, 300);
+        } else {
+            accountModal.classList.remove("show");
+            setTimeout(function() {
+                addAccountModal.classList.add("show");
+            }, 250);
+        }
     };
 }
 

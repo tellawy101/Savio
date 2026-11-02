@@ -49,11 +49,17 @@ if (addCategoryBtn) {
             `<i data-lucide="tag" id="selectedCategoryIconPreview"></i>`;
         selectedCategoryIconLabel.textContent = t("choose_icon_label");
         if (window.lucide) lucide.createIcons();
-        
-        categoryModal.classList.remove("show");
-        setTimeout(function() {
+                if (document.body.classList.contains("add-transaction-page")) {
             addCategoryModal.classList.add("show");
-        }, 250);
+            setTimeout(function() {
+                categoryModal.classList.remove("show");
+            }, 300);
+        } else {
+            categoryModal.classList.remove("show");
+            setTimeout(function() {
+                addCategoryModal.classList.add("show");
+            }, 250);
+        }
     };
 }
 
