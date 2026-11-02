@@ -62,7 +62,7 @@ accounts.push({ id: generateId("acc"), name, description, icon, balance: Number(
             }
 
             saveAccounts(accounts);
-
+            showSaveTick();
             renderAccountsPage();
             showToast(t("account_added_toast"), "success");
             addAccountModal.classList.remove("show");

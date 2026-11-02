@@ -37,3 +37,17 @@
     justify-content: flex-end;
     background: #1976D2;
 }
+.swipe-action svg,
+.swipe-action i {
+    transform: scale(calc(.6 + var(--swipe-p, 0) * .4));
+    transition: transform .2s cubic-bezier(.2, 1.4, .4, 1);
+}
+
+.swipe-action.armed svg,
+.swipe-action.armed i {
+    transform: scale(1.45);
+}
+
+.swipe-action.armed {
+    filter: brightness(1.15);
+}
