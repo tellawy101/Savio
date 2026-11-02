@@ -148,7 +148,7 @@ function initAccountsPage() {
                                 </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
-<polyline points="${getSparklinePoints(account.id, "income", transactions)}" fill="none" stroke="#16a34a" stroke-width="2"/>                            </svg>
+<polyline points="${getSparklinePoints(account.id, "income", transactions)}" fill="none" style="stroke:var(--income)" stroke-width="2"/>                            </svg>
                         </div>
                         <div class="stat-item">
                             <div class="stat-icon stat-icon-expense">
@@ -162,7 +162,7 @@ function initAccountsPage() {
                                 </div>
                             </div>
                             <svg class="stat-sparkline" viewBox="0 0 60 24" preserveAspectRatio="none">
-                                <polyline points="${getSparklinePoints(account.id, "expense", transactions)}" fill="none" stroke="#dc2626" stroke-width="2"/>
+                                <polyline points="${getSparklinePoints(account.id, "expense", transactions)}" fill="none" style="stroke:var(--expense)" stroke-width="2"/>
                             </svg>
                         </div>
                         <div class="stat-item stat-item-last">

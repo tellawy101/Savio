@@ -268,8 +268,8 @@ body:not(.dark):has(.goals-header) {
 .debt-paid-note {
     display: inline-block;
     direction: ltr;
-    background: #dcfce7;
-    color: var(--success);
+        background: var(--income-bg);
+    color: var(--income);
     border-radius: 8px;
     padding: 6px 14px;
     font-size: 0.75rem;

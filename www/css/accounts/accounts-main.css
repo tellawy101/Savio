@@ -128,7 +128,7 @@ body.dark .back-btn {
     margin-top: 3px;
     font-size: 12px;
     font-weight: 700;
-    color: #2563eb;
+    color: var(--transfer);
 }
 
 .account-main-badge i {
@@ -215,15 +215,14 @@ body.dark .back-btn {
 }
 
 .stat-icon-income {
-    background: #DCFCE7;
-    color: var(--success);
+    background: var(--income-bg);
+    color: var(--income);
 }
 
 .stat-icon-expense {
-    background: #FEE2E2;
-    color: var(--danger);
+    background: var(--expense-bg);
+    color: var(--expense);
 }
-
 .stat-icon-balance {
     background: #E0E7FF;
     color: #4f46e5;

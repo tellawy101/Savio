@@ -143,8 +143,8 @@ color: var(--goal-muted);
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 10px;
-    background: #dcfce7;
-    color: var(--success);
+    background: var(--income-bg);
+    color: var(--income);
 }
 
 .goal-progress {
@@ -217,8 +217,8 @@ color: var(--goal-muted);
     height: 40px;
     padding: 0;
     background: transparent;
-    border: 1px solid #fecaca;
-    color: #ef4444;
+      border: 1px solid var(--expense-bg);
+    color: var(--expense);
 }
 
 .goal-delete-btn svg {
@@ -231,8 +231,8 @@ color: var(--goal-muted);
 }
 
 .goal-done .goal-icon {
-    background: #dcfce7;
-    color: var(--success);
+    background: var(--income-bg);
+    color: var(--income);
 }
 
 .goal-done .goal-progress-fill {
@@ -251,8 +251,8 @@ body.dark .goal-progress-fill {
 }
 
 body.dark .goal-delete-btn {
-    border-color: #4a2a2a;
-    color: #f87171;
+    border-color: var(--expense-bg);
+    color: var(--expense);
 }
 
 body.dark .goal-done {
@@ -261,10 +261,10 @@ body.dark .goal-done {
 
 body.dark .goal-done .goal-icon,
 body.dark .goal-badge {
-    background: #12301f;
-    color: #4ade80;
+    background: var(--income-bg);
+    color: var(--income);
 }
 
 body.dark .goal-done .goal-progress-fill {
-    background: #22c55e;
+    background: var(--income);
 }

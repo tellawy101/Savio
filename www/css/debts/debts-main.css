@@ -185,13 +185,13 @@
 }
 
 .debt-badge.receivable {
-    color: var(--success);
-    background: #dcfce7;
+    color: var(--income);
+    background: var(--income-bg);
 }
 
 .debt-badge.payable {
-    color: var(--danger);
-    background: #fee2e2;
+    color: var(--expense);
+    background: var(--expense-bg);
 }
 
 

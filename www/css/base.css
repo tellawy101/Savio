@@ -44,13 +44,21 @@
     --brand-soft: #E8F5F2;
     --danger: #DC2626;
     --success: #16A34A;
-        --z-bg: 0;
+    --income: #16A34A;
+    --income-bg: #DCFCE7;
+    --expense: #DC2626;
+    --expense-bg: #FEE2E2;
+    --transfer: #2563EB;
+    --transfer-bg: #DBEAFE;
+    --warning: #D97706;
+    --warning-bg: #FEF3C7;
+    --z-bg: 0;
     --z-content: 1;
     --z-raised: 2;
     --z-swipe-under: 5;
     --z-over: 10;
     --z-float: 20;
-        --z-sticky: 100;
+    --z-sticky: 100;
     --z-nav: 1000;
     --z-fab: 1002;
     --z-modal: 2000;
@@ -63,15 +71,15 @@
     --c-line: #E8EEEB;
     --c-bg-soft: #F8FAFC;
     --c-bg-chip: #F3F4F6;
-        --c-white: #FFFFFF;
+    --c-white: #FFFFFF;
     --brand-bg-soft: rgba(15, 118, 110, 0.04);
     --brand-bg: rgba(15, 118, 110, 0.10);
     --brand-line: rgba(15, 118, 110, 0.15);
-        --brand-divider: rgba(15, 118, 110, 0.12);
+    --brand-divider: rgba(15, 118, 110, 0.12);
     --divider: rgba(0, 0, 0, 0.07);
-        --press-bg: rgba(0, 0, 0, 0.04);
+    --press-bg: rgba(0, 0, 0, 0.04);
     --option-bg: rgba(15, 118, 110, 0.04);
-        --goal-muted: var(--c-muted);
+    --goal-muted: var(--c-muted);
     --goal-btn-bg: var(--brand);
     --goal-btn-text: var(--c-white);
     --goal-soft-bg: #E8F5F2;
@@ -87,7 +95,7 @@
 
 body.dark {
     --brand-text: #4FD1C5;
-        --bg: #101817;
+    --bg: #101817;
     --text: #F1F5F4;
     --text-muted: #A3B3AE;
     --text-faint: #82938D;
@@ -95,15 +103,25 @@ body.dark {
     --surface-alt: #101817;
     --border: #2B3935;
     --brand-soft: #1D3530;
+    --danger: #F87171;
+    --success: #4ADE80;
+    --income: #4ADE80;
+    --income-bg: #173D2A;
+    --expense: #F87171;
+    --expense-bg: #422323;
+    --transfer: #60A5FA;
+    --transfer-bg: #1E3350;
+    --warning: #FBBF24;
+    --warning-bg: #45351B;
     --brand-bg-soft: rgba(79, 209, 197, 0.06);
     --brand-bg: rgba(79, 209, 197, 0.12);
     --brand-line: rgba(79, 209, 197, 0.15);
-        --brand-divider: rgba(79, 209, 197, 0.12);
+    --brand-divider: rgba(79, 209, 197, 0.12);
     --divider: rgba(255, 255, 255, 0.08);
     --press-bg: rgba(255, 255, 255, 0.05);
     --option-bg: #192522;
-        --goal-muted: #8aa09b;
-            --goal-btn-bg: #14b8a6;
+    --goal-muted: #8aa09b;
+    --goal-btn-bg: #14b8a6;
     --goal-btn-text: #04201c;
     --goal-soft-bg: #1D3530;
     --goal-summary-text: #8fd5ca;
@@ -149,7 +167,7 @@ main {
 }
 
 .card {
-    background: var(--surface-alt);
+background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 15px;
     padding: 20px;

@@ -178,9 +178,9 @@ body.dark .cb-picker-item.selected {
     align-items: center;
     justify-content: center;
     background: transparent;
-    border: 1px solid #fecaca;
+    border: 1px solid;
     border-radius: 10px;
-    color: #ef4444;
+    color: var(--expense);
 }
 
 .cb-delete-btn svg {
@@ -210,6 +210,6 @@ body.dark .cb-delete-btn {
 }
 
 body.dark .cb-over .goal-progress-fill {
-    background: #dc2626;
+    background: var(--expense);
 }
 

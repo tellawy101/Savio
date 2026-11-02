@@ -73,21 +73,23 @@
     font-weight: 800;
     direction: ltr;
 }
-.period-income { color: #16a34a; }
-.period-expense { color: #dc2626; }
+.period-income { color: var(--income); }
+.period-expense { color: var(--expense); }
 
 body.dark .period-report {
-    background: #151e1d;
+    background: #192522;
 }
 .period-range { text-align: center; font-size: 12px; color: var(--c-muted); margin-top: 10px; direction: ltr; }
 .period-net { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-top: 8px; }
 .period-net-value { font-size: 26px; font-weight: 800; direction: ltr; font-family: "Supreme", sans-serif; }
-.period-bar { height: 6px; border-radius: 999px; background: #dc2626; overflow: hidden; margin: 12px 0 4px; direction: ltr; }
-.period-bar span { display: block; height: 100%; background: #16a34a; border-radius: 999px; }
+.period-bar { height: 6px; border-radius: 999px; background: var(--expense); 
+overflow: hidden; margin: 12px 0 4px; direction: ltr; }
+.period-bar span { display: block; height: 100%; background: var(--income);
+border-radius: 999px; }
 .period-bar.empty { background: var(--c-bg-chip); }
 .period-totals { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--c-line); }
-body.dark .period-chip { background: #2c2c2c; color: #F9FAFB; }
+body.dark .period-chip { background: #2c2c2c; color: #F1F5F4; }
 body.dark .period-chip.active { background: var(--brand); color: #fff; }
 body.dark .period-bar.empty { background: var(--dk-field); }
 body.dark .period-totals { border-top-color: rgba(255,255,255,0.08); }
-body.dark .period-custom input { background: #2c2c2c; color: #F9FAFB; border-color: rgba(255,255,255,0.08); }
+body.dark .period-custom input { background: #2c2c2c; color: #F1F5F4; border-color: rgba(255,255,255,0.08); }
