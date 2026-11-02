@@ -42,3 +42,51 @@ button:not(:disabled):active,
 .settings-item:active {
     scale: .96;
 }
+/* ضغطة الكروت */
+.account-card,
+.goal-card,
+.rec-card {
+    transition: scale .12s ease;
+}
+.account-card:active,
+.goal-card:active,
+.rec-card:active {
+    scale: .98;
+}
+
+/* ظهور كروت الحسابات والديون بالتتابع */
+.page-enter .account-card,
+.page-enter .debt-card-wrapper {
+    animation: cardIn .35s ease backwards;
+}
+.page-enter .account-card:nth-child(2),
+.page-enter .debt-card-wrapper:nth-child(2) { animation-delay: .05s; }
+.page-enter .account-card:nth-child(3),
+.page-enter .debt-card-wrapper:nth-child(3) { animation-delay: .1s; }
+.page-enter .account-card:nth-child(n+4),
+.page-enter .debt-card-wrapper:nth-child(n+4) { animation-delay: .15s; }
+
+/* امتلاء أشرطة التقدم */
+.page-enter .goal-progress-fill,
+.page-enter .period-bar span {
+    animation: barGrow .7s cubic-bezier(.2, .8, .2, 1) .15s backwards;
+}
+@keyframes barGrow {
+    from { width: 0; }
+}
+
+/* لمن النظام يطلب تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+    .page-enter,
+    .page-enter * {
+        animation: none !important;
+    }
+}
+/* حذف معاملة بحركة */
+.expense-item.removing {
+    transition: max-height .24s ease, opacity .2s ease, margin .24s ease;
+    max-height: 0 !important;
+    opacity: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}

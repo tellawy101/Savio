@@ -54,7 +54,7 @@ homeReport.appendChild(buildPeriodReportCard(reportState, expenses, renderHomeRe
     function renderExpenses() {
 
         expenseList.innerHTML = "";
-if (expenses.length === 0) {
+if (expenses.length === 0 && !getAccounts().some(function (a) { return Number(a.balance) !== 0; })) {
                 expenseList.innerHTML = renderEmptyState(
             "receipt-text",
             t("no_transactions"),
@@ -152,7 +152,11 @@ t("delete_confirm"),
                                const removedDebtPayment = expense.debtPaymentId
                     ? removeDebtPayment(expense.debtPaymentId)
                     : null;
-                renderExpenses();
+                li.style.maxHeight = li.offsetHeight + "px";
+                li.style.overflow = "hidden";
+                li.getBoundingClientRect();
+                li.classList.add("removing");
+                setTimeout(renderExpenses, 240);
  updateBudgetButton();
                 showUndoToast(
 t("item_deleted_toast"),
@@ -206,6 +210,15 @@ t("item_deleted_toast"),
                     expenses.forEach(function (tx) {
                         if (getTxAccountId(tx) === acc.id && tx.date && (!openingDate || tx.date < openingDate)) openingDate = tx.date;
                     });
+                }
+                                if (!openingDate) {
+                    openingDate = getTodayDateString();
+                    const allAccounts = getAccounts();
+                    const savedAcc = allAccounts.find(function (a) { return a.id === acc.id; });
+                    if (savedAcc) {
+                        savedAcc.createdAt = openingDate;
+                        saveAccounts(allAccounts);
+                    }
                 }
                 if (!openingDate || !openingDate.startsWith(window.selectedMonth)) return;
                 const positive = bal > 0;
