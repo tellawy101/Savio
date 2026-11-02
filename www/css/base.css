@@ -30,7 +30,7 @@
     font-style: normal;
     font-display: swap;
 }
-@@font-face {
+@font-face {
     font-family: "Supreme";
     src: url("../fonts/NotoSansArabic-VariableFont_wdth,wght.ttf") format("truetype");
     font-weight: 100 900;
@@ -228,10 +228,10 @@ background: var(--surface);
     border-radius: 12px;
     background: var(--brand);
     color: white;
-    font-size: var(--fs-button);
+    font-size: 18px;
     cursor: pointer;
-    font-family: "Supreme", sans-serif;
-    font-weight: var(--fw-button);
+    font-family: "Supreme", "Noto Sans Arabic", sans-serif;
+    font-weight: 700;
 }
 
 button:hover {
