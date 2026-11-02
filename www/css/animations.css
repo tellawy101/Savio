@@ -90,3 +90,52 @@ button:not(:disabled):active,
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
+/* علامة الصح بعد الحفظ */
+.save-tick {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 96px;
+    height: 96px;
+    margin: -48px 0 0 -48px;
+    z-index: 100000;
+    pointer-events: none;
+    border-radius: 50%;
+    background: var(--surface);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: saveTickPop .35s cubic-bezier(.2, 1.4, .4, 1) both;
+    transition: opacity .3s ease;
+}
+.save-tick.hide { opacity: 0; }
+.save-tick svg { width: 64px; height: 64px; }
+.save-tick-circle {
+    fill: none;
+    stroke: var(--brand);
+    stroke-width: 3;
+    stroke-dasharray: 151;
+    stroke-dashoffset: 151;
+    animation: saveTickDraw .45s ease .05s forwards;
+}
+.save-tick-check {
+    fill: none;
+    stroke: var(--brand);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 36;
+    stroke-dashoffset: 36;
+    animation: saveTickDraw .3s ease .4s forwards;
+}
+@keyframes saveTickPop { from { transform: scale(.5); opacity: 0; } }
+@keyframes saveTickDraw { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+    .save-tick,
+    .save-tick * {
+        animation: none !important;
+        stroke-dashoffset: 0 !important;
+    }
+}

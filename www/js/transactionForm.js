@@ -180,6 +180,7 @@ if (!saveTransactions(transactions)) {
             safeSetItem("lastCategoryId_" + type, entryData.categoryId || "");
         }
                 hapticSuccess();
+                                showSaveTick();
         navigateTo("home");
 };
         function prefillLastChoices() {

@@ -80,7 +80,7 @@ customAlert(t("enter_account_name_alert"));
 }
 
 saveAccounts(accounts);
-        
+       showSaveTick(); 
       const field = getAccountFieldEl();
       if (field && (!wasEditing || field.dataset.id === savedAccountId)) {
           field.textContent = name;
