@@ -12,3 +12,10 @@ document.addEventListener("click", function (e) {
     if (typeof hapticTap === "function") hapticTap();
     if (typeof window.handleHardwareBack === "function") window.handleHardwareBack();
 });
+// زر الرجوع في صفحة اختيار أيقونة الحساب
+document.addEventListener("click", function (e) {
+    const btn = e.target.closest(".icon-list-back");
+    if (!btn) return;
+    if (typeof hapticTap === "function") hapticTap();
+    if (typeof window.handleHardwareBack === "function") window.handleHardwareBack();
+});

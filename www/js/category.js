@@ -50,11 +50,8 @@ if (addCategoryBtn) {
         selectedCategoryIconLabel.textContent = t("choose_icon_label");
         if (window.lucide) lucide.createIcons();
                 if (document.body.classList.contains("add-transaction-page")) {
-            addCategoryModal.classList.add("show");
-            setTimeout(function() {
-                categoryModal.classList.remove("show");
-            }, 300);
-        } else {
+                    addCategoryModal.classList.add("show");
+                } else {
             categoryModal.classList.remove("show");
             setTimeout(function() {
                 addCategoryModal.classList.add("show");

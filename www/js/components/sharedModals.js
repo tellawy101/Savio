@@ -38,8 +38,9 @@ function renderSharedModals() {
         <span id="selectedIconLabel" data-i18n="choose_icon_label">اختر أيقونة</span>
         <i data-lucide="chevron-right"></i>
     </button>
-    <div class="icon-dropdown-list" id="iconDropdownList">
+        <div class="icon-dropdown-list" id="iconDropdownList">
         <div class="icon-search-wrap">
+<button type="button" class="back-btn icon-list-back">←</button>
             <input
                 type="text"
                 id="iconSearchInput"
@@ -159,7 +160,8 @@ function renderSharedModals() {
                 class="icon-dropdown-list"
                 id="categoryIconDropdownList">
 
-                <div class="icon-search-wrap">
+                                <div class="icon-search-wrap">
+                    <button type="button" class="back-btn icon-list-back">←</button>
                     <input
                         type="text"
                         id="categoryIconSearchInput"
