@@ -31,7 +31,7 @@ async function navigateTo(pageName, fromPopState = false) {
             // لو حصل تنقل أحدث أثناء التحميل، نلغي التنقل ده
             if (navToken !== navigationToken) return;
                     currentPageName = pageName;
-        app.style.visibility = "hidden";
+        app.style.opacity = "0";
         if (pageName !== "accounts") {
             const oldFab = document.getElementById("openAddAccountBtn");
             if (oldFab) oldFab.remove();
@@ -74,7 +74,8 @@ async function navigateTo(pageName, fromPopState = false) {
         }
         if (typeof applyLanguage === "function") applyLanguage();
         
-        app.style.visibility = "visible";
+        app.style.opacity = "";
+app.style.visibility = "visible";
                 app.classList.remove("page-enter");
         void app.offsetWidth;
         app.classList.add("page-enter");
@@ -86,6 +87,7 @@ async function navigateTo(pageName, fromPopState = false) {
         }
     } catch (err) {
         app.style.visibility = "visible";
+        app.style.opacity = "";
         console.error("Router failed to load page:", pageName, err);
         
         // نعرض الخطأ بس لو ده آخر تنقل (مش تنقل قديم اتلغى)
