@@ -7,6 +7,7 @@ function renderSharedModals() {
     return `
     <div id="accountModal" class="modal">
         <div class="modal-content">
+                    <button type="button" class="back-btn modal-page-back">←</button>
             <h2 data-i18n="accounts_title">Accounts</h2>
             <div id="accountsList"></div>
             <button id="addAccountBtn" data-i18n="add_account_btn">
@@ -17,6 +18,7 @@ function renderSharedModals() {
 
     <div id="addAccountModal" class="modal">
         <div class="modal-content">
+                    <button type="button" class="back-btn modal-page-back">←</button>
             <h2 data-i18n="new_account_title">New Account</h2>
             <input
                 type="text"
@@ -113,6 +115,7 @@ function renderSharedModals() {
 
     <div id="categoryModal" class="modal">
         <div class="modal-content">
+                 <button type="button" class="back-btn modal-page-back">←</button>   
             <h2 data-i18n="categories_title">Categories</h2>
             <div id="categoriesList"></div>
             <button id="addCategoryBtn" data-i18n="add_category_btn">
@@ -123,7 +126,7 @@ function renderSharedModals() {
 
 <div id="addCategoryModal" class="modal">
     <div class="modal-content">
-
+        <button type="button" class="back-btn modal-page-back">←</button>
         <h2 data-i18n="new_category_title">New Category</h2>
 
         <input
