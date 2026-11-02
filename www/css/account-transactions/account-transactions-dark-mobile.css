@@ -70,7 +70,7 @@ body.dark #transactionsList li {
         margin-inline-end: auto;
     }
     .transaction-title h1 {
-        font-size: 18px;
+        font-size: var(--fs-page-title);
         white-space: nowrap;
         margin: 0;
     }

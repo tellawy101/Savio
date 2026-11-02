@@ -29,6 +29,8 @@
     margin: 10px 0 0;
     order: 3;
     flex-basis: 100%;
+    font-size: var(--fs-section-title);
+    font-weight: var(--fw-section-title);
 }
 
 .search-btn {
@@ -111,8 +113,8 @@
 }
 
 .expense-category {
-    font-size: 15px;
-    font-weight: 600;
+        font-size: var(--fs-card-title);
+    font-weight: var(--fw-card-title);
         color: var(--text-faint);
     line-height: 1.2;
     margin: 0 0 3px 0;
@@ -141,21 +143,21 @@
     flex-direction: row;
     align-items: baseline;
     gap: 4px;
-    font-size: 15px;
-    font-weight: 700;
+        font-size: var(--fs-amount);
+    font-weight: var(--fw-amount);
     color: var(--brand-text);
     white-space: nowrap;
     line-height: 1.2;
 }
 
 .expense-date {
-    font-size: 10px;
+        font-size: var(--fs-caption);
     color: #999;
     white-space: nowrap;
 }
 
 .expense-note {
-    font-size: 10px;
+    font-size: var(--fs-caption);
     color: #999;
     white-space: nowrap;
     overflow: hidden;

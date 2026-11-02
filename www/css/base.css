@@ -30,7 +30,33 @@
     font-style: normal;
     font-display: swap;
 }
+@@font-face {
+    font-family: "Supreme";
+    src: url("../fonts/NotoSansArabic-VariableFont_wdth,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
 :root {
+        --fs-page-title: 22px;
+    --fw-page-title: 700;
+    --fs-section-title: 17px;
+    --fw-section-title: 700;
+    --fs-card-title: 15px;
+    --fw-card-title: 500;
+    --fs-balance: 30px;
+    --fw-balance: 700;
+    --fs-amount: 17px;
+    --fw-amount: 700;
+    --fs-body: 14px;
+    --fw-body: 400;
+    --fs-secondary: 12px;
+    --fw-secondary: 400;
+    --fs-button: 14px;
+    --fw-button: 500;
+    --fs-caption: 11px;
+    --fw-caption: 400;
     --brand: #0F766E;
     --brand-text: #0F766E;
     --brand-gradient: linear-gradient(180deg, var(--brand), #115e59);
@@ -142,8 +168,9 @@ body.dark {
 body {
     margin: 0;
     font-family: "Supreme", sans-serif;
-    font-weight: 400;
-background: var(--bg);
+    font-weight: var(--fw-body);
+    font-size: var(--fs-body);
+    background: var(--bg);
     color: var(--text);
 }
 body.capacitor-app {
@@ -201,10 +228,10 @@ background: var(--surface);
     border-radius: 12px;
     background: var(--brand);
     color: white;
-    font-size: 18px;
+    font-size: var(--fs-button);
     cursor: pointer;
     font-family: "Supreme", sans-serif;
-    font-weight: 700;
+    font-weight: var(--fw-button);
 }
 
 button:hover {
