@@ -28,7 +28,7 @@
         // الشيت
         const sheet = document.createElement("div");
         sheet.id = sheetId;
-        sheet.className = "modal select-sheet";
+sheet.className = "modal select-sheet" + (select.hasAttribute("data-popup") ? " select-sheet-popup" : "");
         sheet.innerHTML =
             '<div class="modal-content"><h2></h2><div class="select-sheet-list"></div></div>';
         sheet.querySelector("h2").textContent = title || "";
