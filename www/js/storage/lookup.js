@@ -53,8 +53,9 @@ function getAccountNameById(id, fallback) {
     const acc = id ? getLookup(ACCOUNTS_KEY, getAccounts).byId.get(id) : null;
     return acc ? acc.name : (fallback || "");
 }
-function getAccountIconById(id) {
-    const acc = id ? getLookup(ACCOUNTS_KEY, getAccounts).byId.get(id) : null;
+function getAccountIconById(id, fallbackName) {
+    const lookup = getLookup(ACCOUNTS_KEY, getAccounts);
+    const acc = (id && lookup.byId.get(id)) || (fallbackName && lookup.byName.get(fallbackName)) || null;
     return acc && acc.icon ? acc.icon : "";
 }
 
