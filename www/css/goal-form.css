@@ -212,4 +212,206 @@ body.dark .cb-delete-btn {
 body.dark .cb-over .goal-progress-fill {
     background: var(--expense);
 }
+/* ==============================
+   شيت هدف توفير جديد: نفس شكل شيت سداد دين
+============================== */
+#goalModal .modal-content {
+    padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    max-height: 92vh;
+    overflow-y: auto;
+}
 
+/* مقبض السحب */
+#goalModal .modal-content::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 14px;
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.4);
+}
+
+/* العنوان في النص من غير أيقونة ولا X */
+#goalModal .budget-modal-header {
+    justify-content: center;
+    margin: 0 0 14px;
+}
+
+#goalModal .budget-modal-icon,
+#goalModal .budget-modal-close {
+    display: none;
+}
+
+#goalModal .budget-modal-header h2 {
+    flex: none;
+    margin: 0;
+    text-align: center;
+    font-size: var(--fs-section-title);
+    font-weight: var(--fw-section-title);
+    color: var(--text);
+}
+
+/* الحقول */
+#goalModal .goal-field {
+    margin-bottom: 14px;
+}
+
+#goalModal .goal-field label {
+    margin-bottom: 6px;
+    font-size: var(--fs-secondary);
+    font-weight: 500;
+}
+
+#goalModal .goal-field input:not(.date-native) {
+    height: 46px;
+    border: 1px solid #D9E2DF;
+    border-radius: var(--r-field);
+    background: transparent;
+    color: var(--text);
+    font-size: var(--fs-body);
+}
+
+#goalModal .goal-field input:focus {
+    outline: none;
+    border-color: var(--brand-text);
+}
+
+body.dark #goalModal .goal-field input:not(.date-native) {
+    background: transparent !important;
+    border-color: #3E3E3E !important;
+    color: #ffffff;
+}
+
+body.dark #goalModal .goal-field input:focus {
+    border-color: var(--brand-text) !important;
+}
+
+#goalModal #goalTarget,
+#goalModal #goalCurrent {
+    direction: rtl;
+    text-align: right;
+}
+
+/* زرار الحفظ */
+#goalModal .budget-save-btn {
+    height: 48px;
+    margin-top: 16px;
+    padding: 0;
+    border-radius: var(--r-btn);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-button);
+    background: var(--btn-bg);
+    color: var(--btn-text);
+}
+/* ==============================
+   شيت ميزانية فئة جديدة: نفس شكل شيت سداد دين
+============================== */
+#catBudgetModal .modal-content {
+    padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    max-height: 92vh;
+    overflow-y: auto;
+}
+
+/* مقبض السحب */
+#catBudgetModal .modal-content::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 14px;
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.4);
+}
+
+/* العنوان في النص من غير أيقونة ولا X */
+#catBudgetModal .budget-modal-header {
+    justify-content: center;
+    margin: 0 0 14px;
+}
+
+#catBudgetModal .budget-modal-icon,
+#catBudgetModal .budget-modal-close {
+    display: none;
+}
+
+#catBudgetModal .budget-modal-header h2 {
+    flex: none;
+    margin: 0;
+    text-align: center;
+    font-size: var(--fs-section-title);
+    font-weight: var(--fw-section-title);
+    color: var(--text);
+}
+
+/* الحقول */
+#catBudgetModal .goal-field {
+    margin-bottom: 14px;
+}
+
+#catBudgetModal .goal-field label {
+    margin-bottom: 6px;
+    font-size: var(--fs-secondary);
+    font-weight: 500;
+}
+
+#catBudgetModal .goal-field input:not([type="hidden"]),
+#catBudgetModal .cb-picker-btn {
+    height: 46px;
+    border: 1px solid #D9E2DF;
+    border-radius: var(--r-field);
+    background: transparent;
+    color: var(--text);
+    font-size: var(--fs-body);
+}
+
+#catBudgetModal .goal-field input:focus,
+#catBudgetModal .cb-picker.open .cb-picker-btn {
+    outline: none;
+    border-color: var(--brand-text);
+}
+
+#catBudgetModal #catBudgetAmount {
+    direction: rtl;
+    text-align: right;
+}
+
+/* القايمة المنسدلة */
+#catBudgetModal .cb-picker-list {
+    border: 1px solid #D9E2DF;
+    border-radius: var(--r-field);
+    background: transparent;
+}
+
+#catBudgetModal .cb-picker-item.selected {
+    color: var(--brand-text);
+}
+
+body.dark #catBudgetModal .goal-field input:not([type="hidden"]),
+body.dark #catBudgetModal .cb-picker-btn,
+body.dark #catBudgetModal .cb-picker-list {
+    background: transparent !important;
+    border-color: #3E3E3E !important;
+    color: #ffffff;
+}
+
+body.dark #catBudgetModal .cb-picker-item {
+    border-bottom-color: #3E3E3E;
+}
+
+body.dark #catBudgetModal .goal-field input:focus,
+body.dark #catBudgetModal .cb-picker.open .cb-picker-btn {
+    border-color: var(--brand-text) !important;
+}
+
+/* زرار الحفظ */
+#catBudgetModal .budget-save-btn {
+    height: 48px;
+    margin-top: 16px;
+    padding: 0;
+    border-radius: var(--r-btn);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-button);
+    background: var(--btn-bg);
+    color: var(--btn-text);
+}

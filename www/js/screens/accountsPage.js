@@ -95,6 +95,8 @@ function initAccountsPage() {
         
         container.innerHTML = "";
         
+        const countEl = document.getElementById("accountsCount");
+        if (countEl) countEl.textContent = accountsWithBalance.length;
         
         const list = document.createElement("div");
         list.className = "accounts-list";
@@ -134,6 +136,7 @@ function initAccountsPage() {
                             <span class="account-card-balance-amount">${formatAmountNumber(account.currentBalance)}</span>
                         </div>
                     </div>
+                                        <div class="account-details">
                     <div class="account-divider"></div>
                     <div class="account-stats-row">
                         <div class="stat-item">
@@ -178,12 +181,12 @@ function initAccountsPage() {
                             </div>
                         </div>
 
-                        <div class="account-corner-icon">
+                                                                    <div class="account-corner-icon">
                             <i data-lucide="scale"></i>
                         </div>
                     </div>
+                    </div>
                 `;
-                
                 const incomeStat = item.querySelector(".stat-item:nth-child(1)");
                 const expenseStat = item.querySelector(".stat-item:nth-child(2)");
                 
@@ -207,8 +210,11 @@ function initAccountsPage() {
                 const cardHeader = item.querySelector(".account-card-top");
                 
                 let pressTimer;
+                let longPressed = false;
                 cardHeader.addEventListener("touchstart", function() {
+                    longPressed = false;
                     pressTimer = setTimeout(function() {
+                        longPressed = true;
                         openAccountMenu(account.id);
                     }, 700);
                 });
@@ -220,7 +226,8 @@ function initAccountsPage() {
                 });
                 cardHeader.onclick = function(e) {
                     e.stopPropagation();
-                    openAccountMenu(account.id);
+                    if (longPressed) { longPressed = false; return; }
+                    item.classList.toggle("expanded");
                 };
                 
                 list.appendChild(item);

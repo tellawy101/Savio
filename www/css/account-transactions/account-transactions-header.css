@@ -189,3 +189,43 @@ justify-content: flex-end;
     line-height: 1;
     color: #ffffff;
 }
+/* من غير هيدر: الصفحة بتبدأ من عنوان القايمة */
+.total-card {
+    display: none;
+}
+
+body .transactions-section {
+    padding-top: calc(20px + env(safe-area-inset-top, 0px));
+}
+/* صف العنوان: رجوع | عنوان في النص | عداد */
+.transactions-section .section-title {
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    align-items: center;
+    margin: 0 0 14px;
+}
+
+.transactions-section .section-title h3 {
+    text-align: center;
+}
+
+.transactions-section .section-title #transactionCount {
+    justify-self: end;
+}
+
+.transactions-section .section-title .back-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: rgba(128, 128, 128, 0.15);
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
