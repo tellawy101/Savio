@@ -53,6 +53,10 @@ function getAccountNameById(id, fallback) {
     const acc = id ? getLookup(ACCOUNTS_KEY, getAccounts).byId.get(id) : null;
     return acc ? acc.name : (fallback || "");
 }
+function getAccountIconById(id) {
+    const acc = id ? getLookup(ACCOUNTS_KEY, getAccounts).byId.get(id) : null;
+    return acc && acc.icon ? acc.icon : "";
+}
 
 function getCategoryNameById(id, fallback) {
     const cat = id ? getLookup(CATEGORIES_KEY, getCategories).byId.get(id) : null;

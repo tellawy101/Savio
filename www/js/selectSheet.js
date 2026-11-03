@@ -35,9 +35,16 @@
         document.body.appendChild(sheet);
         const list = sheet.querySelector(".select-sheet-list");
 
-        function refresh() {
+                function refresh() {
             const opt = select.options[select.selectedIndex];
-            label.textContent = opt ? opt.textContent : "";
+            label.textContent = "";
+            if (opt && opt.dataset.icon) {
+                const ic = document.createElement("i");
+                ic.setAttribute("data-lucide", opt.dataset.icon);
+                label.appendChild(ic);
+            }
+            if (opt) label.appendChild(document.createTextNode(opt.textContent));
+            if (window.lucide) lucide.createIcons();
         }
 
         function close() { sheet.classList.remove("show"); }
@@ -49,8 +56,17 @@
                 b.type = "button";
                 b.className = "select-sheet-option" +
                     (opt.value === select.value ? " selected" : "");
-                b.textContent = opt.textContent;
+                const main = document.createElement("span");
+                main.className = "select-sheet-option-main";
+                if (opt.dataset.icon) {
+                    const ic = document.createElement("i");
+                    ic.setAttribute("data-lucide", opt.dataset.icon);
+                    main.appendChild(ic);
+                }
+                main.appendChild(document.createTextNode(opt.textContent));
+                b.appendChild(main);
                 b.disabled = opt.disabled;
+                if (opt.value === "") b.classList.add("is-placeholder");
                 b.onclick = function () {
                     select.value = opt.value;
                     select.dispatchEvent(new Event("change", { bubbles: true }));
@@ -58,10 +74,11 @@
                 };
                 list.appendChild(b);
             });
+                        if (window.lucide) lucide.createIcons();
             sheet.classList.add("show");
-        }
-
-        trigger.onclick = open;
+            }
+            
+            trigger.onclick = open;
 
         // stopPropagation عشان click الـ document في homePage ميقفلش لوحة البحث
         sheet.addEventListener("click", function (e) {

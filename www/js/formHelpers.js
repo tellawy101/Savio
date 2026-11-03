@@ -157,7 +157,8 @@ function fillSelect(select, options, selectedValue) {
     options.forEach(function (option) {
         const opt = document.createElement("option");
         opt.value = option.value;
-        opt.textContent = option.label;
+                opt.textContent = option.label;
+        if (option.icon) opt.dataset.icon = option.icon;
         select.appendChild(opt);
     });
     select.value = selectedValue || "";

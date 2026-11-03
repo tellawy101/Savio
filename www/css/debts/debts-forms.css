@@ -281,3 +281,288 @@ body:not(.dark):has(.goals-header) {
 .debt-paid-note .debt-currency {
     font-size: 10px;
 }
+/* ==============================
+   شيتات الدين (إضافة / تعديل): شكل نظيف وخفيف
+============================== */
+:is(#debtModal, #editDebtModal) .modal-content {
+    padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    max-height: 92vh;
+    overflow-y: auto;
+}
+
+/* مقبض السحب */
+:is(#debtModal, #editDebtModal) .modal-content::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 14px;
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.4);
+}
+
+/* الهيدر */
+:is(#debtModal, #editDebtModal) .budget-modal-header {
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+:is(#debtModal, #editDebtModal) .budget-modal-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    border-radius: 11px;
+}
+
+:is(#debtModal, #editDebtModal) .budget-modal-header h2 {
+    font-size: var(--fs-section-title);
+    font-weight: var(--fw-section-title);
+}
+
+:is(#debtModal, #editDebtModal) .budget-modal-close {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    border: 0;
+    background: var(--c-bg-chip);
+    color: var(--text-muted);
+}
+
+:is(#debtModal, #editDebtModal) .budget-modal-close svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 2.2;
+}
+
+body.dark :is(#debtModal, #editDebtModal) .budget-modal-close {
+    background: var(--dk-field);
+    color: #A3B3AE;
+    border: 0;
+}
+
+/* أزرار ليا / علي */
+:is(#debtModal, #editDebtModal) .debt-type-buttons {
+    gap: 8px;
+    margin: 0 0 14px;
+}
+
+:is(#debtModal, #editDebtModal) :is(.debt-type-btn, .edit-debt-type-btn) {
+    height: 44px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--r-field);
+    background: var(--c-bg-chip);
+    color: var(--text-muted);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-button);
+}
+
+:is(#debtModal, #editDebtModal) :is(.debt-type-btn, .edit-debt-type-btn).active {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+}
+
+body.dark :is(#debtModal, #editDebtModal) :is(.debt-type-btn, .edit-debt-type-btn) {
+    background: var(--dk-field);
+    color: #A3B3AE;
+}
+
+body.dark :is(#debtModal, #editDebtModal) :is(.debt-type-btn, .edit-debt-type-btn).active {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+}
+
+/* الحقول */
+:is(#debtModal, #editDebtModal) .goal-field {
+    margin-bottom: 12px;
+}
+
+:is(#debtModal, #editDebtModal) .goal-field label {
+    margin-bottom: 6px;
+    font-size: var(--fs-secondary);
+    font-weight: 500;
+}
+
+:is(#debtModal, #editDebtModal) .goal-field input:not(.date-native) {
+    height: 46px;
+    border: 1px solid #D9E2DF;
+    border-radius: var(--r-field);
+    background: transparent;
+    font-size: var(--fs-body);
+}
+
+:is(#debtModal, #editDebtModal) .goal-field textarea {
+    min-height: 64px;
+    border: 1px solid #D9E2DF;
+    border-radius: var(--r-field);
+    background: transparent;
+    font-size: var(--fs-body);
+}
+
+:is(#debtModal, #editDebtModal) .goal-field input:focus,
+:is(#debtModal, #editDebtModal) .goal-field textarea:focus {
+    outline: none;
+    border-color: var(--brand-text);
+}
+
+body.dark :is(#debtModal, #editDebtModal) .goal-field input:not(.date-native),
+body.dark :is(#debtModal, #editDebtModal) .goal-field textarea {
+    background: transparent !important;
+    border-color: #3E3E3E !important;
+    color: #ffffff;
+}
+
+body.dark :is(#debtModal, #editDebtModal) .goal-field input:focus,
+body.dark :is(#debtModal, #editDebtModal) .goal-field textarea:focus {
+    border-color: var(--brand-text) !important;
+}
+
+/* زرار الحفظ */
+:is(#debtModal, #editDebtModal) :is(.budget-save-btn, #saveEditDebtBtn) {
+    height: 48px;
+    margin: 8px 0 0;
+    padding: 0;
+    border-radius: var(--r-btn);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-button);
+}
+
+body.dark :is(#debtModal, #editDebtModal) :is(.budget-save-btn, #saveEditDebtBtn) {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+}
+/* ==============================
+   شيت سداد دين: نفس شكل باقي الشيتات
+============================== */
+#payDebtModal .modal-content {
+    padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    max-height: 92vh;
+    overflow-y: auto;
+}
+
+/* مقبض السحب */
+#payDebtModal .modal-content::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 14px;
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.4);
+}
+
+#payDebtModal h2 {
+    margin: 0 0 6px;
+    text-align: center;
+    font-size: var(--fs-section-title);
+    font-weight: var(--fw-section-title);
+    color: var(--text);
+}
+
+#payDebtModal .pay-debt-info {
+    margin: 0 0 14px;
+    font-size: var(--fs-secondary);
+}
+
+/* القايمة والحقول */
+#payDebtModal select,
+#payDebtModal .select-sheet-trigger,
+#payDebtModal input:not(.date-native) {
+    box-sizing: border-box;
+    width: 100%;
+    height: 46px;
+    margin: 0 0 10px;
+    padding: 0 14px;
+    border: 1px solid #D9E2DF;
+    border-radius: var(--r-field);
+    background: transparent;
+    color: var(--text);
+    font-size: var(--fs-body);
+}
+
+#payDebtModal select:focus,
+#payDebtModal input:focus {
+    outline: none;
+    border-color: var(--brand-text);
+}
+
+#payDebtModal .goal-field {
+    margin-bottom: 14px;
+}
+
+#payDebtModal .goal-field label {
+    margin-bottom: 6px;
+    font-size: var(--fs-secondary);
+    font-weight: 500;
+}
+
+#payDebtModal .goal-field input:not(.date-native) {
+    margin: 0;
+}
+
+body.dark #payDebtModal select,
+body.dark #payDebtModal .select-sheet-trigger,
+body.dark #payDebtModal input:not(.date-native) {
+    background: transparent !important;
+    border-color: #3E3E3E !important;
+    color: #ffffff;
+}
+
+body.dark #payDebtModal select:focus,
+body.dark #payDebtModal input:focus {
+    border-color: var(--brand-text) !important;
+}
+
+/* زرار سداد الباقي كله */
+#payDebtModal .pay-full-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 46px;
+    margin: 0 0 14px;
+    padding: 0;
+    border: 1px solid var(--brand-text);
+    border-radius: var(--r-field);
+    background: transparent;
+    color: var(--brand-text);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-button);
+}
+
+/* الأزرار */
+#payDebtModal .modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+#payDebtModal .modal-actions button {
+    flex: 1;
+    width: auto;
+    height: 48px;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--r-btn);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-button);
+}
+
+#payDebtModal #confirmPayBtn {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+}
+
+#payDebtModal #cancelPayBtn {
+    background: var(--c-bg-chip);
+    color: var(--text-muted);
+}
+
+body.dark #payDebtModal #cancelPayBtn {
+    background: var(--dk-field);
+    color: #F1F5F4;
+}
+#payDebtModal #payAmount {
+    direction: rtl;
+    text-align: right;
+}

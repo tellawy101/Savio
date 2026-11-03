@@ -79,7 +79,13 @@ function initDebtsPaymentsHistory(debts, renderDebts) {
 
                 const account = document.createElement("span");
                 account.className = "payment-row-account";
-account.textContent = getAccountNameById(payment.accountId, payment.account);
+                const accIcon = getAccountIconById(payment.accountId);
+                if (accIcon) {
+                    const ic = document.createElement("i");
+                    ic.setAttribute("data-lucide", accIcon);
+                    account.appendChild(ic);
+                }
+                account.appendChild(document.createTextNode(getAccountNameById(payment.accountId, payment.account)));
 
                 const date = document.createElement("span");
                 date.className = "payment-row-date";
@@ -114,10 +120,11 @@ formatAmountNumber(payment.amount);
             });
         }
 
+                if (window.lucide) lucide.createIcons();
         paymentsHistoryModal.classList.add("show");
-    }
-
-    if (closePaymentsHistoryBtn) {
+        }
+        
+        if (closePaymentsHistoryBtn) {
         closePaymentsHistoryBtn.onclick = function () {
             paymentsHistoryModal.classList.remove("show");
         };

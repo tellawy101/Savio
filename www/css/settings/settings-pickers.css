@@ -262,3 +262,77 @@
 #themePickerModal .modal-actions {
     display: none;
 }
+/* اختيار حساب سداد الدين: بوبب زي العملة والوضع */
+#selectSheet_payAccount {
+    align-items: center;
+    padding-top: 0;
+}
+
+#selectSheet_payAccount .modal-content {
+    width: 82%;
+    max-width: 300px;
+    padding: 14px 14px 10px;
+    border-radius: var(--r-card);
+    transform: scale(0.96);
+    opacity: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#selectSheet_payAccount.show .modal-content {
+    transform: none;
+    opacity: 1;
+}
+
+#selectSheet_payAccount h2 {
+    margin: 0 0 10px;
+    text-align: center;
+    font-size: var(--fs-section-title);
+    color: var(--brand-text);
+}
+
+#selectSheet_payAccount .select-sheet-list {
+    gap: 5px;
+    max-height: 50vh;
+}
+
+#selectSheet_payAccount .select-sheet-option {
+    padding: 9px 14px;
+    border: 1.5px solid var(--brand-line);
+    border-radius: 12px;
+    background: var(--option-bg);
+    font-size: 13px;
+}
+
+#selectSheet_payAccount .select-sheet-option.selected {
+    border-color: var(--brand-text);
+    background: var(--brand-bg);
+    color: var(--text);
+}
+
+#selectSheet_payAccount .is-placeholder {
+    display: none;
+}
+.select-sheet-option-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.select-sheet-option-main svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--brand-text);
+}
+.select-sheet-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.select-sheet-label svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--brand-text);
+}

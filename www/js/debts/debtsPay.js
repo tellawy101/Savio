@@ -131,7 +131,7 @@ function openPayDebt(debt) {
                     const accounts = getAccounts();
 
                                                             fillSelect(payAccount, [{ value: "", label: t("select_account") }].concat(
-                        accounts.map(function(acc) { return { value: acc.id, label: acc.name }; })
+                        accounts.map(function(acc) { return { value: acc.id, label: acc.name, icon: acc.icon }; })
                     ));
 makeSelectSheet(payAccount, t("select_account"));
                     payDebtModal.classList.add("show");
