@@ -263,12 +263,12 @@
     display: none;
 }
 /* اختيار حساب سداد الدين: بوبب زي العملة والوضع */
-#selectSheet_payAccount {
+.select-sheet.select-sheet-popup {
     align-items: center;
     padding-top: 0;
 }
 
-#selectSheet_payAccount .modal-content {
+.select-sheet.select-sheet-popup.modal-content {
     width: 82%;
     max-width: 300px;
     padding: 14px 14px 10px;
@@ -278,24 +278,24 @@
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-#selectSheet_payAccount.show .modal-content {
+.select-sheet.select-sheet-popup.show .modal-content {
     transform: none;
     opacity: 1;
 }
 
-#selectSheet_payAccount h2 {
+.select-sheet.select-sheet-popup h2 {
     margin: 0 0 10px;
     text-align: center;
     font-size: var(--fs-section-title);
     color: var(--brand-text);
 }
 
-#selectSheet_payAccount .select-sheet-list {
+.select-sheet.select-sheet-popup .select-sheet-list {
     gap: 5px;
     max-height: 50vh;
 }
 
-#selectSheet_payAccount .select-sheet-option {
+.select-sheet.select-sheet-popup .select-sheet-option {
     padding: 9px 14px;
     border: 1.5px solid var(--brand-line);
     border-radius: 12px;
@@ -303,13 +303,13 @@
     font-size: 13px;
 }
 
-#selectSheet_payAccount .select-sheet-option.selected {
+.select-sheet.select-sheet-popup .select-sheet-option.selected {
     border-color: var(--brand-text);
     background: var(--brand-bg);
     color: var(--text);
 }
 
-#selectSheet_payAccount .is-placeholder {
+.select-sheet.select-sheet-popup .is-placeholder {
     display: none;
 }
 .select-sheet-option-main {
