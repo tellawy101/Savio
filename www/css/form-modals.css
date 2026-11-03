@@ -397,3 +397,293 @@ body.add-transaction-page #addCategoryModal .modal-page-back {
 #categoryIconDropdownList .icon-list-back {
     flex: 0 0 36px;
 }
+/* ==============================
+   شيت إضافة حساب: شكل نظيف وخفيف
+============================== */
+#addAccountModal .modal-content {
+    padding-top: 12px;
+}
+
+/* مقبض السحب */
+#addAccountModal .modal-content::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 14px;
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.4);
+}
+
+/* العنوان */
+#addAccountModal .modal-content > h2 {
+    display: block !important;
+    margin: 0 0 14px;
+    text-align: center;
+    font-size: var(--fs-section-title);
+    font-weight: var(--fw-section-title);
+    color: var(--text);
+}
+
+/* الحقول */
+#addAccountModal .form-input {
+    height: 48px;
+    padding: 0 14px;
+    margin: 0 0 10px;
+    border: 1px solid transparent;
+    border-radius: var(--r-field);
+    background: var(--c-bg-chip);
+    color: var(--text);
+    font-size: var(--fs-body);
+}
+
+#addAccountModal .form-input::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+#addAccountModal .form-input:focus {
+    outline: none;
+    border-color: var(--brand-text);
+}
+
+body.dark #addAccountModal .form-input {
+    background: var(--dk-field);
+    border-color: transparent;
+    color: #ffffff;
+}
+
+body.dark #addAccountModal .form-input:focus {
+    border-color: var(--brand-text);
+}
+
+/* زرار اختيار الأيقونة */
+#addAccountModal .icon-dropdown-trigger {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-color: transparent;
+    border-radius: var(--r-field);
+    background: var(--c-bg-chip);
+    color: var(--text);
+    font-size: var(--fs-body);
+}
+
+body.dark #addAccountModal .icon-dropdown-trigger {
+    background: var(--dk-field);
+    color: #ffffff;
+}
+
+/* الأزرار */
+#addAccountModal .modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+#addAccountModal .modal-actions button {
+    flex: 1;
+    width: auto;
+    height: 48px;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--r-btn);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-button);
+}
+/* ==============================
+   شيت إضافة حساب: عنوان عائم على الحد العلوي
+============================== */
+#addAccountModal .float-field {
+    position: relative;
+    margin: 0 0 14px;
+}
+
+#addAccountModal .float-field .form-input {
+    margin: 0;
+    background: transparent;
+    border: 1px solid #D9E2DF;
+}
+
+#addAccountModal .float-field .form-input:focus {
+    border-color: var(--brand-text);
+}
+
+#addAccountModal .float-field .form-input {
+    transition: border-color .25s ease;
+}
+
+#addAccountModal .float-field label {
+    position: absolute;
+    inset-inline-start: 12px;
+    top: 50%;
+    transform: translateY(-50%) scale(1);
+    transform-origin: right center;
+    padding: 0 6px;
+    background: var(--c-white);
+    color: var(--text-muted);
+    font-size: var(--fs-body);
+    line-height: 1.2;
+    pointer-events: none;
+    transition:
+        top .25s cubic-bezier(.2, .8, .2, 1),
+        transform .25s cubic-bezier(.2, .8, .2, 1),
+        color .25s ease;
+}
+
+html[dir="ltr"] #addAccountModal .float-field label {
+    transform-origin: left center;
+}
+
+body.dark #addAccountModal .float-field label {
+    background: var(--dk-pop);
+}
+#addAccountModal .float-field .form-input:focus+label,
+#addAccountModal .float-field .form-input:not(:placeholder-shown)+label {
+    top: 0;
+    transform: translateY(-50%) scale(.78);
+    color: var(--brand-text);
+}
+
+body.dark #addAccountModal .float-field .form-input {
+    background: transparent;
+    border-color: #3E3E3E;
+}
+
+body.dark #addAccountModal .float-field .form-input:focus {
+    border-color: var(--brand-text);
+}
+
+
+/* زرار اختيار الأيقونة بنفس شكل الحقول */
+#addAccountModal .icon-dropdown-trigger {
+    margin-bottom: 14px;
+    background: transparent;
+    border-color: #D9E2DF;
+}
+
+body.dark #addAccountModal .icon-dropdown-trigger {
+    background: transparent;
+    border-color: #3E3E3E;
+}
+/* ==============================
+   شيت إضافة تصنيف: نفس شكل شيت الحساب
+============================== */
+#addCategoryModal .modal-content {
+    padding-top: 12px;
+}
+
+#addCategoryModal .modal-content::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 14px;
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.4);
+}
+
+#addCategoryModal .modal-content > h2 {
+    display: block !important;
+    margin: 0 0 14px;
+    text-align: center;
+    font-size: var(--fs-section-title);
+    font-weight: var(--fw-section-title);
+    color: var(--text);
+}
+
+#addCategoryModal .float-field {
+    position: relative;
+    margin: 0 0 14px;
+}
+
+#addCategoryModal .float-field .form-input {
+    height: 48px;
+    margin: 0;
+    padding: 0 14px;
+    border: 1px solid #D9E2DF;
+    border-radius: var(--r-field);
+    background: transparent;
+    color: var(--text);
+    font-size: var(--fs-body);
+    transition: border-color .25s ease;
+}
+
+#addCategoryModal .float-field .form-input:focus {
+    outline: none;
+    border-color: var(--brand-text);
+}
+
+#addCategoryModal .float-field label {
+    position: absolute;
+    inset-inline-start: 12px;
+    top: 50%;
+    transform: translateY(-50%) scale(1);
+    transform-origin: right center;
+    padding: 0 6px;
+    background: var(--c-white);
+    color: var(--text-muted);
+    font-size: var(--fs-body);
+    line-height: 1.2;
+    pointer-events: none;
+    transition:
+        top .25s cubic-bezier(.2, .8, .2, 1),
+        transform .25s cubic-bezier(.2, .8, .2, 1),
+        color .25s ease;
+}
+
+html[dir="ltr"] #addCategoryModal .float-field label {
+    transform-origin: left center;
+}
+
+#addCategoryModal .float-field .form-input:focus + label,
+#addCategoryModal .float-field .form-input:not(:placeholder-shown) + label {
+    top: 0;
+    transform: translateY(-50%) scale(.78);
+    color: var(--brand-text);
+}
+
+#addCategoryModal .icon-dropdown-trigger {
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    border-color: #D9E2DF;
+    border-radius: var(--r-field);
+    background: transparent;
+    color: var(--text);
+    font-size: var(--fs-body);
+}
+
+#addCategoryModal #saveCategoryBtn {
+    width: 100%;
+    height: 48px;
+    margin: 16px 0 0;
+    padding: 0;
+    border-radius: var(--r-btn);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-button);
+}
+
+/* الدارك */
+body.dark #addCategoryModal .float-field .form-input {
+    background: transparent;
+    border-color: #3E3E3E;
+    color: #ffffff;
+}
+
+body.dark #addCategoryModal .float-field .form-input:focus {
+    border-color: var(--brand-text);
+}
+
+body.dark #addCategoryModal .float-field label {
+    background: var(--dk-pop);
+}
+
+body.dark #addCategoryModal .icon-dropdown-trigger {
+    background: transparent;
+    border-color: #3E3E3E;
+    color: #ffffff;
+}
+
+body.dark #addCategoryModal #saveCategoryBtn {
+    background: var(--btn-bg) !important;
+    color: var(--btn-text) !important;
+}

@@ -20,18 +20,14 @@ function renderSharedModals() {
         <div class="modal-content">
                     <button type="button" class="back-btn modal-page-back">←</button>
             <h2 data-i18n="new_account_title">New Account</h2>
-            <input
-                type="text"
-                id="newAccountName"
-                class="form-input"
-                placeholder="Account name" data-i18n-placeholder="account_name_placeholder">
-
-            <input
-                type="text"
-                id="newAccountDescription"
-                class="form-input"
-                placeholder="Description (optional)" data-i18n-placeholder="account_description_placeholder">
-
+            <div class="float-field">
+                <input type="text" id="newAccountName" class="form-input" placeholder=" ">
+                <label for="newAccountName" data-i18n="account_name_placeholder">Account name</label>
+            </div>
+            <div class="float-field">
+                <input type="text" id="newAccountDescription" class="form-input" placeholder=" ">
+                <label for="newAccountDescription" data-i18n="account_description_placeholder">Description (optional)</label>
+            </div>
 <div class="icon-dropdown" id="iconDropdown">
     <button type="button" class="icon-dropdown-trigger" id="iconDropdownTrigger">
         <span id="selectedIconPreviewWrap"><i data-lucide="wallet" id="selectedIconPreview"></i></span>
@@ -98,11 +94,10 @@ function renderSharedModals() {
     </div>
 </div>
 <input type="hidden" id="newAccountIcon" value="wallet">
-            <input
-                type="tel"
-                id="newAccountBalance"
-                class="form-input"
-                placeholder="Initial Balance" data-i18n-placeholder="initial_balance_placeholder">
+                       <div class="float-field">
+                <input type="tel" id="newAccountBalance" class="form-input" placeholder=" ">
+                <label for="newAccountBalance" data-i18n="initial_balance_placeholder">Initial Balance</label>
+            </div>
             <div class="modal-actions">
                 <button id="cancelAddAccountBtn" class="account-cancel-btn" data-i18n="cancel">
                     Cancel
@@ -130,11 +125,10 @@ function renderSharedModals() {
         <button type="button" class="back-btn modal-page-back">←</button>
         <h2 data-i18n="new_category_title">New Category</h2>
 
-        <input
-            type="text"
-            id="newCategoryName"
-            class="form-input"
-            placeholder="Category name" data-i18n-placeholder="category_name_placeholder">
+        <div class="float-field">
+            <input type="text" id="newCategoryName" class="form-input" placeholder=" ">
+            <label for="newCategoryName" data-i18n="category_name_placeholder">Category name</label>
+        </div>
 
         <!-- Category Icon Picker -->
         <div class="icon-dropdown" id="categoryIconDropdown">
