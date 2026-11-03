@@ -205,6 +205,6 @@ function updateLastBackupBadge() {
         badge.textContent = t("backup_none_yet");
     } else {
         const d = new Date(lastTime);
-        badge.textContent = t("backup_last_prefix") + d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        badge.textContent = t("backup_last_prefix") + formatDateFromObj(d)() + " " + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 }

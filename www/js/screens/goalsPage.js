@@ -94,8 +94,7 @@ function initGoalsPage() {
                 const parts = goal.date.split("-").map(Number);
 
                 if (parts.length === 3 && !parts.some(Number.isNaN)) {
-                    dateText = new Date(parts[0], parts[1] - 1, parts[2])
-                        .toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric" });
+                    goal.date
                 }
             }
 

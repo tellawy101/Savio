@@ -219,3 +219,177 @@ body.dark #recurringModal .goal-field input:focus {
     background: var(--btn-bg);
     color: var(--btn-text);
 }
+/* ===== Polish 1: الهيكل والمسافات ===== */
+#recurringModal .modal-content {
+    max-height: 92vh;
+    padding: 10px 20px calc(16px + env(safe-area-inset-bottom, 0px));
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+}
+@supports (height: 1dvh) {
+    #recurringModal .modal-content { max-height: 92dvh; }
+}
+
+#recurringModal .modal-content::before {
+    margin: 0 auto 12px;
+}
+
+/* العنوان يفضل ظاهر كله تحت الـHandle حتى مع الـscroll */
+#recurringModal .budget-modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: inherit;
+    margin: 0 0 16px;
+    padding: 4px 0 8px;
+}
+#recurringModal .budget-modal-header h2 {
+    width: 100%;
+    line-height: 1.5;
+    white-space: normal;
+    overflow: visible;
+}
+
+/* مسافات موحدة */
+#recurringModal .goal-field {
+    margin: 0 0 18px;
+}
+#recurringModal .goal-field label {
+    display: block;
+    margin: 0 0 8px;
+    font-size: var(--fs-secondary);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-muted);
+    text-align: start;
+}
+/* ===== Polish 2: الحقول ===== */
+#recurringModal .goal-field input:not(.date-native),
+#recurringModal .goal-field .select-sheet-trigger {
+    height: 48px;
+    margin: 0;
+    padding: 0 14px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: var(--r-field);
+    font-size: var(--fs-body);
+    font-weight: 500;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+/* السهم أكبر ومكانه ثابت */
+#recurringModal .select-sheet-label {
+    font-weight: 500;
+    text-align: start;
+}
+#recurringModal .select-sheet-arrow {
+    flex: 0 0 auto;
+    font-size: 18px;
+    line-height: 1;
+    opacity: .7;
+}
+
+/* المبلغ */
+#recurringModal #recAmount {
+    font-size: 17px;
+    font-weight: 600;
+    direction: rtl;
+    text-align: right;
+}
+
+/* التاريخ: dd/mm/yyyy مع اتجاه الصفحة، والسهم بعيد عن النص */
+#recurringModal .date-wrap {
+    width: 100%;
+}
+#recurringModal .date-wrap .date-visible {
+    direction: inherit;
+    text-align: start;
+    padding-inline-end: 40px;
+}
+#recurringModal .date-wrap::after {
+    inset-inline-end: 16px;
+    width: 9px;
+    height: 9px;
+}
+
+/* الوصف */
+#recurringModal .goal-field textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 88px;
+    max-height: 160px;
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid #D9E2DF;
+    border-radius: var(--r-field);
+    background: transparent;
+    color: var(--text);
+    font-family: inherit;
+    font-size: var(--fs-body);
+    font-weight: 500;
+    line-height: 1.6;
+    resize: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+#recurringModal .goal-field textarea::placeholder {
+    color: var(--text-muted);
+    font-weight: 400;
+    opacity: .8;
+}
+body.dark #recurringModal .goal-field textarea {
+    border-color: #3E3E3E;
+    color: #ffffff;
+}
+
+/* Focus واضح وهادي */
+#recurringModal .goal-field input:focus,
+#recurringModal .goal-field textarea:focus,
+#recurringModal .goal-field .select-sheet-trigger:focus,
+#recurringModal .goal-field .select-sheet-trigger:focus-visible {
+    outline: none;
+    border-color: var(--brand-text);
+    box-shadow: 0 0 0 3px var(--brand-bg);
+}
+body.dark #recurringModal .goal-field input:focus,
+body.dark #recurringModal .goal-field textarea:focus,
+body.dark #recurringModal .goal-field .select-sheet-trigger:focus,
+body.dark #recurringModal .goal-field .select-sheet-trigger:focus-visible {
+    border-color: var(--brand-text) !important;
+}
+/* ===== Polish 3: زر الحفظ والموبايل ===== */
+#recurringModal .budget-save-btn {
+    position: sticky;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    z-index: 3;
+    width: 100%;
+    height: 56px;
+    margin-top: 8px;
+    border-radius: var(--r-field);
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .12s ease, opacity .12s ease;
+}
+#recurringModal .budget-save-btn:active {
+    transform: scale(.98);
+    opacity: .9;
+}
+
+/* الكيبورد: الحقل ميتخبّاش ورا الزر */
+#recurringModal .goal-field input,
+#recurringModal .goal-field textarea {
+    scroll-margin-bottom: 96px;
+}
+
+/* شاشات ضيقة / قصيرة */
+@media (max-width: 360px) {
+    #recurringModal .modal-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+@media (max-height: 640px) {
+    #recurringModal .goal-field { margin-bottom: 14px; }
+    #recurringModal .goal-field textarea { min-height: 72px; }
+}

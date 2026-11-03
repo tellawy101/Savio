@@ -25,7 +25,12 @@ function initRecurringPage() {
   const dateText = document.getElementById("recDateText");
   const dateLabel = document.getElementById("recDateLabel");
   const descriptionInput = document.getElementById("recDescription");
-  
+    // عرض التاريخ dd/mm/yyyy (عرض فقط، القيمة الداخلية في recDate زي ما هي)
+    // عرض التاريخ: 3 نوفمبر 2026 (عربي) / 3 Nov 2026 (إنجليزي) — عرض فقط
+    // عرض التاريخ بالتنسيق الموحد (من transactionCommon.js)
+  function syncRecDateText() {
+    syncDateText(dateInput, dateText);
+  }
   let editingId = null;
   
   if (amountInput) attachThousandsFormatter(amountInput);
@@ -71,9 +76,18 @@ function initRecurringPage() {
   makeSelectSheet(frequencySelect, t("recurring_frequency"));
   
   if (dateInput) {
-    dateInput.onchange = function() {
-      syncDateText(dateInput, dateText);
-    };
+    dateInput.onchange =   // عرض التاريخ: 3 نوفمبر 2026 (عربي) / 3 Nov 2026 (إنجليزي) — عرض فقط
+  function syncRecDateText() {
+    if (!dateInput || !dateText) return;
+    const p = String(dateInput.value || "").split("-");
+    if (p.length !== 3) { dateText.value = ""; return; }
+    const d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    const isAr = getLanguage() === "ar";
+    dateText.value = d.toLocaleDateString(
+      isAr ? "ar-EG-u-nu-latn" : "en-GB",
+      { day: "numeric", month: isAr ? "long" : "short", year: "numeric" }
+    );
+  }
   }
   
   // ------------------------------
@@ -157,7 +171,7 @@ function initRecurringPage() {
     amountInput.value = item ? Number(item.amount).toLocaleString("en-US") : "";
     descriptionInput.value = item ? (item.description || "") : "";
     dateInput.value = item ? item.nextDate : getTodayDateString();
-    syncDateText(dateInput, dateText);
+        syncRecDateText();
     
     modal.classList.add("show");
   }

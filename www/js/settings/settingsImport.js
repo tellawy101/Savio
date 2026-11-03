@@ -36,7 +36,7 @@ const importFileInput = document.getElementById("importFileInput");    const res
             document.getElementById("previewTxCount").textContent = txs.length;
             document.getElementById("previewDebtsCount").textContent = debts.length;
             document.getElementById("previewAccountsCount").textContent = accounts.length;
-            document.getElementById("previewBackupDate").textContent = payload.exportedAt ? new Date(payload.exportedAt).toLocaleDateString() : "-";
+            document.getElementById("previewBackupDate").textContent = payload.exportedAt ? formatDateFromObj(new Date(payload.exportedAt)) : "-";
 
             if (importManualModal) importManualModal.classList.remove("show");
             if (restorePreviewModal) restorePreviewModal.classList.add("show");
