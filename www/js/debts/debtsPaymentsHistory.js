@@ -79,7 +79,7 @@ function initDebtsPaymentsHistory(debts, renderDebts) {
 
                 const account = document.createElement("span");
                 account.className = "payment-row-account";
-                const accIcon = getAccountIconById(payment.accountId);
+                const accIcon = getAccountIconById(payment.accountId, payment.account);
                 if (accIcon) {
                     const ic = document.createElement("i");
                     ic.setAttribute("data-lucide", accIcon);
