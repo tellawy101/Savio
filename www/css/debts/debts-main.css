@@ -14,7 +14,7 @@
     }
 
 .debts-header h3{
-    font-size:20px;
+        font-size: var(--fs-section-title);
     margin-inline-start: 15px;
 }
 
@@ -87,19 +87,19 @@
 }
 
 #netBalance{
-    font-size:40px;
-    font-weight:700;
+        font-size: var(--fs-balance);
+        font-weight: var(--fw-balance);
     margin-top:5px;
     margin-bottom:20px;
 }
 #netBalance .currency{
-    font-size:20px;
+        font-size: var(--fs-amount);
     font-weight:500;
 }
 
 #netBalance .amount{
-    font-size:40px;
-    font-weight:800;
+        font-size: var(--fs-balance);
+        font-weight: var(--fw-balance);
     font-family:"Supreme", sans-serif;
 }
 .balance-grid {
@@ -164,8 +164,8 @@
 
     color: var(--text);
 
-    font-size: 1.1rem;
-    font-weight: 700;
+        font-size: var(--fs-card-title);
+        font-weight: var(--fw-card-title);
 }
 
 
@@ -180,7 +180,7 @@
 
     border-radius: 8px;
 
-    font-size: 0.8rem;
+        font-size: var(--fs-secondary);
     font-weight: 700;
 }
 
@@ -203,8 +203,8 @@
     order: 2;
     margin: 0 0 12px;
     color: var(--c-muted);
-    font-size: 1.4rem;
-    font-weight: 800;
+        font-size: var(--fs-amount);
+        font-weight: var(--fw-amount);
         text-align: end;
 }
 .debt-currency {
@@ -214,8 +214,8 @@
 }
 
 .debt-amount-value {
-    font-size: 1.4rem;
-    font-weight: 800;
+        font-size: var(--fs-amount);
+        font-weight: var(--fw-amount);
 }
 
 /* ==============================
@@ -230,6 +230,6 @@
 
     color: var(--text-muted);
 
-    font-size: 0.8rem;
+        font-size: var(--fs-secondary);
 }
 

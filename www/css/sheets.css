@@ -12,7 +12,7 @@
 #exportFallbackModal,
 #importManualModal,
 #restorePreviewModal,
-#languagePickerModal,
+
 #currencyPickerModal,
 #aboutModal,
 #privacyModal {
@@ -36,7 +36,7 @@
 #exportFallbackModal .modal-content,
 #importManualModal .modal-content,
 #restorePreviewModal .modal-content,
-#languagePickerModal .modal-content,
+
 #currencyPickerModal .modal-content,
 #aboutModal .modal-content,
 #privacyModal .modal-content {
@@ -60,7 +60,7 @@
 #exportFallbackModal.show .modal-content,
 #importManualModal.show .modal-content,
 #restorePreviewModal.show .modal-content,
-#languagePickerModal.show .modal-content,
+
 #currencyPickerModal.show .modal-content,
 #aboutModal.show .modal-content,
 #privacyModal.show .modal-content {

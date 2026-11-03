@@ -57,8 +57,8 @@ background: var(--dk-field);
 
 .balance-grid .stat p{
     margin: 0;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: var(--fs-amount);
+    font-weight: var(--fw-amount);
     color: var(--c-white);
 }
 

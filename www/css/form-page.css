@@ -155,7 +155,7 @@ body.has-scroll {
 
     background: var(--c-bg-soft);
     border: 1px solid var(--c-line);
-    border-radius: 16px;
+        border-radius: var(--r-field);
     padding: 14px 16px;
 }
 
@@ -233,7 +233,7 @@ body.has-scroll {
 
     background: var(--c-bg-soft);
     border: 1px solid var(--c-line);
-    border-radius: 16px;
+    border-radius: var(--r-field);
     padding: 10px 16px;
 
     cursor: pointer;
@@ -331,11 +331,10 @@ body.has-scroll {
     height: 56px;
     padding: 0 16px;
     border: 1px solid #e5e5e5;
-    border-radius: 14px;
+    border-radius: var(--r-field);
     background: var(--c-bg-soft);
     font-size: 16px;
     color: #111;
     outline: none;
     box-sizing: border-box;
 }
-

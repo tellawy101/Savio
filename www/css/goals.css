@@ -12,14 +12,14 @@ padding: 24px 20px 0;
 }
 
 .goals-header h3 {
-    font-size: 22px;
-    font-weight: 700;
+    font-size: var(--fs-page-title);
+    font-weight: var(--fw-page-title);
     margin: 0;
 }
 
 .goals-subtitle {
     display: block;
-    font-size: 13px;
+        font-size: var(--fs-secondary);
         color: var(--goal-muted);
     margin-top: 2px;
 }
@@ -53,12 +53,12 @@ padding: 24px 20px 0;
 }
 
 .goals-summary-label {
-    font-size: 13px;
+        font-size: var(--fs-secondary);
 }
 
 .goals-summary-value {
-    font-size: 26px;
-    font-weight: 700;
+        font-size: var(--fs-balance);
+    font-weight: var(--fw-balance);
     margin: 4px 0 10px;
     color: var(--goal-summary-value);
 }
@@ -69,7 +69,7 @@ padding: 24px 20px 0;
 
 .goals-summary-sub {
     display: block;
-    font-size: 12px;
+        font-size: var(--fs-secondary);
     margin-top: 6px;
 }
 
@@ -122,24 +122,24 @@ padding: 24px 20px 0;
 }
 
 .goal-name {
-    font-size: 16px;
-    font-weight: 700;
+        font-size: var(--fs-card-title);
+    font-weight: var(--fw-card-title);
         color: var(--goal-name);
 }
 
 .goal-amounts-text {
-    font-size: 12px;
+        font-size: var(--fs-secondary);
 color: var(--goal-muted);
 }
 
 .goal-percent {
-    font-size: 15px;
-    font-weight: 700;
+        font-size: var(--fs-amount);
+    font-weight: var(--fw-amount);
     color: var(--brand);
 }
 
 .goal-badge {
-    font-size: 12px;
+        font-size: var(--fs-caption);
     font-weight: 700;
     padding: 4px 10px;
     border-radius: 10px;
@@ -167,7 +167,7 @@ background: var(--goal-track);
     align-items: center;
     gap: 6px;
     margin-top: 10px;
-    font-size: 12px;
+        font-size: var(--fs-caption);
 color: var(--goal-muted);
 }
 
@@ -189,8 +189,8 @@ color: var(--goal-muted);
     padding: 10px 14px;
     border: none;
     border-radius: 12px;
-    font-size: 14px;
-    font-weight: 700;
+        font-size: var(--fs-button);
+    font-weight: var(--fw-button);
     color: var(--c-white);
     background: var(--brand);
     display: flex;

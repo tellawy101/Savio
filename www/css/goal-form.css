@@ -9,7 +9,7 @@
 .goal-field label {
     display: block;
     margin-bottom: 8px;
-    font-size: 13px;
+        font-size: var(--fs-secondary);
     font-weight: 700;
     color: var(--text-muted);
 }
@@ -23,7 +23,7 @@
     border: 1px solid var(--c-line);
     border-radius: 14px;
     background: var(--surface-alt);
-    font-size: 15px;
+        font-size: var(--fs-body);
     color: var(--text);
 }
 
@@ -47,14 +47,14 @@ body.dark .goal-field input {
     background: var(--surface-alt);
     color: var(--text);
     font-family: inherit;
-    font-size: 15px;
+    font-size: var(--fs-body);
     resize: none;
 }
 
 .goal-field #debtNotes::placeholder,
 .goal-field #editDebtNotes::placeholder {
     color: var(--text-muted);
-    font-size: 15px;
+    font-size: var(--fs-body);
 }
 
 body.dark .goal-field #debtNotes,
@@ -102,7 +102,7 @@ body.dark .goal-field #editDebtNotes {
     border: 1px solid var(--c-line);
     border-radius: 14px;
     background: var(--surface-alt);
-    font-size: 15px;
+    font-size: var(--fs-body);
     font-family: inherit;
     color: var(--c-ink);
     cursor: pointer;
@@ -135,7 +135,7 @@ body.dark .goal-field #editDebtNotes {
 
 .cb-picker-item {
     padding: 14px;
-    font-size: 15px;
+    font-size: var(--fs-body);
     color: var(--text);
     border-bottom: 1px solid var(--c-line);
     cursor: pointer;
@@ -193,7 +193,7 @@ body.dark .cb-picker-item.selected {
     align-items: center;
     justify-content: space-between;
     margin-top: 10px;
-    font-size: 13px;
+        font-size: var(--fs-secondary);
 }
 
 .cb-used {

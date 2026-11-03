@@ -57,6 +57,11 @@
     --fw-button: 500;
     --fs-caption: 11px;
     --fw-caption: 400;
+        --r-card: 18px;
+    --r-btn: 13px;
+    --r-field: 12px;
+    --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.04);
+    --shadow-modal: 0 12px 35px rgba(0, 0, 0, 0.10);
     --brand: #0F766E;
     --brand-text: #0F766E;
     --brand-gradient: linear-gradient(180deg, var(--brand), #115e59);
@@ -196,10 +201,11 @@ main {
 .card {
 background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 15px;
+        border-radius: var(--r-card);
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+        box-shadow: var(--shadow-card);
+    
 }
 .expenses-section {
     background: transparent;
@@ -225,13 +231,13 @@ background: var(--surface);
     padding: 15px;
     margin: 10px 0;
     border: none;
-    border-radius: 12px;
+        border-radius: var(--r-btn);
     background: var(--brand);
     color: white;
-    font-size: 18px;
+    font-size: var(--fs-button);
     cursor: pointer;
-    font-family: "Supreme", "Noto Sans Arabic", sans-serif;
-    font-weight: 700;
+    font-family: "Supreme", sans-serif;
+    font-weight: var(--fw-button);
 }
 
 button:hover {
@@ -273,8 +279,9 @@ button:hover {
     background: white;
     width: 90%;
     max-width: 360px;
-    border-radius: 15px;
+        border-radius: var(--r-card);
     padding: 20px;
+    box-shadow: var(--shadow-modal);
     max-height: 90vh;
     overflow-y: auto;
 }
@@ -289,8 +296,8 @@ button:hover {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+        border: 1px solid var(--border);
+    border-radius: var(--r-field);
     box-sizing: border-box;
 }
 .modal-content input:focus,
@@ -367,7 +374,7 @@ background: var(--dk-pop);
     flex: 1;
     padding: 12px;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--r-btn);
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
@@ -412,8 +419,8 @@ background: var(--expense);
     padding: 0 12px;
     margin: 0;
 
-    border: 1px solid #ddd;
-    border-radius: 12px;
+        border: 1px solid var(--border);
+    border-radius: var(--r-field);
 
     box-sizing: border-box;
     font-size: 16px;
@@ -435,4 +442,33 @@ background: var(--expense);
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+/* ==============================
+   ألوان الأزرار الأساسية (فاتح / دارك)
+============================== */
+:root {
+    --btn-bg: #0F766E;
+    --btn-text: #FFFFFF;
+}
+
+body.dark {
+    --btn-bg: #4FD1C5;
+    --btn-text: #101817;
+}
+
+/* أزرار الأكشن الأساسية في الدارك */
+body.dark .custom-confirm-ok-btn:not(.danger),
+body.dark .import-close-btn,
+body.dark #saveEditDebtBtn,
+body.dark .debt-card-pay-btn,
+body.dark .goal-add-btn,
+body.dark .period-chip.active,
+body.dark .ob-chip.active {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+}
+
+html body.dark .modal-actions .account-save-btn {
+    background: var(--btn-bg) !important;
+    color: var(--btn-text) !important;
 }

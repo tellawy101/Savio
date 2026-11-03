@@ -133,3 +133,132 @@
     color: #128C7E;
     flex-shrink: 0;
 }
+/* ==============================
+   Theme Picker: أصغر وينزل لتحت شوية
+============================== */
+#themePickerModal {
+    padding-top: 36vh;
+}
+
+#themePickerModal .modal-content {
+    width: 78%;
+    max-width: 270px;
+    padding: 14px 14px 10px;
+}
+
+.theme-modal-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 10px;
+}
+
+.theme-modal-icon svg {
+    width: 30px;
+    height: 30px;
+    color: var(--brand-text);
+}
+
+#themePickerModal .picker-list {
+    gap: 5px;
+    margin-top: 0;
+}
+
+#themePickerModal .picker-option {
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+#themePickerModal .modal-actions {
+    margin-top: 8px;
+}
+
+#themePickerModal .import-close-btn {
+    margin: 0;
+    padding: 9px;
+    font-size: 13px;
+}
+/* ==============================
+   Language Picker: أصغر وينزل لتحت شوية، أيقونة بدل العنوان
+============================== */
+#languagePickerModal {
+    padding-top: 36vh;
+}
+
+#languagePickerModal .modal-content {
+    width: 78%;
+    max-width: 270px;
+    padding: 14px 14px 10px;
+}
+
+#languagePickerModal h2 {
+    display: none;
+}
+
+#languagePickerModal .import-modal-icon {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 10px;
+}
+
+#languagePickerModal .import-modal-icon i {
+    width: 22px;
+    height: 22px;
+}
+
+#languagePickerModal .picker-list {
+    gap: 5px;
+    margin-top: 0;
+}
+
+#languagePickerModal .picker-option {
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+#languagePickerModal .modal-actions {
+    margin-top: 8px;
+}
+
+#languagePickerModal .import-close-btn {
+    margin: 0;
+    padding: 9px;
+    font-size: 13px;
+}
+/* ==============================
+   Currency Picker + تصليح مسافات الأزرار
+============================== */
+.picker-option {
+    margin: 3px 0;
+}
+
+#currencyPickerModal .modal-content {
+    overflow-y: visible;
+    max-height: none;
+}
+
+#currencyPickerModal .picker-list {
+    gap: 5px;
+    margin-top: 4px;
+}
+
+#currencyPickerModal .picker-option {
+    padding: 9px 14px;
+    font-size: 13px;
+}
+
+#currencyPickerModal .modal-actions {
+    margin-top: 8px;
+}
+
+#currencyPickerModal .import-close-btn {
+    margin: 0;
+    padding: 9px;
+    font-size: 13px;
+}
+/* إخفاء زرار الإغلاق: البوبب بيتقفل بالضغط بره */
+#currencyPickerModal .modal-actions,
+#languagePickerModal .modal-actions,
+#themePickerModal .modal-actions {
+    display: none;
+}

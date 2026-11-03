@@ -126,6 +126,13 @@ setupPicker({
         return value === "ar" ? "العربية" : "English";
     }
 });
+function updateThemeModalIcon(value) {
+    const holder = document.getElementById("themeModalIcon");
+    if (!holder) return;
+    const name = value === "dark" ? "moon" : value === "light" ? "sun" : "monitor";
+    holder.innerHTML = '<i data-lucide="' + name + '"></i>';
+    if (window.lucide) lucide.createIcons();
+}
 // ------------------------------
 // المظهر (فاتح / داكن / حسب النظام)
 // ------------------------------
@@ -139,7 +146,8 @@ setupPicker({
         saveTheme(value);
         applyTheme(value);
     },
-    getLabelText: function (value) {
+        getLabelText: function(value) {
+        updateThemeModalIcon(value);
         return t("theme_" + value);
     }
 });

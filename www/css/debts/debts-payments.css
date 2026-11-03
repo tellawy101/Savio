@@ -48,8 +48,8 @@
 }
 
 .payment-row-account {
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: var(--fw-card-title);
+    font-size: var(--fs-card-title);
 }
 
 .payment-row-date {
@@ -59,8 +59,8 @@
 
 .payment-row-amount {
     direction: ltr;
-    font-weight: 800;
-    font-size: 15px;
+        font-weight: var(--fw-amount);
+    font-size: var(--fs-amount);
 }
 
 .payment-row-amount.receivable {

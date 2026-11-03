@@ -171,7 +171,9 @@ body.dark .account-row {
     font-size: 15px;
     font-weight: 700;
 }
-
+.compare-value:first-child strong {
+    color: #3B82F6;
+}
 body.dark .compare-label {
     color: #9CA3AF;
 }
