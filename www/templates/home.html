@@ -6,6 +6,10 @@
             <span id="budgetValue">Budget</span>
         </button>
     </div>
+    <div class="month-nav home-month-nav">
+    <button id="monthLabelBtn" class="month-label-btn"></button>
+    <input type="month" id="monthPicker" class="month-picker-input">
+</div>
     <div id="homeReport"></div>
 </div>
 <main>
@@ -50,21 +54,7 @@
 
    <div class="expenses-header">
    <h2 data-i18n="expenses_title">Expenses</h2>
-
-    <div class="month-nav">
-        <button id="prevMonthBtn" class="month-nav-btn" aria-label="Previous month">
-            <i data-lucide="chevron-left"></i>
-        </button>
-
-<button id="monthLabelBtn" class="month-label-btn"></button>
-
-        <button id="nextMonthBtn" class="month-nav-btn" aria-label="Next month">
-            <i data-lucide="chevron-right"></i>
-        </button>
-
-        <input type="month" id="monthPicker" class="month-picker-input">
-    </div>
-
+   
     <button id="searchBtn" class="search-btn">
         <i data-lucide="search"></i>
     </button>
