@@ -68,6 +68,7 @@ body.dark .stat {
 
 html[dir="rtl"] .date-wrap .date-visible {
     text-align: right;
+    direction: rtl;
 }
 
 html[dir="rtl"] .goal-field input[type="tel"] {
