@@ -3,8 +3,7 @@
 // إحصائيات الفئات: الدونات + القائمة (بيشاركوا نفس الألوان)
 // ==============================================================
 
-const STATS_CATEGORY_COLORS = ["#0F766E", "#14B8A6", "#2DD4BF", "#0D9488", "#64748B", "#8B5CF6", "#3B82F6", "#EC4899", "#84CC16", "#F59E0B", "#F97316", "#06B6D4", "#A855F7", "#10B981", "#E11D48", "#6366F1", "#EAB308", "#0EA5E9", "#D946EF", "#78716C"];
-
+const STATS_CATEGORY_COLORS = ["#F97316", "#3B82F6", "#EC4899", "#10B981", "#8B5CF6", "#F59E0B", "#06B6D4", "#E11D48", "#84CC16", "#6366F1", "#14B8A6", "#D946EF", "#EAB308", "#0EA5E9", "#A855F7", "#F43F5E", "#22C55E", "#FB923C", "#2DD4BF", "#78716C"];
 // مدخلات: تقسيم الفئات + الرسم القديم ← مخرجات: الرسم الجديد (أو القديم لو الـ canvas مش موجود)
 function renderCategoryPie(breakdown, oldChart) {
     const canvas = document.getElementById("categoryPieChart");
@@ -68,7 +67,8 @@ function renderCategoryList(breakdown) {
         `;
         return;
     }
-
+const iconByName = {};
+getCategories().forEach(function(c) { iconByName[c.name] = c.icon; });
     container.innerHTML = breakdown.map(({ category, amount, percentage }, index) => `
         <div class="category-row">
 
@@ -76,7 +76,7 @@ function renderCategoryList(breakdown) {
 
                 <span class="category-name">
                     <span class="category-dot" style="background: ${STATS_CATEGORY_COLORS[index % STATS_CATEGORY_COLORS.length]}"></span>
-                    ${escapeHTML(category)}
+                <i data-lucide="${escapeHTML(iconByName[category] || 'tag')}" style="width:16px;height:16px;color:${STATS_CATEGORY_COLORS[index % STATS_CATEGORY_COLORS.length]}"></i>    ${escapeHTML(category)}
                 </span>
 
                 <span class="category-amount">
@@ -86,7 +86,7 @@ function renderCategoryList(breakdown) {
             </div>
 
             <div class="category-progress">
-                <div class="category-progress-fill" style="width: ${percentage}%"></div>
+                <div class="category-progress-fill" style="width: ${percentage}%; background: ${STATS_CATEGORY_COLORS[index % STATS_CATEGORY_COLORS.length]}"></div>
             </div>
 
         </div>

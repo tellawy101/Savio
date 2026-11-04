@@ -14,10 +14,11 @@ function initHomeMonthFilter(expenseList, renderExpenses) {
         const [year, month] = window.selectedMonth.split("-");
         const date = new Date(Number(year), Number(month) - 1);
 const monthName = date.toLocaleDateString(getLanguage() === "ar" ? "ar-EG" : "en-US", { month: "long" });
-        monthLabelBtn.innerHTML = `
-            <span class="month-label-month">${monthName}</span>
-            <span class="month-label-year">${year}</span>
-        `;
+const lastDay = new Date(Number(year), Number(month), 0).getDate();
+const isAr = getLanguage() === "ar";
+const fromText = isAr ? "1 " + monthName : monthName + " 1";
+const toText = isAr ? lastDay + " " + monthName : monthName + " " + lastDay;
+monthLabelBtn.textContent = fromText + " - " + toText;
     }
 
     function changeMonth(diff) {

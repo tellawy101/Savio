@@ -163,5 +163,75 @@ background: var(--surface-alt);
     font-size: 14px;
     font-weight: 700;
 }
-
-
+.account-stats .account-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+.account-row-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.account-row-top .account-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 15px;
+}
+.account-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20,184,166,.15);
+    color: #14B8A6;
+    flex-shrink: 0;
+}
+.account-icon-box i {
+    width: 20px;
+    height: 20px;
+}
+.account-value {
+    font-size: 15px;
+    font-weight: 700;
+}
+.account-value.positive {
+    color: var(--income);
+}
+.account-value.negative {
+    color: var(--expense);
+}
+.account-stats .account-activity {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 8px;
+}
+.account-income,
+.account-expense {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+.account-income {
+    background: rgba(22,163,74,.12);
+}
+.account-expense {
+    background: rgba(220,38,38,.12);
+}
+.account-label {
+    font-weight: 700;
+}
+.account-amount {
+    font-weight: 500;
+    white-space: nowrap;
+}

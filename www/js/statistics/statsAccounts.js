@@ -5,13 +5,13 @@
 
 function renderAccountList(transactions) {
     const container = document.getElementById("accountStats");
-
+    
     if (!container) {
         return;
     }
-
+    
     const entries = calculateAccountBreakdown(transactions);
-
+    
     if (!entries.length) {
         container.innerHTML = `
             <div class="empty-stat">
@@ -21,39 +21,32 @@ function renderAccountList(transactions) {
         `;
         return;
     }
-
+    
+    const iconByName = {};
+    getAccounts().forEach(function(a) { iconByName[a.name] = a.icon; });
+    
     container.innerHTML = entries.map(data => {
-        const sign = data.net >= 0 ? "+" : "";
-
+        const sign = data.net > 0 ? "+" : (data.net < 0 ? "-" : "");
+        const valueClass = data.net >= 0 ? "positive" : "negative";
+        const icon = iconByName[data.account] || "wallet";
+        
         return `
         <div class="account-row">
-
-            <div class="account-info">
-
-                <span class="account-name">
-                    ${escapeHTML(data.account)}
-                </span>
-
-                <div class="account-activity">
-
-                    <span class="account-income">
-                        ${t("stats_income")}:
-                        ${formatCurrency(data.income)}
-                    </span>
-
-                    <span class="account-expense">
-                        ${t("stats_expense")}:
-                        ${formatCurrency(data.expense)}
-                    </span>
-
-                </div>
-
+            <div class="account-row-top">
+                <div class="account-icon-box"><i data-lucide="${escapeHTML(icon)}"></i></div>
+                <span class="account-name">${escapeHTML(data.account)}</span>
+                <span class="account-value ${valueClass}" dir="ltr">${sign}${formatCurrency(Math.abs(data.net))}</span>
             </div>
-
-            <span class="account-value">
-                ${sign}${formatCurrency(data.net)}
-            </span>
-
+            <div class="account-activity">
+                <div class="account-income">
+                    <span class="account-label">${t("stats_income")}</span>
+                    <span class="account-amount" dir="ltr">${formatCurrency(data.income)}</span>
+                </div>
+                <div class="account-expense">
+                    <span class="account-label">${t("stats_expense")}</span>
+                    <span class="account-amount" dir="ltr">${formatCurrency(data.expense)}</span>
+                </div>
+            </div>
         </div>
         `;
     }).join("");
