@@ -117,3 +117,15 @@ body.amounts-hidden #homeReport .period-value{
     user-select:none;
     transition:filter .2s ease;
 }
+.home-month-nav {
+    margin: 6px 0 0;
+}
+.home-month-nav .month-label-btn {
+    color: #fff;
+}
+.home-month-nav .month-label-month {
+    font-size: 15px;
+}
+.home-month-nav .month-label-year {
+    font-size: 11px;
+}
