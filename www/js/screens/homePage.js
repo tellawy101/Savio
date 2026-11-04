@@ -115,11 +115,10 @@ if (expenses.length === 0 && !getAccounts().some(function (a) { return Number(a.
                 return;
             }
 
-            if (
-                window.selectedMonth &&
-                (!expense.date || !expense.date.startsWith(window.selectedMonth))
-            ) {
-                return;
+                        const hr = window.homeRange;
+            if (hr) {
+                const txDay = (expense.date || "").slice(0, 10);
+                if (!txDay || txDay < hr.from || txDay > hr.to) return;
             }
             // استخدام مكوّن الكارت المشترك
             const li = createTransactionElement(expense);
@@ -220,7 +219,9 @@ t("item_deleted_toast"),
                         saveAccounts(allAccounts);
                     }
                 }
-                if (!openingDate || !openingDate.startsWith(window.selectedMonth)) return;
+                const hr2 = window.homeRange;
+const openDay = (openingDate || "").slice(0, 10);
+if (!openDay || (hr2 && (openDay < hr2.from || openDay > hr2.to))) return;
                 const positive = bal > 0;
                 const openingLi = document.createElement("li");
                 openingLi.className = "expense-item opening-card";
