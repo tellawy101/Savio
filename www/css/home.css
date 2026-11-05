@@ -3,19 +3,20 @@
    هيدر الرئيسية (الرصيد) + قايمة المصروفات + أزرار التعديل والحذف
 ============================== */
 /* الرئيسية: الجزء اللي فوق (العين + الميزانية + كارت التقرير) جوه الأخضر */
-.home-top {
+/*.home-top {
     background:
-    linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(0,0,0,.7) 30%, transparent 75%),
+        linear-gradient(to top, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .7) 30%, transparent 75%),
         radial-gradient(circle at 90% -10%, rgba(94, 234, 212, .55) 0%, transparent 50%),
         radial-gradient(circle at 0% 105%, rgba(52, 211, 153, .45) 0%, transparent 55%),
         radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .06) 0%, transparent 60%),
         linear-gradient(165deg, #14917F 0%, #0F766E 40%, #0B4F4A 100%);
+    box-shadow: none;
     color: #fff;
     padding: 14px 0 16px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    
-}
+}*/
+
 .home-top-actions{
     display:flex;
     align-items:center;
@@ -236,11 +237,4 @@ body.amounts-hidden #homeReport .period-value{
     font-weight: 700;
     cursor: pointer;
     margin-top: 4px;
-}
-.home-top {
-    background:
-        linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.6) 30%, transparent 75%),
-        radial-gradient(circle at 90% -10%, rgba(94,234,212,.55) 0%, transparent 50%),
-        linear-gradient(165deg, #14917F 0%, #0F766E 40%, #0B4F4A 100%) !important;
-    box-shadow: none !important;
 }
