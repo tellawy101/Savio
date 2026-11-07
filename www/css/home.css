@@ -3,7 +3,9 @@
    هيدر الرئيسية (الرصيد) + قايمة المصروفات + أزرار التعديل والحذف
 ============================== */
 /* الرئيسية: الجزء اللي فوق (العين + الميزانية + كارت التقرير) جوه الأخضر */
-.home-top {
+
+.home-top,
+.balance-card.debts-top {
     background:
         linear-gradient(to top, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .7) 30%, transparent 75%),
         radial-gradient(circle at 90% -10%, rgba(94, 234, 212, .55) 0%, transparent 50%),
@@ -179,6 +181,7 @@ body.amounts-hidden #homeReport .period-value{
 #homeRangeSheet .modal-content {
     max-height: 85vh;
     overflow-y: auto;
+     border-radius: 12px 12px 0 0;
 }
 .range-chips {
     display: flex;
@@ -197,7 +200,7 @@ body.amounts-hidden #homeReport .period-value{
     flex: 0 0 auto;
     white-space: nowrap;
     padding: 10px 18px;
-    border-radius: 999px;
+    border-radius: 14px;
     border: 1px solid var(--border);
     background: var(--surface-alt);
     color: var(--text);
