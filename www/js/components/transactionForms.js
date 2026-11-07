@@ -86,7 +86,7 @@ function renderTransferFields() {
 <div class="form-group">
 <label data-i18n="transfer_from_label">From Account</label>
     <div class="account-select-box">
-        <span class="account-icon">💳</span>
+        <span class="account-icon"><i data-lucide="credit-card"></i></span>
         <div id="transferFromAccount" class="account-select" data-i18n="select_account">Select Account</div>
         <span class="account-arrow">›</span>
     </div>
@@ -101,7 +101,7 @@ function renderTransferFields() {
 <div class="form-group">
 <label data-i18n="transfer_to_label">To Account</label>
     <div class="account-select-box">
-        <span class="account-icon">💳</span>
+        <span class="account-icon"><i data-lucide="credit-card"></i></span>
         <div id="transferToAccount" class="account-select" data-i18n="select_account">Select Account</div>
         <span class="account-arrow">›</span>
     </div>

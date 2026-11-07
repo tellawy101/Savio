@@ -66,10 +66,21 @@ swapAccountsBtn.onclick = function () {
     
     if (toId) { transferFromAccount.dataset.id = toId; } else { delete transferFromAccount.dataset.id; }
     if (fromId) { transferToAccount.dataset.id = fromId; } else { delete transferToAccount.dataset.id; }
-
+    [transferFromAccount, transferToAccount].forEach(function(el) {
+        if (el.dataset.id) el.removeAttribute("data-i18n");
+        else el.setAttribute("data-i18n", "select_account");
+    });
+        syncAccountIcon(transferFromAccount);
+    syncAccountIcon(transferToAccount);
     checkTransferForm();
 };
-
+// بتحدّث أيقونة الحساب جنب الخانة حسب الـ id بتاعها
+function syncAccountIcon(fieldEl) {
+    const iconEl = fieldEl.closest(".account-select-box").querySelector(".account-icon");
+    const acc = getAccounts().find(function (a) { return a.id === fieldEl.dataset.id; });
+    iconEl.innerHTML = acc ? '<i data-lucide="' + escapeHTML(acc.icon) + '"></i>' : "💳";
+    if (window.lucide) lucide.createIcons();
+}
 // ==============================
 // التحقق من الفورم
 // ==============================
@@ -128,7 +139,11 @@ function loadEditingTransfer() {
     const fromSideId = getTxAccountId(fromSide);
     const toSideId = getTxAccountId(toSide);
     if (fromSideId) transferFromAccount.dataset.id = fromSideId;
-    if (toSideId) transferToAccount.dataset.id = toSideId;
+        if (toSideId) transferToAccount.dataset.id = toSideId;
+    transferFromAccount.removeAttribute("data-i18n");
+    transferToAccount.removeAttribute("data-i18n");
+        syncAccountIcon(transferFromAccount);
+    syncAccountIcon(transferToAccount);
     transferDescription.value = fromSide.note || "";
     transferDate.value = fromSide.date;
 
@@ -204,7 +219,7 @@ showToast(t("missing_prefix") + missing);
 
     transactions.push(fromEntry, toEntry);
 
-if (!saveTransactions(transactions)) return;
+if (!saveTransactions(transaction!= s)) return;
 navigateTo("home");
 };
 
