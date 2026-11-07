@@ -130,9 +130,14 @@ const categoryName = isTransferView ? t("transfer_title") : (getTxCategoryName(t
 
 let note = String(transaction.description || "").trim();
 if (isTransferView) {
-    note = transaction.type === "income" ?
-        getAccountNameById(transaction.transferFromId, transaction.transferFrom) + " ➔ " + getTxAccountName(transaction) :
-        getTxAccountName(transaction) + " ➔ " + getAccountNameById(transaction.transferToId, transaction.transferTo);
+            (function () {
+        const isAr = getLanguage() === "ar";
+        const wrap = function (s) { return isAr ? s : "\u2066" + s + "\u2069"; };
+        const arrow = isAr ? " \u2B05\uFE0E " : " \u27A1\uFE0E ";
+        const fromName = transaction.type === "income" ? getAccountNameById(transaction.transferFromId, transaction.transferFrom) : getTxAccountName(transaction);
+        const toName = transaction.type === "income" ? getTxAccountName(transaction) : getAccountNameById(transaction.transferToId, transaction.transferTo);
+        return wrap(fromName) + arrow + wrap(toName);
+    })();
 } else if (note === categoryName) {
     note = "";
 } else if (note.startsWith(categoryName)) {

@@ -49,7 +49,10 @@ function createTransactionElement(expense, options = {}) {
     let subtitle = getTxAccountName(expense);
     if (isTransfer) {
         title = typeof t === "function" ? t("transfer_title") : "Transfer";
-        subtitle = `${getTxAccountName(expense)} ➔ ${getAccountNameById(expense.transferToId, expense.transferTo)}`;
+                                const isAr = (typeof getLanguage === "function" && getLanguage() === "ar");
+        const wrap = function(s) { return isAr ? s : "\u2066" + s + "\u2069"; };
+                const arrow = isAr ? "\u2B05\uFE0E" : "\u27A1\uFE0E";
+        subtitle = `${wrap(getTxAccountName(expense))} ${arrow} ${wrap(getAccountNameById(expense.transferToId, expense.transferTo))}`;
     }
 
     li.innerHTML = `
