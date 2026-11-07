@@ -55,17 +55,17 @@ function buildPeriodReportCard(state, transactions, onChange) {
         <div class="period-range">${rangeLabel}</div>
         <div class="period-net">
             <span class="period-label">${t("stats_net_balance")}</span>
-<span class="period-net-value ${netCls}" data-countup="report-net" data-value="${net}" data-prefix="${cur} ">${cur} ${fmt(net)}</span>
+<span class="period-net-value ${netCls}" data-countup="report-net" data-value="${net}" data-prefix="${cur} "><span class="cu-cur">${cur}</span> <span class="cu-num">${fmt(net)}</span></span>
         </div>
         <div class="period-bar ${total === 0 ? "empty" : ""}"><span style="width:${incPct}%"></span></div>
         <div class="period-totals">
             <div class="period-item">
                 <span class="period-label">${t("stats_income")}</span>
-<span class="period-value period-income" data-countup="report-income" data-value="${totals.income}" data-prefix="${cur} ">${cur} ${fmt(totals.income)}</span>
+<span class="period-value period-income" data-countup="report-income" data-value="${totals.income}" data-prefix="${cur} "><span class="cu-cur">${cur}</span> <span class="cu-num">${fmt(totals.income)}</span></span>
             </div>
             <div class="period-item">
                 <span class="period-label">${t("stats_expense")}</span>
-<span class="period-value period-expense" data-countup="report-expense" data-value="${totals.expense}" data-prefix="${cur} ">${cur} ${fmt(totals.expense)}</span>
+<span class="period-value period-expense" data-countup="report-expense" data-value="${totals.expense}" data-prefix="${cur} "><span class="cu-cur">${cur}</span> <span class="cu-num">${fmt(totals.expense)}</span></span>
             </div>
         </div>
     `;

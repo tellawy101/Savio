@@ -14,7 +14,8 @@ function countUp(root) {
         const key = el.dataset.countup;
         const target = Number(el.dataset.value) || 0;
         const from = countUpPrev[key] !== undefined ? countUpPrev[key] : 0;
-        const prefix = el.dataset.prefix || "";
+        const numEl = el.querySelector(".cu-num");
+        const prefix = numEl ? "" : (el.dataset.prefix || "");
 
         countUpPrev[key] = target;
 
@@ -26,7 +27,7 @@ function countUp(root) {
         function frame(now) {
             const p = Math.min((now - start) / duration, 1);
             const eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = prefix + formatWholeAmount(from + (target - from) * eased);
+(numEl || el).textContent = prefix + formatWholeAmount(from + (target - from) * eased);
             if (p < 1) requestAnimationFrame(frame);
         }
 
