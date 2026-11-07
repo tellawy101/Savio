@@ -236,6 +236,16 @@ body.amounts-hidden #homeReport .period-value{
 .range-input {
     width: 100%;
     box-sizing: border-box;
+    height: 46px;
+    padding: 0 14px;
+    border-radius: 12px;
+}
+.range-input:invalid::before {
+    content: attr(data-ph);
+    opacity: .5;
+}
+.range-input:invalid::-webkit-datetime-edit {
+    display: none;
 }
 .range-apply {
     width: 100%;

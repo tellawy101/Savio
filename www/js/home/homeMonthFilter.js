@@ -92,11 +92,11 @@ function initHomeMonthFilter(expenseList, renderExpenses) {
                     }).join("")}
                 </div>
                 <div class="range-section-title">${ar ? "بحث حسب الشهر" : "Search by month"}</div>
-                <input type="month" id="rangeMonthInput" class="range-input" value="${r.key === "month" ? r.from.slice(0, 7) : ""}">
+                <input type="month" id="rangeMonthInput" class="range-input" required data-ph="${ar ? "اختار الشهر" : "Pick month"}" value="${r.key === "month" ? r.from.slice(0, 7) : ""}">
                 <div class="range-section-title">${ar ? "فترة مخصصة" : "Custom range"}</div>
                 <div class="range-custom">
-                    <label><span>${ar ? "من" : "From"}</span><input type="date" id="rangeFromInput" class="range-input" value="${r.key === "custom" ? r.from : ""}"></label>
-                    <label><span>${ar ? "إلى" : "To"}</span><input type="date" id="rangeToInput" class="range-input" value="${r.key === "custom" ? r.to : ""}"></label>
+                    <label><span>${ar ? "من" : "From"}</span><input type="date" id="rangeFromInput" class="range-input" required data-ph="${ar ? "اختار التاريخ" : "Pick date"}" value="${r.key === "custom" ? r.from : ""}"></label>
+                    <label><span>${ar ? "إلى" : "To"}</span><input type="date" id="rangeToInput" class="range-input" required data-ph="${ar ? "اختار التاريخ" : "Pick date"}" value="${r.key === "custom" ? r.to : ""}"></label>
                 </div>
                 <button type="button" id="rangeApplyBtn" class="range-apply">${ar ? "تطبيق" : "Apply"}</button>
             </div>
