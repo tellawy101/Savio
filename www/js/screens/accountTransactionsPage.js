@@ -5,12 +5,9 @@
 // ==============================================================
 
 function initAccountTransactionsPage() {
+    const accountId = window.pendingAccountTransactionsAccount || new URLSearchParams(window.location.search).get("account");
 
-    const accountId = window.pendingAccountTransactionsAccount ||
-        new URLSearchParams(window.location.search).get("account");
-
-    const type = window.pendingAccountTransactionsType ||
-        new URLSearchParams(window.location.search).get("type");
+    const type = window.pendingAccountTransactionsType || new URLSearchParams(window.location.search).get("type");
 
     window.pendingAccountTransactionsAccount = null;
     window.pendingAccountTransactionsType = null;
@@ -18,81 +15,84 @@ function initAccountTransactionsPage() {
     applyStoredTheme();
 
     const backBtn = document.getElementById("backBtn");
-if (backBtn) {
-    backBtn.onclick = function() {
-        navigateTo("accounts");
-    };
-}
+    if (backBtn) {
+        backBtn.onclick = function () {
+            navigateTo("accounts");
+        };
+    }
 
-const accountNameEl = document.getElementById("accountName");
-const accountIconEl = document.querySelector(".acc-header-icon");
-const transactionTypeEl = document.getElementById("transactionType");
-const totalLabelEl = document.getElementById("totalLabel");
-const totalAmountEl = document.getElementById("totalAmount");
-const listTitleEl = document.getElementById("listTitle");
-const transactionCountEl = document.getElementById("transactionCount");
-const transactionsListEl = document.getElementById("transactionsList");
-const emptyStateEl = document.getElementById("emptyState");
-const transactions = loadTransactions();
-const accountTransactions = transactions.filter(transaction => {
-    const sameAccount = getTxAccountId(transaction) === accountId;
+    const accountNameEl = document.getElementById("accountName");
+    const accountIconEl = document.querySelector(".acc-header-icon");
+    const transactionTypeEl = document.getElementById("transactionType");
+    const totalLabelEl = document.getElementById("totalLabel");
+    const totalAmountEl = document.getElementById("totalAmount");
+    const listTitleEl = document.getElementById("listTitle");
+    const transactionCountEl = document.getElementById("transactionCount");
+    const transactionsListEl = document.getElementById("transactionsList");
+    const emptyStateEl = document.getElementById("emptyState");
+    const transactions = loadTransactions();
+    const accountTransactions = transactions.filter((transaction) => {
+        const sameAccount = getTxAccountId(transaction) === accountId;
         const sameType = type === "transfer" ? !!transaction.isTransfer : transaction.type === type;
-    return sameAccount && sameType && (type === "transfer" || !transaction.isTransfer);
-});
-const openingAccount = getAccounts().find(a => a.id === accountId);
-const openingBalance = openingAccount ? (Number(openingAccount.balance) || 0) : 0;
-const showOpening = type !== "transfer" && openingBalance !== 0 && ((type === "income") === (openingBalance > 0));
-if (accountNameEl) {
-    accountNameEl.textContent = t("account_label");
-}
-if (accountId && accountIconEl) {
-    const accounts = getAccounts();
-const account = accounts.find(a => a.id === accountId);
-    if (account) {
-        accountNameEl.textContent = account.name;
-  accountIconEl.innerHTML = `<i data-lucide="${escapeHTML(account.icon)}"></i>`;
-        if (window.lucide) {
-            lucide.createIcons();
+        return sameAccount && sameType && (type === "transfer" || !transaction.isTransfer);
+    });
+    const openingAccount = getAccounts().find((a) => a.id === accountId);
+    const openingBalance = openingAccount ? Number(openingAccount.balance) || 0 : 0;
+    const showOpening = type !== "transfer" && openingBalance !== 0 && (type === "income") === openingBalance > 0;
+    if (accountNameEl) {
+        accountNameEl.textContent = t("account_label");
+    }
+    if (accountId && accountIconEl) {
+        const accounts = getAccounts();
+        const account = accounts.find((a) => a.id === accountId);
+        if (account) {
+            accountNameEl.textContent = account.name;
+            accountIconEl.innerHTML = `<i data-lucide="${escapeHTML(account.icon)}"></i>`;
+            if (window.lucide) {
+                lucide.createIcons();
+            }
         }
     }
-}
-const isIncome = type === "income";
-const isTransferView = type === "transfer";
-if (transactionTypeEl) {
-    transactionTypeEl.textContent = isTransferView ? t("transfer_title") : (isIncome ? t("income_title") : t("expense_title"));
-}
-if (totalLabelEl) {
-    totalLabelEl.textContent = isTransferView ? t("account_transfers_net") : (isIncome ? t("stats_total_income") : t("stats_total_expense"));
-}
-if (listTitleEl) {
-    listTitleEl.textContent = isTransferView ? t("transfer_title") : (isIncome ? t("income_title") : t("expense_title"));
-}
-const total = isTransferView ?
-    accountTransactions.reduce(function(sum, tx) {
-        return sum + (tx.type === "income" ? 1 : -1) * (Number(tx.amount) || 0);
-    }, 0) :
-    calculateTransactionsTotal(accountTransactions);
-if (totalAmountEl) {
-    totalAmountEl.textContent = total.toLocaleString("en-US");
-    const totalCurrencyEl = totalAmountEl.parentElement.querySelector(".currency");
-    if (totalCurrencyEl) totalCurrencyEl.textContent = getCurrency();
-    const totalLen = String(Math.round(total)).length;
-    if (totalLen <= 4) {
-        totalAmountEl.style.fontSize = "26px";
-    } else if (totalLen <= 7) {
-        totalAmountEl.style.fontSize = "22px";
-    } else {
-        totalAmountEl.style.fontSize = "18px";
+    const isIncome = type === "income";
+    const isTransferView = type === "transfer";
+    if (transactionTypeEl) {
+        transactionTypeEl.textContent = isTransferView ? t("transfer_title") : isIncome ? t("income_title") : t("expense_title");
     }
-}
+    if (totalLabelEl) {
+        totalLabelEl.textContent = isTransferView
+            ? t("account_transfers_net")
+            : isIncome
+              ? t("stats_total_income")
+              : t("stats_total_expense");
+    }
+    if (listTitleEl) {
+        listTitleEl.textContent = isTransferView ? t("transfer_title") : isIncome ? t("income_title") : t("expense_title");
+    }
+    const total = isTransferView
+        ? accountTransactions.reduce(function (sum, tx) {
+              return sum + (tx.type === "income" ? 1 : -1) * (Number(tx.amount) || 0);
+          }, 0)
+        : calculateTransactionsTotal(accountTransactions);
+    if (totalAmountEl) {
+        totalAmountEl.textContent = total.toLocaleString("en-US");
+        const totalCurrencyEl = totalAmountEl.parentElement.querySelector(".currency");
+        if (totalCurrencyEl) totalCurrencyEl.textContent = getCurrency();
+        const totalLen = String(Math.round(total)).length;
+        if (totalLen <= 4) {
+            totalAmountEl.style.fontSize = "26px";
+        } else if (totalLen <= 7) {
+            totalAmountEl.style.fontSize = "22px";
+        } else {
+            totalAmountEl.style.fontSize = "18px";
+        }
+    }
 
     transactionCountEl.textContent = accountTransactions.length;
 
-        emptyStateEl.style.display =
-        accountTransactions.length === 0 && !showOpening ? "block" : "none";
+    emptyStateEl.style.display = accountTransactions.length === 0 && !showOpening ? "block" : "none";
 
     const sortEl = document.getElementById("accSortFilter");
-    
+
     // ترتيب المعاملات من غير ما نغيّر الأصل
     function getSortedTransactions() {
         const mode = sortEl ? sortEl.value : "date_desc";
@@ -106,44 +106,48 @@ if (totalAmountEl) {
                 const dateA = a.transaction.date || "";
                 const dateB = b.transaction.date || "";
                 if (dateA !== dateB) {
-                    return mode === "date_asc" ?
-                        dateA.localeCompare(dateB) :
-                        dateB.localeCompare(dateA);
+                    return mode === "date_asc" ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA);
                 }
                 return mode === "date_asc" ? a.index - b.index : b.index - a.index;
             })
-            .map(entry => entry.transaction);
+            .map((entry) => entry.transaction);
     }
-    
+
     function renderTransactionsList() {
-        
         transactionsListEl.innerHTML = "";
-        
-        getSortedTransactions().forEach(transaction => {
-            
-const li = document.createElement("li");
-const rowIsIncome = isTransferView ? transaction.type === "income" : isIncome;
-li.className = rowIsIncome ? "is-income" : "is-expense";
-const amount = Number(transaction.amount || 0);
 
-const categoryName = isTransferView ? t("transfer_title") : (getTxCategoryName(transaction) || "Transaction");
+        getSortedTransactions().forEach((transaction) => {
+            const li = document.createElement("li");
+            const rowIsIncome = isTransferView ? transaction.type === "income" : isIncome;
+            li.className = rowIsIncome ? "is-income" : "is-expense";
+            const amount = Number(transaction.amount || 0);
 
-let note = String(transaction.description || "").trim();
-if (isTransferView) {
-            (function () {
-        const isAr = getLanguage() === "ar";
-        const wrap = function (s) { return isAr ? s : "\u2066" + s + "\u2069"; };
-        const arrow = isAr ? " \u2B05\uFE0E " : " \u27A1\uFE0E ";
-        const fromName = transaction.type === "income" ? getAccountNameById(transaction.transferFromId, transaction.transferFrom) : getTxAccountName(transaction);
-        const toName = transaction.type === "income" ? getTxAccountName(transaction) : getAccountNameById(transaction.transferToId, transaction.transferTo);
-        return wrap(fromName) + arrow + wrap(toName);
-    })();
-} else if (note === categoryName) {
-    note = "";
-} else if (note.startsWith(categoryName)) {
-    note = note.slice(categoryName.length).trim() || note;
-}
-li.innerHTML = `
+            const categoryName = isTransferView ? t("transfer_title") : getTxCategoryName(transaction) || "Transaction";
+
+            let note = String(transaction.description || "").trim();
+            if (isTransferView) {
+                (function () {
+                    const isAr = getLanguage() === "ar";
+                    const wrap = function (s) {
+                        return isAr ? s : "\u2066" + s + "\u2069";
+                    };
+                    const arrow = isAr ? " \u2B05\uFE0E " : " \u27A1\uFE0E ";
+                    const fromName =
+                        transaction.type === "income"
+                            ? getAccountNameById(transaction.transferFromId, transaction.transferFrom)
+                            : getTxAccountName(transaction);
+                    const toName =
+                        transaction.type === "income"
+                            ? getTxAccountName(transaction)
+                            : getAccountNameById(transaction.transferToId, transaction.transferTo);
+                    return wrap(fromName) + arrow + wrap(toName);
+                })();
+            } else if (note === categoryName) {
+                note = "";
+            } else if (note.startsWith(categoryName)) {
+                note = note.slice(categoryName.length).trim() || note;
+            }
+            li.innerHTML = `
     <div class="transaction-icon-box">
         <i data-lucide="${escapeHTML(getTxCategoryIcon(transaction))}"></i>
     </div>
@@ -159,11 +163,10 @@ li.innerHTML = `
         </div>
     </div>
 `;
-            
+
             transactionsListEl.appendChild(li);
-            
         });
-                if (showOpening) {
+        if (showOpening) {
             const openingLi = document.createElement("li");
             openingLi.className = openingBalance > 0 ? "is-income" : "is-expense";
             openingLi.innerHTML = `
@@ -184,14 +187,14 @@ li.innerHTML = `
             lucide.createIcons();
         }
     }
-    
+
     if (sortEl) {
-                fillSelect(sortEl, getSortOptions(), "date_desc");
+        fillSelect(sortEl, getSortOptions(), "date_desc");
         sortEl.onchange = renderTransactionsList;
         makeSelectSheet(sortEl, t("sort_by"));
         // مفيش لازمة للترتيب لو فيه معاملة واحدة أو مفيش
         sortEl.parentElement.style.display = accountTransactions.length > 1 ? "" : "none";
     }
-    
+
     renderTransactionsList();
-    }
+}

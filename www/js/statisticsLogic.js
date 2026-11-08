@@ -15,7 +15,7 @@ function calculateSummary(transactions) {
     let income = 0;
     let expense = 0;
 
-    transactions.forEach(transaction => {
+    transactions.forEach((transaction) => {
         if (transaction.isTransfer === true) return;
         const amount = Number(transaction.amount) || 0;
         if (transaction.type === "income") income += amount;
@@ -28,14 +28,16 @@ function calculateSummary(transactions) {
 function calculateCategoryBreakdown(transactions) {
     const categories = {};
     const catNameById = {};
-    getCategories().forEach(function(c) { catNameById[c.id] = c.name; });
+    getCategories().forEach(function (c) {
+        catNameById[c.id] = c.name;
+    });
 
-    transactions.forEach(transaction => {
+    transactions.forEach((transaction) => {
         if (transaction.type !== "expense" || transaction.isTransfer === true) return;
         const knownName = transaction.categoryId && catNameById[transaction.categoryId];
         const legacyName = transaction.category === "Debt Payment" ? t("debts_category_payment") : transaction.category;
         const name = knownName || legacyName || t("stats_category_other");
-                const key = knownName ? "id:" + transaction.categoryId : "name:" + name;
+        const key = knownName ? "id:" + transaction.categoryId : "name:" + name;
         const amount = Number(transaction.amount) || 0;
         if (!categories[key]) categories[key] = { name, amount: 0 };
         categories[key].amount += amount;
@@ -48,14 +50,17 @@ function calculateCategoryBreakdown(transactions) {
     const totalAmount = entries.reduce((sum, entry) => sum + entry.amount, 0);
 
     // نسب صحيحة مجموعها 100 بالضبط
-    const rawShares = entries.map(entry => totalAmount > 0 ? (entry.amount / totalAmount) * 100 : 0);
-    const shares = rawShares.map(value => Math.floor(value));
+    const rawShares = entries.map((entry) => (totalAmount > 0 ? (entry.amount / totalAmount) * 100 : 0));
+    const shares = rawShares.map((value) => Math.floor(value));
     let remaining = totalAmount > 0 ? 100 - shares.reduce((sum, value) => sum + value, 0) : 0;
     rawShares
         .map((value, index) => ({ index, fraction: value - Math.floor(value) }))
         .sort((a, b) => b.fraction - a.fraction)
-        .forEach(item => {
-            if (remaining > 0) { shares[item.index]++; remaining--; }
+        .forEach((item) => {
+            if (remaining > 0) {
+                shares[item.index]++;
+                remaining--;
+            }
         });
 
     return entries.map((entry, index) => ({
@@ -69,23 +74,25 @@ function calculateCategoryBreakdown(transactions) {
 function calculateAccountBreakdown(transactions) {
     const accounts = {};
     const accNameById = {};
-    getAccounts().forEach(function(a) { accNameById[a.id] = a.name; });
-    
-    transactions.forEach(transaction => {
+    getAccounts().forEach(function (a) {
+        accNameById[a.id] = a.name;
+    });
+
+    transactions.forEach((transaction) => {
         if (transaction.isTransfer === true) return;
         const knownName = transaction.accountId && accNameById[transaction.accountId];
         const name = knownName || transaction.account || t("stats_account_unknown");
         const key = knownName ? "id:" + transaction.accountId : "name:" + name;
         const amount = Number(transaction.amount) || 0;
-        
+
         if (!accounts[key]) accounts[key] = { name, income: 0, expense: 0 };
-        
+
         if (transaction.type === "income") accounts[key].income += amount;
         if (transaction.type === "expense") accounts[key].expense += amount;
     });
-    
+
     return Object.values(accounts)
-        .map(data => ({
+        .map((data) => ({
             account: data.name,
             income: data.income,
             expense: data.expense,
@@ -96,19 +103,20 @@ function calculateAccountBreakdown(transactions) {
 
 function groupTransactionsForChart(transactions, currentPeriod, getTransactionDate, locale) {
     const grouped = {};
-    const formatOptions = currentPeriod === "year"
-        ? { month: "short" }
-        : currentPeriod === "all"
-            ? { month: "short", year: "numeric" }
-            : { month: "short", day: "numeric" };
+    const formatOptions =
+        currentPeriod === "year"
+            ? { month: "short" }
+            : currentPeriod === "all"
+              ? { month: "short", year: "numeric" }
+              : { month: "short", day: "numeric" };
     const formatter = new Intl.DateTimeFormat(locale, formatOptions);
-    transactions.forEach(transaction => {
+    transactions.forEach((transaction) => {
         if (transaction.isTransfer === true || !transaction.date) return;
         const date = getTransactionDate(transaction);
         if (!date) return;
 
-const key = formatter.format(date);        
-if (!grouped[key]) grouped[key] = { income: 0, expense: 0, date };
+        const key = formatter.format(date);
+        if (!grouped[key]) grouped[key] = { income: 0, expense: 0, date };
 
         const amount = Number(transaction.amount) || 0;
         if (transaction.type === "income") grouped[key].income += amount;
@@ -141,15 +149,15 @@ if (!grouped[key]) grouped[key] = { income: 0, expense: 0, date };
     const entries = Object.entries(grouped).sort((a, b) => a[1].date - b[1].date);
 
     return {
-        labels: entries.map(entry => entry[0]),
-        incomeData: entries.map(entry => entry[1].income),
-        expenseData: entries.map(entry => entry[1].expense)
+        labels: entries.map((entry) => entry[0]),
+        incomeData: entries.map((entry) => entry[1].income),
+        expenseData: entries.map((entry) => entry[1].expense)
     };
 }
 function calculateDailyAverage(transactions, currentPeriod) {
     const todayEnd = new Date();
     todayEnd.setHours(23, 59, 59, 999);
-    const pastTransactions = transactions.filter(transaction => {
+    const pastTransactions = transactions.filter((transaction) => {
         if (!transaction.date) return true;
         const parts = String(transaction.date).split("-").map(Number);
         if (parts.length !== 3 || parts.some(Number.isNaN)) return true;
@@ -169,7 +177,7 @@ function calculateDailyAverage(transactions, currentPeriod) {
     } else if (currentPeriod === "year") {
         start = new Date(today.getFullYear(), 0, 1);
     } else {
-        transactions.forEach(transaction => {
+        transactions.forEach((transaction) => {
             if (transaction.isTransfer === true || !transaction.date) return;
             const parts = String(transaction.date).split("-").map(Number);
             if (parts.length !== 3 || parts.some(Number.isNaN)) return;
@@ -193,9 +201,7 @@ function getTransactionDate(transaction) {
     }
 
     const parts = String(transaction.date).split("-").map(Number);
-    const date = parts.length === 3 && !parts.some(Number.isNaN) ?
-        new Date(parts[0], parts[1] - 1, parts[2]) :
-        new Date(transaction.date);
+    const date = parts.length === 3 && !parts.some(Number.isNaN) ? new Date(parts[0], parts[1] - 1, parts[2]) : new Date(transaction.date);
 
     if (Number.isNaN(date.getTime())) {
         return null;
@@ -208,12 +214,12 @@ function getTransactionDate(transaction) {
 // مخرجات: المعاملات اللي تاريخها داخل الفترة دي بس
 function filterTransactionsByPeriod(transactions, period) {
     if (period === "all") {
-        return transactions.filter(transaction => getTransactionDate(transaction));
+        return transactions.filter((transaction) => getTransactionDate(transaction));
     }
 
     const now = new Date();
 
-    return transactions.filter(transaction => {
+    return transactions.filter((transaction) => {
         const date = getTransactionDate(transaction);
 
         if (!date) {
@@ -229,10 +235,7 @@ function filterTransactionsByPeriod(transactions, period) {
         }
 
         if (period === "month") {
-            return (
-                date.getFullYear() === now.getFullYear() &&
-                date.getMonth() === now.getMonth()
-            );
+            return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth();
         }
 
         if (period === "year") {
@@ -246,7 +249,7 @@ function filterTransactionsByPeriod(transactions, period) {
 // مخرجات: أكتر حساب نشاطًا { account, share } أو null لو مفيش بيانات
 function calculateTopAccount(transactions) {
     const activity = calculateAccountBreakdown(transactions)
-        .map(item => ({
+        .map((item) => ({
             account: item.account,
             volume: item.income + item.expense
         }))
@@ -278,11 +281,7 @@ function calculateMonthComparison(transactions) {
     }
 
     return {
-        current: calculateSummary(
-            transactions.filter(item => inMonth(item, thisYear, thisMonth))
-        ),
-        previous: calculateSummary(
-            transactions.filter(item => inMonth(item, lastDate.getFullYear(), lastDate.getMonth()))
-        )
+        current: calculateSummary(transactions.filter((item) => inMonth(item, thisYear, thisMonth))),
+        previous: calculateSummary(transactions.filter((item) => inMonth(item, lastDate.getFullYear(), lastDate.getMonth())))
     };
 }

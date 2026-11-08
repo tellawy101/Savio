@@ -5,7 +5,6 @@
 // ==============================================================
 
 function initHomePage() {
-    
     const modalsPlaceholder = document.getElementById("modals-placeholder");
     if (modalsPlaceholder) {
         modalsPlaceholder.innerHTML = renderSharedModals();
@@ -21,24 +20,26 @@ function initHomePage() {
     const filterSummary = document.getElementById("filterSummary");
     const filterCount = document.getElementById("filterCount");
     const nowLocal = new Date();
-    window.selectedMonth = window.selectedMonth || (nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0"));
+    window.selectedMonth = window.selectedMonth || nowLocal.getFullYear() + "-" + String(nowLocal.getMonth() + 1).padStart(2, "0");
     // تحميل البيانات
     let expenses = loadTransactions();
     const reportState = window.homeReportState || (window.homeReportState = { period: "this_month", from: "", to: "" });
-    
+
     // كارت التقرير اللي فوق (الرصيد الصافي / الدخل / المصروفات)
     function renderHomeReport() {
         if (!homeReport) return;
         homeReport.innerHTML = "";
-homeReport.appendChild(buildPeriodReportCard(reportState, expenses, renderHomeReport));
+        homeReport.appendChild(buildPeriodReportCard(reportState, expenses, renderHomeReport));
     }
-        // هل فيه بحث أو فلتر شغّال؟ (الترتيب بيتحسب لو اتغير عن الافتراضي)
+    // هل فيه بحث أو فلتر شغّال؟ (الترتيب بيتحسب لو اتغير عن الافتراضي)
     function hasAnyFilter() {
-        return (searchInput && searchInput.value.trim() !== "") ||
+        return (
+            (searchInput && searchInput.value.trim() !== "") ||
             (accountFilter && accountFilter.value !== "") ||
             (categoryFilter && categoryFilter.value !== "") ||
             (typeFilter && typeFilter.value !== "") ||
-            (sortFilter && sortFilter.value !== "date_desc");
+            (sortFilter && sortFilter.value !== "date_desc")
+        );
     }
 
     // صف عدد النتائج + زرار مسح الفلاتر
@@ -52,22 +53,24 @@ homeReport.appendChild(buildPeriodReportCard(reportState, expenses, renderHomeRe
     }
     // عرض البيانات
     function renderExpenses() {
-
         expenseList.innerHTML = "";
-if (expenses.length === 0 && !getAccounts().some(function (a) { return Number(a.balance) !== 0; })) {
-                expenseList.innerHTML = renderEmptyState(
-            "receipt-text",
-            t("no_transactions"),
-            "",
-            t("empty_add_transaction_btn")
-        );
-        const emptyBtn = expenseList.querySelector("[data-empty-action]");
-        if (emptyBtn) emptyBtn.onclick = function() { navigateTo("add-transaction"); };
-        if (window.lucide) lucide.createIcons();
-                                updateFilterSummary(0);
-        renderHomeReport();
-        return;
-    }
+        if (
+            expenses.length === 0 &&
+            !getAccounts().some(function (a) {
+                return Number(a.balance) !== 0;
+            })
+        ) {
+            expenseList.innerHTML = renderEmptyState("receipt-text", t("no_transactions"), "", t("empty_add_transaction_btn"));
+            const emptyBtn = expenseList.querySelector("[data-empty-action]");
+            if (emptyBtn)
+                emptyBtn.onclick = function () {
+                    navigateTo("add-transaction");
+                };
+            if (window.lucide) lucide.createIcons();
+            updateFilterSummary(0);
+            renderHomeReport();
+            return;
+        }
         // بنرتب المعاملات حسب التاريخ (الأحدث فوق)، ولو نفس التاريخ الأحدث إضافة الأول
         // من غير ما نغيّر ترتيبها الأصلي جوه الـ localStorage (عشان index يفضل صحيح للتعديل/الحذف)
         const sortedEntries = expenses
@@ -78,35 +81,33 @@ if (expenses.length === 0 && !getAccounts().some(function (a) { return Number(a.
                 const amountB = Math.abs(Number(b.expense.amount || 0));
                 if (mode === "amount_desc" && amountA !== amountB) return amountB - amountA;
                 if (mode === "amount_asc" && amountA !== amountB) return amountA - amountB;
-                                const dateA = a.expense.date || "";
+                const dateA = a.expense.date || "";
                 const dateB = b.expense.date || "";
                 if (dateA !== dateB) {
-                    return mode === "date_asc"
-                        ? dateA.localeCompare(dateB)
-                        : dateB.localeCompare(dateA);
+                    return mode === "date_asc" ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA);
                 }
                 return mode === "date_asc" ? a.index - b.index : b.index - a.index;
             });
-
 
         // نص البحث بعد تنضيفه من المسافات الزيادة وتحويله لحروف صغيرة
         const searchTerm = searchInput.value.trim().toLowerCase();
 
         sortedEntries.forEach(({ expense, index }) => {
             if (expense.isTransfer && expense.type === "income") return;
-                        const accountValue = accountFilter ? accountFilter.value : "";
-            if (accountValue && getTxAccountId(expense) !== accountValue && (expense.transferToId || getAccountIdByName(expense.transferTo)) !== accountValue) return;
-                        const categoryValue = categoryFilter ? categoryFilter.value : "";
+            const accountValue = accountFilter ? accountFilter.value : "";
+            if (
+                accountValue &&
+                getTxAccountId(expense) !== accountValue &&
+                (expense.transferToId || getAccountIdByName(expense.transferTo)) !== accountValue
+            )
+                return;
+            const categoryValue = categoryFilter ? categoryFilter.value : "";
             if (categoryValue && getTxCategoryId(expense) !== categoryValue) return;
             const typeValue = typeFilter ? typeFilter.value : "";
             if (typeValue === "transfer" && !expense.isTransfer) return;
             if (typeValue === "income" && (expense.isTransfer || expense.type !== "income")) return;
             if (typeValue === "expense" && (expense.isTransfer || expense.type !== "expense")) return;
-            const searchableText = [
-                                expense.description,
-                    getTxCategoryName(expense),
-                    getTxAccountName(expense)
-            ]
+            const searchableText = [expense.description, getTxCategoryName(expense), getTxAccountName(expense)]
                 .filter(Boolean)
                 .join(" ")
                 .toLowerCase();
@@ -115,7 +116,7 @@ if (expenses.length === 0 && !getAccounts().some(function (a) { return Number(a.
                 return;
             }
 
-                        const hr = window.homeRange;
+            const hr = window.homeRange;
             if (hr) {
                 const txDay = (expense.date || "").slice(0, 10);
                 if (!txDay || txDay < hr.from || txDay > hr.to) return;
@@ -124,56 +125,48 @@ if (expenses.length === 0 && !getAccounts().some(function (a) { return Number(a.
             const li = createTransactionElement(expense);
             expenseList.appendChild(li);
 
-const card = li.querySelector(".expense-main");
+            const card = li.querySelector(".expense-main");
             const deleteBtn = li.querySelector(".swipe-delete");
             const editBtn = li.querySelector(".swipe-edit");
 
             deleteBtn.addEventListener("click", async (e) => {
                 e.stopPropagation();
-                const confirmed = await customConfirm(
-t("delete_confirm"),
-                    { danger: true }
-                );
+                const confirmed = await customConfirm(t("delete_confirm"), { danger: true });
                 if (!confirmed) return;
 
                 const itemsToDelete = expense.isTransfer
-                    ? expenses.filter(item => item.transferId === expense.transferId)
-                    : expenses.filter(item => item.id === expense.id);
-                const deletedWithPositions = itemsToDelete.map(item => ({
+                    ? expenses.filter((item) => item.transferId === expense.transferId)
+                    : expenses.filter((item) => item.id === expense.id);
+                const deletedWithPositions = itemsToDelete.map((item) => ({
                     item,
                     position: expenses.indexOf(item)
                 }));
-                                const remaining = expense.isTransfer ?
-                    expenses.filter(item => item.transferId !== expense.transferId) :
-                    expenses.filter(item => item.id !== expense.id);
+                const remaining = expense.isTransfer
+                    ? expenses.filter((item) => item.transferId !== expense.transferId)
+                    : expenses.filter((item) => item.id !== expense.id);
                 if (!saveTransactions(remaining)) return;
                 expenses = remaining;
-                               const removedDebtPayment = expense.debtPaymentId
-                    ? removeDebtPayment(expense.debtPaymentId)
-                    : null;
+                const removedDebtPayment = expense.debtPaymentId ? removeDebtPayment(expense.debtPaymentId) : null;
                 li.style.maxHeight = li.offsetHeight + "px";
                 li.style.overflow = "hidden";
                 li.getBoundingClientRect();
                 li.classList.add("removing");
                 setTimeout(renderExpenses, 240);
- updateBudgetButton();
-                showUndoToast(
-t("item_deleted_toast"),
-                    function () {
-                                                const currentList = loadTransactions();
-                        deletedWithPositions
-                            .sort((a, b) => a.position - b.position)
-                            .forEach(({ item, position }) => {
-                                const insertAt = Math.min(position, currentList.length);
-                                currentList.splice(insertAt, 0, item);
-                            });
-                        if (!saveTransactions(currentList)) return;
-                        expenses = currentList;
-                        restoreDebtPayment(removedDebtPayment);
-                        renderExpenses();
-                        updateBudgetButton();
-                    }
-                );
+                updateBudgetButton();
+                showUndoToast(t("item_deleted_toast"), function () {
+                    const currentList = loadTransactions();
+                    deletedWithPositions
+                        .sort((a, b) => a.position - b.position)
+                        .forEach(({ item, position }) => {
+                            const insertAt = Math.min(position, currentList.length);
+                            currentList.splice(insertAt, 0, item);
+                        });
+                    if (!saveTransactions(currentList)) return;
+                    expenses = currentList;
+                    restoreDebtPayment(removedDebtPayment);
+                    renderExpenses();
+                    updateBudgetButton();
+                });
             });
 
             editBtn.addEventListener("click", (e) => {
@@ -191,9 +184,8 @@ t("item_deleted_toast"),
 
             // استدعاء مكوّن السحب المشترك بسطر واحد!
             attachSwipeActions(card, { deleteEl: deleteBtn, editEl: editBtn });
-
         });
-                       const openingTypeValue = typeFilter ? typeFilter.value : "";
+        const openingTypeValue = typeFilter ? typeFilter.value : "";
         const openingAccountValue = accountFilter ? accountFilter.value : "";
         const openingCategoryValue = categoryFilter ? categoryFilter.value : "";
         if (!searchTerm && !openingCategoryValue && openingTypeValue !== "transfer") {
@@ -210,18 +202,20 @@ t("item_deleted_toast"),
                         if (getTxAccountId(tx) === acc.id && tx.date && (!openingDate || tx.date < openingDate)) openingDate = tx.date;
                     });
                 }
-                                if (!openingDate) {
+                if (!openingDate) {
                     openingDate = getTodayDateString();
                     const allAccounts = getAccounts();
-                    const savedAcc = allAccounts.find(function (a) { return a.id === acc.id; });
+                    const savedAcc = allAccounts.find(function (a) {
+                        return a.id === acc.id;
+                    });
                     if (savedAcc) {
                         savedAcc.createdAt = openingDate;
                         saveAccounts(allAccounts);
                     }
                 }
                 const hr2 = window.homeRange;
-const openDay = (openingDate || "").slice(0, 10);
-if (!openDay || (hr2 && (openDay < hr2.from || openDay > hr2.to))) return;
+                const openDay = (openingDate || "").slice(0, 10);
+                if (!openDay || (hr2 && (openDay < hr2.from || openDay > hr2.to))) return;
                 const positive = bal > 0;
                 const openingLi = document.createElement("li");
                 openingLi.className = "expense-item opening-card";
@@ -244,15 +238,12 @@ if (!openDay || (hr2 && (openDay < hr2.from || openDay > hr2.to))) return;
                 else expenseList.appendChild(openingLi);
             });
             if (window.lucide) lucide.createIcons();
-        } updateFilterSummary(expenseList.children.length);
-        if (!expenseList.children.length) {
-            expenseList.innerHTML = renderEmptyState(
-                "search",
-                t("no_transactions"),
-                ""
-            );
         }
-                renderHomeReport();
+        updateFilterSummary(expenseList.children.length);
+        if (!expenseList.children.length) {
+            expenseList.innerHTML = renderEmptyState("search", t("no_transactions"), "");
+        }
+        renderHomeReport();
 
         if (window.lucide) {
             lucide.createIcons();
@@ -267,14 +258,14 @@ if (!openDay || (hr2 && (openDay < hr2.from || openDay > hr2.to))) return;
     const searchFilters = initHomeSearchFilters(renderExpenses, hasAnyFilter);
 
     if (addMenuBtn) {
-    addMenuBtn.onclick = function() {
-        window.pendingAddTransactionTab = "expense";
-        navigateTo("add-transaction");
-    };
-}
+        addMenuBtn.onclick = function () {
+            window.pendingAddTransactionTab = "expense";
+            navigateTo("add-transaction");
+        };
+    }
 
     // تنظيف لما نسيب الصفحة الرئيسية
-    window.cleanupHomePage = function() {
+    window.cleanupHomePage = function () {
         searchFilters.cleanup();
     };
 }
