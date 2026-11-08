@@ -3,17 +3,13 @@
 ========================================= */
 
 .empty-stat {
-    min-height: 120px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     gap: 8px;
-
+    min-height: 120px;
     color: #9CA3AF;
-
     text-align: center;
 }
 
@@ -21,7 +17,6 @@
     width: 30px;
     height: 30px;
 }
-
 
 /* =========================================
    DARK MODE
@@ -50,45 +45,41 @@ body.dark .account-row {
 ========================================= */
 
 @media (max-width: 700px) {
-
     .statistics-container {
         padding: 14px 14px 105px;
     }
-
+    
     .stats-summary {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-}
-
-.stat-card {
-    min-height: 88px;
-    padding: 14px 16px;
-
-    box-sizing: border-box;
-}
-
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .stat-card {
+        min-height: 88px;
+        padding: 14px 16px;
+        box-sizing: border-box;
+    }
+    
     .stat-content strong {
         font-size: 19px;
     }
-
+    
     .statistics-card {
         padding: 16px;
         border-radius: 16px;
     }
-
+    
     .chart-wrapper {
         height: 210px;
     }
 }
 
-
 @media (max-width: 380px) {
-
     .period-btn {
         font-size: 12px;
     }
-
+    
     .chart-wrapper {
         height: 220px;
     }
@@ -107,6 +98,7 @@ body.dark .account-row {
     font-size: 22px;
     font-weight: 800;
 }
+
 /* =========================================
    MONTH COMPARISON
 ========================================= */
@@ -115,7 +107,7 @@ body.dark .account-row {
     padding: 12px 0;
 }
 
-.compare-row + .compare-row {
+.compare-row+.compare-row {
     border-top: 1px solid rgba(156, 163, 175, 0.25);
 }
 
@@ -171,9 +163,11 @@ body.dark .account-row {
     font-size: 15px;
     font-weight: 700;
 }
+
 .compare-value:first-child strong {
     color: #3B82F6;
 }
+
 body.dark .compare-label {
     color: #9CA3AF;
 }

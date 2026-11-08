@@ -13,8 +13,8 @@
 
 .dark #debtNotes,
 .dark #editDebtNotes {
-background: var(--dk-field);
     color: #ffffff;
+    background: var(--dk-field);
     border: 1px solid #555;
 }
 
@@ -24,13 +24,13 @@ background: var(--dk-field);
 }
 
 .balance-grid .stat {
-    background: transparent;
-    border-radius: 0;
+    position: relative;
+    flex: 1;
+    min-width: 0;
     padding: 10px;
     text-align: center;
-    flex: 1;
-    position: relative;
-    min-width: 0;
+    background: transparent;
+    border-radius: 0;
 }
 
 .balance-grid .stat+.stat::before {
@@ -49,17 +49,17 @@ background: var(--dk-field);
     height: 18px;
 }
 
-.balance-grid .stat h4{
+.balance-grid .stat h4 {
     margin: 6px 0 4px;
     font-size: 15px;
     font-weight: 400;
 }
 
-.balance-grid .stat p{
+.balance-grid .stat p {
     margin: 0;
+    color: var(--c-white);
     font-size: var(--fs-amount);
     font-weight: var(--fw-amount);
-    color: var(--c-white);
 }
 
 .balance-grid .stat .stat-value {
@@ -72,8 +72,8 @@ background: var(--dk-field);
     opacity: 0.8;
 }
 
-.hidden{
-    display:none;
+.hidden {
+    display: none;
 }
 
 /* ==============================
@@ -82,37 +82,25 @@ background: var(--dk-field);
 
 #toast {
     position: fixed !important;
-
     left: 50% !important;
     bottom: 90px !important;
-
+    z-index: var(--z-toast) !important;
     transform: translateX(-50%) !important;
-
+    display: none;
     width: auto !important;
     min-width: 0 !important;
     max-width: calc(100% - 40px) !important;
-
     padding: 12px 20px !important;
-
-    border-radius: 14px !important;
-
     color: var(--c-white) !important;
-
     font-family: "Supreme", sans-serif !important;
     font-size: 14px !important;
     font-weight: 700 !important;
-
     text-align: center !important;
     white-space: nowrap !important;
-
+    border-radius: 14px !important;
     box-shadow: 0 8px 25px rgba(0, 0, 0, .18) !important;
-
-    z-index: var(--z-toast) !important;
-
-    display: none;
 }
 
 #toast.show {
     display: block !important;
 }
-

@@ -9,19 +9,19 @@
    تنسيق قائمة المصروفات في الداشبورد (index.html)
 ================================================================== */
 #expenseList {
-    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 1px;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .expenses-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-        flex-wrap: wrap;
     margin-bottom: 15px;
 }
 
@@ -32,20 +32,17 @@
 }
 
 .search-btn {
-    width: 48px;
-    height: 48px;
-    padding: 0;
-        margin: 0;
-    margin-inline-start: auto;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    border: none;
-    background: transparent;
-
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    margin-inline-start: auto;
+    padding: 0;
     color: var(--text);
+    background: transparent;
+    border: none;
     opacity: 1 !important;
     visibility: visible !important;
 }
@@ -68,69 +65,59 @@
     display: none;
     width: 100%;
     height: 48px;
-    box-sizing: border-box;
-
-    border: 1px solid var(--border);
-    border-radius: 14px;
-
     padding: 0 14px;
-
+    box-sizing: border-box;
+    color: var(--text);
     font-size: 18px;
     font-weight: 600;
-
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
     outline: none;
-        background: var(--surface);
-    color: var(--text);
 }
 
 .expense-icon-box {
-    width: 44px;
-    height: 44px;
-
-    flex: 0 0 44px;
-
     display: flex;
+    flex: 0 0 44px;
     align-items: center;
     justify-content: center;
-
-    border-radius: 12px;
+    width: 44px;
+    height: 44px;
     margin-right: 12px;
-
     font-size: 20px;
+    border-radius: 12px;
 }
 
 .expense-info {
-    gap: 2px;
-    flex: 1 1 auto;
-    min-width: 0;
-
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
     align-items: flex-start;
-
+    gap: 2px;
+    min-width: 0;
     overflow: hidden;
 }
 
 .expense-category {
-        font-size: var(--fs-card-title);
-    font-weight: var(--fw-card-title);
-        color: var(--text-faint);
-    line-height: 1.2;
-    margin: 0 0 3px 0;
     max-width: 100%;
-    white-space: normal;
+    margin: 0 0 3px 0;
+    color: var(--text-faint);
+    font-size: var(--fs-card-title);
+    font-weight: var(--fw-card-title);
+    line-height: 1.2;
     overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .expense-right {
-    gap: 2px;
+    display: flex;
     flex: 0 0 auto;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
     width: auto;
     min-width: 90px;
     max-width: 160px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     margin-left: 0;
     padding: 0;
     box-sizing: border-box;
@@ -138,37 +125,37 @@
 
 .expense-amount {
     display: inline-flex;
-    direction: ltr;
     flex-direction: row;
     align-items: baseline;
     gap: 4px;
-        font-size: var(--fs-amount);
-    font-weight: var(--fw-amount);
+    direction: ltr;
     color: var(--brand-text);
-    white-space: nowrap;
+    font-size: var(--fs-amount);
+    font-weight: var(--fw-amount);
     line-height: 1.2;
+    white-space: nowrap;
 }
 
 .expense-date {
-        font-size: var(--fs-caption);
     color: #999;
+    font-size: var(--fs-caption);
     white-space: nowrap;
 }
 
 .expense-note {
-    font-size: var(--fs-caption);
-    color: #999;
-    white-space: nowrap;
     overflow: hidden;
+    color: #999;
+    font-size: var(--fs-caption);
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #expenseList li {
+    margin-bottom: 12px;
+    padding: 0;
     background: transparent;
     border: none;
     box-shadow: none;
-    padding: 0;
-    margin-bottom: 12px;
 }
 
 .expense-swipe {
@@ -177,50 +164,46 @@
 
 .expense-main {
     position: relative;
-        z-index: var(--z-over);
+    z-index: var(--z-over);
     display: flex;
     align-items: center;
+    gap: 6px;
     width: 100%;
     min-width: 0;
+    padding: 10px 16px;
     box-sizing: border-box;
-
     background: var(--surface);
-        border: 1px solid var(--border);
+    border: 1px solid var(--border);
     border-radius: 16px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    padding: 10px 16px;
-    gap: 6px;
 }
 
 /* ==============================
    Month Navigation (Filter)
 ============================== */
 .month-nav {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 14px;
     margin: 5px 0 18px;
-    position: relative;
 }
 
 .month-nav-btn {
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    margin: 0;
-
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+    background: var(--surface-alt);
     border: none;
     border-radius: 50%;
-    background: var(--surface-alt);
-    
-    color: var(--text);
     cursor: pointer;
-    flex-shrink: 0;
 }
 
 .month-nav-btn:active {
@@ -234,19 +217,16 @@
 }
 
 .month-label-btn {
-    width: auto;
-    padding: 2px 4px;
-    margin: 0;
-
-    background: transparent;
-    color: var(--text);
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: auto;
+    margin: 0;
+    padding: 2px 4px;
+    color: var(--text);
     line-height: 1.1;
-
+    background: transparent;
     border: none;
     cursor: pointer;
 }
@@ -261,21 +241,23 @@
     font-weight: 600;
     opacity: .75;
 }
+
 .month-picker-input {
     position: absolute;
-    opacity: 0;
     width: 1px;
     height: 1px;
+    opacity: 0;
     pointer-events: none;
 }
+
 .opening-card .expense-main {
-    border: 1.5px dashed var(--brand);
     background: var(--brand-bg-soft);
+    border: 1.5px dashed var(--brand);
 }
 
 .expense-icon-box.opening {
-    background: var(--brand-bg);
     color: var(--brand);
+    background: var(--brand-bg);
 }
 
 body.dark .expense-icon-box.opening {

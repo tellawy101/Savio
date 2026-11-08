@@ -6,257 +6,293 @@
 
 .home-top,
 .balance-card.debts-top {
+    padding: 14px 0 16px;
+    color: #fff;
     background:
         linear-gradient(to top, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .7) 30%, transparent 75%),
         radial-gradient(circle at 90% -10%, rgba(94, 234, 212, .55) 0%, transparent 50%),
         radial-gradient(circle at 0% 105%, rgba(52, 211, 153, .45) 0%, transparent 55%),
         radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .06) 0%, transparent 60%),
         linear-gradient(165deg, #14917F 0%, #0F766E 40%, #0B4F4A 100%);
-    box-shadow: none;
-    color: #fff;
-    padding: 14px 0 16px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+    box-shadow: none;
 }
 
-.home-top-actions{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
+.home-top-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     padding: 0 20px;
 }
 
-.home-top-actions .eye-btn{
-    width:auto;
-    margin:0;
-    padding:8px 10px;
-    border:none;
-    border-radius:14px;
-    background: rgba(255,255,255,.12);
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
+.home-top-actions .eye-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    margin: 0;
+    padding: 8px 10px;
+    color: #fff;
+    background: rgba(255, 255, 255, .12);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
 }
-.eye-btn svg{
-    width:17px;
-    height:17px;
+
+.eye-btn svg {
+    width: 17px;
+    height: 17px;
 }
-.eye-btn:active{
+
+.eye-btn:active {
     transform: scale(0.95);
 }
 
-.home-top-actions .budget-btn{
+.home-top-actions .budget-btn {
     position: static;
     inset-inline-end: auto;
     top: auto;
-    background: rgba(255,255,255,.12);
-    color: #fff;
-    padding: 8px 12px;
     max-width: 55vw;
+    padding: 8px 12px;
+    color: #fff;
+    background: rgba(255, 255, 255, .12);
 }
-.home-top-actions #budgetValue{
+
+.home-top-actions #budgetValue {
     max-width: calc(55vw - 50px);
 }
-.home-top-actions .budget-number{
+
+.home-top-actions .budget-number {
     color: #fff;
 }
 
 /* كارت التقرير جوه الأخضر (#homeReport بيكسب على قواعد الدارك مود بتاعة الحسابات) */
-#homeReport .period-report{
-    background: transparent;
-    box-shadow: none;
+#homeReport .period-report {
     margin: 6px 20px 0;
     padding: 8px 0 0;
+    background: transparent;
+    box-shadow: none;
 }
-#homeReport .period-chip{
-    background: rgba(255,255,255,.15);
+
+#homeReport .period-chip {
     color: #fff;
+    background: rgba(255, 255, 255, .15);
 }
-#homeReport .period-chip.active{
-    background: #fff;
+
+#homeReport .period-chip.active {
     color: var(--brand);
+    background: #fff;
 }
+
 #homeReport .period-label,
-#homeReport .period-custom label{
-    color: rgba(255,255,255,.8);
+#homeReport .period-custom label {
+    color: rgba(255, 255, 255, .8);
 }
-#homeReport .period-range{
+
+#homeReport .period-range {
     display: none;
 }
+
 #homeReport .period-net-value,
-#homeReport .period-value{
+#homeReport .period-value {
     color: #fff;
 }
+
 #homeReport .period-value.period-income,
-#homeReport .period-net-value.period-income{
+#homeReport .period-net-value.period-income {
     color: #4ade80;
 }
+
 #homeReport .period-value.period-expense,
-#homeReport .period-net-value.period-expense{
+#homeReport .period-net-value.period-expense {
     color: #ff7b7b;
 }
+
 /* العملة أصغر وأخف من الرقم */
 #homeReport .cu-cur {
     font-size: .5em;
     font-weight: 500;
     opacity: .75;
 }
+
 #homeReport .period-value .cu-cur {
     font-size: .7em;
 }
-#homeReport .period-bar{
+
+#homeReport .period-bar {
     background: #ff7b7b;
 }
-#homeReport .period-bar.empty{
-    background: rgba(255,255,255,.28);
+
+#homeReport .period-bar.empty {
+    background: rgba(255, 255, 255, .28);
 }
-#homeReport .period-bar span{
+
+#homeReport .period-bar span {
     background: #4ade80;
 }
+
 #homeReport .period-totals {
     border-top: none;
 }
-#homeReport .period-custom input{
-    background: rgba(255,255,255,.15);
+
+#homeReport .period-custom input {
     color: #fff;
-    border: 1px solid rgba(255,255,255,.3);
     color-scheme: dark;
+    background: rgba(255, 255, 255, .15);
+    border: 1px solid rgba(255, 255, 255, .3);
 }
 
 /* إخفاء الأرقام */
 body.amounts-hidden #homeReport .period-net-value,
-body.amounts-hidden #homeReport .period-value{
-    filter:blur(7px);
-    -webkit-filter:blur(7px);
-    user-select:none;
-    transition:filter .2s ease;
+body.amounts-hidden #homeReport .period-value {
+    user-select: none;
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    transition: filter .2s ease;
 }
+
 .home-month-nav {
     margin: 0;
 }
+
 .home-month-nav .month-label-btn {
-    background: rgba(255,255,255,.15);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,.2);
-    border-radius: 999px;
     padding: 8px 18px;
     color: #fff;
     font-size: 14px;
     font-weight: 700;
     white-space: nowrap;
-}
-.home-top-actions .home-month-nav {
-    margin: 0;
-    gap: 0;
-}
-.home-top-actions .home-month-nav .month-label-btn {
-    background: rgba(255,255,255,.12);
+    background: rgba(255, 255, 255, .15);
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 999px;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: none;
-    border-radius: 14px;
+}
+
+.home-top-actions .home-month-nav {
+    gap: 0;
+    margin: 0;
+}
+
+.home-top-actions .home-month-nav .month-label-btn {
     padding: 8px 14px;
     color: #fff;
     font-size: 12px;
     font-weight: 700;
     white-space: nowrap;
+    background: rgba(255, 255, 255, .12);
+    border: none;
+    border-radius: 14px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
+
 .home-top-actions .home-month-nav .month-label-btn {
     flex-direction: row;
     gap: 8px;
 }
+
 .home-top-actions .home-month-nav .month-label-btn::after {
     content: "";
     width: 6px;
     height: 6px;
+    margin-top: -3px;
     border-right: 2px solid #fff;
     border-bottom: 2px solid #fff;
     transform: rotate(45deg);
-    margin-top: -3px;
 }
+
 #homeRangeSheet .modal-content {
     max-height: 85vh;
     overflow-y: auto;
-     border-radius: 12px 12px 0 0;
+    border-radius: 12px 12px 0 0;
 }
+
 .range-chips {
     display: flex;
     gap: 8px;
-    overflow-x: auto;
     margin-bottom: 16px;
     padding-bottom: 4px;
+    overflow-x: auto;
     scrollbar-width: none;
 }
+
 .range-chips::-webkit-scrollbar {
     display: none;
 }
+
 .range-chip {
+    flex: 0 0 auto;
     width: auto;
     margin: 0;
-    flex: 0 0 auto;
-    white-space: nowrap;
     padding: 10px 18px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    background: var(--surface-alt);
     color: var(--text);
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
+    white-space: nowrap;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 14px;
     cursor: pointer;
     transition: .2s;
 }
+
 .range-chip.active {
+    color: #fff;
     background: #0F766E;
     border-color: #0F766E;
-    color: #fff;
 }
+
 .range-section-title {
+    margin: 8px 0;
     font-size: 13px;
     font-weight: 700;
     opacity: .7;
-    margin: 8px 0;
 }
+
 .range-custom {
     display: flex;
     gap: 10px;
     margin-bottom: 12px;
 }
+
 .range-custom label {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 4px;
     font-size: 12px;
 }
+
 .range-input {
     width: 100%;
-    box-sizing: border-box;
     height: 46px;
     padding: 0 14px;
+    box-sizing: border-box;
     border-radius: 12px;
 }
+
 .range-input:invalid::before {
     content: attr(data-ph);
     opacity: .5;
 }
+
 .range-input:invalid::-webkit-datetime-edit {
     display: none;
 }
+
 .range-apply {
     width: 100%;
+    margin-top: 4px;
     padding: 13px;
-    border: none;
-    border-radius: 12px;
-    background: #0F766E;
     color: #fff;
     font-family: inherit;
     font-size: 15px;
     font-weight: 700;
+    background: #0F766E;
+    border: none;
+    border-radius: 12px;
     cursor: pointer;
-    margin-top: 4px;
 }

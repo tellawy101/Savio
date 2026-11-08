@@ -29,9 +29,9 @@
 }
 
 .bottom-nav .nav-icon svg {
+    display: block;
     width: 24px;
     height: 24px;
-    display: block;
 }
 
 /* اللابل */

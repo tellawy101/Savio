@@ -6,7 +6,6 @@
     padding: 48px 24px 120px;
 }
 
-
 /* =========================================
    TRANSACTIONS TITLE
    ========================================= */
@@ -15,13 +14,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
     margin: 0 2px 12px;
 }
 
 .section-title h3 {
     margin: 0;
-    
     font-size: 18px;
     font-weight: 700;
 }
@@ -30,23 +27,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
     min-width: 24px;
     height: 24px;
-    
     padding: 0 7px;
-    
-    border-radius: 20px;
-    
-    background: #f1f3f5;
-    
     font-size: 12px;
     font-weight: 700;
-    
+    background: #f1f3f5;
+    border-radius: 20px;
     opacity: 0.7;
 }
-
-
 
 /* =========================================
    TRANSACTIONS LIST
@@ -56,36 +45,36 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 #transactionsList li {
     display: flex;
     align-items: center;
+    gap: 12px;
     min-height: 72px;
     padding: 14px 16px;
+    box-sizing: border-box;
+    background: #FAFAFA;
     border: 1px solid #eef0f2;
     border-radius: 14px;
-    background: #FAFAFA;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-    box-sizing: border-box;
-    gap: 12px;
-} 
+}
 
 #transactionsList li .transaction-icon-box {
-    width: 42px;
-    height: 42px;
-    flex: 0 0 42px;
     display: flex;
+    flex: 0 0 42px;
     align-items: center;
     justify-content: center;
-    border-radius: 12px;
+    width: 42px;
+    height: 42px;
     margin: 0;
-    background: rgba(15, 118, 110, 0.12);
     color: #0F766E;
     font-size: 20px;
+    background: rgba(15, 118, 110, 0.12);
+    border-radius: 12px;
 }
 
 #transactionsList li .transaction-icon-box svg {
@@ -96,18 +85,17 @@
 
 /* دفع المبلغ لأقصى الطرف المقابل */
 #transactionsList li .transaction-amount {
+    flex-shrink: 0;
     margin-inline-start: auto;
     color: #0F766E;
-    font-weight: 700;
     font-size: 15px;
+    font-weight: 700;
     white-space: nowrap;
-    flex-shrink: 0;
 }
 
 body.dark #transactionsList li .transaction-icon-box {
     background: rgba(15, 118, 110, 0.22);
 }
-
 
 /* =========================================
    EMPTY STATE
@@ -115,27 +103,18 @@ body.dark #transactionsList li .transaction-icon-box {
 
 .empty-state {
     display: none;
-
-    text-align: center;
-
     padding: 55px 20px;
-
+    text-align: center;
     opacity: 0.55;
 }
 
-
 .empty-state div {
-    font-size: 42px;
-
     margin-bottom: 10px;
+    font-size: 42px;
 }
-
 
 .empty-state p {
     margin: 0;
-
     font-size: 15px;
     font-weight: 700;
 }
-
-

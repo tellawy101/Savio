@@ -3,9 +3,6 @@
    تنسيق صفحة عمليات الحساب
    ========================================= */
 
-
-
-
 /* =========================================
    ACCOUNT TOTAL HEADER
    Header + Total
@@ -17,23 +14,23 @@
 .total-card {
     width: 100%;
     min-height: auto;
+    margin: 0;
     padding: 20px 20px 24px;
     box-sizing: border-box;
-    margin: 0;
-background: var(--brand-gradient);
-    color: #ffffff;
-    border-radius: 0 0 30px 30px;
     overflow: hidden;
+    color: #ffffff;
+    background: var(--brand-gradient);
+    border-radius: 0 0 30px 30px;
 }
 
 /* =========================================
    HEADER TOP
 ========================================= */
 .account-header {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
     width: 100%;
     min-height: 44px;
 }
@@ -42,19 +39,19 @@ background: var(--brand-gradient);
    BACK BUTTON
 ========================================= */
 .total-card .back-btn {
+    display: flex;
+    flex: 0 0 38px;
+    align-items: center;
+    justify-content: center;
     width: 38px;
     height: 38px;
-    flex: 0 0 38px;
     padding: 0;
-    border: none;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.15);
     color: #ffffff;
     font-size: 18px;
     line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 12px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
@@ -76,10 +73,10 @@ background: var(--brand-gradient);
 
 .transaction-title h1 {
     margin: 0;
-        font-size: var(--fs-page-title);
+    color: #ffffff;
+    font-size: var(--fs-page-title);
     font-weight: var(--fw-page-title);
     line-height: 1;
-    color: #ffffff;
     white-space: nowrap;
 }
 
@@ -87,23 +84,23 @@ background: var(--brand-gradient);
    ACCOUNT INFO
 ========================================= */
 .account-info {
+    display: flex;
+    flex: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
     margin-inline-start: auto;
-margin-inline-end: 0;
-display: flex;
-flex-direction: row;
-align-items: center;
-gap: 6px;
-flex: none;
-justify-content: flex-end;
+    margin-inline-end: 0;
     white-space: nowrap;
 }
 
 #accountName {
-    font-size: 17px;
-    font-weight: 700;
-    color: #ffffff;
     max-width: 130px;
     overflow: hidden;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 700;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -113,11 +110,11 @@ justify-content: flex-end;
 }
 
 .acc-header-icon {
-    font-size: 18px;
-    line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 18px;
+    line-height: 1;
 }
 
 /* =========================================
@@ -133,26 +130,23 @@ justify-content: flex-end;
 /* =========================================
    TOTAL ROW
 ========================================= */
-/* =========================================
-   TOTAL ROW
-========================================= */
 .total-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 22px;
     width: 100%;
+    margin-top: 22px;
     box-sizing: border-box;
 }
 
 .total-label {
     order: 1;
+    flex-shrink: 1;
     margin: 0;
+    color: #ffffff;
     font-size: 18px;
     font-weight: 700;
-    color: #ffffff;
     white-space: nowrap;
-    flex-shrink: 1;
 }
 
 /* خط فاصل أنيق بين العنوان والمبلغ */
@@ -160,35 +154,36 @@ justify-content: flex-end;
     content: "";
     display: block;
     position: static;
-    width: 1px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.35);
     order: 2;
     flex-shrink: 0;
+    width: 1px;
+    height: 30px;
     margin: 0 10px;
+    background: rgba(255, 255, 255, 0.35);
 }
 
 .total-value {
     order: 3;
     display: flex;
     align-items: baseline;
+    flex-shrink: 0;
     gap: 6px;
     direction: ltr;
-    flex-shrink: 0;
 }
 
 .total-value .currency {
+    color: rgba(255, 255, 255, 0.82);
     font-size: 14px;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.82);
 }
 
 #totalAmount {
+    color: #ffffff;
     font-size: 28px;
     font-weight: 800;
     line-height: 1;
-    color: #ffffff;
 }
+
 /* من غير هيدر: الصفحة بتبدأ من عنوان القايمة */
 .total-card {
     display: none;
@@ -197,6 +192,7 @@ justify-content: flex-end;
 body .transactions-section {
     padding-top: calc(20px + env(safe-area-inset-top, 0px));
 }
+
 /* صف العنوان: رجوع | عنوان في النص | عداد */
 .transactions-section .section-title {
     display: grid;
@@ -214,18 +210,18 @@ body .transactions-section {
 }
 
 .transactions-section .section-title .back-btn {
-    width: 38px;
-    height: 38px;
-    padding: 0;
-    border: none;
-    border-radius: 12px;
-    background: rgba(128, 128, 128, 0.15);
-    color: var(--text);
-    font-size: 18px;
-    line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1;
+    background: rgba(128, 128, 128, 0.15);
+    border: none;
+    border-radius: 12px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }

@@ -2,28 +2,28 @@
    تنسيقات نافذة الميزانية في الوضع الليلي (Dark Mode)
 ========================================= */
 body.dark #budgetModal .budget-modal-content {
+    color: #F1F5F4;
     background: #192522;
     border: 1px solid #2B3935;
-    color: #F1F5F4;
 }
 
 /* أيقونة المحفظة */
 body.dark .budget-modal-icon {
-    background: rgba(15, 118, 110, 0.25);
     color: #2DD4BF;
+    background: rgba(15, 118, 110, 0.25);
 }
 
 /* زرار الإغلاق X */
 body.dark .budget-modal-close {
-    background: rgba(255, 255, 255, 0.06); /* خلفية ناعمة جداً وخفيفة */
     color: #9CA3AF; /* لون الـ X مريح للعين */
+    background: rgba(255, 255, 255, 0.06); /* خلفية ناعمة جداً وخفيفة */
     border: 1px solid rgba(255, 255, 255, 0.08); /* تحديد خفيف جداً */
     transition: background 0.2s ease, color 0.2s ease;
 }
 
 body.dark .budget-modal-close:active {
-    background: rgba(255, 255, 255, 0.15);
     color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.15);
 }
 
 /* صندوق كتابة المبلغ */
@@ -38,14 +38,16 @@ body.dark .budget-input-wrap input {
     outline: none;
     box-shadow: none;
 }
+
 body.dark .budget-input-wrap input::placeholder {
     color: #6B7280;
 }
 
 body.dark .budget-input-wrap:focus-within {
-border-color: #2DD4BF;
-box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+    border-color: #2DD4BF;
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
 }
+
 /* =========================================
    تنسيق العملة والمبلغ في زر الميزانية
 ========================================= */
@@ -76,6 +78,7 @@ box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
     font-weight: 700;
     opacity: 0.85;
 }
+
 /* حد أقصى لعرض زرار الميزانية عشان ميغطيش على كلمة Balance */
 .budget-btn {
     max-width: 42vw;

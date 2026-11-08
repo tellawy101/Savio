@@ -5,117 +5,139 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: calc(env(safe-area-inset-top, 0px) + 24px) 24px calc(env(safe-area-inset-bottom, 0px) + 24px);
-    background: var(--surface);
+    padding:
+        calc(env(safe-area-inset-top, 0px) + 24px)
+        24px
+        calc(env(safe-area-inset-bottom, 0px) + 24px);
     color: var(--text);
+    background: var(--surface);
     animation: obFade .25s ease;
 }
+
 body.dark .ob-overlay {
-    background: #0f1716;
     color: #f1f5f9;
+    background: #0f1716;
 }
+
 @keyframes obFade {
-    from { opacity: 0; }
+    from {
+        opacity: 0;
+    }
 }
+
 .ob-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .ob-dots {
     display: flex;
     gap: 6px;
 }
+
 .ob-dot {
     width: 8px;
     height: 8px;
-    border-radius: 50%;
     background: var(--text-faint);
+    border-radius: 50%;
     transition: all .2s ease;
 }
+
 .ob-dot.active {
     width: 24px;
-    border-radius: 999px;
     background: var(--brand);
+    border-radius: 999px;
 }
+
 .ob-skip {
     width: auto;
-    background: none;
-    border: none;
     color: var(--text-muted);
     font-family: inherit;
     font-size: 14px;
+    background: none;
+    border: none;
     cursor: pointer;
 }
+
 .ob-body {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: center;
-    text-align: center;
     gap: 14px;
+    text-align: center;
 }
+
 .ob-body h2 {
     margin: 0;
     font-size: 26px;
 }
+
 .ob-body p {
     margin: 0 0 10px;
-        color: var(--text-muted);
+    color: var(--text-muted);
     font-size: 15px;
 }
+
 .ob-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
     justify-content: center;
+    gap: 10px;
 }
+
 .ob-chip {
     width: auto;
     padding: 12px 22px;
-    border: none;
-    border-radius: 999px;
-        background: var(--border);
     color: inherit;
     font-family: inherit;
     font-size: 16px;
     font-weight: 600;
+    background: var(--border);
+    border: none;
+    border-radius: 999px;
     cursor: pointer;
 }
+
 body.dark .ob-chip {
     background: #1c2625;
 }
+
 .ob-chip.active,
 body.dark .ob-chip.active {
-    background: var(--brand);
     color: #fff;
+    background: var(--brand);
 }
+
 .ob-input {
     width: 100%;
     box-sizing: border-box;
     padding: 15px 16px;
-        border: 1px solid var(--border);
-    border-radius: 14px;
-    background: var(--surface-alt);
     color: var(--text);
     font-family: inherit;
     font-size: 16px;
     text-align: center;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 14px;
 }
+
 body.dark .ob-input {
-    background: #1c2625;
-    border-color: rgba(255,255,255,.08);
     color: #f1f5f9;
+    background: #1c2625;
+    border-color: rgba(255, 255, 255, .08);
 }
+
 .ob-next {
     width: 100%;
     padding: 15px;
-    border: none;
-    border-radius: 16px;
-    background: var(--brand-gradient);
     color: #fff;
     font-family: inherit;
     font-size: 16px;
     font-weight: 700;
+    background: var(--brand-gradient);
+    border: none;
+    border-radius: 16px;
     cursor: pointer;
 }

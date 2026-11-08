@@ -16,7 +16,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 7px;
 }
 
@@ -30,10 +29,10 @@
 }
 
 .category-dot {
+    flex-shrink: 0;
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    flex-shrink: 0;
 }
 
 .category-amount {
@@ -45,23 +44,17 @@
 .category-progress {
     width: 100%;
     height: 8px;
-
     overflow: hidden;
-
     background: var(--border);
     border-radius: 99px;
 }
 
 .category-progress-fill {
     height: 100%;
-
     background: #0F766E;
-
     border-radius: inherit;
-
     transition: width 0.3s ease;
 }
-
 
 /* =========================================
    ACCOUNTS
@@ -78,39 +71,31 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-
     padding: 14px;
-
-background: var(--surface-alt);
-
+    background: var(--surface-alt);
     border: 1px solid var(--border);
     border-radius: 12px;
 }
-
 
 /* معلومات الحساب */
 .account-info {
     display: flex;
     flex-direction: column;
     gap: 6px;
-
     min-width: 0;
 }
 
-
 /* اسم الحساب */
 .account-name {
-    font-weight: 700;
     color: var(--text);
+    font-weight: 700;
 }
-
 
 /* تفاصيل الدخل والمصروف */
 .account-activity {
     display: flex;
     align-items: center;
     gap: 12px;
-
     font-size: 12px;
 }
 
@@ -131,22 +116,21 @@ background: var(--surface-alt);
 }
 
 @media (max-width: 480px) {
-
     .account-row {
-        padding: 12px;
         gap: 10px;
+        padding: 12px;
     }
-
+    
     .account-activity {
         flex-direction: column;
         align-items: flex-start;
         gap: 3px;
     }
-
+    
     .account-name {
         font-size: 14px;
     }
-
+    
     .account-value {
         font-size: 13px;
     }
@@ -163,74 +147,88 @@ background: var(--surface-alt);
     font-size: 14px;
     font-weight: 700;
 }
+
 .account-stats .account-row {
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
 }
+
 .account-row-top {
     display: flex;
     align-items: center;
     gap: 10px;
 }
+
 .account-row-top .account-name {
     flex: 1;
     min-width: 0;
     overflow: hidden;
+    font-size: 15px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 15px;
 }
+
 .account-icon-box {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    background: rgba(20,184,166,.15);
+    width: 40px;
+    height: 40px;
     color: #14B8A6;
-    flex-shrink: 0;
+    background: rgba(20, 184, 166, .15);
+    border-radius: 12px;
 }
+
 .account-icon-box i {
     width: 20px;
     height: 20px;
 }
+
 .account-value {
     font-size: 15px;
     font-weight: 700;
 }
+
 .account-value.positive {
     color: var(--income);
 }
+
 .account-value.negative {
     color: var(--expense);
 }
+
 .account-stats .account-activity {
     flex-direction: row;
     align-items: stretch;
     gap: 8px;
 }
+
 .account-income,
 .account-expense {
-    flex: 1;
     display: flex;
+    flex: 1;
     justify-content: space-between;
     align-items: center;
     gap: 6px;
     padding: 8px 10px;
-    border-radius: 10px;
     font-size: 12px;
+    border-radius: 10px;
 }
+
 .account-income {
-    background: rgba(22,163,74,.12);
+    background: rgba(22, 163, 74, .12);
 }
+
 .account-expense {
-    background: rgba(220,38,38,.12);
+    background: rgba(220, 38, 38, .12);
 }
+
 .account-label {
     font-weight: 700;
 }
+
 .account-amount {
     font-weight: 500;
     white-space: nowrap;

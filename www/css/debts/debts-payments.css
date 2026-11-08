@@ -11,8 +11,8 @@
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    border-radius: 20px 20px 0 0;
     margin: 0;
+    border-radius: 20px 20px 0 0;
     transform: translateY(100%);
 }
 
@@ -51,26 +51,26 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-weight: var(--fw-card-title);
     font-size: var(--fs-card-title);
+    font-weight: var(--fw-card-title);
 }
 
 .payment-row-account svg {
+    flex-shrink: 0;
     width: 18px;
     height: 18px;
-    flex-shrink: 0;
     color: var(--brand-text);
 }
 
 .payment-row-date {
-    font-size: 12px;
     color: var(--text-muted);
+    font-size: 12px;
 }
 
 .payment-row-amount {
     direction: ltr;
-        font-weight: var(--fw-amount);
     font-size: var(--fs-amount);
+    font-weight: var(--fw-amount);
 }
 
 .payment-row-amount.receivable {
@@ -78,14 +78,14 @@
 }
 
 .payment-row-amount.payable {
-color: var(--danger);
+    color: var(--danger);
 }
 
 .payments-history-empty {
-    text-align: center;
-    color: var(--text-muted);
     padding: 20px 0;
+    color: var(--text-muted);
     font-size: 14px;
+    text-align: center;
 }
 
 .payment-row-end {
@@ -95,18 +95,18 @@ color: var(--danger);
 }
 
 .payment-delete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 32px;
     min-width: 32px;
     height: 32px;
     margin: 0;
     padding: 0;
+    color: var(--expense);
+    background: var(--expense-bg);
     border: none;
     border-radius: 8px;
-        background: var(--expense-bg);
-    color: var(--expense);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
 }
 
@@ -118,9 +118,15 @@ color: var(--danger);
 body.dark .payment-delete-btn {
     background: #3f1d1d;
 }
-.cb-over .goal-progress-fill { background: var(--danger); }
-.cb-over .goal-percent { color: var(--danger); 
+
+.cb-over .goal-progress-fill {
+    background: var(--danger);
 }
+
+.cb-over .goal-percent {
+    color: var(--danger);
+}
+
 /* توحيد شيت سجل الدفعات مع شيت سداد دين */
 #paymentsHistoryModal .modal-content {
     padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px));
@@ -132,16 +138,16 @@ body.dark .payment-delete-btn {
     width: 40px;
     height: 4px;
     margin: 0 auto 14px;
-    border-radius: 999px;
     background: rgba(128, 128, 128, 0.4);
+    border-radius: 999px;
 }
 
 #paymentsHistoryModal h2 {
     margin: 0 0 8px;
-    text-align: center;
+    color: var(--text);
     font-size: var(--fs-section-title);
     font-weight: var(--fw-section-title);
-    color: var(--text);
+    text-align: center;
 }
 
 #paymentsHistoryModal .modal-actions {
@@ -151,9 +157,9 @@ body.dark .payment-delete-btn {
 #paymentsHistoryModal #closePaymentsHistoryBtn {
     height: 48px;
     padding: 0;
-    border-radius: var(--r-btn);
+    color: var(--btn-text);
     font-size: var(--fs-button);
     font-weight: var(--fw-button);
     background: var(--btn-bg);
-    color: var(--btn-text);
+    border-radius: var(--r-btn);
 }

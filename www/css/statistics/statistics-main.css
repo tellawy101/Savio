@@ -15,64 +15,54 @@
 ========================================= */
 
 .period-selector {
+    position: relative;
     display: flex;
     gap: 8px;
-
     width: 100%;
-    padding: 8px;
-
     margin-bottom: 20px;
-
+    padding: 8px;
+    box-sizing: border-box;
     background: #FFFFFF;
     border: 1px solid var(--border);
     border-radius: 12px;
-
-    box-sizing: border-box;
-    position: relative;
 }
+
 .period-indicator {
     position: absolute;
     top: 8px;
     bottom: 8px;
-    border-radius: 8px;
+    z-index: var(--z-bg);
     background: #0F766E;
+    border-radius: 8px;
     transition: left 0.3s ease, width 0.3s ease;
-        z-index: var(--z-bg);
 }
 
 /* form-page... يعني css/statistics.css سطر 62 */
 .period-btn {
+    position: relative;
+    z-index: var(--z-content);
+    display: flex;
     flex: 1;
+    align-items: center;
+    justify-content: center;
     width: auto;
-
     height: 34px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
-    border: 0;
-    border-radius: 10px;
-
-    background: transparent;
     color: var(--text-muted);
-
     font-size: 14px;
     font-weight: 700;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
     cursor: pointer;
-    position: relative;
-    z-index: var(--z-content);
     transition: color 0.25s ease;
 }
 
 .period-btn.active {
     color: #FFFFFF;
 }
-
 
 /* =========================================
    SUMMARY
@@ -82,7 +72,6 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
-
     margin-bottom: 18px;
 }
 
@@ -90,33 +79,24 @@
     display: flex;
     align-items: center;
     gap: 12px;
-
     min-width: 0;
-
     padding: 18px;
-
+    box-sizing: border-box;
     background: #FFFFFF;
-
     border: 1px solid var(--border);
     border-radius: 16px;
-
-    box-sizing: border-box;
 }
 
 .stat-icon {
-    width: 44px;
-    height: 44px;
-
-    flex: 0 0 44px;
-
     display: flex;
+    flex: 0 0 44px;
     align-items: center;
     justify-content: center;
-
-    border-radius: 13px;
-
-    background: #F0FDFA;
+    width: 44px;
+    height: 44px;
     color: #0F766E;
+    background: #F0FDFA;
+    border-radius: 13px;
 }
 
 .stat-content {
@@ -125,26 +105,20 @@
 
 .stat-content span {
     display: block;
-
     margin-bottom: 5px;
-
     color: var(--text-muted);
     font-size: 13px;
 }
 
 .stat-content strong {
     display: block;
-
+    overflow: hidden;
     color: var(--text);
-
     font-size: 20px;
     font-weight: 700;
-
-    white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
 
 /* =========================================
    CARDS
@@ -152,42 +126,32 @@
 
 .statistics-card {
     margin-bottom: 18px;
-
     padding: 20px;
-
+    box-sizing: border-box;
     background: #FFFFFF;
-
     border: 1px solid var(--border);
     border-radius: 18px;
-
-    box-sizing: border-box;
 }
 
 .section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 18px;
 }
 
 .section-header h2 {
     margin: 0;
-
     color: var(--text);
-
     font-size: 17px;
     font-weight: 700;
 }
 
 .section-header p {
     margin: 5px 0 0;
-
     color: var(--text-muted);
-
     font-size: 13px;
 }
-
 
 /* =========================================
    CHART
@@ -195,12 +159,9 @@
 
 .chart-wrapper {
     position: relative;
-
     width: 100%;
     height: 240px;
-
     padding: 4px 0 8px;
-
     box-sizing: border-box;
 }
 
@@ -208,5 +169,3 @@
     width: 100% !important;
     height: 100% !important;
 }
-
-

@@ -4,28 +4,27 @@
 
 .expense-swipe {
     position: relative;
+    margin-bottom: 12px;
     overflow: hidden;
     border-radius: 18px;
-    margin-bottom: 12px;
 }
 
 .swipe-action {
     position: absolute;
     inset: 0;
+    z-index: var(--z-swipe-under);
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 0 24px;
-
+    direction: ltr;
     color: #fff;
     font-size: 24px;
     font-weight: bold;
+    border-radius: 18px;
     opacity: 0;
     transition: opacity .2s ease;
     pointer-events: none;
-    z-index: var(--z-swipe-under);
-    border-radius: 18px;
-    direction: ltr;
 }
 
 .swipe-delete {
@@ -37,6 +36,7 @@
     justify-content: flex-end;
     background: #1976D2;
 }
+
 .swipe-action svg,
 .swipe-action i {
     transform: scale(calc(.6 + var(--swipe-p, 0) * .4));

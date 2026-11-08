@@ -2,6 +2,7 @@
    Sheets
    كل الـ Bottom Sheets: الأهداف والميزانيات والإعدادات + قوايم الاختيار (Select)
 ============================== */
+
 /* ==============================
    Bottom Sheets (Goals / Budgets / Income / Backup / Settings)
 ============================== */
@@ -12,7 +13,6 @@
 #exportFallbackModal,
 #importManualModal,
 #restorePreviewModal,
-
 #currencyPickerModal,
 #aboutModal,
 #privacyModal {
@@ -36,7 +36,6 @@
 #exportFallbackModal .modal-content,
 #importManualModal .modal-content,
 #restorePreviewModal .modal-content,
-
 #currencyPickerModal .modal-content,
 #aboutModal .modal-content,
 #privacyModal .modal-content {
@@ -44,11 +43,11 @@
     max-width: 100% !important;
     min-width: 0;
     margin: 0;
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
     box-sizing: border-box;
     border-radius: 20px 20px 0 0;
-    padding-bottom: max(22px, env(safe-area-inset-bottom));
-    transform: translateY(100%);
     opacity: 1;
+    transform: translateY(100%);
     transition: transform .3s cubic-bezier(.2, .8, .2, 1);
 }
 
@@ -60,12 +59,12 @@
 #exportFallbackModal.show .modal-content,
 #importManualModal.show .modal-content,
 #restorePreviewModal.show .modal-content,
-
 #currencyPickerModal.show .modal-content,
 #aboutModal.show .modal-content,
 #privacyModal.show .modal-content {
     transform: translateY(0);
 }
+
 /* ==============================
    Select → Bottom Sheet
 ============================== */
@@ -73,12 +72,12 @@
     width: 100%;
     margin: 0;
     padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: #fff;
     color: var(--text);
     font-family: inherit;
     font-size: 15px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
 
 .select-sheet-trigger {
@@ -98,23 +97,29 @@
     white-space: nowrap;
 }
 
-.select-sheet-arrow { opacity: .5; font-size: 12px; }
+.select-sheet-arrow {
+    font-size: 12px;
+    opacity: .5;
+}
 
 body.dark .select-sheet-trigger:not(.filter-select) {
     background: #17202B;
 }
 
-.select-sheet { align-items: flex-end; padding-top: 0; }
+.select-sheet {
+    align-items: flex-end;
+    padding-top: 0;
+}
 
 .select-sheet .modal-content {
     width: 100%;
     max-width: 100%;
     margin: 0;
+    padding: 20px 16px max(22px, env(safe-area-inset-bottom));
     box-sizing: border-box;
     border-radius: 20px 20px 0 0;
-    padding: 20px 16px max(22px, env(safe-area-inset-bottom));
-    transform: translateY(100%);
     opacity: 1;
+    transform: translateY(100%);
     transition: transform .3s cubic-bezier(.2, .8, .2, 1);
 }
 
@@ -122,9 +127,11 @@ body.dark .select-sheet-trigger:not(.filter-select) {
 .select-sheet-list {
     overscroll-behavior: none;
 }
+
 .select-sheet .modal-content {
     overflow-y: hidden;
 }
+
 .select-sheet-list {
     display: flex;
     flex-direction: column;
@@ -140,23 +147,25 @@ body.dark .select-sheet-trigger:not(.filter-select) {
     width: 100%;
     margin: 0;
     padding: 14px 16px;
-    border-radius: 14px;
-    border: 1.5px solid #E5E7EB;
-    background: var(--surface);
     color: var(--text);
     font-family: inherit;
     font-size: 15px;
     font-weight: 700;
     text-align: start;
+    background: var(--surface);
+    border: 1.5px solid #E5E7EB;
+    border-radius: 14px;
 }
 
 .select-sheet-option.selected {
-    border-color: var(--brand-text);
-    background: var(--brand-bg);
     color: var(--brand-text);
+    background: var(--brand-bg);
+    border-color: var(--brand-text);
 }
 
-.select-sheet-option.selected::after { content: "✓"; }
+.select-sheet-option.selected::after {
+    content: "✓";
+}
 
 body.dark .select-sheet-option {
     border-color: rgba(79, 209, 197, 0.15);

@@ -7,11 +7,11 @@
 }
 
 .page-header h2 {
+    flex: 1;
     margin: 0;
+    color: var(--text);
     font-size: 20px;
     font-weight: 700;
-    color: var(--text);
-    flex: 1;
 }
 
 /* Icon Dropdown */
@@ -21,17 +21,17 @@
 }
 
 .icon-dropdown-trigger {
-    width: 100%;
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
     padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color, #e0e0e0);
-    background: var(--input-bg, var(--c-white));
-    cursor: pointer;
-    font-size: 15px;
     color: #333;
+    font-size: 15px;
+    background: var(--input-bg, var(--c-white));
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 12px;
+    cursor: pointer;
 }
 
 .icon-dropdown-trigger span {
@@ -39,18 +39,18 @@
 }
 
 #selectedIconPreviewWrap {
-    width: 38px;
-    height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    width: 38px;
+    height: 38px;
     background: #f1f5f5;
+    border-radius: 10px;
 }
 
 #selectedIconLabel {
     flex: 1;
-        text-align: start;
+    text-align: start;
 }
 
 .icon-dropdown-trigger i {
@@ -63,50 +63,50 @@
 }
 
 .icon-dropdown-list.show {
-    display: block;
-
     position: fixed;
     inset-inline: 0;
     bottom: 0;
     top: auto;
-
+    z-index: var(--z-dropdown);
+    display: block;
     width: 100%;
     height: 70vh;
     max-height: 100%;
-
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
     overflow-y: auto;
     overscroll-behavior: contain;
-    z-index: var(--z-dropdown);
-
-    box-sizing: border-box;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-
     background: var(--input-bg, var(--c-white));
-
     border: none;
     border-radius: 20px 20px 0 0;
-
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
     animation: iconSheetUp 0.25s ease-out;
 }
 
 @keyframes iconSheetUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+    from {
+        transform: translateY(100%);
+    }
+    
+    to {
+        transform: translateY(0);
+    }
 }
+
 .icon-option {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 12px 14px;
-    cursor: pointer;
     font-size: 15px;
     border-bottom: 1px solid var(--border-color, #eee);
+    cursor: pointer;
 }
 
 .icon-option:last-child {
     border-bottom: none;
 }
+
 .icon-option:hover {
     background: var(--hover-bg, #f2f2f2);
 }
@@ -115,14 +115,15 @@
     width: 18px;
     height: 18px;
 }
+
 .dark .icon-dropdown-trigger {
-background: var(--dk-field);
-    border-color: #555;
     color: #f9fafb;
+    background: var(--dk-field);
+    border-color: #555;
 }
 
 .dark .icon-dropdown-list {
-background: var(--dk-field);
+    background: var(--dk-field);
     border-color: #555;
 }
 
@@ -137,9 +138,11 @@ background: var(--dk-field);
 .dark .icon-option span {
     color: #f9fafb;
 }
+
 .dark #selectedIconPreviewWrap {
     background: var(--dk-hover);
 }
+
 .modal-actions {
     display: flex;
     gap: 10px;
@@ -153,22 +156,23 @@ background: var(--dk-field);
 
 .account-cancel-btn {
     padding: 12px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color, #ccc);
-    background: #f0f0f0;
-    font-weight: 700;
-    cursor: pointer;
     color: #333;
+    font-weight: 700;
+    background: #f0f0f0;
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 12px;
+    cursor: pointer;
 }
+
 .dark .account-card {
     background: var(--dk-pop);
     box-shadow: none;
 }
 
 .dark .account-avatar {
-background: var(--dk-field);
+    background: var(--dk-field);
 }
 
 .dark .account-corner-icon {
-background: var(--dk-pop);
+    background: var(--dk-pop);
 }

@@ -6,21 +6,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
     padding: 45px 20px;
     text-align: center;
-    width: 100%;
 }
 
 .empty-state-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: var(--brand-bg);
-    color: var(--brand-text);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 64px;
+    height: 64px;
     margin-bottom: 14px;
+    color: var(--brand-text);
+    background: var(--brand-bg);
+    border-radius: 50%;
 }
 
 .empty-state-icon svg {
@@ -29,15 +29,15 @@
 }
 
 .empty-state-title {
+    margin: 0 0 6px 0;
+    color: #4B5563;
     font-size: 16px;
     font-weight: 700;
-    color: #4B5563;
-    margin: 0 0 6px 0;
 }
 
 .empty-state-sub {
-    font-size: 13px;
     color: #9CA3AF;
+    font-size: 13px;
 }
 
 body.dark .empty-state-title {
@@ -45,15 +45,18 @@ body.dark .empty-state-title {
 }
 
 body.dark .empty-state-sub {
-     color: var(--text-faint);
+    color: var(--text-faint);
 }
+
 .expense-icon-box.transfer {
-    background: var(--transfer-bg);
     color: var(--transfer);
+    background: var(--transfer-bg);
 }
+
 .expense-amount-transfer {
     color: var(--transfer) !important;
 }
+
 .search-panel {
     display: none;
     width: 100%;
@@ -61,14 +64,14 @@ body.dark .empty-state-sub {
 
 #searchPanel #searchInput {
     display: block;
-    background: #FFFFFF;
     color: var(--text);
+    background: #FFFFFF;
     border: 1px solid var(--border);
 }
 
 body.dark #searchPanel #searchInput {
-    background: #0B1118;
     color: var(--text);
+    background: #0B1118;
     border: 1px solid #2F3B4A;
     box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
 }
@@ -91,51 +94,54 @@ body.dark #searchPanel #searchInput::placeholder {
     flex: 1;
     min-width: 0;
     padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid var(--border);    background: #FFFFFF;
     color: var(--text);
     font-family: "Supreme", sans-serif;
     font-size: 14px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
 
 body.dark .filter-select {
     background: #17202B;
 }
+
 .filter-summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
     padding: 12px 2px 0;
-    font-size: 13px;
     color: var(--text-muted);
+    font-size: 13px;
 }
 
 .filter-clear-btn {
     margin: 0;
     padding: 6px 12px;
-    border: none;
-    border-radius: 10px;
-    background: var(--brand-bg);
     color: var(--brand-text);
     font-family: inherit;
     font-size: 13px;
     font-weight: 700;
+    background: var(--brand-bg);
+    border: none;
+    border-radius: 10px;
 }
 
 .account-sort-row {
     padding: 0 2px 12px;
 }
+
 .empty-state-btn {
+    width: auto;
     margin-top: 16px;
     padding: 11px 22px;
-    border: none;
-    border-radius: 14px;
-    background: var(--brand);
     color: #fff;
     font-family: inherit;
     font-size: 14px;
     font-weight: 700;
-    width: auto;
+    background: var(--brand);
+    border: none;
+    border-radius: 14px;
     cursor: pointer;
 }

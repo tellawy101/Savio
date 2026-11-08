@@ -7,36 +7,36 @@
     align-items: center;
     justify-content: space-between;
     gap: 15px;
-padding: 24px 20px 0;
     margin-bottom: 14px;
+    padding: 24px 20px 0;
 }
 
 .goals-header h3 {
+    margin: 0;
     font-size: var(--fs-page-title);
     font-weight: var(--fw-page-title);
-    margin: 0;
 }
 
 .goals-subtitle {
     display: block;
-        font-size: var(--fs-secondary);
-        color: var(--goal-muted);
     margin-top: 2px;
+    color: var(--goal-muted);
+    font-size: var(--fs-secondary);
 }
 
 .goals-add-btn {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
     width: 42px;
     height: 42px;
     margin: 0;
     padding: 0;
+    color: var(--goal-btn-text);
+    background: var(--goal-btn-bg);
     border: none;
     border-radius: 14px;
-        background: var(--goal-btn-bg);
-    color: var(--goal-btn-text);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
 }
 
 .goals-add-btn svg {
@@ -47,20 +47,20 @@ padding: 24px 20px 0;
 .goals-summary-card {
     margin: 0 20px 12px;
     padding: 14px 16px;
-    border-radius: 18px;
-        background: var(--goal-soft-bg);
     color: var(--goal-summary-text);
+    background: var(--goal-soft-bg);
+    border-radius: 18px;
 }
 
 .goals-summary-label {
-        font-size: var(--fs-secondary);
+    font-size: var(--fs-secondary);
 }
 
 .goals-summary-value {
-        font-size: var(--fs-balance);
-    font-weight: var(--fw-balance);
     margin: 4px 0 10px;
     color: var(--goal-summary-value);
+    font-size: var(--fs-balance);
+    font-weight: var(--fw-balance);
 }
 
 .goals-summary-card .goal-progress {
@@ -69,8 +69,8 @@ padding: 24px 20px 0;
 
 .goals-summary-sub {
     display: block;
-        font-size: var(--fs-secondary);
     margin-top: 6px;
+    font-size: var(--fs-secondary);
 }
 
 .goals-list {
@@ -80,12 +80,12 @@ padding: 24px 20px 0;
 .goal-card {
     width: 100%;
     max-width: 400px;
+    margin: 0 auto 12px;
+    padding: 14px;
     box-sizing: border-box;
-        background: var(--goal-card-bg);
+    background: var(--goal-card-bg);
     border: 1px solid var(--goal-card-border);
     border-radius: 18px;
-    padding: 14px;
-    margin: 0 auto 12px;
 }
 
 .goal-top {
@@ -97,15 +97,15 @@ padding: 24px 20px 0;
 }
 
 .goal-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-        background: var(--goal-soft-bg);
-    color: var(--goal-accent);
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    color: var(--goal-accent);
+    background: var(--goal-soft-bg);
+    border-radius: 14px;
 }
 
 .goal-icon svg {
@@ -114,51 +114,51 @@ padding: 24px 20px 0;
 }
 
 .goal-info {
-    flex: 1;
-    min-width: 0;
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 2px;
+    min-width: 0;
 }
 
 .goal-name {
-        font-size: var(--fs-card-title);
+    color: var(--goal-name);
+    font-size: var(--fs-card-title);
     font-weight: var(--fw-card-title);
-        color: var(--goal-name);
 }
 
 .goal-amounts-text {
-        font-size: var(--fs-secondary);
-color: var(--goal-muted);
+    color: var(--goal-muted);
+    font-size: var(--fs-secondary);
 }
 
 .goal-percent {
-        font-size: var(--fs-amount);
-    font-weight: var(--fw-amount);
     color: var(--brand);
+    font-size: var(--fs-amount);
+    font-weight: var(--fw-amount);
 }
 
 .goal-badge {
-        font-size: var(--fs-caption);
-    font-weight: 700;
     padding: 4px 10px;
-    border-radius: 10px;
-    background: var(--income-bg);
     color: var(--income);
+    font-size: var(--fs-caption);
+    font-weight: 700;
+    background: var(--income-bg);
+    border-radius: 10px;
 }
 
 .goal-progress {
     width: 100%;
     height: 6px;
-    border-radius: 999px;
-background: var(--goal-track);
     overflow: hidden;
+    background: var(--goal-track);
+    border-radius: 999px;
 }
 
 .goal-progress-fill {
     height: 100%;
-    border-radius: 999px;
     background: var(--brand);
+    border-radius: 999px;
     transition: width 0.3s ease;
 }
 
@@ -167,8 +167,8 @@ background: var(--goal-track);
     align-items: center;
     gap: 6px;
     margin-top: 10px;
-        font-size: var(--fs-caption);
-color: var(--goal-muted);
+    color: var(--goal-muted);
+    font-size: var(--fs-caption);
 }
 
 .goal-date svg {
@@ -184,27 +184,27 @@ color: var(--goal-muted);
 }
 
 .goal-btn {
-    width: auto;
-    margin: 0;
-    padding: 10px 14px;
-    border: none;
-    border-radius: 12px;
-        font-size: var(--fs-button);
-    font-weight: var(--fw-button);
-    color: var(--c-white);
-    background: var(--brand);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
+    width: auto;
+    margin: 0;
+    padding: 10px 14px;
+    color: var(--c-white);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-button);
+    background: var(--brand);
+    border: none;
+    border-radius: 12px;
 }
 
 .goal-add-btn {
     flex: 1;
     height: 40px;
     padding: 0;
-        background: var(--goal-btn-bg);
     color: var(--goal-btn-text);
+    background: var(--goal-btn-bg);
 }
 
 .goal-add-btn svg {
@@ -216,9 +216,9 @@ color: var(--goal-muted);
     width: 40px;
     height: 40px;
     padding: 0;
-    background: transparent;
-      border: 1px solid var(--expense-bg);
     color: var(--expense);
+    background: transparent;
+    border: 1px solid var(--expense-bg);
 }
 
 .goal-delete-btn svg {
@@ -231,8 +231,8 @@ color: var(--goal-muted);
 }
 
 .goal-done .goal-icon {
-    background: var(--income-bg);
     color: var(--income);
+    background: var(--income-bg);
 }
 
 .goal-done .goal-progress-fill {
@@ -240,7 +240,6 @@ color: var(--goal-muted);
 }
 
 /* Dark Mode */
-
 
 body.dark .goal-card:not(.cb-over) .goal-percent {
     color: #2dd4bf;
@@ -251,8 +250,8 @@ body.dark .goal-progress-fill {
 }
 
 body.dark .goal-delete-btn {
-    border-color: var(--expense-bg);
     color: var(--expense);
+    border-color: var(--expense-bg);
 }
 
 body.dark .goal-done {
@@ -261,8 +260,8 @@ body.dark .goal-done {
 
 body.dark .goal-done .goal-icon,
 body.dark .goal-badge {
-    background: var(--income-bg);
     color: var(--income);
+    background: var(--income-bg);
 }
 
 body.dark .goal-done .goal-progress-fill {

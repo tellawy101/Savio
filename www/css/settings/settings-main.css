@@ -1,7 +1,7 @@
 .settings-page {
-    padding: 20px 16px 100px;
     max-width: 700px;
     margin: 0 auto;
+    padding: 20px 16px 100px;
 }
 
 .settings-section {
@@ -16,18 +16,18 @@
 }
 
 .settings-card {
+    overflow: hidden;
     background: var(--card-bg, #ffffff);
     border-radius: 16px;
-    overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .settings-item {
-    min-height: 70px;
-    padding: 12px 16px;
     display: flex;
     align-items: center;
     gap: 14px;
+    min-height: 70px;
+    padding: 12px 16px;
     cursor: pointer;
     transition: background 0.2s ease;
 }
@@ -37,15 +37,15 @@
 }
 
 .settings-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    background: rgba(15, 118, 110, 0.10);
+    width: 42px;
+    height: 42px;
     color: #0F766E;
-    flex-shrink: 0;
+    background: rgba(15, 118, 110, 0.10);
+    border-radius: 12px;
 }
 
 .settings-icon svg {
@@ -60,37 +60,37 @@
 
 .settings-info span {
     display: block;
-        font-size: var(--fs-card-title);
-        font-weight: var(--fw-card-title);
+    font-size: var(--fs-card-title);
+    font-weight: var(--fw-card-title);
 }
 
 .settings-info small {
     display: block;
     margin-top: 3px;
-        font-size: var(--fs-secondary);
+    font-size: var(--fs-secondary);
     opacity: 0.55;
 }
 
 .settings-arrow {
+    flex-shrink: 0;
     width: 18px;
     height: 18px;
     opacity: 0.45;
-    flex-shrink: 0;
 }
 
 .settings-divider {
     height: 1px;
-        background: var(--divider);
     margin-left: 72px;
+    background: var(--divider);
 }
 
 /* Dark Mode Switch */
 
 .switch {
     position: relative;
+    flex-shrink: 0;
     width: 46px;
     height: 26px;
-    flex-shrink: 0;
 }
 
 .switch input {
@@ -109,23 +109,22 @@
 .slider::before {
     content: "";
     position: absolute;
-    width: 20px;
-    height: 20px;
     left: 3px;
     top: 3px;
+    width: 20px;
+    height: 20px;
     background: white;
     border-radius: 50%;
     transition: 0.25s;
 }
 
-.switch input:checked + .slider {
+.switch input:checked+.slider {
     background: #0F766E;
 }
 
-.switch input:checked + .slider::before {
+.switch input:checked+.slider::before {
     transform: translateX(20px);
 }
-
 
 /* Danger */
 
@@ -134,8 +133,8 @@
 }
 
 .settings-item.danger .settings-icon {
-    background: var(--expense-bg);
     color: var(--expense);
+    background: var(--expense-bg);
 }
 
 .settings-item.danger .settings-info small {
@@ -143,12 +142,11 @@
     opacity: 0.65;
 }
 
-
 /* App Version */
 
 .app-version {
-    text-align: center;
     margin: 30px 0 20px;
+    text-align: center;
     opacity: 0.5;
 }
 
@@ -161,63 +159,62 @@
 .app-version small {
     display: block;
     margin-top: 4px;
-        font-size: var(--fs-caption);
+    font-size: var(--fs-caption);
 }
 
 /* Mobile */
 @media (max-width: 480px) {
-
     .settings-page {
         padding: 16px 12px 100px;
     }
-
+    
     .settings-section {
         margin-bottom: 20px;
     }
-
+    
     .settings-item {
+        gap: 12px;
         min-height: 66px;
         padding: 10px 14px;
-        gap: 12px;
     }
-
+    
     .settings-icon {
         width: 40px;
         height: 40px;
     }
-
+    
     .settings-info span {
-                font-size: var(--fs-card-title);
+        font-size: var(--fs-card-title);
     }
-
+    
     .settings-info small {
-                font-size: var(--fs-secondary);
+        font-size: var(--fs-secondary);
     }
-
 }
+
 /* ==============================
    Import Modal - Professional Look
 ============================== */
 .import-modal-content {
-    text-align: center;
     padding: 28px 22px 22px;
+    text-align: center;
 }
 
 .import-modal-icon {
-    width: 62px;
-    height: 62px;
-    margin: 0 auto 14px;
-    border-radius: 50%;
-        background: var(--brand-bg);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 14px;
+    background: var(--brand-bg);
+    border-radius: 50%;
 }
 
 .import-modal-icon i {
     width: 28px;
     height: 28px;
-        color: var(--brand-text);
+    color: var(--brand-text);
 }
 
 .import-modal-content h2 {
@@ -226,10 +223,10 @@
 }
 
 .import-modal-desc {
-        color: var(--text-muted);
-        font-size: var(--fs-body);
-    line-height: 1.6;
     margin: 0 0 20px;
+    color: var(--text-muted);
+    font-size: var(--fs-body);
+    line-height: 1.6;
 }
 
 .import-file-drop {
@@ -238,9 +235,9 @@
     align-items: center;
     gap: 8px;
     padding: 22px 16px;
-        border: 1.5px dashed var(--brand-text);
-    border-radius: 14px;
     background: var(--brand-bg-soft);
+    border: 1.5px dashed var(--brand-text);
+    border-radius: 14px;
     cursor: pointer;
     transition: background .2s ease, border-color .2s ease;
 }
@@ -252,13 +249,13 @@
 .import-file-drop i {
     width: 26px;
     height: 26px;
-        color: var(--brand-text);
+    color: var(--brand-text);
 }
 
 .import-file-drop span {
+    color: var(--brand-text);
     font-size: 13.5px;
     font-weight: 700;
-color: var(--brand-text);
 }
 
 .import-modal-actions {
@@ -267,11 +264,10 @@ color: var(--brand-text);
 
 .import-close-btn {
     width: 100%;
-    background: #0F766E;
-    color: #fff;
-    border: none;
-    font-weight: 700;
     padding: 12px;
+    color: #fff;
+    font-weight: 700;
+    background: #0F766E;
+    border: none;
     border-radius: 10px;
 }
-

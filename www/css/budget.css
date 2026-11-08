@@ -2,34 +2,26 @@
    BUDGET BUTTON
 ========================= */
 
-
 .budget-btn {
     position: absolute;
     top: 18px;
     inset-inline-end: 18px;
-
+    z-index: var(--z-float);
     display: flex;
     align-items: center;
     justify-content: center;
-
+    gap: 6px;
     width: auto;
     height: auto;
-
-    gap: 6px;
-    padding: 7px 12px;
     margin: 0;
-
-    border: none;
-    border-radius: 14px;
-
-    background: rgba(255, 255, 255, 0.12);
+    padding: 7px 12px;
     color: #ffffff;
-
     font-size: 11px;
     font-weight: 800;
-
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    border-radius: 14px;
     cursor: pointer;
-        z-index: var(--z-float);
 }
 
 .budget-btn svg {
@@ -45,6 +37,7 @@
     white-space: nowrap;
     font-weight: 700;
 }
+
 /* =========================
    BUDGET MODAL
 ========================= */
@@ -61,41 +54,39 @@
 }
 
 .budget-modal-icon {
-    width: 44px;
-    height: 44px;
-    flex: 0 0 44px;
-    
     display: flex;
+    flex: 0 0 44px;
     align-items: center;
     justify-content: center;
-    
-    border-radius: 13px;
-    
-    background: #F0FDFA;
+    width: 44px;
+    height: 44px;
     color: #0F766E;
+    background: #F0FDFA;
+    border-radius: 13px;
 }
 
 .budget-modal-header h2 {
-    margin: 0;
     flex: 1;
-    font-size: 20px;
+    margin: 0;
     color: var(--text);
+    font-size: 20px;
 }
 
 .budget-modal-close {
-    width: 48px;
-    height: 48px;
-    flex: 0 0 48px;
     display: flex;
+    flex: 0 0 48px;
     align-items: center;
     justify-content: center;
+    width: 48px;
+    height: 48px;
+    color: #4B5563;
+    background: #F3F4F6;
     border: 0;
     border-radius: 50%;
-    background: #F3F4F6;
-    color: #4B5563;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
+
 .budget-modal-close svg {
     width: 32px;
     height: 32px;
@@ -105,42 +96,46 @@
 .budget-modal-content label {
     display: block;
     margin-bottom: 8px;
+    color: var(--text-muted);
     font-size: 13px;
     font-weight: 700;
-    color: var(--text-muted);
 }
+
 .budget-input-currency {
+    color: var(--brand-text);
     font-size: 14px;
     font-weight: 700;
-    color: var(--brand-text);
 }
+
 .budget-input-wrap {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 4px 16px;
     margin-bottom: 22px;
+    padding: 4px 16px;
+    background: #F9FAFB;
     border: 2px solid #0F766E; /* لون هوية البرنامج الأساسي */
     border-radius: 14px;
-    background: #F9FAFB;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* توهج خفيف ناعم بنفس هوية البرنامج */
 .budget-input-wrap:focus-within {
-    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.25); /* توهج خفيف ناعم بنفس هوية البرنامج */
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.25);
 }
 
 .budget-input-wrap input {
-    border: none;
-    outline: none;
-    box-shadow: none; /* إلغاء أي بوردر داخلي نهائياً */
-    -webkit-appearance: none;
-    background: transparent;
-    padding: 14px 0;
+    width: 100%;
     margin: 0;
+    padding: 14px 0;
     font-size: 20px;
     font-weight: 700;
-    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    /* إلغاء أي بوردر داخلي نهائياً */
+    box-shadow: none;
+    -webkit-appearance: none;
 }
 
 .budget-input-wrap input:focus {
@@ -152,16 +147,12 @@
 .budget-save-btn {
     width: 100%;
     padding: 15px;
-    
-    border: 0;
-    border-radius: 14px;
-    
-    background: #0F766E;
     color: #ffffff;
-    
     font-size: 15px;
     font-weight: 700;
-    
+    background: #0F766E;
+    border: 0;
+    border-radius: 14px;
     cursor: pointer;
 }
 

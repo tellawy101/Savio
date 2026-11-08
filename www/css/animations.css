@@ -1,8 +1,12 @@
 .page-enter {
     animation: pageEnter .4s cubic-bezier(.2, .8, .2, 1) backwards;
 }
+
 @keyframes pageEnter {
-    from { opacity: 0; transform: translateY(18px) scale(.985); }
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(.985);
+    }
 }
 
 .page-enter .settings-card,
@@ -13,23 +17,36 @@
 .page-enter .total-card {
     animation: cardIn .35s ease backwards;
 }
+
 .page-enter .settings-card:nth-child(2),
 .page-enter .stat-card:nth-child(2),
 .page-enter .statistics-card:nth-child(2),
 .page-enter .goal-card:nth-child(2),
-.page-enter .rec-card:nth-child(2) { animation-delay: .05s; }
+.page-enter .rec-card:nth-child(2) {
+    animation-delay: .05s;
+}
+
 .page-enter .settings-card:nth-child(3),
 .page-enter .stat-card:nth-child(3),
 .page-enter .statistics-card:nth-child(3),
 .page-enter .goal-card:nth-child(3),
-.page-enter .rec-card:nth-child(3) { animation-delay: .1s; }
+.page-enter .rec-card:nth-child(3) {
+    animation-delay: .1s;
+}
+
 .page-enter .settings-card:nth-child(n+4),
 .page-enter .stat-card:nth-child(n+4),
 .page-enter .statistics-card:nth-child(n+4),
 .page-enter .goal-card:nth-child(n+4),
-.page-enter .rec-card:nth-child(n+4) { animation-delay: .15s; }
+.page-enter .rec-card:nth-child(n+4) {
+    animation-delay: .15s;
+}
+
 @keyframes cardIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
 }
 
 button,
@@ -37,17 +54,20 @@ button,
 .settings-item {
     transition: scale .12s ease;
 }
+
 button:not(:disabled):active,
 .nav-item:active,
 .settings-item:active {
     scale: .96;
 }
+
 /* ضغطة الكروت */
 .account-card,
 .goal-card,
 .rec-card {
     transition: scale .12s ease;
 }
+
 .account-card:active,
 .goal-card:active,
 .rec-card:active {
@@ -59,20 +79,32 @@ button:not(:disabled):active,
 .page-enter .debt-card-wrapper {
     animation: cardIn .35s ease backwards;
 }
+
 .page-enter .account-card:nth-child(2),
-.page-enter .debt-card-wrapper:nth-child(2) { animation-delay: .05s; }
+.page-enter .debt-card-wrapper:nth-child(2) {
+    animation-delay: .05s;
+}
+
 .page-enter .account-card:nth-child(3),
-.page-enter .debt-card-wrapper:nth-child(3) { animation-delay: .1s; }
+.page-enter .debt-card-wrapper:nth-child(3) {
+    animation-delay: .1s;
+}
+
 .page-enter .account-card:nth-child(n+4),
-.page-enter .debt-card-wrapper:nth-child(n+4) { animation-delay: .15s; }
+.page-enter .debt-card-wrapper:nth-child(n+4) {
+    animation-delay: .15s;
+}
 
 /* امتلاء أشرطة التقدم */
 .page-enter .goal-progress-fill,
 .page-enter .period-bar span {
     animation: barGrow .7s cubic-bezier(.2, .8, .2, 1) .15s backwards;
 }
+
 @keyframes barGrow {
-    from { width: 0; }
+    from {
+        width: 0;
+    }
 }
 
 /* لمن النظام يطلب تقليل الحركة */
@@ -82,35 +114,45 @@ button:not(:disabled):active,
         animation: none !important;
     }
 }
+
 /* حذف معاملة بحركة */
 .expense-item.removing {
-    transition: max-height .24s ease, opacity .2s ease, margin .24s ease;
     max-height: 0 !important;
-    opacity: 0;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    opacity: 0;
+    transition: max-height .24s ease, opacity .2s ease, margin .24s ease;
 }
+
 /* علامة الصح بعد الحفظ */
 .save-tick {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 96px;
-    height: 96px;
-    margin: -48px 0 0 -48px;
     z-index: 100000;
-    pointer-events: none;
-    border-radius: 50%;
-    background: var(--surface);
-    box-shadow: 0 8px 28px rgba(0, 0, 0, .25);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 96px;
+    height: 96px;
+    margin: -48px 0 0 -48px;
+    background: var(--surface);
+    border-radius: 50%;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .25);
+    pointer-events: none;
     animation: saveTickPop .35s cubic-bezier(.2, 1.4, .4, 1) both;
     transition: opacity .3s ease;
 }
-.save-tick.hide { opacity: 0; }
-.save-tick svg { width: 64px; height: 64px; }
+
+.save-tick.hide {
+    opacity: 0;
+}
+
+.save-tick svg {
+    width: 64px;
+    height: 64px;
+}
+
 .save-tick-circle {
     fill: none;
     stroke: var(--brand);
@@ -119,6 +161,7 @@ button:not(:disabled):active,
     stroke-dashoffset: 151;
     animation: saveTickDraw .45s ease .05s forwards;
 }
+
 .save-tick-check {
     fill: none;
     stroke: var(--brand);
@@ -129,8 +172,19 @@ button:not(:disabled):active,
     stroke-dashoffset: 36;
     animation: saveTickDraw .3s ease .4s forwards;
 }
-@keyframes saveTickPop { from { transform: scale(.5); opacity: 0; } }
-@keyframes saveTickDraw { to { stroke-dashoffset: 0; } }
+
+@keyframes saveTickPop {
+    from {
+        transform: scale(.5);
+        opacity: 0;
+    }
+}
+
+@keyframes saveTickDraw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
 
 @media (prefers-reduced-motion: reduce) {
     .save-tick,
@@ -139,30 +193,59 @@ button:not(:disabled):active,
         stroke-dashoffset: 0 !important;
     }
 }
+
 /* ===== حركة وسلاسة إضافية ===== */
 
-html { scroll-behavior: smooth; }
-* { -webkit-tap-highlight-color: transparent; }
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
 
 /* ظهور المعاملات بالتتابع */
 #expenseList .expense-item {
     animation: itemIn .35s cubic-bezier(.2, .8, .2, 1) backwards;
 }
-#expenseList .expense-item:nth-child(2) { animation-delay: .04s; }
-#expenseList .expense-item:nth-child(3) { animation-delay: .08s; }
-#expenseList .expense-item:nth-child(4) { animation-delay: .12s; }
-#expenseList .expense-item:nth-child(5) { animation-delay: .16s; }
-#expenseList .expense-item:nth-child(n+6) { animation-delay: .2s; }
+
+#expenseList .expense-item:nth-child(2) {
+    animation-delay: .04s;
+}
+
+#expenseList .expense-item:nth-child(3) {
+    animation-delay: .08s;
+}
+
+#expenseList .expense-item:nth-child(4) {
+    animation-delay: .12s;
+}
+
+#expenseList .expense-item:nth-child(5) {
+    animation-delay: .16s;
+}
+
+#expenseList .expense-item:nth-child(n+6) {
+    animation-delay: .2s;
+}
+
 @keyframes itemIn {
-    from { opacity: 0; translate: 0 14px; }
+    from {
+        opacity: 0;
+        translate: 0 14px;
+    }
 }
 
 /* التوست ينزلق ويظهر بنعومة */
 #toast.show {
     animation: toastIn .3s cubic-bezier(.2, 1.2, .4, 1);
 }
+
 @keyframes toastIn {
-    from { opacity: 0; translate: 0 20px; }
+    from {
+        opacity: 0;
+        translate: 0 20px;
+    }
 }
 
 /* حركة ناعمة للكروت والصناديق */
@@ -181,7 +264,10 @@ body {
 
 /* تقليل الحركة لو النظام طالبها */
 @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
+    html {
+        scroll-behavior: auto;
+    }
+
     #expenseList .expense-item,
     #toast.show {
         animation: none !important;

@@ -10,38 +10,28 @@
 }
 
 #categoryIconDropdown .icon-dropdown-trigger {
-    width: 100%;
-    min-height: 64px;
-
     display: flex;
     align-items: center;
-
     gap: 12px;
-
+    width: 100%;
+    min-height: 64px;
     padding: 14px 16px;
-
-    border: 1px solid var(--border-color, #ddd);
-    border-radius: 14px;
-
-    background: var(--input-bg, var(--c-white));
-
     font-size: 16px;
     font-weight: 700;
-
+    background: var(--input-bg, var(--c-white));
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 14px;
     cursor: pointer;
 }
 
 #selectedCategoryIconPreviewWrap {
-    width: 38px;
-    height: 38px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    border-radius: 10px;
-
+    width: 38px;
+    height: 38px;
     background: #f1f5f5;
+    border-radius: 10px;
 }
 
 #selectedCategoryIconPreviewWrap svg {
@@ -67,7 +57,7 @@
     top: 0;
     z-index: var(--z-raised);
     padding: 8px;
-        background: var(--input-bg, var(--c-white));
+    background: var(--input-bg, var(--c-white));
     border-bottom: 1px solid var(--border-color, #eee);
 }
 
@@ -75,45 +65,46 @@
     width: 100%;
     box-sizing: border-box;
     padding: 10px 12px;
-    border: 1px solid var(--border-color, #ddd);
-    border-radius: 10px;
+    color: inherit;
     font-size: 14px;
     background: var(--card-bg, #f7f7f7);
-    color: inherit;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 10px;
     outline: none;
 }
+
 .icon-search-input:focus {
     border-color: var(--brand);
 }
 
 .icon-option-custom {
-    border-top: 1px dashed var(--border-color, #ddd);
-    font-style: italic;
     color: var(--brand-color, var(--brand));
+    font-style: italic;
+    border-top: 1px dashed var(--border-color, #ddd);
 }
 
 .dark .icon-search-wrap {
-        background: var(--dk-field-deep);
+    background: var(--dk-field-deep);
     border-bottom-color: #333;
 }
 
 .dark .icon-search-input {
+    color: #fff;
     background: #1a1a1a;
     border-color: #333;
-    color: #fff;
 }
 
 .dark #categoryIconDropdown .icon-dropdown-trigger {
+    color: #fff;
     background: var(--dk-field-deep);
     border-color: #333;
-    color: #fff;
 }
 
 .dark #selectedCategoryIconPreviewWrap {
     background: #333;
 }
+
 body.dark .save-btn i,
 body.dark .save-btn svg {
     stroke: #0F766E !important;
 }
-
