@@ -27,10 +27,6 @@
     color: var(--text);
 }
 
-#goalModal .budget-save-btn {
-    margin-top: 6px;
-}
-
 body.dark .goal-field input {
     border-color: #3d3d3d;
 }
@@ -283,7 +279,9 @@ body.dark #goalModal .goal-field input:focus {
 }
 
 /* زرار الحفظ */
-#goalModal .budget-save-btn {
+#goalModal .budget-save-btn,
+#catBudgetModal .budget-save-btn,
+#recurringModal .budget-save-btn {
     height: 48px;
     margin-top: 16px;
     padding: 0;
@@ -380,16 +378,4 @@ body.dark #catBudgetModal .cb-picker-item {
 body.dark #catBudgetModal .goal-field input:focus,
 body.dark #catBudgetModal .cb-picker.open .cb-picker-btn {
     border-color: var(--brand-text) !important;
-}
-
-/* زرار الحفظ */
-#catBudgetModal .budget-save-btn {
-    height: 48px;
-    margin-top: 16px;
-    padding: 0;
-    border-radius: var(--r-btn);
-    font-size: var(--fs-button);
-    font-weight: var(--fw-button);
-    background: var(--btn-bg);
-    color: var(--btn-text);
 }

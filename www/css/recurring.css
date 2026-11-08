@@ -112,10 +112,6 @@
     color: var(--danger);
 }
 
-#recurringModal .budget-save-btn {
-    margin-top: 6px;
-}
-
 .goal-field .select-sheet-trigger {
     height: 48px;
     padding: 0 14px;
@@ -197,17 +193,6 @@ body.dark #recurringModal .goal-field input:focus {
     text-align: right;
 }
 
-/* زرار الحفظ */
-#recurringModal .budget-save-btn {
-    height: 48px;
-    margin-top: 16px;
-    padding: 0;
-    border-radius: var(--r-btn);
-    font-size: var(--fs-button);
-    font-weight: var(--fw-button);
-    background: var(--btn-bg);
-    color: var(--btn-text);
-}
 /* ===== Polish 1: الهيكل والمسافات ===== */
 #recurringModal .modal-content {
     max-height: 92vh;
