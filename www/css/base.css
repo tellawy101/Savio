@@ -178,6 +178,10 @@ body {
     background: var(--bg);
     color: var(--text);
 }
+html,
+body {
+    overscroll-behavior: none;
+}
 body.capacitor-app {
     padding-top: env(safe-area-inset-top, 0px);
 }
