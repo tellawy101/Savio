@@ -39,5 +39,5 @@
 
     document.addEventListener("focusin", remember);
     document.addEventListener("focusout", remember);
-    window.addEventListener("resize", smooth);
+    // window.addEventListener("resize", smooth);
 })();

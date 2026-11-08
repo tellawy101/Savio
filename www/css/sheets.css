@@ -118,8 +118,13 @@ body.dark .select-sheet-trigger:not(.filter-select) {
     transition: transform .3s cubic-bezier(.2, .8, .2, 1);
 }
 
-.select-sheet.show .modal-content { transform: translateY(0); }
-
+.select-sheet .modal-content,
+.select-sheet-list {
+    overscroll-behavior: none;
+}
+.select-sheet .modal-content {
+    overflow-y: hidden;
+}
 .select-sheet-list {
     display: flex;
     flex-direction: column;
