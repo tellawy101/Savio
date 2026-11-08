@@ -13,7 +13,10 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(AppExitPlugin.class);
         
         super.onCreate(savedInstanceState);
-
+        // قفل تأثير التمطيط (Overscroll) في أندرويد
+        if (bridge != null && bridge.getWebView() != null) {
+            bridge.getWebView().setOverScrollMode(View.OVER_SCROLL_NEVER);
+        }
         // اعتراض زر الرجوع ومنع الـ WebView من عمل goBack تلقائي
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
