@@ -35,7 +35,7 @@ function initHomeMonthFilter(expenseList, renderExpenses) {
     if (!window.homeRange) setPreset("this_month");
 
     function monthName(y, m) {
-        return new Date(y, m - 1, 1).toLocaleDateString(getLanguage() === "ar" ? "ar-EG" : "en-US", { month: "long" });
+        return new Date(y, m - 1, 1).toLocaleDateString(getLanguage() === "ar" ? "ar-EG" : "en-US", { month: getLanguage() === "ar" ? "long" : "short" });
     }
 
     function formatDay(dateStr, withYear) {

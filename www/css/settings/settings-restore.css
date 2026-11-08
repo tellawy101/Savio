@@ -247,6 +247,14 @@ body.dark .restore-option-check::after {
     white-space: nowrap;
     margin: 0;
 }
+.goals-header .sub-title-row > div {
+    max-width: calc(100% - 112px);
+}
+.goals-header .sub-title-row h3 {
+    font-size: clamp(16px, 5vw, 22px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 /* سهم الرجوع واضح في الوضع الفاتح */
 body:not(.dark) .sub-page-header .back-btn,
 body:not(.dark) .sub-title-row .back-btn {
