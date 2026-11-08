@@ -290,6 +290,23 @@ button:hover {
     overflow-y: auto;
 }
 
+/* مقبض السحب */
+#addAccountModal .modal-content::before,
+#addCategoryModal .modal-content::before,
+#goalModal .modal-content::before,
+#catBudgetModal .modal-content::before,
+#recurringModal .modal-content::before,
+:is(#debtModal, #editDebtModal) .modal-content::before,
+#payDebtModal .modal-content::before,
+#paymentsHistoryModal .modal-content::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 14px;
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.4);
+}
 .modal-content h2 {
     margin-top: 0;
     color: #0F766E;

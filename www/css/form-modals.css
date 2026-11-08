@@ -404,17 +404,6 @@ body.add-transaction-page #addCategoryModal .modal-page-back {
     padding-top: 12px;
 }
 
-/* مقبض السحب */
-#addAccountModal .modal-content::before {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 4px;
-    margin: 0 auto 14px;
-    border-radius: 999px;
-    background: rgba(128, 128, 128, 0.4);
-}
-
 /* العنوان */
 #addAccountModal .modal-content > h2 {
     display: block !important;
@@ -570,16 +559,6 @@ body.dark #addAccountModal .icon-dropdown-trigger {
 ============================== */
 #addCategoryModal .modal-content {
     padding-top: 12px;
-}
-
-#addCategoryModal .modal-content::before {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 4px;
-    margin: 0 auto 14px;
-    border-radius: 999px;
-    background: rgba(128, 128, 128, 0.4);
 }
 
 #addCategoryModal .modal-content > h2 {

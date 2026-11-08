@@ -132,16 +132,6 @@ body.dark .payment-delete-btn {
     padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px));
 }
 
-#paymentsHistoryModal .modal-content::before {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 4px;
-    margin: 0 auto 14px;
-    background: rgba(128, 128, 128, 0.4);
-    border-radius: 999px;
-}
-
 #paymentsHistoryModal h2 {
     margin: 0 0 8px;
     color: var(--text);

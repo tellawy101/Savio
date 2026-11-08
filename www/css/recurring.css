@@ -133,17 +133,6 @@
     overflow-y: auto;
 }
 
-/* مقبض السحب */
-#recurringModal .modal-content::before {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 4px;
-    margin: 0 auto 14px;
-    border-radius: 999px;
-    background: rgba(128, 128, 128, 0.4);
-}
-
 /* العنوان في النص من غير أيقونة ولا X */
 #recurringModal .budget-modal-header {
     justify-content: center;

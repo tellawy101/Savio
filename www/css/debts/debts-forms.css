@@ -290,17 +290,6 @@ body:not(.dark):has(.goals-header) {
     overflow-y: auto;
 }
 
-/* مقبض السحب */
-:is(#debtModal, #editDebtModal) .modal-content::before {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 4px;
-    margin: 0 auto 14px;
-    border-radius: 999px;
-    background: rgba(128, 128, 128, 0.4);
-}
-
 /* الهيدر */
 :is(#debtModal, #editDebtModal) .budget-modal-header {
     gap: 10px;
@@ -438,17 +427,6 @@ body.dark :is(#debtModal, #editDebtModal) :is(.budget-save-btn, #saveEditDebtBtn
     padding: 12px 20px calc(20px + env(safe-area-inset-bottom, 0px));
     max-height: 92vh;
     overflow-y: auto;
-}
-
-/* مقبض السحب */
-#payDebtModal .modal-content::before {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 4px;
-    margin: 0 auto 14px;
-    border-radius: 999px;
-    background: rgba(128, 128, 128, 0.4);
 }
 
 #payDebtModal h2 {
