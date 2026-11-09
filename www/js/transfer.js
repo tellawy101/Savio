@@ -162,7 +162,7 @@ showToast(t("missing_prefix") + missing);
         return;
     }
 
-    const amount = Number(transferAmount.value.replace(/,/g, ""));
+    const amount = parseAmount(transferAmount.value);
     const fromAccount = transferFromAccount.textContent.trim();
     const toAccount = transferToAccount.textContent.trim();
         const fromAccountId = transferFromAccount.dataset.id || getAccountIdByName(fromAccount);
@@ -219,7 +219,7 @@ showToast(t("missing_prefix") + missing);
 
     transactions.push(fromEntry, toEntry);
 
-if (!saveTransactions(transaction!= s)) return;
+if (!saveTransactions(transactions)) return;
 navigateTo("home");
 };
 

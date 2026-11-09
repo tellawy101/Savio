@@ -157,8 +157,11 @@ if (saveGoalBtn) {
         saveGoalBtn.onclick = async function () {
 
             const name = goalNameInput ? goalNameInput.value.trim() : "";
-                        const target = goalTargetInput ? Number(goalTargetInput.value.replace(/,/g, "")) : 0;
-            const current = goalCurrentInput ? Number(goalCurrentInput.value.replace(/,/g, "")) || 0 : 0;
+
+           const target = goalTargetInput ? parseAmount(goalTargetInput.value) : 0;
+                        
+            const current = goalCurrentInput ? parseAmount(goalCurrentInput.value) || 0 : 0;
+            
             const date = goalDateInput ? goalDateInput.value : "";
 
             if (name === "") {
@@ -250,7 +253,7 @@ const deleteBtn = e.target.closest(".goal-delete-btn");
     if (confirmGoalMoneyBtn) {
         confirmGoalMoneyBtn.onclick = async function () {
 
-const amount = goalMoneyAmountInput ? Number(goalMoneyAmountInput.value.replace(/,/g, "")) : 0;
+const amount = goalMoneyAmountInput ? parseAmount(goalMoneyAmountInput.value) : 0;
 
             if (!amount || amount <= 0) {
                                 await customAlert(t("enter_valid_amount_alert"));

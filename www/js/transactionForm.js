@@ -27,7 +27,7 @@ setupCommonFormPage();
         setTimeout(() => amountEl.focus(), 300);
     }
     function getMissingField() {
-        const amount = Number(amountEl.value.replace(/,/g, ""));
+        const amount = parseAmount(amountEl.value);
         const account = accountEl.textContent.trim();
         const category = categoryEl.textContent.trim();
         const date = dateEl.value;
@@ -114,7 +114,7 @@ showToast(t("missing_prefix") + missing);
 
         let transactions = loadTransactions();
         const entryData = {
-            amount: Number(amountEl.value.replace(/,/g, "")),
+            amount: parseAmount(amountEl.value),
                         account: accountEl.textContent.trim(),
                 accountId: accountEl.dataset.id || getAccountIdByName(accountEl.textContent.trim()),
                 description: descriptionEl.value.trim(),

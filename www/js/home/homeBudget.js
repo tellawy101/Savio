@@ -77,7 +77,7 @@ const overText = t("budget_over");
 
     if (saveBudgetBtn && budgetAmountInput) {
     saveBudgetBtn.onclick = async function() {
-                const amt = Number(budgetAmountInput.value.replace(/,/g, ""));
+                const amt = parseAmount(budgetAmountInput.value);
                 
                 if (!amt || amt <= 0) {
                                         await customAlert(t("enter_valid_amount_alert"));

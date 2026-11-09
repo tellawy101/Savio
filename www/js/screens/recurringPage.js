@@ -103,10 +103,6 @@ function initRecurringPage() {
     // ------------------------------
     // عرض القائمة
     // ------------------------------
-    function readAmount() {
-        return Number(normalizeDigits(amountInput.value).replace(/,/g, "")) || 0;
-    }
-
     function renderRecurring() {
         if (!listEl) return;
 
@@ -211,7 +207,7 @@ function initRecurringPage() {
     // ------------------------------
     if (saveBtn) {
         saveBtn.onclick = function () {
-            const amount = readAmount();
+            const amount = parseAmount(amountInput.value) || 0;
             const account = getAccounts().find(function (a) {
                 return a.id === accountSelect.value;
             });

@@ -5,5 +5,5 @@
 
 // بتقرا المبلغ وتحوّل الأرقام العربية والفواصل لرقم عادي
 function readAmount(input) {
-    return Number(normalizeDigits(input.value).replace(/,/g, ""));
+    return parseAmount(input.value);
 }

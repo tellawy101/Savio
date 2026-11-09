@@ -66,7 +66,7 @@ function startOnboarding() {
     }
 
     function toNumber(value) {
-        return Number(String(value).replace(/,/g, "")) || 0;
+        return parseAmount(value) || 0;
     }
 
     function render() {

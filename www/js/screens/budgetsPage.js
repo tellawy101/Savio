@@ -193,7 +193,7 @@ pickerText.textContent = item.textContent;
         saveCatBudgetBtn.onclick = async function () {
 
             const category = catBudgetCategory ? catBudgetCategory.value : "";
-            const amount = catBudgetAmount ? Number(catBudgetAmount.value.replace(/,/g, "")) : 0;
+            const amount = catBudgetAmount ? parseAmount(catBudgetAmount.value) : 0;
 
             if (!category) {
                 await customAlert(t("cb_select_category"));

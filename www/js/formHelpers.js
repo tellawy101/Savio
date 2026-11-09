@@ -45,6 +45,16 @@ function normalizeDigits(str) {
         .replace(/[−–—]/g, "-");
 }
 
+// بتحوّل قيمة الحقل (أرقام عربية أو فواصل) لرقم
+function parseAmount(value) {
+    return Number(normalizeDigits(value).replace(/,/g, ""));
+}
+
+// بتحوّل قيمة الحقل (أرقام عربية أو فواصل) لرقم
+function parseAmount(value) {
+    return Number(normalizeDigits(value).replace(/,/g, ""));
+}
+
 // بتنظّف النص وتنسّقه: أرقام + كسر لحد خانتين + (اختياري) سالب + فواصل آلاف
 function formatNumberText(raw, allowNegative) {
     let s = normalizeDigits(raw).replace(/,/g, "");
