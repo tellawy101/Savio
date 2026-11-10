@@ -75,15 +75,13 @@ body.capacitor-app main {
     height: 65px;
     margin: 0;
     padding: 0;
-    color: #0F766E;
+    color: #ffffff;
     font-size: 30px;
     font-weight: bold;
-    background: rgba(255, 255, 255, .75);
-    border: 1px solid rgba(255, 255, 255, .9);
+    background: #0F766E;
+    border: 4px solid #ffffff;
     border-radius: 50%;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, .12);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 8px 24px rgba(15, 118, 110, .35);
     transition: .3s;
 }
 
@@ -109,27 +107,26 @@ body.capacitor-app main {
 @keyframes fabPulse {
     0% {
         box-shadow:
-            0 8px 30px rgba(0, 0, 0, .12),
+            0 8px 24px rgba(15, 118, 110, .35),
             0 0 0 0 rgba(15, 118, 110, .35);
     }
-
+    
     70% {
         box-shadow:
-            0 8px 30px rgba(0, 0, 0, .12),
+            0 8px 24px rgba(15, 118, 110, .35),
             0 0 0 16px rgba(15, 118, 110, 0);
     }
-
+    
     100% {
         box-shadow:
-            0 8px 30px rgba(0, 0, 0, .12),
+            0 8px 24px rgba(15, 118, 110, .35),
             0 0 0 0 rgba(15, 118, 110, 0);
     }
 }
-
 .fab-nav {
     animation:
-        fabFloat 3s ease-in-out infinite,
-        fabPulse 2.4s ease-out infinite;
+        fabFloat 3s ease-in-out 3,
+        fabPulse 2.4s ease-out 3;
 }
 
 .fab-nav.open {

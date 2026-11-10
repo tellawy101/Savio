@@ -307,6 +307,26 @@ button:hover {
     border-radius: 999px;
     background: rgba(128, 128, 128, 0.4);
 }
+
+/* أنيميشن الشيتس: بتطلع من تحت وتنزل لتحت */
+:is(
+    #customConfirmModal, #goalModal, #goalMoneyModal, #catBudgetModal, #incomeModal,
+    #exportFallbackModal, #importManualModal, #restorePreviewModal, #currencyPickerModal,
+    #aboutModal, #privacyModal, #budgetModal, #categoryModal, #addCategoryModal,
+    #addAccountModal, #accountModal, #accountMenu, #categoryMenu, #dataModal,
+    #debtModal, #payDebtModal, #editDebtModal, #paymentsHistoryModal
+):not(.show) .modal-content {
+    transform: translateY(100%);
+    opacity: 1;
+    transition: transform .25s cubic-bezier(.2, .8, .2, 1), opacity .25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-content {
+        transition: none !important;
+    }
+}
+
 .modal-content h2 {
     margin-top: 0;
     color: #0F766E;

@@ -190,8 +190,8 @@ body.dark .restore-option-check::after {
     box-sizing: border-box;
     border-radius: 24px 24px 0 0;
     padding: 14px 16px calc(20px + env(safe-area-inset-bottom, 16px));
-    animation: slideUpSheet .25s ease;
 }
+
 .data-sheet-handle {
     width: 40px;
     height: 4px;
