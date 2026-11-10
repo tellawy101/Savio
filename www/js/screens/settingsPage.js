@@ -17,7 +17,32 @@ function initSettingsPage() {
 }
 
 setupVersionTexts();
-    
+        // عدد معاملات المستخدم (التحويل بيتحسب مرة واحدة)
+    function setupTransactionCount() {
+        let el = document.getElementById("txCountText");
+        
+        // لو القالب القديم لسه في الكاش، نعمل العنصر بالكود
+        if (!el) {
+            const box = document.querySelector(".app-version");
+            if (!box) return;
+            el = document.createElement("small");
+            el.id = "txCountText";
+            box.appendChild(el);
+        }
+
+        const transferIds = new Set();
+        let count = 0;
+
+        loadTransactions().forEach(function (tx) {
+            if (tx.isTransfer) transferIds.add(tx.transferId);
+            else count++;
+        });
+
+        count += transferIds.size;
+        el.textContent = t("settings_tx_count").replace("{n}", count);
+    }
+
+    setupTransactionCount();
     function setupSharedModals() {
     const modalsPlaceholder = document.getElementById("modals-placeholder");
 if (modalsPlaceholder) {
@@ -121,7 +146,10 @@ setupPicker({
     modalId: "languagePickerModal",
     closeBtnId: "closeLanguagePickerBtn",
     getValue: getLanguage,
-    setValue: setLanguage,
+    setValue: function(lang) {
+        setLanguage(lang);
+        setupTransactionCount();
+    },
     getLabelText: function(value) {
         return value === "ar" ? "العربية" : "English";
     }
