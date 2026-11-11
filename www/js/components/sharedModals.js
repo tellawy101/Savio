@@ -113,6 +113,10 @@ function renderSharedModals() {
         <div class="modal-content">
                  <button type="button" class="back-btn modal-page-back">←</button>   
             <h2 data-i18n="categories_title">Categories</h2>
+            <div class="category-search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="categorySearchInput" class="category-search-input" placeholder="Search categories..." data-i18n-placeholder="category_search_placeholder" autocomplete="off">
+            </div>
             <div id="categoriesList"></div>
             <button id="addCategoryBtn" data-i18n="add_category_btn">
                 + Add Category
@@ -172,7 +176,11 @@ function renderSharedModals() {
             type="hidden"
             id="newCategoryIcon"
             value="tag">
-
+        <div class="color-picker-section">
+            <div class="color-picker-label" data-i18n="category_color_label">Color</div>
+            <div id="categoryColorPicker" class="color-swatches"></div>
+            <input type="hidden" id="newCategoryColor" value="">
+        </div>
         <button
             id="saveCategoryBtn"
             class="account-save-btn"
@@ -194,6 +202,7 @@ function renderSharedModals() {
     <div id="categoryMenu" class="modal">
         <div class="modal-content">
             <button id="editCategoryBtn"><i data-lucide="pencil"></i> <span data-i18n="menu_edit">Edit</span></button>
+            
             <button id="deleteCategoryBtn"><i data-lucide="trash-2"></i> <span data-i18n="menu_delete">Delete</span></button>
         </div>
     </div>

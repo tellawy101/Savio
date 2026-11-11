@@ -58,11 +58,21 @@ function getAccountIconById(id, fallbackName) {
     const acc = (id && lookup.byId.get(id)) || (fallbackName && lookup.byName.get(fallbackName)) || null;
     return acc && acc.icon ? acc.icon : "";
 }
-
+function getCategoryById(id) {
+    return id ? (getLookup(CATEGORIES_KEY, getCategories).byId.get(id) || null) : null;
+}
 function getCategoryNameById(id, fallback) {
     const cat = id ? getLookup(CATEGORIES_KEY, getCategories).byId.get(id) : null;
     return cat ? cat.name : (fallback || "");
 }
+
+// اسم التصنيف كامل: "رئيسي › فرعي" للفرعي، واسمه بس للرئيسي
+function getCategoryFullName(category) {
+    if (!category) return "";
+    const parent = typeof getParentCategory === "function" ? getParentCategory(category) : null;
+    return parent ? parent.name + " › " + category.name : category.name;
+}
+
 function getTxAccountName(tx) {
     return getAccountNameById(tx.accountId, tx.account);
 }
@@ -75,5 +85,6 @@ function getTxCategoryName(tx) {
     if (!tx.categoryId && tx.category === "Debt Payment") {
         return t("debts_category_payment");
     }
-    return getCategoryNameById(tx.categoryId, tx.category);
+    const cat = getCategoryById(tx.categoryId);
+    return cat ? getCategoryFullName(cat) : (tx.category || "");
 }

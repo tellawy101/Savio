@@ -24,6 +24,7 @@ function ensureAccountAndCategoryIds() {
     });
     if (categoriesChanged) saveCategories(categories);
 }
+
 function migrateDataToIds() {
     const failuresBefore = storageWriteFailures;
     ensureAccountAndCategoryIds();
@@ -95,4 +96,74 @@ function migrateDataToIds() {
     if (storageWriteFailures === failuresBefore) {
         safeSetItem("savioIdMigrationDone", "1");
     }
+}
+    // ==============================
+// ترحيل التصنيفات القديمة لنظام الأنواع (income / expense)
+// ==============================
+function migrateCategoryTypes() {
+    if (localStorage.getItem("savioCategoryTypesDone") === "1") return;
+    const failuresBefore = storageWriteFailures;
+
+    const categories = getCategories();
+    const transactions = loadTransactions();
+    const recurring = getRecurring();
+    let transactionsChanged = false;
+    let recurringChanged = false;
+
+    // نوع الاستخدام لكل تصنيف (دخل / مصروف)
+    const usage = {};
+    function markUsage(id, type) {
+        if (!id) return;
+        usage[id] = usage[id] || {};
+        usage[id][type] = true;
     }
+    transactions.forEach(function (tx) {
+        if (!tx.isTransfer) markUsage(tx.categoryId, tx.type);
+    });
+    recurring.forEach(function (item) {
+        markUsage(item.categoryId, item.type);
+    });
+
+    const clones = [];
+    let categoriesChanged = false;
+    categories.forEach(function (category) {
+        if (CATEGORY_TYPES.includes(category.type)) return;
+        const used = usage[category.id] || {};
+        categoriesChanged = true;
+
+        if (used.income && !used.expense) {
+            category.type = "income";
+            return;
+        }
+        category.type = "expense";
+
+        // التصنيف مستخدم في الدخل والمصروف: بنعمله نسخة للدخل وننقل معاملات الدخل عليها
+        if (used.income && used.expense) {
+            const clone = { id: generateId("cat"), name: category.name, icon: category.icon, type: "income" };
+            clones.push(clone);
+            transactions.forEach(function (tx) {
+                if (!tx.isTransfer && tx.categoryId === category.id && tx.type === "income") {
+                    tx.categoryId = clone.id;
+                    transactionsChanged = true;
+                }
+            });
+            recurring.forEach(function (item) {
+                if (item.categoryId === category.id && item.type === "income") {
+                    item.categoryId = clone.id;
+                    recurringChanged = true;
+                }
+            });
+        }
+    });
+
+    clones.forEach(function (clone) { categories.push(clone); });
+
+    if (categoriesChanged) saveCategories(categories);
+    if (transactionsChanged) saveTransactions(transactions);
+    if (recurringChanged) saveRecurring(recurring);
+
+    // العلامة بتتحط بس لو كل الكتابات نجحت
+    if (storageWriteFailures === failuresBefore) {
+        safeSetItem("savioCategoryTypesDone", "1");
+    }
+}

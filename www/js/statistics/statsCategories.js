@@ -4,6 +4,15 @@
 // ==============================================================
 
 const STATS_CATEGORY_COLORS = ["#F97316", "#3B82F6", "#EC4899", "#10B981", "#8B5CF6", "#F59E0B", "#06B6D4", "#E11D48", "#84CC16", "#6366F1", "#14B8A6", "#D946EF", "#EAB308", "#0EA5E9", "#A855F7", "#F43F5E", "#22C55E", "#FB923C", "#2DD4BF", "#78716C"];
+
+function getStatsCategoryColor(name, index) {
+    const cat = getCategories().find(function (c) {
+        return c.name === name && getCategoryType(c) === "expense";
+    });
+    if (cat) return getCategoryColor(cat);
+    return STATS_CATEGORY_COLORS[index % STATS_CATEGORY_COLORS.length];
+}
+
 // مدخلات: تقسيم الفئات + الرسم القديم ← مخرجات: الرسم الجديد (أو القديم لو الـ canvas مش موجود)
 function renderCategoryPie(breakdown, oldChart) {
     const canvas = document.getElementById("categoryPieChart");
@@ -29,7 +38,7 @@ function renderCategoryPie(breakdown, oldChart) {
             labels: breakdown.map(item => item.category),
             datasets: [{
                 data: breakdown.map(item => item.amount),
-                backgroundColor: breakdown.map((item, i) => STATS_CATEGORY_COLORS[i % STATS_CATEGORY_COLORS.length]),
+backgroundColor: breakdown.map((item, i) => getStatsCategoryColor(item.category, i)),
                 borderWidth: 0
             }]
         },
@@ -75,8 +84,8 @@ getCategories().forEach(function(c) { iconByName[c.name] = c.icon; });
             <div class="category-top">
 
                 <span class="category-name">
-                    <span class="category-dot" style="background: ${STATS_CATEGORY_COLORS[index % STATS_CATEGORY_COLORS.length]}"></span>
-                <i data-lucide="${escapeHTML(iconByName[category] || 'tag')}" style="width:16px;height:16px;color:${STATS_CATEGORY_COLORS[index % STATS_CATEGORY_COLORS.length]}"></i>    ${escapeHTML(category)}
+<span class="category-dot" style="background: ${getStatsCategoryColor(category, index)}"></span>
+<i data-lucide="${escapeHTML(iconByName[category] || 'tag')}" style="width:16px;height:16px;color:${getStatsCategoryColor(category, index)}"></i>    ${escapeHTML(category)}
                 </span>
 
                 <span class="category-amount">
@@ -86,7 +95,7 @@ getCategories().forEach(function(c) { iconByName[c.name] = c.icon; });
             </div>
 
             <div class="category-progress">
-                <div class="category-progress-fill" style="width: ${percentage}%; background: ${STATS_CATEGORY_COLORS[index % STATS_CATEGORY_COLORS.length]}"></div>
+<div class="category-progress-fill" style="width: ${percentage}%; background: ${getStatsCategoryColor(category, index)}"></div>
             </div>
 
         </div>

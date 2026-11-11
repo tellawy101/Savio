@@ -4,9 +4,9 @@
 // ==============================
 
 // شكل الكارت في ليستة الحسابات/التصنيفات (Icon + Title + Arrow)
-function renderListItemHTML(icon, name, extraHTML) {
+function renderListItemHTML(icon, name, extraHTML, color) {
     return `
-   <div class="account-item-icon"><i data-lucide="${escapeHTML(icon)}"></i></div>
+   <div class="account-item-icon"${color ? ` style="${categoryIconStyle(color)}"` : ""}><i data-lucide="${escapeHTML(icon)}"></i></div>
     <div class="account-info">
         <div class="account-name">${escapeHTML(name)}</div>
         ${extraHTML || ""}
@@ -31,7 +31,11 @@ function createTransactionElement(expense, options = {}) {
     } else if (expense.categoryIcon) {
         iconHTML = `<i data-lucide="${escapeHTML(getTxCategoryIcon(expense))}"></i>`;
     }
-
+    let iconStyleAttr = "";
+    if (!isTransfer && expense.categoryIcon) {
+        const txCat = getCategoryById(getTxCategoryId(expense));
+        iconStyleAttr = ` style="${categoryIconStyle(getCategoryColor(txCat || { name: expense.category }))}"`;
+    }
     // تحديد الإشارة والمبلغ
     let sign = "-";
     let amountClass = "expense-amount-negative";
@@ -63,7 +67,7 @@ function createTransactionElement(expense, options = {}) {
             <i data-lucide="pencil"></i>
         </div>
         <div class="expense-main">
-            <div class="expense-icon-box ${isIncome ? 'income' : (isTransfer ? 'transfer' : 'expense')}">
+<div class="expense-icon-box ${isIncome ? 'income' : (isTransfer ? 'transfer' : 'expense')}"${iconStyleAttr}>
                 ${iconHTML}
             </div>
             <div class="expense-info">

@@ -28,16 +28,18 @@ function calculateSummary(transactions) {
 function calculateCategoryBreakdown(transactions) {
     const categories = {};
     const catNameById = {};
+    const catParentById = {};
     getCategories().forEach(function (c) {
         catNameById[c.id] = c.name;
+        if (c.parentId) catParentById[c.id] = c.parentId;
     });
-
     transactions.forEach((transaction) => {
         if (transaction.type !== "expense" || transaction.isTransfer === true) return;
-        const knownName = transaction.categoryId && catNameById[transaction.categoryId];
+                const mainId = transaction.categoryId && (catParentById[transaction.categoryId] || transaction.categoryId);
+        const knownName = mainId && catNameById[mainId];
         const legacyName = transaction.category === "Debt Payment" ? t("debts_category_payment") : transaction.category;
         const name = knownName || legacyName || t("stats_category_other");
-        const key = knownName ? "id:" + transaction.categoryId : "name:" + name;
+        const key = knownName ? "id:" + mainId : "name:" + name;
         const amount = Number(transaction.amount) || 0;
         if (!categories[key]) categories[key] = { name, amount: 0 };
         categories[key].amount += amount;

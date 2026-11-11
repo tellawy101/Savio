@@ -34,7 +34,9 @@ function initBudgetsPage() {
                     if (!tx.date) return;
                     if (!isDateInCurrentMonth(tx.date)) return;
 
-const category = tx.categoryId || getCategoryIdByName(tx.category) || tx.category || "Other";
+const ownId = tx.categoryId || getCategoryIdByName(tx.category);
+const parentCat = ownId ? getParentCategory(getCategoryById(ownId)) : null;
+const category = (parentCat ? parentCat.id : ownId) || tx.category || "Other";
             spent[category] = (spent[category] || 0) + (Number(tx.amount) || 0);
         });
 
@@ -143,7 +145,7 @@ delete budgets[id];
         const budgets = getCategoryBudgets();
         
         const available = getCategories().filter(function(c) {
-return !(c.id in budgets);
+            return getCategoryType(c) === "expense" && !isSubCategory(c) && !(c.id in budgets);
         });
         
         catBudgetCategory.value = "";

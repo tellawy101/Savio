@@ -97,6 +97,7 @@ if (entry.category) {
     const categoryIconEl = document.getElementById(type + "CategoryIcon");
     if (categoryIconEl && entry.categoryIcon) {
         categoryIconEl.innerHTML = `<i data-lucide="${escapeHTML(getTxCategoryIcon(entry))}"></i>`;
+                categoryIconEl.style.cssText = categoryIconStyle(getCategoryColor(getCategoryById(getTxCategoryId(entry)) || { name: entry.category }));
     }
 }
 if (window.lucide) lucide.createIcons();
@@ -113,12 +114,13 @@ showToast(t("missing_prefix") + missing);
         }
 
         let transactions = loadTransactions();
+                const selectedCat = categoryEl.dataset.id ? getCategoryById(categoryEl.dataset.id) : null;
         const entryData = {
             amount: parseAmount(amountEl.value),
                         account: accountEl.textContent.trim(),
                 accountId: accountEl.dataset.id || getAccountIdByName(accountEl.textContent.trim()),
                 description: descriptionEl.value.trim(),
-                category: categoryEl.textContent.trim(),
+category: selectedCat ? selectedCat.name : categoryEl.textContent.trim(),
                 categoryId: categoryEl.dataset.id || getCategoryIdByName(categoryEl.textContent.trim()),
             categoryIcon: categoryEl.dataset.icon || "tag",
             type: type,
@@ -198,12 +200,13 @@ if (!saveTransactions(transactions)) {
         
         const cat = lastCatId && getCategories().find(c => c.id === lastCatId);
         if (cat) {
-            categoryEl.textContent = cat.name;
+categoryEl.textContent = getCategoryFullName(cat);
             categoryEl.dataset.icon = cat.icon;
             categoryEl.dataset.id = cat.id;
             categoryEl.removeAttribute("data-i18n");
             const catIconEl = document.getElementById(type + "CategoryIcon");
             if (catIconEl) catIconEl.innerHTML = `<i data-lucide="${escapeHTML(cat.icon)}"></i>`;
+            if (catIconEl) catIconEl.style.cssText = categoryIconStyle(getCategoryColor(cat));
         }
         
         if (window.lucide) lucide.createIcons();

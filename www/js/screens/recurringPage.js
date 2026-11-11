@@ -68,7 +68,7 @@ function initRecurringPage() {
         fillSelect(accountSelect, accountOptions, accountId);
 
         const categoryOptions = [{ value: "", label: t("select_category") }];
-        getCategories().forEach(function (cat) {
+getCategoriesByType(typeSelect.value === "income" ? "income" : "expense").forEach(function (cat) {
             categoryOptions.push({ value: cat.id, label: cat.name });
         });
         fillSelect(categorySelect, categoryOptions, categoryId);
@@ -77,6 +77,9 @@ function initRecurringPage() {
     fillStaticSelects();
     fillAccountAndCategory("", "");
     makeSelectSheet(typeSelect, t("recurring_type"));
+        typeSelect.addEventListener("change", function () {
+        fillAccountAndCategory(accountSelect.value, "");
+    });
     makeSelectSheet(accountSelect, t("select_account"));
     makeSelectSheet(categorySelect, t("select_category"));
     makeSelectSheet(frequencySelect, t("recurring_frequency"));

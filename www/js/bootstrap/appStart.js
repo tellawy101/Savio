@@ -4,7 +4,7 @@
 // ==============================================================
 document.addEventListener("DOMContentLoaded", function () {
     migrateDataToIds();
-
+    migrateCategoryTypes();
     let recurringAdded = 0;
     try {
         recurringAdded = processRecurringTransactions();
