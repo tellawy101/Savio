@@ -25,11 +25,11 @@ function createTransactionElement(expense, options = {}) {
     li.className = "expense-item expense-swipe";
 
     // تحديد الأيقونة ولون الكارت
-    let iconHTML = `<i data-lucide="receipt"></i>`;
-    if (expense.categoryIcon) {
+        let iconHTML = `<i data-lucide="receipt"></i>`;
+    if (isTransfer) {
+        iconHTML = `<i data-lucide="arrow-left-right"></i>`;
+    } else if (expense.categoryIcon) {
         iconHTML = `<i data-lucide="${escapeHTML(getTxCategoryIcon(expense))}"></i>`;
-    } else if (isTransfer) {
-        iconHTML = `<i data-lucide="repeat"></i>`;
     }
 
     // تحديد الإشارة والمبلغ
