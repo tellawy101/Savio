@@ -93,7 +93,10 @@ body.capacitor-app main {
         box-shadow:
         0 10px 24px rgba(0, 0, 0, .28),
         0 4px 14px rgba(15, 118, 110, .45);
-    transition: .3s;
+        transition:
+        transform .3s,
+        translate .5s cubic-bezier(.4, 0, .2, 1),
+        opacity .4s ease;
     animation:
         fabFloat 3s ease-in-out 3,
         fabSmoke 9s ease-in-out infinite;
@@ -121,6 +124,12 @@ body.capacitor-app main {
 
 .fab-nav:active svg {
     transform: rotate(90deg);
+}
+
+.fab-nav.fab-hidden {
+    translate: 0 90px;
+    opacity: 0;
+    pointer-events: none;
 }
 
 @keyframes fabFloat {
