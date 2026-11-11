@@ -90,7 +90,9 @@ body.capacitor-app main {
     background-repeat: no-repeat;
     border: none;
     border-radius: 50%;
-    box-shadow: 0 8px 24px rgba(15, 118, 110, .35);
+        box-shadow:
+        0 10px 24px rgba(0, 0, 0, .28),
+        0 4px 14px rgba(15, 118, 110, .45);
     transition: .3s;
     animation:
         fabFloat 3s ease-in-out 3,
@@ -100,6 +102,12 @@ body.capacitor-app main {
 .fab-nav.open {
     transform: translateX(-50%) rotate(45deg);
     animation: none;
+}
+
+.dark .fab-nav {
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, .55),
+        0 0 24px rgba(15, 118, 110, .55);
 }
 
 .fab-nav:active {
