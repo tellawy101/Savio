@@ -272,12 +272,12 @@ body:not(.dark) .sub-title-row .back-btn {
 body .goals-header,
 body .cb-header {
     position: sticky;
-    top: env(safe-area-inset-top, 0px);
+    top: calc(env(safe-area-inset-top, 0px) - 16px);
     z-index: var(--z-sticky);
     padding-top: 0;
     margin-top: -16px;
     padding-bottom: 12px;
-    margin-bottom: 0;
+    margin-bottom: 16px;
 }
 
 body .goals-header {
