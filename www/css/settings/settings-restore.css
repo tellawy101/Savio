@@ -274,7 +274,7 @@ body .cb-header {
     position: relative;
     z-index: var(--z-sticky);
     padding-top: 0;
-    margin-top: -24px;
+    margin-top: 10px;
     padding-bottom: 12px;
     margin-bottom: 0;
 }
