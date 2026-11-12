@@ -5,6 +5,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     migrateDataToIds();
     migrateCategoryTypes();
+    seedDefaultCategories();
     let recurringAdded = 0;
     try {
         recurringAdded = processRecurringTransactions();

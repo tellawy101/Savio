@@ -109,6 +109,7 @@ closeModalOnBackdropClick(addCategoryModal, function() {
     setColorSectionVisible(true);
 });
 window.renderCategories = function() {
+        if (typeof window.onCategoriesChanged === "function") window.onCategoriesChanged();
     const categoriesList = document.getElementById("categoriesList");
     if (!categoriesList) return;
 
@@ -377,6 +378,26 @@ if (field && deletedIds.includes(field.dataset.id)) {
 }
 
 closeModalOnBackdropClick(categoryMenu);
+window.categoryActions = {
+    add: function (type) {
+        currentCategoryType = type;
+        addCategoryBtn.onclick({ stopPropagation: function () {} });
+    },
+    addSub: function (parent) {
+        currentCategoryType = getCategoryType(parent);
+        selectedCategory = parent;
+        addSubCategoryBtn.onclick();
+    },
+    edit: function (cat) {
+        currentCategoryType = getCategoryType(cat);
+        selectedCategory = cat;
+        editCategoryBtn.onclick();
+    },
+    remove: function (cat) {
+        selectedCategory = cat;
+        deleteCategoryBtn.onclick();
+    }
+};
 }
 
 initCategoryPicker();

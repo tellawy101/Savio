@@ -845,3 +845,14 @@ body.dark .category-search-box {
     color: var(--text-muted);
     font-size: 14px;
 }
+.categories-page-list { padding: 0 16px 90px; }
+.cat-group { margin-bottom: 8px; }
+.cat-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: var(--surface-alt); color: var(--text); transition: transform .2s, box-shadow .2s; }
+.cat-row-sub { margin-top: 6px; margin-inline-start: 24px; }
+.cat-subs { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.cat-subs.open { max-height: 1000px; }
+.cat-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cat-info small { opacity: .6; font-size: 11px; }
+.cat-drag { touch-action: none; opacity: .5; display: flex; padding: 4px; cursor: grab; }
+.cat-btn { background: none; border: 0; color: inherit; opacity: .7; padding: 6px; display: flex; }
+.cat-group.dragging, .cat-row.dragging { box-shadow: 0 8px 24px rgba(0,0,0,.18); transform: scale(1.02); position: relative; z-index: 2; }

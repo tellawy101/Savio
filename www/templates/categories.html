@@ -1,0 +1,21 @@
+<div class="goals-header">
+  <div class="sub-title-row">
+    <button type="button" class="back-btn" data-back="settings">←</button>
+    <div>
+      <h3 data-i18n="categories_title">Categories</h3>
+      <span id="categoriesPageSubtitle" class="goals-subtitle"></span>
+    </div>
+  </div>
+  <button id="addCategoryPageBtn" class="goals-add-btn" aria-label="Add category">
+    <i data-lucide="plus"></i>
+  </button>
+</div>
+
+<div class="tx-tabs" id="categoriesPageTabs">
+  <button type="button" class="tx-tab active" data-tab="expense" data-i18n="tab_expense">Expense</button>
+  <button type="button" class="tx-tab" data-tab="income" data-i18n="tab_income">Income</button>
+</div>
+
+<div id="categoriesPageList" class="categories-page-list"></div>
+
+<div id="modals-placeholder"></div>

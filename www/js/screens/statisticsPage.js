@@ -21,7 +21,7 @@ function initStatisticsPage() {
         const categoryBreakdown = calculateCategoryBreakdown(filtered);
 
         renderStatsSummary(filtered, currentPeriod, categoryBreakdown);
-        renderCategoryList(categoryBreakdown);
+        renderCategoryList(categoryBreakdown, filtered);
         categoryPieChart = renderCategoryPie(categoryBreakdown, categoryPieChart);
         renderAccountList(filtered);
         cashFlowChart = renderFlowChart("line", filtered, currentPeriod, cashFlowChart);

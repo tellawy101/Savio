@@ -41,7 +41,7 @@ function calculateCategoryBreakdown(transactions) {
         const name = knownName || legacyName || t("stats_category_other");
         const key = knownName ? "id:" + mainId : "name:" + name;
         const amount = Number(transaction.amount) || 0;
-        if (!categories[key]) categories[key] = { name, amount: 0 };
+        if (!categories[key]) categories[key] = { name, amount: 0, id: knownName ? mainId : null };
         categories[key].amount += amount;
     });
 
@@ -66,11 +66,27 @@ function calculateCategoryBreakdown(transactions) {
         });
 
     return entries.map((entry, index) => ({
+        id: entry.id,
         category: entry.name,
         amount: entry.amount,
         percentage: maxAmount > 0 ? (entry.amount / maxAmount) * 100 : 0,
         share: shares[index]
     }));
+}
+
+function calculateSubBreakdown(transactions, mainId) {
+    const names = {};
+    names[mainId] = t("stats_sub_general");
+    getSubCategories(mainId).forEach(function (s) { names[s.id] = s.name; });
+    const totals = {};
+    transactions.forEach(function (tx) {
+        if (tx.type !== "expense" || tx.isTransfer === true) return;
+        if (!(tx.categoryId in names)) return;
+        totals[tx.categoryId] = (totals[tx.categoryId] || 0) + (Number(tx.amount) || 0);
+    });
+    return Object.keys(totals).map(function (id) {
+        return { id: id, name: names[id], amount: totals[id] };
+    }).sort(function (a, b) { return b.amount - a.amount; });
 }
 
 function calculateAccountBreakdown(transactions) {

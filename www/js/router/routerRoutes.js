@@ -55,6 +55,12 @@ const ROUTES = {
             }
         }
     },
+        categories: {
+        template: "templates/categories.html",
+        init: function() {
+            if (typeof initCategoriesPage === "function") initCategoriesPage();
+        }
+    },
     statistics: {
         template: "templates/statistics.html",
         init: function() {
@@ -107,7 +113,9 @@ const ROUTES = {
     },
 };
 const ROUTE_INIT_NAMES = {
-    settings: "initSettingsPage",
+    categories: "initCategoriesPage",
+    settings:
+    "initSettingsPage",
     accounts: "initAccountsPage",
     debts: "initDebtsPage",
 planning: "initSettingsPage",

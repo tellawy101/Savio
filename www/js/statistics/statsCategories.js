@@ -60,7 +60,7 @@ backgroundColor: breakdown.map((item, i) => getStatsCategoryColor(item.category,
     });
 }
 
-function renderCategoryList(breakdown) {
+function renderCategoryList(breakdown, transactions){
     const container = document.getElementById("categoryStats");
 
     if (!container) {
@@ -78,7 +78,7 @@ function renderCategoryList(breakdown) {
     }
 const iconByName = {};
 getCategories().forEach(function(c) { iconByName[c.name] = c.icon; });
-    container.innerHTML = breakdown.map(({ category, amount, percentage }, index) => `
+    container.innerHTML = breakdown.map(({ id, category, amount, percentage }, index) => `
         <div class="category-row">
 
             <div class="category-top">
@@ -97,7 +97,26 @@ getCategories().forEach(function(c) { iconByName[c.name] = c.icon; });
             <div class="category-progress">
 <div class="category-progress-fill" style="width: ${percentage}%; background: ${getStatsCategoryColor(category, index)}"></div>
             </div>
-
+ <div class="category-subs"></div>
         </div>
-    `).join("");
+       `).join("");
+
+    container.querySelectorAll(".category-row").forEach(function (row, i) {
+        const item = breakdown[i];
+        if (!item.id || !getSubCategories(item.id).length) return;
+        row.classList.add("has-subs");
+        row.onclick = function () {
+            const box = row.querySelector(".category-subs");
+            if (!box.innerHTML) {
+                const color = getStatsCategoryColor(item.category, i);
+                box.innerHTML = calculateSubBreakdown(transactions, item.id).map(function (s) {
+                    const pct = item.amount > 0 ? Math.round(s.amount / item.amount * 100) : 0;
+                    return '<div class="sub-row"><span>' + escapeHTML(s.name) + '</span><span>' +
+                        formatCurrency(s.amount) + ' · ' + pct + '%</span></div>' +
+                        '<div class="category-progress"><div class="category-progress-fill" style="width:' + pct + '%;background:' + color + '"></div></div>';
+                }).join("");
+            }
+            row.classList.toggle("open");
+        };
+    });
 }

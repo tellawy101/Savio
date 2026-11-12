@@ -213,7 +213,8 @@ setupPicker({
             navigateTo("budgets");
         };
     }
-    
+        const categoriesBtn = document.getElementById("categoriesBtn");
+    if (categoriesBtn) categoriesBtn.onclick = function () { navigateTo("categories"); };
 }
 
 setupNavButtons();
