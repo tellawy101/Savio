@@ -109,108 +109,131 @@ closeModalOnBackdropClick(addCategoryModal, function() {
     setColorSectionVisible(true);
 });
 window.renderCategories = function() {
-        if (typeof window.onCategoriesChanged === "function") window.onCategoriesChanged();
+    if (typeof window.onCategoriesChanged === "function") window.onCategoriesChanged();
     const categoriesList = document.getElementById("categoriesList");
     if (!categoriesList) return;
-
     categoriesList.innerHTML = "";
-
-const searchInput = document.getElementById("categorySearchInput");
-const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
-
-let categories = [];
-getMainCategoriesByType(currentCategoryType).forEach(function(main) {
-    if (query) {
-        const mainMatches = main.name.toLowerCase().includes(query);
-        const matchedSubs = getSubCategories(main.id).filter(function(sub) {
-            return sub.name.toLowerCase().includes(query);
-        });
-        if (mainMatches || matchedSubs.length > 0) {
-            categories.push(main);
-            matchedSubs.forEach(function(sub) {
-                categories.push(sub);
-            });
+    
+    const searchInput = document.getElementById("categorySearchInput");
+    const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    
+    const items = [];
+    getMainCategoriesByType(currentCategoryType).forEach(function(main) {
+        let subs = getSubCategories(main.id);
+        if (query) {
+            const mainMatches = main.name.toLowerCase().includes(query);
+            subs = subs.filter(function(s) { return s.name.toLowerCase().includes(query); });
+            if (!mainMatches && subs.length === 0) return;
         }
+        items.push({ main: main, subs: subs });
+    });
+    
+    if (items.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "category-empty";
+        empty.textContent = t("no_results");
+        categoriesList.appendChild(empty);
         return;
     }
-    categories.push(main);
-    if (expandedCategoryIds.has(main.id)) {
-        getSubCategories(main.id).forEach(function(sub) {
-            categories.push(sub);
-        });
+    
+    function isOpen(entry) {
+        return entry.subs.length > 0 && (query ? true : expandedCategoryIds.has(entry.main.id));
     }
-});
-
-if (categories.length === 0) {
-    const empty = document.createElement("div");
-    empty.className = "category-empty";
-    empty.textContent = t("no_results");
-    categoriesList.appendChild(empty);
-    return;
-}
-
-categories.forEach(category => {
-            const item = document.createElement("div");
-            const isSub = isSubCategory(category);
-            item.className = "category-tile" + (isSub ? " category-tile-sub" : "");
-            item.innerHTML =
-                `<div class="category-tile-icon" style="${categoryIconStyle(getCategoryColor(category))}"><i data-lucide="${escapeHTML(category.icon)}"></i></div>` +
-                `<div class="category-tile-name">${escapeHTML(category.name)}</div>`;
-            if (!query && !isSub && getSubCategories(category.id).length > 0) {
-            const toggleBtn = document.createElement("button");
-            toggleBtn.type = "button";
-            toggleBtn.className = "category-expand-btn";
-            toggleBtn.textContent = expandedCategoryIds.has(category.id) ? "▴" : "▾";
-            toggleBtn.onclick = function(e) {
-                e.stopPropagation();
-                if (expandedCategoryIds.has(category.id)) {
-                    expandedCategoryIds.delete(category.id);
-                } else {
-                    expandedCategoryIds.add(category.id);
-                }
-                renderCategories();
-            };
-            item.appendChild(toggleBtn);
+    
+    function pick(category) {
+        const field = getCategoryFieldEl();
+        if (field) {
+            field.textContent = getCategoryFullName(category);
+            field.dataset.icon = category.icon;
+            field.dataset.id = category.id;
+            field.removeAttribute("data-i18n");
         }
-        let pressTimer;
-
-        item.addEventListener("touchstart", function () {
-            pressTimer = setTimeout(function () {
+        const iconEl = window.activeCategoryBox ? window.activeCategoryBox.querySelector(".category-icon") : null;
+        if (iconEl) {
+            iconEl.innerHTML = `<i data-lucide="${escapeHTML(category.icon)}"></i>`;
+            iconEl.style.cssText = categoryIconStyle(getCategoryColor(category));
+        }
+        if (window.lucide) lucide.createIcons();
+        categoryModal.classList.remove("show");
+        notifyFormFieldChanged();
+    }
+    
+    function addLongPress(el, category) {
+        let timer;
+        el.addEventListener("touchstart", function() {
+            timer = setTimeout(function() {
                 selectedCategory = category;
+                const addSubBtn = document.getElementById("addSubCategoryBtn");
+                if (addSubBtn) addSubBtn.style.display = isSubCategory(category) ? "none" : "";
                 if (categoryMenu) categoryMenu.classList.add("show");
             }, 700);
         });
-
-        item.addEventListener("touchend", function () {
-            clearTimeout(pressTimer);
-        });
-
-        item.addEventListener("touchmove", function () {
-            clearTimeout(pressTimer);
-        });
-
-        item.onclick = function() {
-    const field = getCategoryFieldEl();
-    if (field) {
-field.textContent = getCategoryFullName(category);
-        field.dataset.icon = category.icon;
-                field.dataset.id = category.id;
-        field.removeAttribute("data-i18n");
+        el.addEventListener("touchend", function() { clearTimeout(timer); });
+        el.addEventListener("touchmove", function() { clearTimeout(timer); });
     }
-    const iconEl = window.activeCategoryBox ? window.activeCategoryBox.querySelector(".category-icon") : null;
-    if (iconEl) iconEl.innerHTML = `<i data-lucide="${escapeHTML(category.icon)}"></i>`;
-        if (iconEl) iconEl.style.cssText = categoryIconStyle(getCategoryColor(category));
-    if (window.lucide) lucide.createIcons();
-    categoryModal.classList.remove("show");
-    notifyFormFieldChanged();
-};
-
-        categoriesList.appendChild(item);
+    
+    function buildPanel(entry) {
+        const main = entry.main;
+        const panel = document.createElement("div");
+        panel.className = "category-sub-panel";
+        panel.style.setProperty("--c", getCategoryColor(main));
+        
+        const chips = [{ cat: main, label: t("stats_sub_general") }].concat(
+            entry.subs.map(function(s) { return { cat: s, label: s.name }; })
+        );
+        chips.forEach(function(c) {
+            const chip = document.createElement("div");
+            chip.className = "category-sub-chip";
+            chip.innerHTML = `<i data-lucide="${escapeHTML(c.cat.icon)}"></i><span>${escapeHTML(c.label)}</span>`;
+            chip.onclick = function() { pick(c.cat); };
+            addLongPress(chip, c.cat);
+            panel.appendChild(chip);
+        });
+        
+        if (!query && addSubCategoryBtn) {
+            const add = document.createElement("div");
+            add.className = "category-sub-chip category-sub-add";
+            add.innerHTML = `<i data-lucide="plus"></i>`;
+            add.onclick = function() {
+                selectedCategory = main;
+                addSubCategoryBtn.onclick();
+            };
+            panel.appendChild(add);
+        }
+        return panel;
+    }
+    
+    items.forEach(function(entry, i) {
+        const main = entry.main;
+        const hasSubs = entry.subs.length > 0;
+        const tile = document.createElement("div");
+        tile.className = "category-tile" + (isOpen(entry) ? " category-tile-open" : "");
+        tile.style.setProperty("--c", getCategoryColor(main));
+        tile.innerHTML =
+            `<div class="category-tile-icon" style="${categoryIconStyle(getCategoryColor(main))}"><i data-lucide="${escapeHTML(main.icon)}"></i></div>` +
+            `<div class="category-tile-name">${escapeHTML(main.name)}</div>` +
+            (hasSubs && !query ? `<span class="category-sub-count">${entry.subs.length}</span>` : "");
+        addLongPress(tile, main);
+        tile.onclick = function() {
+            if (hasSubs && !query) {
+                const wasOpen = expandedCategoryIds.has(main.id);
+                expandedCategoryIds.clear();
+                if (!wasOpen) expandedCategoryIds.add(main.id);
+                renderCategories();
+            } else {
+                pick(main);
+            }
+        };
+        categoriesList.appendChild(tile);
+        
+        if (i % 3 === 2 || i === items.length - 1) {
+            for (let k = i - (i % 3); k <= i; k++) {
+                if (isOpen(items[k])) categoriesList.appendChild(buildPanel(items[k]));
+            }
+        }
     });
-
-    if (window.lucide) {
-        lucide.createIcons();
-    }
+    
+    if (window.lucide) lucide.createIcons();
 };
 
 if (saveCategoryBtn) {

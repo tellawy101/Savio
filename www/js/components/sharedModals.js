@@ -202,7 +202,7 @@ function renderSharedModals() {
     <div id="categoryMenu" class="modal">
         <div class="modal-content">
             <button id="editCategoryBtn"><i data-lucide="pencil"></i> <span data-i18n="menu_edit">Edit</span></button>
-            
+                        <button id="addSubCategoryBtn"><i data-lucide="plus"></i> <span data-i18n="menu_add_sub">Add subcategory</span></button>
             <button id="deleteCategoryBtn"><i data-lucide="trash-2"></i> <span data-i18n="menu_delete">Delete</span></button>
         </div>
     </div>
